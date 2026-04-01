@@ -1,0 +1,35 @@
+.page {
+  display: flex;
+  flex-direction: column;
+}
+
+.tldr {
+  max-width: var(--container-md);
+  margin: 0 auto;
+  padding: var(--space-8) var(--space-6);
+  width: 100%;
+}
+
+.tldrCard {
+  padding: var(--space-6);
+  border-left: 3px solid var(--accent);
+}
+
+.tldrTitle {
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--accent);
+  margin-bottom: var(--space-3);
+}
+
+.tldrText {
+  font-size: 1rem;
+  color: var(--text-body);
+  line-height: 1.8;
+}
+
+.metricsSection {
+  padding: var(--space-8) var(--space-6);
+}

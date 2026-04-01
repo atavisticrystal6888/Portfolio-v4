@@ -1,0 +1,95 @@
+---
+slug: "why-pms-should-code"
+title: "Why PMs Should Code (And When to Stop)"
+date: "2026-03-28"
+updatedDate: null
+category: "Career"
+tags: ["product-management", "coding", "technical-fluency", "career-advice"]
+readingTime: "6 min read"
+excerpt: "The PM-coding debate is tireless. Here's a practical framework for finding the sweet spot between technical fluency and over-engineering."
+socialImage: null
+---
+
+## Why the Debate Matters
+
+Every few months, the PM Twitter discourse erupts: "Should PMs code?" It generates heat but rarely light. The real question isn't binary. It's about finding the **right level** of technical fluency for your role, your team, and your product.
+
+I've been on both sides. I've been the PM who didn't understand why a "simple" feature took three sprints. And I've been the PM who accidentally rewrote an engineer's PR because I got too deep into the implementation. Neither extreme works.
+
+## The Case For Coding
+
+Technical fluency gives PMs three superpowers:
+
+### 1. Understanding Engineering Constraints
+
+When you understand that "just add a dropdown" means schema changes, migration scripts, API versioning, and frontend state management, you make better product decisions. You stop proposing architecturally expensive features for marginal user value.
+
+At Omniful, I saved two sprint cycles by prototyping a solution that showed the engineering team a simpler approach. That wouldn't have happened without understanding how the data layer worked.
+
+### 2. Building Prototypes That Prove Value
+
+The fastest way to validate an idea is to build a rough version. Not a pixel-perfect mockup — a working prototype that real users can interact with. SQL queries against production data, quick Python scripts to model outcomes, simple HTML prototypes to test flows.
+
+```python
+# Quick churn prediction to validate feature priority
+import pandas as pd
+
+users = pd.read_sql("""
+    SELECT user_id, 
+           datediff(day, last_login, current_date) as days_inactive,
+           total_sessions_30d,
+           feature_adoption_score
+    FROM user_metrics 
+    WHERE signup_date > '2025-01-01'
+""", conn)
+
+at_risk = users[
+    (users.days_inactive > 14) & 
+    (users.feature_adoption_score < 0.3)
+]
+print(f"At-risk users: {len(at_risk)} ({len(at_risk)/len(users)*100:.1f}%)")
+```
+
+That took 15 minutes. The insight — that 23% of new users were at risk — reprioritized our entire Q2 roadmap.
+
+### 3. Speaking the Same Language
+
+When you can read a pull request, understand an architecture diagram, or discuss trade-offs in a design review, you earn engineering trust. Not because coding is required — but because you've done the work to meet them where they are.
+
+## When To Stop
+
+Here's where most "PMs should code" advice falls apart: it doesn't tell you when to stop. And the stopping point matters more than the starting point.
+
+**Stop when you're doing the engineer's job.** If you're writing production code, you're not being a PM. You're being an engineer who also goes to stakeholder meetings. That's a different role — and usually a worse version of both.
+
+**Stop when you're optimizing for implementation over discovery.** The PM's job is to figure out *what* to build and *why*. If your technical skills are pulling you toward *how*, you're in the wrong lane.
+
+**Stop when it's slower than collaborating.** If explaining what you want to an engineer takes 10 minutes but building it yourself takes 2 hours, you've already lost the ROI argument.
+
+> **The litmus test:** Ask yourself — "Am I using code to make better product decisions, or am I using product meetings as an excuse to write code?" The motivation matters.
+
+## The Sweet Spot
+
+After three years navigating this, here's my practical framework:
+
+- **SQL — Yes, always.** Every PM should be able to query their own product data. Waiting for an analyst to pull numbers creates a bottleneck that slows every decision.
+- **Scripting (Python/JS) — Useful, not required.** Great for quick analyses, prototypes, and automation. Don't aim for production quality — aim for "convincing enough to make a decision."
+- **Reading code — More valuable than writing it.** Understand pull requests. Read the data model. Know what's in the codebase. This builds trust faster than any prototype.
+- **System design — Understand it conceptually.** You don't need to draw sequence diagrams. But understanding why microservices take longer than a monolith change helps you set realistic timelines.
+- **APIs — Know the basics.** Understand REST vs. GraphQL conceptually. Be able to use Postman. This helps in integrations and platform discussions.
+
+## Practical Advice by PM Level
+
+**Junior/APM:** Learn SQL deeply. Read your product's codebase for 30 minutes a week. Build something small (a personal site, a data dashboard). The goal is empathy for the engineering process.
+
+**Mid-level PM:** Use scripting to validate assumptions. Write design docs that include technical context. Participate in design reviews. Your technical fluency should speed up decisions, not slow down engineering.
+
+**Senior PM:** Your value is in judgment, not execution. Know enough to ask the right questions and challenge estimates when they feel off. Mentor junior PMs on technical literacy. Don't code in production — code to think.
+
+## The Bottom Line
+
+The PM-coding question has a boring answer: it depends. But "it depends" isn't useful, so here's the concrete version: **invest in technical fluency up to the point where it improves your product decisions, and not a line of code beyond that.**
+
+For me, that means SQL fluency, Python for analysis, enough JavaScript to build prototypes, and enough system design knowledge to have informed architecture discussions. Your mileage will vary — but the principle holds.
+
+The best PMs I know aren't the ones who can code the most. They're the ones who know exactly how much coding makes them better at their actual job.

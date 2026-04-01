@@ -1,0 +1,99 @@
+---
+slug: "aarkid"
+title: "Aarkid — Flora Monitoring System"
+subtitle: "AI-powered plant care app that detects health issues and recommends personalized actions using Gemini Pro Vision."
+role: "Product Builder"
+duration: "2025"
+stack: ["Gemini Pro Vision", "Python", "LangChain", "FastAPI"]
+tldr: "Plant owners had no personalized real-time care guidance. I built an end-to-end AI product using Gemini Pro Vision + text models that detects plant health issues from images and recommends care actions — delivering a complete AI product from concept to deployment."
+metrics:
+  - label: "Image Analysis"
+    value: 95
+    displayValue: "95%"
+    chartType: "bar"
+  - label: "Recommendation"
+    value: 90
+    displayValue: "90%"
+    chartType: "bar"
+  - label: "Task Mgmt"
+    value: 85
+    displayValue: "85%"
+    chartType: "bar"
+  - label: "Lifecycle"
+    value: 80
+    displayValue: "80%"
+    chartType: "bar"
+prevSlug: "portfolio-site"
+nextSlug: "churn-analysis"
+---
+
+## Context & Problem
+
+Plant enthusiasts and home gardeners struggle with identifying plant health issues early. Existing apps offer generic advice based on species lookup, but none combine real-time image analysis with personalized care recommendations.
+
+The gap was clear: no tool existed that could look at your specific plant, diagnose problems visually, and provide actionable guidance — all in one flow.
+
+## Research & Discovery
+
+Before building, I conducted discovery to validate the problem and understand the landscape:
+
+- Interviewed 10+ plant enthusiasts about their care routines and pain points
+- Analyzed top plant care apps (Planta, PictureThis, Greg) — found they relied on static databases, not real-time AI analysis
+- Identified the core unmet need: personalized, image-based diagnosis with actionable next steps
+
+## Solution & Approach
+
+### 1. Architecture Design
+
+FastAPI backend with LangChain orchestration layer. Gemini Pro Vision for image analysis, text model for generating care recommendations.
+
+### 2. Image Analysis Pipeline
+
+Users upload plant photos → Gemini Pro Vision identifies species, health indicators, and potential issues → structured output feeds into recommendation engine.
+
+### 3. Recommendation Engine
+
+LangChain chains combine visual diagnosis with care knowledge to generate personalized action plans — watering, sunlight, soil, treatment schedules.
+
+### 4. Task Management
+
+Built lifecycle tracking: users can set care reminders, track plant progress over time, and get proactive alerts based on seasonal patterns.
+
+## Implementation
+
+The technical architecture prioritized modularity and fast iteration:
+
+```python
+# Simplified flow: Image → Analysis → Recommendation
+from langchain.chains import SequentialChain
+from langchain_google_genai import ChatGoogleGenerativeAI
+
+vision_model = ChatGoogleGenerativeAI(model="gemini-pro-vision")
+text_model = ChatGoogleGenerativeAI(model="gemini-pro")
+
+# Step 1: Analyze plant image
+diagnosis = vision_model.invoke([image, diagnosis_prompt])
+
+# Step 2: Generate care plan from diagnosis
+care_plan = text_model.invoke(care_prompt.format(
+    diagnosis=diagnosis.content
+))
+```
+
+> **Key Decision:** Using LangChain as an orchestration layer (rather than direct API calls) allowed rapid experimentation with prompt chaining and easy swapping of model versions.
+
+## Outcome & Metrics
+
+- **Deliverable:** Full AI Product — End-to-end from concept to working app
+- **Tech Stack:** 4 Components — FastAPI + LangChain + Vision + Text
+- **Features:** 3 Core Flows — Diagnose, Recommend, Track
+
+## Learnings
+
+### What Worked
+
+Using LangChain's chain abstraction made it easy to iterate on prompts without touching infrastructure. The modular architecture let me develop and test each component independently.
+
+### What I'd Change
+
+Would add a feedback loop: let users confirm or correct diagnoses, then use that data to improve prompt engineering over time. The system is one-directional right now.

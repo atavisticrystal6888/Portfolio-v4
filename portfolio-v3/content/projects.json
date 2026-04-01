@@ -1,0 +1,58 @@
+[
+  {
+    "slug": "aarkid",
+    "name": "Aarkid — Flora Monitoring Platform",
+    "category": "product",
+    "description": "End-to-end flora health monitoring using computer vision and real-time dashboards.",
+    "stack": ["Python", "Streamlit", "OpenCV", "MongoDB"],
+    "metricValue": "92%",
+    "metricLabel": "Detection Accuracy",
+    "featured": true,
+    "githubUrl": null,
+    "duration": "Aug 2025 – Nov 2025",
+    "role": "Product Manager & Technical Lead",
+    "order": 1
+  },
+  {
+    "slug": "churn-analysis",
+    "name": "Customer Churn Analysis",
+    "category": "data",
+    "description": "Predictive churn model that identified at-risk users and reduced monthly churn by 15%.",
+    "stack": ["Python", "Pandas", "Scikit-learn", "SQL"],
+    "metricValue": "~15%",
+    "metricLabel": "Churn Reduction",
+    "featured": true,
+    "githubUrl": null,
+    "duration": "Jan 2026 – Mar 2026",
+    "role": "Data Analyst",
+    "order": 2
+  },
+  {
+    "slug": "marketing-effectiveness",
+    "name": "Marketing Effectiveness Analysis",
+    "category": "data",
+    "description": "Data-driven budget optimization across marketing channels that improved ROI by 28%.",
+    "stack": ["Python", "Pandas", "Matplotlib", "SQL"],
+    "metricValue": "+28%",
+    "metricLabel": "ROI Improvement",
+    "featured": true,
+    "githubUrl": null,
+    "duration": "Feb 2026 – Mar 2026",
+    "role": "Marketing Analyst",
+    "order": 3
+  },
+  {
+    "slug": "portfolio-site",
+    "name": "This Portfolio — Meta Case Study",
+    "category": "technical",
+    "description": "Applied PM thinking to build a 14-page enterprise portfolio from spec to deployment.",
+    "stack": ["Next.js", "React", "TypeScript", "Three.js"],
+    "metricValue": "14",
+    "metricLabel": "Pages Shipped",
+    "featured": false,
+    "githubUrl": null,
+    "duration": "Mar 2026 – Apr 2026",
+    "role": "Full-Stack Developer & Product Manager",
+    "order": 4
+  }
+]

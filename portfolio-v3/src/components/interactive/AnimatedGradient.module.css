@@ -1,0 +1,47 @@
+.gradient {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.15;
+  background: linear-gradient(
+    135deg,
+    var(--accent-subtle) 0%,
+    transparent 40%,
+    transparent 60%,
+    var(--accent-glow) 100%
+  );
+  background-size: 400% 400%;
+  animation: gradientShift 30s ease infinite;
+}
+
+.gradient.paused {
+  animation: none;
+}
+
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gradient {
+    animation: none;
+  }
+}
+
+@media print {
+  .gradient {
+    display: none;
+  }
+}
