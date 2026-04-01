@@ -1,0 +1,46 @@
+[
+  {
+    "slug": "aarkid",
+    "name": "Aarkid — Flora Monitoring Platform",
+    "category": "product",
+    "stack": ["Python", "Streamlit", "OpenCV", "MongoDB"],
+    "oneLiner": "End-to-end flora health monitoring using computer vision and real-time dashboards.",
+    "metricValue": "92%",
+    "metricLabel": "Detection Accuracy",
+    "featured": true,
+    "caseStudyUrl": "case-studies/aarkid.html"
+  },
+  {
+    "slug": "churn-analysis",
+    "name": "Customer Churn Analysis",
+    "category": "data",
+    "stack": ["Python", "Pandas", "Scikit-learn", "SQL"],
+    "oneLiner": "Predictive churn model that identified at-risk users and reduced monthly churn by 15%.",
+    "metricValue": "~15%",
+    "metricLabel": "Churn Reduction",
+    "featured": true,
+    "caseStudyUrl": "case-studies/churn-analysis.html"
+  },
+  {
+    "slug": "marketing-effectiveness",
+    "name": "Marketing Effectiveness Analysis",
+    "category": "data",
+    "stack": ["Python", "Pandas", "Matplotlib", "SQL"],
+    "oneLiner": "Data-driven budget optimization across marketing channels that improved ROI by 28%.",
+    "metricValue": "+28%",
+    "metricLabel": "ROI Improvement",
+    "featured": true,
+    "caseStudyUrl": "case-studies/marketing-effectiveness.html"
+  },
+  {
+    "slug": "portfolio-site",
+    "name": "This Portfolio — Meta Case Study",
+    "category": "technical",
+    "stack": ["HTML/CSS/JS", "Three.js", "GSAP", "Chart.js"],
+    "oneLiner": "Applied PM thinking to build a 14-page enterprise portfolio from spec to deployment.",
+    "metricValue": "14",
+    "metricLabel": "Pages Shipped",
+    "featured": false,
+    "caseStudyUrl": "case-studies/portfolio-site.html"
+  }
+]

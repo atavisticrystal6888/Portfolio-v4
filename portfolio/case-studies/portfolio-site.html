@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>This Portfolio — Meta Case Study | Dhruv Singhal</title>
+  <meta name="description" content="Case study: How I applied PM thinking to build my own portfolio — from single HTML to enterprise multi-page architecture.">
+  <meta property="og:title" content="Portfolio — Case Study | Dhruv Singhal">
+  <meta property="og:description" content="How I applied PM thinking to build my own portfolio — from single HTML to enterprise multi-page architecture.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://dhruvsinghal.dev/case-studies/portfolio-site.html">
+  <meta name="twitter:card" content="summary">
+  <link rel="canonical" href="https://dhruvsinghal.dev/case-studies/portfolio-site.html">
+
+  <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,600,700&f[]=boska@400,700&display=swap">
+  <link rel="stylesheet" href="../css/tokens.css">
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/animations.css">
+  <link rel="stylesheet" href="../css/responsive.css">
+  <link rel="stylesheet" href="../css/case-study.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
+</head>
+<body data-page="case-study" data-theme="dark">
+
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+  <div id="loading-screen" class="loading-screen" aria-hidden="true"><div class="loading-content"><div class="loading-bar"><div id="loading-bar-fill" class="loading-bar-fill"></div></div><span class="loading-text">Loading experience...</span></div></div>
+  <div class="cursor-dot" aria-hidden="true"></div>
+  <div class="cursor-ring" aria-hidden="true"></div>
+  <div class="scroll-progress" aria-hidden="true"><div id="scroll-progress-fill" class="scroll-progress-fill"></div></div>
+  <div class="toast-container" id="toast-container" aria-live="polite"></div>
+
+  <nav class="nav" role="navigation" aria-label="Main navigation">
+    <div class="container nav-inner">
+      <a href="../index.html" class="nav-logo" aria-label="Dhruv Singhal — Home"><svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect width="36" height="36" rx="8" fill="currentColor" opacity="0.1"/><text x="50%" y="55%" dominant-baseline="middle" text-anchor="middle" font-family="Boska, serif" font-weight="700" font-size="18" fill="currentColor">DS</text></svg> Dhruv Singhal</a>
+      <ul class="nav-links"><li><a href="../index.html">Home</a></li><li><a href="../about.html">About</a></li><li><a href="../projects.html">Projects</a></li><li><a href="../blog.html">Blog</a></li><li><a href="../contact.html">Contact</a></li></ul>
+      <div class="nav-actions">
+        <button class="btn-icon" id="theme-toggle" aria-label="Toggle theme"><i data-lucide="sun"></i></button>
+        <button class="btn-ghost" id="command-palette-trigger" aria-label="Open command palette"><i data-lucide="search" style="width:14px;height:14px"></i><kbd>Ctrl+K</kbd></button>
+        <button class="nav-hamburger" id="nav-toggle" aria-label="Toggle navigation" aria-expanded="false"><span></span><span></span><span></span></button>
+      </div>
+    </div>
+    <div class="nav-mobile" id="nav-mobile"><a href="../index.html">Home</a><a href="../about.html">About</a><a href="../projects.html">Projects</a><a href="../blog.html">Blog</a><a href="../contact.html">Contact</a></div>
+  </nav>
+
+  <div id="command-palette-overlay" class="command-palette-overlay" hidden>
+    <div class="command-palette" role="dialog" aria-label="Command palette">
+      <div class="command-palette-header"><i data-lucide="search" class="command-palette-icon"></i><input id="command-palette-input" type="text" placeholder="Search pages, actions..." autocomplete="off" aria-label="Search commands"></div>
+      <div id="command-palette-results" class="command-palette-results">
+        <div class="command-palette-group"><div class="command-palette-group-title">Pages</div>
+          <button class="command-palette-item" data-action="navigate" data-target="../index.html"><i data-lucide="home"></i><span>Go to Home</span></button>
+          <button class="command-palette-item" data-action="navigate" data-target="../projects.html"><i data-lucide="folder-open"></i><span>Go to Projects</span></button>
+          <button class="command-palette-item" data-action="navigate" data-target="../contact.html"><i data-lucide="mail"></i><span>Go to Contact</span></button>
+        </div>
+        <div class="command-palette-group"><div class="command-palette-group-title">Case Studies</div>
+          <button class="command-palette-item" data-action="navigate" data-target="aarkid.html"><i data-lucide="leaf"></i><span>Aarkid</span></button>
+          <button class="command-palette-item" data-action="navigate" data-target="churn-analysis.html"><i data-lucide="trending-down"></i><span>Churn Analysis</span></button>
+          <button class="command-palette-item" data-action="navigate" data-target="marketing-effectiveness.html"><i data-lucide="bar-chart-3"></i><span>Marketing Effectiveness</span></button>
+          <button class="command-palette-item" data-action="navigate" data-target="portfolio-site.html"><i data-lucide="globe"></i><span>Portfolio</span></button>
+        </div>
+        <div class="command-palette-group"><div class="command-palette-group-title">Actions</div>
+          <button class="command-palette-item" data-action="theme"><i data-lucide="moon"></i><span>Toggle Theme</span></button>
+          <button class="command-palette-item" data-action="copy" data-value="dhruvsinghal6888@gmail.com"><i data-lucide="copy"></i><span>Copy Email</span></button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <main id="main-content">
+
+    <nav class="breadcrumb" aria-label="Breadcrumb"><div class="container"><ol class="breadcrumb-list"><li><a href="../index.html">Home</a></li><li><a href="../projects.html">Projects</a></li><li aria-current="page">Portfolio</li></ol></div></nav>
+
+    <header class="cs-hero">
+      <div class="container"><div class="cs-hero-inner">
+        <div class="cs-hero-meta">
+          <span class="cs-hero-role"><i data-lucide="user"></i> Product Builder</span>
+          <span class="cs-hero-duration"><i data-lucide="calendar"></i> 2025 – 2026</span>
+        </div>
+        <h1 class="h1">This Portfolio — A Product in Itself</h1>
+        <p class="cs-hero-subtitle">Applied PM thinking to my own portfolio: user research, spec writing, iterative builds from v1 single-file to v3 multi-page architecture.</p>
+        <div class="cs-hero-stack">
+          <span class="stack-chip">HTML/CSS/JS</span>
+          <span class="stack-chip">Three.js</span>
+          <span class="stack-chip">GSAP</span>
+          <span class="stack-chip">Chart.js</span>
+        </div>
+      </div></div>
+    </header>
+
+    <div class="container">
+      <div class="cs-tldr">
+        <div class="cs-tldr-label"><i data-lucide="zap"></i> TL;DR</div>
+        <p>Needed to stand out as a PM candidate with limited traditional PM experience. I treated the portfolio itself as a product — conducting user research, writing specs, and building iteratively. The result: a <span class="highlight-metric">14-page enterprise-grade portfolio</span> demonstrating product thinking at every level.</p>
+      </div>
+    </div>
+
+    <div class="container"><div class="cs-body"><div class="cs-content">
+
+      <h2>Context & Problem</h2>
+      <p>Breaking into product management with a non-traditional background requires demonstrating PM skills, not just claiming them. A standard resume-style portfolio wouldn't cut it — I needed something that was itself proof of product thinking.</p>
+      <p>The meta-challenge: the portfolio needed to demonstrate the same skills it was showcasing.</p>
+
+      <h2>Research & Discovery</h2>
+      <ul>
+        <li>Analyzed 20+ PM portfolios to identify what worked and what didn't</li>
+        <li>Researched what hiring managers and recruiters actually look at (spoiler: case studies and proof of structured thinking)</li>
+        <li>Identified reference sites (odena.io and similar PM portfolios) for interaction patterns and content strategy</li>
+      </ul>
+
+      <h2>Solution & Approach</h2>
+
+      <div class="cs-process">
+        <div class="cs-process-step">
+          <div class="cs-step-number">1</div>
+          <div class="cs-step-content">
+            <h4>v1: Single HTML File</h4>
+            <p>Started with everything in one file — validated the content works, tested with initial reviewers, identified what was missing.</p>
+          </div>
+        </div>
+        <div class="cs-process-step">
+          <div class="cs-step-number">2</div>
+          <div class="cs-step-content">
+            <h4>v2: Multi-File Single Page</h4>
+            <p>Refactored into modular CSS/JS architecture. Added Three.js hero, GSAP animations, Chart.js skills radar, command palette.</p>
+          </div>
+        </div>
+        <div class="cs-process-step">
+          <div class="cs-step-number">3</div>
+          <div class="cs-step-content">
+            <h4>v3: Multi-Page Architecture</h4>
+            <p>Full SpecKit workflow: constitution → spec → plan → tasks. 14 pages, 11 CSS, 17 JS files. Depth-over-breadth philosophy.</p>
+          </div>
+        </div>
+        <div class="cs-process-step">
+          <div class="cs-step-number">4</div>
+          <div class="cs-step-content">
+            <h4>Spec-Driven Development</h4>
+            <p>Every page, component, and interaction was specified before code was written. 56 tasks across 8 phases with dependency mapping.</p>
+          </div>
+        </div>
+      </div>
+
+      <h2>Implementation Highlights</h2>
+      <p>Key technical decisions that demonstrate product thinking:</p>
+      <ul>
+        <li><strong>Conditional loading:</strong> Each page only loads the CSS/JS it needs — blog doesn't load Three.js, home doesn't load Prism.js</li>
+        <li><strong>Page detection system:</strong> <code>data-page</code> attribute on <code>&lt;body&gt;</code> drives conditional initialization in the orchestrator</li>
+        <li><strong>Command palette:</strong> Cross-page navigation with fuzzy search — reaches any page, case study, or article from anywhere</li>
+        <li><strong>Theme system:</strong> CSS custom properties for zero-layout-shift theme switching that persists across pages</li>
+      </ul>
+
+      <h2>Outcome & Metrics</h2>
+
+      <div class="cs-metrics-grid">
+        <div class="cs-metric-card">
+          <div class="cs-metric-label">Pages</div>
+          <div class="cs-metric-value">14</div>
+          <div class="cs-metric-desc">Full multi-page architecture</div>
+        </div>
+        <div class="cs-metric-card">
+          <div class="cs-metric-label">Tech Stack</div>
+          <div class="cs-metric-value">10</div>
+          <div class="cs-metric-desc">CDN libraries integrated</div>
+        </div>
+        <div class="cs-metric-card">
+          <div class="cs-metric-label">Versions</div>
+          <div class="cs-metric-value">3</div>
+          <div class="cs-metric-desc">Iterative builds v1 → v3</div>
+        </div>
+      </div>
+
+      <div class="cs-chart-container">
+        <canvas data-chart data-chart-type="bar" data-chart-config='{"labels":["v1","v2","v3"],"datasets":[{"label":"Files","data":[1,18,42]},{"label":"Features","data":[5,15,30]}]}'></canvas>
+      </div>
+
+      <h2>Learnings</h2>
+      <div class="cs-learnings">
+        <div class="cs-learning-card">
+          <h4>What Worked</h4>
+          <p>Writing full specs before coding prevented scope creep and made the multi-page migration smooth. The SpecKit workflow (constitution → spec → plan → tasks) is a PM artifact in itself.</p>
+        </div>
+        <div class="cs-learning-card">
+          <h4>What I'd Change</h4>
+          <p>Would have started multi-page from v2. The single-page → multi-page migration required rewriting most of the JS orchestration. If I'd planned for it earlier, the architecture would be cleaner.</p>
+        </div>
+      </div>
+
+    </div></div></div>
+
+    <div class="container">
+      <nav class="cs-nav" aria-label="Case study navigation">
+        <a href="marketing-effectiveness.html" class="cs-nav-link prev">
+          <span class="cs-nav-label"><i data-lucide="arrow-left"></i> Previous</span>
+          <span class="cs-nav-title">Marketing Effectiveness</span>
+        </a>
+        <a href="aarkid.html" class="cs-nav-link next">
+          <span class="cs-nav-label">Next <i data-lucide="arrow-right"></i></span>
+          <span class="cs-nav-title">Aarkid — Flora Monitoring</span>
+        </a>
+      </nav>
+    </div>
+
+  </main>
+
+  <footer class="footer" role="contentinfo"><div class="container footer-inner"><div class="footer-left"><span class="footer-logo">Dhruv Singhal</span><p class="footer-tagline">Product Analyst & Builder</p></div><nav class="footer-links" aria-label="Footer navigation"><a href="../about.html">About</a><a href="../projects.html">Projects</a><a href="../blog.html">Blog</a><a href="../contact.html">Contact</a></nav><p class="footer-copy">&copy; 2026 Dhruv Singhal. Crafted with intention.</p></div></footer>
+
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+  <script src="../js/theme.js"></script>
+  <script src="../js/cursor.js"></script>
+  <script src="../js/toast.js"></script>
+  <script src="../js/command-palette.js"></script>
+  <script src="../js/scroll-animations.js"></script>
+  <script src="../js/page-transitions.js"></script>
+  <script src="../js/case-study-charts.js"></script>
+  <script src="../js/reading-progress.js"></script>
+  <script src="../js/utils.js"></script>
+  <script src="../js/app.js"></script>
+</body>
+</html>

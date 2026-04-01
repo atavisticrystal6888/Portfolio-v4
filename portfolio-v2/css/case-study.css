@@ -1,0 +1,514 @@
+/* ============================================================
+   CASE STUDY — Hero, TL;DR, Process Flow, Metrics, Code, Nav
+   ============================================================ */
+
+/* ===== CASE STUDY HERO BANNER ===== */
+.cs-hero {
+  padding-top: calc(var(--nav-height) + var(--space-10));
+  padding-bottom: var(--space-9);
+  border-bottom: 1px solid var(--border);
+}
+
+.cs-hero-inner {
+  max-width: var(--reading-width);
+}
+
+.cs-hero-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3);
+  margin-bottom: var(--space-5);
+}
+
+.cs-hero-role,
+.cs-hero-duration {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 14px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  border-radius: var(--radius-full);
+}
+
+.cs-hero-role {
+  color: var(--accent);
+  background: var(--badge-current-bg);
+}
+
+.cs-hero-duration {
+  color: var(--text-muted);
+  background: var(--chip-bg);
+  border: 1px solid var(--chip-border);
+}
+
+.cs-hero-duration i,
+.cs-hero-role i {
+  width: 14px;
+  height: 14px;
+}
+
+.cs-hero h1 {
+  margin-bottom: var(--space-4);
+}
+
+.cs-hero-subtitle {
+  font-size: 1.1rem;
+  color: var(--text-muted);
+  line-height: 1.7;
+  max-width: 600px;
+}
+
+.cs-hero-stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-top: var(--space-6);
+}
+
+/* ===== TL;DR BOX ===== */
+.cs-tldr {
+  padding: var(--space-7);
+  background: var(--accent-subtle);
+  border: 1px solid var(--border-accent);
+  border-left: 4px solid var(--accent);
+  border-radius: var(--radius-lg);
+  margin: var(--space-8) 0;
+  max-width: var(--reading-width);
+}
+
+.cs-tldr-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--accent);
+  margin-bottom: var(--space-3);
+}
+
+.cs-tldr-label i {
+  width: 16px;
+  height: 16px;
+}
+
+.cs-tldr p {
+  font-size: 1rem;
+  color: var(--text);
+  line-height: 1.7;
+}
+
+.cs-tldr .highlight-metric {
+  font-weight: 700;
+  color: var(--metric);
+}
+
+/* ===== CASE STUDY BODY LAYOUT ===== */
+.cs-body {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-8);
+  padding: var(--space-9) 0;
+}
+
+.cs-content {
+  max-width: var(--reading-width);
+}
+
+.cs-content h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-strong);
+  margin-top: var(--space-9);
+  margin-bottom: var(--space-5);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--border);
+}
+
+.cs-content h2:first-child {
+  margin-top: 0;
+  border-top: none;
+  padding-top: 0;
+}
+
+.cs-content h3 {
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--text-strong);
+  margin-top: var(--space-7);
+  margin-bottom: var(--space-4);
+}
+
+.cs-content p {
+  font-size: 1rem;
+  color: var(--text);
+  line-height: 1.8;
+  margin-bottom: var(--space-5);
+}
+
+.cs-content ul,
+.cs-content ol {
+  padding-left: var(--space-6);
+  margin-bottom: var(--space-5);
+}
+
+.cs-content li {
+  font-size: 0.95rem;
+  color: var(--text);
+  line-height: 1.8;
+  margin-bottom: var(--space-2);
+}
+
+/* ===== PROCESS FLOW ===== */
+.cs-process {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-5);
+  margin: var(--space-7) 0;
+}
+
+.cs-process-step {
+  display: flex;
+  gap: var(--space-5);
+  align-items: flex-start;
+  padding: var(--space-6);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  position: relative;
+  opacity: 0;
+  transform: translateX(-20px);
+}
+
+.cs-process-step.visible {
+  animation: processStepReveal 0.5s ease forwards;
+}
+
+.cs-process-step:nth-child(1) { animation-delay: 0s; }
+.cs-process-step:nth-child(2) { animation-delay: 0.1s; }
+.cs-process-step:nth-child(3) { animation-delay: 0.2s; }
+.cs-process-step:nth-child(4) { animation-delay: 0.3s; }
+
+.cs-step-number {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+  font-weight: 700;
+  border-radius: 50%;
+  flex-shrink: 0;
+  color: #fff;
+}
+
+.cs-process-step:nth-child(1) .cs-step-number { background: var(--process-step-1); }
+.cs-process-step:nth-child(2) .cs-step-number { background: var(--process-step-2); }
+.cs-process-step:nth-child(3) .cs-step-number { background: var(--process-step-3); }
+.cs-process-step:nth-child(4) .cs-step-number { background: var(--process-step-4); }
+
+.cs-step-content h4 {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text-strong);
+  margin-bottom: var(--space-2);
+}
+
+.cs-step-content p {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  line-height: 1.7;
+  margin-bottom: 0;
+}
+
+/* Connector lines between steps */
+.cs-process-step:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  left: calc(var(--space-6) + 17px);
+  bottom: -20px;
+  width: 2px;
+  height: 20px;
+  background: var(--process-connector);
+}
+
+/* ===== METRIC VISUALIZATION ===== */
+.cs-metrics-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-5);
+  margin: var(--space-7) 0;
+}
+
+.cs-metric-card {
+  padding: var(--space-6);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  text-align: center;
+}
+
+.cs-metric-card.before {
+  border-left: 3px solid var(--error);
+}
+
+.cs-metric-card.after {
+  border-left: 3px solid var(--success);
+}
+
+.cs-metric-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+  margin-bottom: var(--space-2);
+}
+
+.cs-metric-value {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--metric);
+  line-height: 1.2;
+}
+
+.cs-metric-desc {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  margin-top: var(--space-2);
+}
+
+.cs-chart-container {
+  padding: var(--space-6);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  margin: var(--space-7) 0;
+}
+
+.cs-chart-container canvas {
+  max-width: 100%;
+  max-height: 320px;
+}
+
+/* ===== CODE BLOCKS (Prism integration) ===== */
+.cs-content pre {
+  background: var(--code-bg);
+  border: 1px solid var(--code-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-5);
+  overflow-x: auto;
+  margin-bottom: var(--space-5);
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  line-height: 1.7;
+  color: var(--code-text);
+}
+
+.cs-content pre code {
+  background: none;
+  padding: 0;
+  border: none;
+  font-size: inherit;
+  color: inherit;
+}
+
+.cs-content code {
+  font-family: var(--font-mono);
+  font-size: 0.85em;
+  padding: 2px 8px;
+  background: var(--code-bg);
+  border: 1px solid var(--code-border);
+  border-radius: 4px;
+  color: var(--code-text);
+}
+
+/* ===== CALLOUT BOXES ===== */
+.cs-callout {
+  padding: var(--space-5) var(--space-6);
+  border-radius: var(--radius-md);
+  margin-bottom: var(--space-5);
+  display: flex;
+  gap: var(--space-4);
+  align-items: flex-start;
+}
+
+.cs-callout-icon {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  margin-top: 2px;
+}
+
+.cs-callout.tip {
+  background: var(--callout-tip-bg);
+  border: 1px solid var(--callout-tip-border);
+}
+
+.cs-callout.tip .cs-callout-icon { color: var(--callout-tip-icon); }
+
+.cs-callout.warning {
+  background: var(--callout-warning-bg);
+  border: 1px solid var(--callout-warning-border);
+}
+
+.cs-callout.warning .cs-callout-icon { color: var(--callout-warning-icon); }
+
+.cs-callout.info {
+  background: var(--callout-info-bg);
+  border: 1px solid var(--callout-info-border);
+}
+
+.cs-callout.info .cs-callout-icon { color: var(--callout-info-icon); }
+
+.cs-callout p {
+  font-size: 0.9rem;
+  line-height: 1.7;
+  margin-bottom: 0;
+}
+
+/* ===== LEARNINGS SECTION ===== */
+.cs-learnings {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-5);
+  margin: var(--space-7) 0;
+}
+
+.cs-learning-card {
+  padding: var(--space-6);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+}
+
+.cs-learning-card h4 {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--text-strong);
+  margin-bottom: var(--space-2);
+}
+
+.cs-learning-card p {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  line-height: 1.7;
+  margin-bottom: 0;
+}
+
+/* ===== PREV/NEXT NAVIGATION ===== */
+.cs-nav {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-4);
+  padding: var(--space-8) 0;
+  border-top: 1px solid var(--border);
+  margin-top: var(--space-9);
+}
+
+.cs-nav-link {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-6);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  text-decoration: none;
+  transition: border-color var(--transition-fast), transform var(--transition-fast);
+}
+
+.cs-nav-link:hover {
+  border-color: var(--border-accent);
+  transform: translateY(-2px);
+}
+
+.cs-nav-link.prev {
+  text-align: left;
+}
+
+.cs-nav-link.next {
+  text-align: right;
+}
+
+.cs-nav-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.cs-nav-link.next .cs-nav-label {
+  justify-content: flex-end;
+}
+
+.cs-nav-label i {
+  width: 14px;
+  height: 14px;
+}
+
+.cs-nav-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-strong);
+}
+
+/* ===== RELATED POSTS STRIP ===== */
+.cs-related {
+  padding: var(--space-8) 0;
+}
+
+.cs-related-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-5);
+  margin-top: var(--space-6);
+}
+
+/* ===== RESPONSIVE ===== */
+@media (min-width: 640px) {
+  .cs-metrics-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .cs-learnings {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .cs-nav {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .cs-related-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 768px) {
+  .cs-process {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* Remove connector lines in 2-col layout */
+  .cs-process-step::after {
+    display: none;
+  }
+}
+
+@media (min-width: 1024px) {
+  .cs-metrics-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .cs-related-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}

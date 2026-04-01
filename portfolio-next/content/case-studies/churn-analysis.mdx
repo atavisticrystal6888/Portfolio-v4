@@ -1,0 +1,96 @@
+---
+slug: "churn-analysis"
+title: "Customer Churn Analysis"
+subtitle: "Identified churn drivers through EDA and segmentation, then built actionable Power BI dashboards for retention strategy."
+role: "Data Analyst"
+duration: "2024"
+stack: ["Python", "SQL", "Power BI"]
+tldr: "Rising churn with no root-cause visibility. I conducted EDA + customer segmentation and built Power BI dashboards that identified high-risk segments, enabling retention strategies with ~15% potential churn reduction."
+metrics:
+  - label: "Churn Reduction"
+    value: 15
+    displayValue: "~15%"
+    chartType: "bar"
+  - label: "Dashboards"
+    value: 3
+    displayValue: "3"
+    chartType: "bar"
+  - label: "Data Sources"
+    value: 3
+    displayValue: "3"
+    chartType: "bar"
+prevSlug: "aarkid"
+nextSlug: "marketing-effectiveness"
+---
+
+## Context & Problem
+
+The company was seeing rising churn but had no clear visibility into why customers were leaving. Revenue was being lost, but the root causes were buried in fragmented data across billing, support, and usage systems.
+
+Without a structured way to identify at-risk customers early, the retention team was playing whack-a-mole — reacting to cancellations instead of preventing them.
+
+## Research & Discovery
+
+- Audited existing data sources: billing records, support tickets, feature usage logs, NPS scores
+- Interviewed customer success team to understand qualitative churn signals they observed
+- Mapped the customer lifecycle to identify critical "danger zones" where churn risk spikes
+
+## Solution & Approach
+
+### 1. Data Consolidation
+
+Unified data from 3 sources (billing, support, usage) into a single analysis-ready dataset using SQL joins and Python preprocessing.
+
+### 2. Exploratory Data Analysis
+
+Identified statistical patterns: tenure vs. churn correlation, support ticket frequency as a leading indicator, feature adoption depths.
+
+### 3. Customer Segmentation
+
+Built customer segments based on behavior patterns. High-risk segment: low feature adoption + high support contact + first 90 days.
+
+### 4. Dashboard & Strategy
+
+Power BI dashboards with real-time KPIs, segment health scores, and automated alerts for high-risk accounts.
+
+## Implementation
+
+The analysis pipeline prioritized speed-to-insight over complexity:
+
+```python
+# Customer risk scoring approach
+import pandas as pd
+from sklearn.preprocessing import StandardScaler
+
+# Feature engineering for churn prediction
+features = ['tenure_days', 'support_tickets_30d',
+            'feature_adoption_score', 'days_since_last_login',
+            'billing_issues_count']
+
+# Normalize and weight features
+scaler = StandardScaler()
+risk_scores = scaler.fit_transform(df[features])
+
+# Segment: High risk = top 20% risk score + tenure < 90 days
+df['risk_segment'] = np.where(
+    (df['risk_score'] > df['risk_score'].quantile(0.8)) &
+    (df['tenure_days'] < 90),
+    'High Risk', 'Standard'
+)
+```
+
+## Outcome & Metrics
+
+- **Before:** No Visibility — No way to identify at-risk customers
+- **After:** ~15% — Potential churn reduction
+- **Dashboards:** 3 — KPI, Segments, Alerts
+
+## Learnings
+
+### What Worked
+
+Starting with qualitative input from the CS team before touching data ensured I was looking for the right signals. The best features in the model came from their observations, not from statistical fishing.
+
+### What I'd Change
+
+Would build a proper ML prediction model rather than a rule-based risk score. The heuristic approach was fast but ceiling-limited. A gradient boosted model could capture non-linear churn patterns.

@@ -1,0 +1,85 @@
+---
+slug: "portfolio-site"
+title: "This Portfolio — A Product in Itself"
+subtitle: "Applied PM thinking to my own portfolio: user research, spec writing, iterative builds from v1 single-file to v3 multi-page architecture."
+role: "Product Builder"
+duration: "2025 – 2026"
+stack: ["HTML/CSS/JS", "Three.js", "GSAP", "Chart.js"]
+tldr: "Needed to stand out as a PM candidate with limited traditional PM experience. I treated the portfolio itself as a product — conducting user research, writing specs, and building iteratively. The result: a 14-page enterprise-grade portfolio demonstrating product thinking at every level."
+metrics:
+  - label: "Pages"
+    value: 14
+    displayValue: "14"
+    chartType: "bar"
+  - label: "Tech Stack"
+    value: 10
+    displayValue: "10"
+    chartType: "bar"
+  - label: "Versions"
+    value: 3
+    displayValue: "3"
+    chartType: "bar"
+prevSlug: "marketing-effectiveness"
+nextSlug: "aarkid"
+---
+
+## Context & Problem
+
+Breaking into product management with a non-traditional background requires demonstrating PM skills, not just claiming them. A standard resume-style portfolio wouldn't cut it — I needed something that was itself proof of product thinking.
+
+The meta-challenge: the portfolio needed to demonstrate the same skills it was showcasing.
+
+## Research & Discovery
+
+- Analyzed 20+ PM portfolios to identify what worked and what didn't
+- Researched what hiring managers and recruiters actually look at (spoiler: case studies and proof of structured thinking)
+- Identified reference sites (odena.io and similar PM portfolios) for interaction patterns and content strategy
+
+## Solution & Approach
+
+### 1. v1: Single HTML File
+
+Started with everything in one file — validated the content works, tested with initial reviewers, identified what was missing.
+
+### 2. v2: Multi-File Single Page
+
+Refactored into modular CSS/JS architecture. Added Three.js hero, GSAP animations, Chart.js skills radar, command palette.
+
+### 3. v3: Multi-Page Architecture
+
+Full SpecKit workflow: constitution → spec → plan → tasks. 14 pages, 11 CSS, 17 JS files. Depth-over-breadth philosophy.
+
+### 4. Spec-Driven Development
+
+Every page, component, and interaction was specified before code was written. 56 tasks across 8 phases with dependency mapping.
+
+## Implementation Highlights
+
+Key technical decisions that demonstrate product thinking:
+
+- **Conditional loading:** Each page only loads the CSS/JS it needs — blog doesn't load Three.js, home doesn't load Prism.js
+- **Page detection system:** `data-page` attribute on `<body>` drives conditional initialization in the orchestrator
+- **Command palette:** Cross-page navigation with fuzzy search — reaches any page, case study, or article from anywhere
+- **Theme system:** CSS custom properties for zero-layout-shift theme switching that persists across pages
+
+## Outcome & Metrics
+
+- **Pages:** 14 — Full multi-page architecture
+- **Tech Stack:** 10 — CDN libraries integrated
+- **Versions:** 3 — Iterative builds v1 → v3
+
+| Version | Files | Features |
+|---------|-------|----------|
+| v1 | 1 | 5 |
+| v2 | 18 | 15 |
+| v3 | 42 | 30 |
+
+## Learnings
+
+### What Worked
+
+Writing full specs before coding prevented scope creep and made the multi-page migration smooth. The SpecKit workflow (constitution → spec → plan → tasks) is a PM artifact in itself.
+
+### What I'd Change
+
+Would have started multi-page from v2. The single-page → multi-page migration required rewriting most of the JS orchestration. If I'd planned for it earlier, the architecture would be cleaner.

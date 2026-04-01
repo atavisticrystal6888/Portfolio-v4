@@ -1,0 +1,32 @@
+[
+  {
+    "slug": "why-pms-should-code",
+    "title": "Why PMs Should Code (And When to Stop)",
+    "date": "2026-03-28",
+    "category": "Career",
+    "readingTime": "6 min read",
+    "excerpt": "The PM-coding debate is tireless. Here's a practical framework for finding the sweet spot between technical fluency and over-engineering.",
+    "featured": true,
+    "articleUrl": "blog/why-pms-should-code.html"
+  },
+  {
+    "slug": "data-driven-product-decisions",
+    "title": "Data-Driven Doesn't Mean Dashboard-Driven",
+    "date": "2026-03-15",
+    "category": "Product",
+    "readingTime": "5 min read",
+    "excerpt": "Dashboards are seductive. But confusing dashboards with data-driven culture is one of the most common mistakes product teams make.",
+    "featured": true,
+    "articleUrl": "blog/data-driven-product-decisions.html"
+  },
+  {
+    "slug": "structured-thinking-framework",
+    "title": "A Structured Thinking Framework for Ambiguous Problems",
+    "date": "2026-02-28",
+    "category": "Product",
+    "readingTime": "7 min read",
+    "excerpt": "Ambiguity is not the enemy — unstructured ambiguity is. Here's the 4-step framework I use to break down the messiest product problems.",
+    "featured": false,
+    "articleUrl": "blog/structured-thinking-framework.html"
+  }
+]

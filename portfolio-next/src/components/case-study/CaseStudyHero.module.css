@@ -1,0 +1,43 @@
+.hero {
+  padding: calc(var(--nav-height) + var(--space-10)) var(--space-6) var(--space-10);
+}
+
+.inner {
+  max-width: var(--container-md);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 700;
+  color: var(--text-strong);
+  line-height: 1.1;
+}
+
+.subtitle {
+  font-size: clamp(1rem, 1.5vw, 1.15rem);
+  color: var(--text-muted);
+  line-height: 1.7;
+  max-width: 600px;
+}
+
+.meta {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  font-size: 0.85rem;
+}
+
+.role { color: var(--accent); font-weight: 600; }
+.sep { color: var(--text-muted); }
+.duration { color: var(--text-muted); }
+
+.stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}

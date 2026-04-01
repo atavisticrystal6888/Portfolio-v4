@@ -63,9 +63,8 @@ The goal: a visitor should be able to spend **15+ minutes** on this site — rea
 | Typed.js | 2.1.0 | Hero role typing animation (home) | ~5KB |
 | Lucide Icons | latest | Icon system (all pages) | ~25KB |
 | Fontshare | — | Satoshi (body) + Boska (display) | ~40KB |
-| Prism.js | 1.29 | Code syntax highlighting (blog) | ~20KB |
-| Marked.js | 12.x | Markdown rendering for blog articles | ~35KB |
-| Mermaid.js | 10.x | Diagram rendering (case studies) | ~50KB |
+| Prism.js | 1.29 | Code syntax highlighting (blog, case studies) | ~20KB |
+| Mermaid.js | 10.x | Diagram rendering (case studies, select blog articles) | ~50KB |
 
 **Storage**: localStorage (theme, command palette recents, reading progress)  
 **Testing**: Manual browser + Lighthouse + axe DevTools  
@@ -155,7 +154,7 @@ portfolio/
 - Blog teaser (latest 3 article cards → link to blog)
 - Contact CTA strip
 
-**JS modules loaded**: app, theme, cursor, toast, command-palette, scroll-animations, three-hero, particles-bg, utils, carousel
+**JS modules loaded**: app, theme, cursor, toast, command-palette, scroll-animations, page-transitions, three-hero, particles-bg, utils, carousel
 
 ### Page 2: About (about.html) — "The Full Story"
 **Purpose**: Recruiter deep-dive into background, philosophy, and skills  
@@ -170,7 +169,7 @@ portfolio/
 - Downloadable resume CTA
 - Traits/values section with visual cards
 
-**JS modules loaded**: app, theme, cursor, toast, command-palette, scroll-animations, skills-chart, utils
+**JS modules loaded**: app, theme, cursor, toast, command-palette, scroll-animations, page-transitions, skills-chart, utils
 
 ### Page 3: Projects (projects.html) — "The Proof"
 **Purpose**: Browsable grid of all projects with filtering  
@@ -181,7 +180,7 @@ portfolio/
   - Each card: name, stack chips, 1-line outcome, metric badge, "Read Case Study →" link
 - Sort options (newest, biggest impact)
 
-**JS modules loaded**: app, theme, cursor, toast, command-palette, scroll-animations, project-filters
+**JS modules loaded**: app, theme, cursor, toast, command-palette, scroll-animations, page-transitions, project-filters
 
 ### Pages 4-7: Case Studies (case-studies/*.html) — "The Depth"
 **Purpose**: Deep-dive into each project — this is where PM skills are proven  
@@ -197,7 +196,7 @@ portfolio/
 9. Navigation: ← Previous Case Study | Next Case Study →
 10. Related blog posts
 
-**JS modules loaded**: app, theme, cursor, toast, command-palette, scroll-animations, case-study-charts, utils, reading-progress
+**JS modules loaded**: app, theme, cursor, toast, command-palette, scroll-animations, page-transitions, case-study-charts, utils, reading-progress
 
 ### Page 8: Blog (blog.html) — "The Authority"
 **Purpose**: Thought leadership — proves PM thinking beyond just shipping  
@@ -211,7 +210,7 @@ portfolio/
   2. "Data-Driven Doesn't Mean Dashboard-Driven"
   3. "A Structured Thinking Framework for Ambiguous Problems"
 
-**JS modules loaded**: app, theme, cursor, toast, command-palette, scroll-animations, blog-search
+**JS modules loaded**: app, theme, cursor, toast, command-palette, scroll-animations, page-transitions, blog-search
 
 ### Pages 9-11: Blog Articles (blog/*.html) — "The Content"
 **Template structure**:
@@ -223,7 +222,7 @@ portfolio/
 6. Navigation: ← Previous Article | Next Article →
 7. Related articles suggestions
 
-**JS modules loaded**: app, theme, cursor, toast, command-palette, scroll-animations, reading-progress
+**JS modules loaded**: app, theme, cursor, toast, command-palette, scroll-animations, page-transitions, reading-progress
 
 ### Page 12: Contact (contact.html) — "The Handshake"
 **Purpose**: Multiple ways to connect, with a form for direct outreach  
@@ -238,7 +237,7 @@ portfolio/
 - Location & timezone info
 - FAQ accordion ("What roles are you looking for?", "Are you open to relocating?", etc.)
 
-**JS modules loaded**: app, theme, cursor, toast, command-palette, scroll-animations, contact-form
+**JS modules loaded**: app, theme, cursor, toast, command-palette, scroll-animations, page-transitions, contact-form
 
 ### Page 13: Now (now.html) — "The Context"
 **Purpose**: a /now page showing what Dhruv is currently focused on (inspired by Derek Sivers)  
@@ -252,7 +251,7 @@ portfolio/
   - Looking for: (roles/opportunities)
 - Minimal styling, content-focused
 
-**JS modules loaded**: app, theme, cursor, toast, command-palette, scroll-animations
+**JS modules loaded**: app, theme, cursor, toast, command-palette, scroll-animations, page-transitions
 
 ### Page 14: 404 (404.html) — "The Personality"
 **Purpose**: Charming error page that keeps visitors engaged  
@@ -333,7 +332,7 @@ Must now include cross-page navigation:
 | Typed.js 2.1.0 | Hero typing | Home only | js/utils.js |
 | Lucide Icons | Icon system | All pages | All HTML files |
 | Prism.js 1.29 | Code highlighting | Blog articles, Case studies | blog/*.html, case-studies/*.html |
-| Mermaid.js 10.x | Diagrams | Case studies | case-studies/*.html |
+| Mermaid.js | 10.x | Diagrams | Case studies, Blog article (T034) | case-studies/*.html, blog/structured-thinking-framework.html |
 | Fontshare | Satoshi + Boska fonts | All pages | All HTML (link tag) |
 
 ### Per-Page Script Loading Matrix

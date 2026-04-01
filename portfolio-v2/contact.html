@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact — Dhruv Singhal</title>
+  <meta name="description" content="Get in touch with Dhruv Singhal — open to Product Analyst, APM, and data-driven PM roles.">
+  <meta property="og:title" content="Contact — Dhruv Singhal">
+  <meta property="og:description" content="Get in touch with Dhruv Singhal — open to Product Analyst, APM, and data-driven PM roles.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://dhruvsinghal.dev/contact.html">
+  <meta name="twitter:card" content="summary">
+  <link rel="canonical" href="https://dhruvsinghal.dev/contact.html">
+
+  <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,600,700&f[]=boska@400,700&display=swap">
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <link rel="stylesheet" href="css/contact.css">
+</head>
+<body data-page="contact" data-theme="dark">
+
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+  <div id="loading-screen" class="loading-screen" aria-hidden="true"><div class="loading-content"><div class="loading-bar"><div id="loading-bar-fill" class="loading-bar-fill"></div></div><span class="loading-text">Loading experience...</span></div></div>
+  <div class="cursor-dot" aria-hidden="true"></div>
+  <div class="cursor-ring" aria-hidden="true"></div>
+  <div class="scroll-progress" aria-hidden="true"><div id="scroll-progress-fill" class="scroll-progress-fill"></div></div>
+  <div class="toast-container" id="toast-container" aria-live="polite"></div>
+
+  <nav class="nav" role="navigation" aria-label="Main navigation">
+    <div class="container nav-inner">
+      <a href="index.html" class="nav-logo" aria-label="Dhruv Singhal — Home"><svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect width="36" height="36" rx="8" fill="currentColor" opacity="0.1"/><text x="50%" y="55%" dominant-baseline="middle" text-anchor="middle" font-family="Boska, serif" font-weight="700" font-size="18" fill="currentColor">DS</text></svg> Dhruv Singhal</a>
+      <ul class="nav-links"><li><a href="index.html">Home</a></li><li><a href="about.html">About</a></li><li><a href="projects.html">Projects</a></li><li><a href="blog.html">Blog</a></li><li><a href="contact.html" class="active" aria-current="page">Contact</a></li></ul>
+      <div class="nav-actions">
+        <button class="btn-icon" id="theme-toggle" aria-label="Toggle theme"><i data-lucide="sun"></i></button>
+        <button class="btn-ghost" id="command-palette-trigger" aria-label="Open command palette"><i data-lucide="search" style="width:14px;height:14px"></i><kbd>Ctrl+K</kbd></button>
+        <button class="nav-hamburger" id="nav-toggle" aria-label="Toggle navigation" aria-expanded="false"><span></span><span></span><span></span></button>
+      </div>
+    </div>
+    <div class="nav-mobile" id="nav-mobile"><a href="index.html">Home</a><a href="about.html">About</a><a href="projects.html">Projects</a><a href="blog.html">Blog</a><a href="contact.html" class="active">Contact</a></div>
+  </nav>
+
+  <div id="command-palette-overlay" class="command-palette-overlay" hidden>
+    <div class="command-palette" role="dialog" aria-label="Command palette">
+      <div class="command-palette-header"><i data-lucide="search" class="command-palette-icon"></i><input id="command-palette-input" type="text" placeholder="Search pages, actions..." autocomplete="off" aria-label="Search commands"></div>
+      <div id="command-palette-results" class="command-palette-results">
+        <div class="command-palette-group"><div class="command-palette-group-title">Pages</div>
+          <button class="command-palette-item" data-action="navigate" data-target="index.html"><i data-lucide="home"></i><span>Go to Home</span></button>
+          <button class="command-palette-item" data-action="navigate" data-target="about.html"><i data-lucide="user"></i><span>Go to About</span></button>
+          <button class="command-palette-item" data-action="navigate" data-target="projects.html"><i data-lucide="folder-open"></i><span>Go to Projects</span></button>
+          <button class="command-palette-item" data-action="navigate" data-target="blog.html"><i data-lucide="file-text"></i><span>Go to Blog</span></button>
+        </div>
+        <div class="command-palette-group"><div class="command-palette-group-title">Actions</div>
+          <button class="command-palette-item" data-action="theme"><i data-lucide="moon"></i><span>Toggle Theme</span></button>
+          <button class="command-palette-item" data-action="copy" data-value="dhruvsinghal6888@gmail.com"><i data-lucide="copy"></i><span>Copy Email</span></button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <main id="main-content">
+
+    <nav class="breadcrumb" aria-label="Breadcrumb"><div class="container"><ol class="breadcrumb-list"><li><a href="index.html">Home</a></li><li aria-current="page">Contact</li></ol></div></nav>
+
+    <header class="contact-availability">
+      <div class="container">
+        <div class="availability-badge">
+          <span class="availability-dot"></span>
+          Open to Opportunities
+        </div>
+        <h1 class="h1">Let's Build Something Together</h1>
+        <p class="contact-subtitle">Looking for Product Analyst, APM, and data-driven PM roles. Also open to interesting collaborations on product and analytics projects.</p>
+      </div>
+    </header>
+
+    <section class="contact-main">
+      <div class="container contact-grid">
+
+        <div class="contact-form-card glass-card">
+          <h2>Send a Message</h2>
+          <form id="contact-form" novalidate>
+            <div class="input-group">
+              <label for="contact-name">Name <span class="required">*</span></label>
+              <input type="text" id="contact-name" name="name" required autocomplete="name" placeholder="Your name">
+              <span class="input-error" data-error="name">Please enter your name.</span>
+            </div>
+            <div class="input-group">
+              <label for="contact-email">Email <span class="required">*</span></label>
+              <input type="email" id="contact-email" name="email" required autocomplete="email" placeholder="you@example.com">
+              <span class="input-error" data-error="email">Please enter a valid email address.</span>
+            </div>
+            <div class="input-group">
+              <label for="contact-subject">Subject</label>
+              <select id="contact-subject" name="subject">
+                <option value="General">General Inquiry</option>
+                <option value="Collaboration">Collaboration</option>
+                <option value="Hiring">Hiring / Job Opportunity</option>
+                <option value="Speaking">Speaking / Guest Post</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+            <div class="input-group">
+              <label for="contact-message">Message <span class="required">*</span></label>
+              <textarea id="contact-message" name="message" required rows="5" placeholder="What's on your mind? (min 20 characters)"></textarea>
+              <span class="input-error" data-error="message">Message must be at least 20 characters.</span>
+            </div>
+            <button type="submit" class="btn-primary contact-submit">
+              <i data-lucide="send" style="width:16px;height:16px"></i> Send Message
+            </button>
+          </form>
+        </div>
+
+        <div class="contact-sidebar">
+          <div class="direct-links-card glass-card">
+            <h3>Direct Links</h3>
+            <div class="direct-links-grid">
+              <a href="mailto:dhruvsinghal6888@gmail.com" class="direct-link" data-copy="dhruvsinghal6888@gmail.com">
+                <i data-lucide="mail"></i>
+                <span>Email</span>
+                <small>dhruvsinghal6888@gmail.com</small>
+              </a>
+              <a href="https://linkedin.com/in/dhruvsinghal6888" target="_blank" rel="noopener noreferrer" class="direct-link">
+                <i data-lucide="linkedin"></i>
+                <span>LinkedIn</span>
+                <small>/in/dhruvsinghal6888</small>
+              </a>
+              <a href="https://github.com/dhruvsinghal6888" target="_blank" rel="noopener noreferrer" class="direct-link">
+                <i data-lucide="github"></i>
+                <span>GitHub</span>
+                <small>dhruvsinghal6888</small>
+              </a>
+              <a href="https://x.com/dhruvsinghal_" target="_blank" rel="noopener noreferrer" class="direct-link">
+                <i data-lucide="twitter"></i>
+                <span>X / Twitter</span>
+                <small>@dhruvsinghal_</small>
+              </a>
+            </div>
+          </div>
+
+          <div class="faq-card glass-card">
+            <h3>Frequently Asked</h3>
+            <div class="faq-accordion" id="faq-accordion">
+              <div class="faq-item">
+                <button class="faq-question" aria-expanded="false">
+                  <span>What roles are you looking for?</span>
+                  <i data-lucide="chevron-down" class="faq-chevron"></i>
+                </button>
+                <div class="faq-answer">
+                  <p>Product Analyst, Associate Product Manager (APM), and data-driven PM roles. I thrive at the intersection of product thinking and analytics — roles where I can use data to make better product decisions.</p>
+                </div>
+              </div>
+              <div class="faq-item">
+                <button class="faq-question" aria-expanded="false">
+                  <span>Are you open to remote or relocation?</span>
+                  <i data-lucide="chevron-down" class="faq-chevron"></i>
+                </button>
+                <div class="faq-answer">
+                  <p>Yes, I'm open to both remote and on-site roles. Happy to relocate for the right opportunity — especially within India's major tech hubs.</p>
+                </div>
+              </div>
+              <div class="faq-item">
+                <button class="faq-question" aria-expanded="false">
+                  <span>What's the best way to reach you?</span>
+                  <i data-lucide="chevron-down" class="faq-chevron"></i>
+                </button>
+                <div class="faq-answer">
+                  <p>LinkedIn DM or email — I typically respond within 24 hours. For quick questions, DM is fastest. For detailed conversations, email works better.</p>
+                </div>
+              </div>
+              <div class="faq-item">
+                <button class="faq-question" aria-expanded="false">
+                  <span>Are you available for freelance/consulting?</span>
+                  <i data-lucide="chevron-down" class="faq-chevron"></i>
+                </button>
+                <div class="faq-answer">
+                  <p>Selectively — for interesting products where I can contribute meaningfully to product analytics, strategy, or data-driven decision making. Let's talk about what you're building.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="location-badge">
+            <i data-lucide="map-pin"></i>
+            <span>Based in India &middot; IST (UTC+5:30)</span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer" role="contentinfo"><div class="container footer-inner"><div class="footer-left"><span class="footer-logo">Dhruv Singhal</span><p class="footer-tagline">Product Analyst & Builder</p></div><nav class="footer-links" aria-label="Footer navigation"><a href="about.html">About</a><a href="projects.html">Projects</a><a href="blog.html">Blog</a><a href="contact.html">Contact</a></nav><p class="footer-copy">&copy; 2026 Dhruv Singhal. Crafted with intention.</p></div></footer>
+
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="js/theme.js"></script>
+  <script src="js/cursor.js"></script>
+  <script src="js/toast.js"></script>
+  <script src="js/command-palette.js"></script>
+  <script src="js/scroll-animations.js"></script>
+  <script src="js/page-transitions.js"></script>
+  <script src="js/contact-form.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

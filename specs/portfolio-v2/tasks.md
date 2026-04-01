@@ -12,7 +12,7 @@
 ### Step 1.1: CSS Architecture Refactoring
 - [ ] T001 Update `css/tokens.css` — Add new tokens: `--page-header-height`, `--sidebar-width`, `--reading-width: 680px`, `--toc-width: 220px`, code block colors (prism tokens), callout colors (tip/warning/info), case-study-specific tokens (process-step colors)
 - [ ] T002 Update `css/base.css` — Add blog typography rules: blockquote styling, inline code, figure/figcaption, article-specific heading hierarchy, .reading-width utility class
-- [ ] T003 Refactor `css/components.css` — Extract page-specific sections (hero, metrics, timeline, etc.) into page CSS files. Keep: nav, footer, buttons, cards, badges, toast, cursor, command palette, scroll progress bar, breadcrumbs (new), page header component (new), filter bar component (new), FAQ accordion (new)
+- [ ] T003 Refactor `css/components.css` — Extract page-specific sections (hero, metrics, timeline, etc.) into page CSS files. Keep: nav, footer, buttons, cards, badges, toast, cursor, command palette, scroll progress bar, breadcrumbs (new), page header component (new), filter bar component (new)
 - [ ] T004 Update `css/animations.css` — Add page transition keyframes (`pageEnter`, `pageExit`, `fadeInPage`), add case-study-specific animations (process-step reveal, metric counter grow), blog reading progress bar animation
 - [ ] T005 Update `css/responsive.css` — Add responsive rules for new components: breadcrumbs, filter bar, sidebar TOC, contact form, FAQ accordion, page header. Update nav responsive for multi-page active state
 
@@ -22,13 +22,13 @@
 - [ ] T008 [P] Create `css/projects.css` — Project filter bar (pill buttons with count), project grid (3-column with animated entry), sort dropdown, project card (enhanced with thumbnail placeholder, category badge, metric badge)
 - [ ] T009 [P] Create `css/case-study.css` — Case study hero banner (full-width, project name, role, timeline), TL;DR box (bordered callout), process flow (numbered steps with connector lines), metric visualization section (before/after cards, chart container), code block styling (prism theme integration), prev/next navigation bar, related posts strip
 - [ ] T010 [P] Create `css/blog.css` — Blog listing header, category pills, search input, article card grid, article page: reading progress bar, TOC sidebar (sticky), article body rich typography (h2-h4, blockquotes, callout boxes, code blocks, images with captions, ordered/unordered lists), author card, article nav (prev/next), related articles strip
-- [ ] T011 [P] Create `css/contact.css` — Contact hero (availability badge), contact form (input groups, textarea, submit button, validation states), direct links card grid, FAQ accordion (collapsible with chevron rotation), location/timezone badge
+- [ ] T011 [P] Create `css/contact.css` — Contact hero (availability badge), contact form (input groups, textarea, submit button, validation states), direct links card grid, FAQ accordion (contact-page exclusive, collapsible with chevron rotation), location/timezone badge
 
 ### Step 1.3: Global JS Module Updates
 - [ ] T012 Update `js/app.js` — Major refactor: detect `data-page` from body, conditional module init based on page type, init shared modules (theme, cursor, toast, cmd palette, scroll anims, page transitions), init page-specific modules based on page type mapping
 - [ ] T013 Update `js/command-palette.js` — Replace section anchors with cross-page navigation: "Go to Home"→index.html, "Go to About"→about.html, "Go to Projects"→projects.html, "Go to Blog"→blog.html, "Go to Contact"→contact.html. Add case study entries and blog article entries. Keep: theme toggle, copy email, open LinkedIn
 - [ ] T014 Update `js/scroll-animations.js` — Make page-aware: detect `data-page`, apply different animation configurations per page. Generic `.fade-in` works on all pages. Page-specific: home (hero parallax, metrics stagger), about (timeline left-slide), projects (card stagger), case-study (process step reveals), blog (card stagger)
-- [ ] T015 [P] Create `js/page-transitions.js` — On internal link click (same-origin, not anchor): add `.page-exit` class to `<main>`, wait 200ms, navigate. On DOMContentLoaded: add `.page-enter` class to `<main>`, remove after 300ms animation. Detect internal links via `[href$=".html"]` or relative paths. Skip for external links and anchor-only links
+- [ ] T015 [P] Create `js/page-transitions.js` — On internal link click (same-origin, not anchor): add `.page-exit` class to `<main>`, wait 200ms, navigate. On DOMContentLoaded: add `.page-enter` class to `<main>`, remove after 300ms animation. Detect internal links via `[href$=".html"]` or relative paths. Skip for external links and anchor-only links. Handle subdirectory-aware relative paths from `case-studies/` and `blog/` using `new URL(href, location.href)`
 
 ### Step 1.4: Remove Deprecated Files
 - [ ] T016 Delete `css/sections.css` (content migrated to page-specific CSS files)
@@ -46,7 +46,7 @@
   - Hero section: 3D canvas, particles-bg, typed roles, hero statement, CTA buttons ("Explore My Work", "Get in Touch")
   - Metrics bar (same 5 metrics from v1)
   - About teaser: 2-sentence intro + "Learn more about me →" link to about.html
-  - Featured projects: 3 cards (from v1 project data) each with "Read Case Study →" linking to case-studies/*.html + "View All Projects →" link to projects.html
+  - Featured projects: 3 cards (Aarkid, Churn Analysis, Marketing Effectiveness — Portfolio excluded as meta/self-referential) each with "Read Case Study →" linking to case-studies/*.html + "View All Projects →" link to projects.html
   - Testimonial carousel (3 quotes)
   - Blog teaser: "Latest Thoughts" heading + 3 article cards → "Read All Posts →" linking to blog.html
   - Contact CTA strip: "Let's build together" + email + LinkedIn CTAs
@@ -121,7 +121,7 @@
   - Implementation: Key technical decisions, challenges overcome, tech stack justification
   - Outcome & Metrics: Full AI product delivered end-to-end. Chart showing feature completeness, user flow coverage.
   - Learnings: What worked, what would change, technical and product insights
-  - Nav: ← Previous (Marketing) | Next → (Churn Analysis)
+  - Nav: ← Previous (Portfolio) | Next → (Churn Analysis)
   - Script tags: shared JS + case-study-charts, reading-progress, utils
   - CSS: shared + case-study.css
 
@@ -199,7 +199,8 @@
     - Conclusion: Practical advice for PMs at different levels
   - Code block examples (Prism.js highlighted)
   - Author card at bottom (Dhruv Singhal, Product Analyst & Builder, photo placeholder)
-  - Nav: Next → "Data-Driven Product Decisions"
+  - Nav: (none — first article) | Next → "Data-Driven Product Decisions"
+  - Include Prism.js CDN `<script defer>` and CSS theme link tags
   - Related articles section
   - Script tags: shared JS + reading-progress
   - CSS: shared + blog.css
@@ -217,7 +218,7 @@
   - Title: "A Structured Thinking Framework for Ambiguous Problems"
   - ~900 words on Dhruv's approach to breaking down ambiguous problems as a PM
   - Sections: Why Ambiguity Is the PM's Job, The 4-Step Framework (Scope, Decompose, Prioritize, Execute), Real Example (applied to a project), Common Pitfalls
-  - Mermaid diagram of the framework flow
+  - Mermaid diagram of the framework flow (include Mermaid.js CDN `<script defer>` tag on this page only)
   - Nav: ← Previous | (none — last article)
 
 ### Step 5.3: Reading Progress Module
@@ -227,6 +228,8 @@
   - Works on both case-study and article pages
   - Auto-detect article container: `.article-body` or `.case-study-content`
   - Show estimated reading time remaining
+  - Auto-generate TOC from h2/h3 headings and populate `.toc-sidebar`
+  - Active heading tracking via IntersectionObserver — highlight current TOC item
   - Expose `window.DSReadingProgress`
 
 **Checkpoint**: Blog listing page shows 3 articles, category filters work, search works. Each article page has full content, reading progress bar fills as you scroll, TOC sidebar highlights current section. All links between articles work (prev/next, related).
@@ -300,6 +303,7 @@
 
 ### Step 7.2: SEO & Meta Tags
 - [ ] T042 Add unique meta tags to every HTML page — title, description, OG title, OG description, OG type, OG image (placeholder), Twitter card, canonical URL, JSON-LD structured data (Person for home/about, Article for blog posts, SoftwareApplication for projects)
+- [ ] T042b Create `sitemap.xml` and `robots.txt` — sitemap listing all 14 HTML pages with lastmod dates; robots.txt allowing all crawlers and referencing sitemap
 
 ### Step 7.3: Cross-Page Wiring
 - [ ] T043 Verify all internal links across all 14 pages — every `href` pointing to another page resolves correctly (relative paths). Create link inventory and test each.
@@ -396,4 +400,5 @@ Phase 8 (Testing):           ║
 | 6. Contact + Now + 404 | T036–T039 | 3 HTML, 1 JS | — | — |
 | 7. Data + SEO | T040–T046 | 3 data/assets | 14 HTML (meta) | — |
 | 8. Testing | T047–T056 | — | (bug fixes) | — |
-| **Total** | **56 tasks** | **14 HTML, 7 CSS, 6 JS, 3 data** | **Varies** | **2** |
+| 7b. Sitemap | T042b | 1 (sitemap.xml + robots.txt) | — | — |
+| **Total** | **57 tasks** | **14 HTML, 7 CSS, 6 JS, 4 data/assets** | **Varies** | **2** |
