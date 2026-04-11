@@ -69,4 +69,46 @@
     max-width: 100% !important;
     page-break-inside: avoid;
   }
+
+  /* ---- Case Study Print Layout ---- */
+
+  /* Branded header */
+  body::before {
+    content: "Dhruv Singhal — dhruvsinghal.com";
+    display: block;
+    font-size: 10pt;
+    color: #666;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 8pt;
+    margin-bottom: 16pt;
+  }
+
+  /* Metric cards in 2-column grid */
+  [class*="MetricChart_grid"] {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 12pt !important;
+  }
+
+  /* Hide interactive metric toggles and charts */
+  [class*="MetricDetail_chevron"],
+  [class*="MetricDetail_details"],
+  [class*="MetricChart_chartWrap"],
+  [class*="CaseStudyNav"],
+  [class*="PrintButton"] {
+    display: none !important;
+  }
+
+  /* Code blocks: light border, no background */
+  pre, code {
+    border: 1px solid #ddd !important;
+    background: #f9f9f9 !important;
+    color: black !important;
+    page-break-inside: avoid;
+  }
+
+  /* Avoid splitting metric panels */
+  [class*="MetricChart_card"] {
+    page-break-inside: avoid;
+  }
 }

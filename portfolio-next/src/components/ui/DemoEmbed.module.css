@@ -1,0 +1,44 @@
+.wrapper {
+  position: relative;
+  width: 100%;
+  max-width: var(--container-md);
+  margin: 0 auto;
+  padding: 0 var(--space-6);
+  aspect-ratio: 16 / 9;
+}
+
+.placeholder {
+  position: absolute;
+  inset: 0;
+  background: var(--surface-secondary);
+  border-radius: var(--radius-lg);
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 0.3; }
+}
+
+.iframe {
+  position: absolute;
+  top: 0;
+  left: var(--space-6);
+  right: var(--space-6);
+  width: calc(100% - var(--space-6) * 2);
+  height: 100%;
+  border: none;
+  border-radius: var(--radius-lg);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.visible {
+  opacity: 1;
+}
+
+@media print {
+  .wrapper {
+    display: none;
+  }
+}

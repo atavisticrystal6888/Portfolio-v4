@@ -8,7 +8,9 @@ import { Button } from "@/components/ui/Button";
 import { ReadingProgress } from "@/components/blog/ReadingProgress";
 import { ShareButtons } from "@/components/blog/ShareButtons";
 import { RelatedArticles } from "@/components/blog/RelatedArticles";
+import { ResumeReading } from "@/components/blog/ResumeReading";
 import { MdxContent } from "@/components/case-study/MdxContent";
+import { ScrollDepthTracker } from "@/components/analytics/ScrollDepthTracker";
 import styles from "./article.module.css";
 
 interface BlogArticlePageProps {
@@ -73,7 +75,8 @@ export default async function BlogArticlePage({
         dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}
       />
 
-      <ReadingProgress />
+      <ReadingProgress slug={slug} />
+      <ResumeReading slug={slug} />
 
       {/* Article Header */}
       <header className={styles.header}>
@@ -108,6 +111,7 @@ export default async function BlogArticlePage({
           ← Back to Blog
         </Button>
       </nav>
+      <ScrollDepthTracker />
     </div>
   );
 }

@@ -44,6 +44,12 @@ export default function RootLayout({
         <link rel="icon" href="/icon.svg" type="image/svg+xml" />
         <meta name="theme-color" content="#0a0a0b" media="(prefers-color-scheme: dark)" />
         <meta name="theme-color" content="#f7f7f8" media="(prefers-color-scheme: light)" />
+        <link
+          rel="alternate"
+          type="application/rss+xml"
+          title="Dhruv Singhal Blog"
+          href="/feed.xml"
+        />
       </head>
       <body>
         <ToastProvider>

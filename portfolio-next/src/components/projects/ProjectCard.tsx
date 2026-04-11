@@ -18,8 +18,11 @@ export function ProjectCard({ project }: ProjectCardProps) {
       <h2 className={styles.title}>
         <Link href={`/projects/${project.slug}`}>{project.name}</Link>
       </h2>
-      <p className={styles.role}>{project.role}</p>
       <p className={styles.desc}>{project.description}</p>
+      <div className={styles.meta}>
+        <Badge variant="outline">{project.role}</Badge>
+        <span className={styles.metaDuration}>{project.duration}</span>
+      </div>
       <div className={styles.metric}>
         <strong>{project.metricValue}</strong> {project.metricLabel}
       </div>

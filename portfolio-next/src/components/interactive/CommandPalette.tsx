@@ -1,18 +1,20 @@
 'use client';
 
 import { useState, useEffect, useRef, useCallback, useMemo } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import styles from './CommandPalette.module.css';
 import { cn } from '@/lib/utils';
 import { useTheme } from '@/hooks/useTheme';
+import { useBehavior } from '@/hooks/useBehavior';
 
 interface PaletteItem {
   id: string;
   label: string;
   group: string;
-  action: 'navigate' | 'theme' | 'external';
+  action: 'navigate' | 'theme' | 'external' | 'clipboard' | 'download';
   target?: string;
+  shortcut?: string;
 }
 
 const ITEMS: PaletteItem[] = [
@@ -33,30 +35,62 @@ const ITEMS: PaletteItem[] = [
   { id: 'blog-data', label: 'Data-Driven Product Decisions', group: 'Blog Articles', action: 'navigate', target: '/blog/data-driven-product-decisions' },
   { id: 'blog-thinking', label: 'Structured Thinking Framework', group: 'Blog Articles', action: 'navigate', target: '/blog/structured-thinking-framework' },
   // Actions
-  { id: 'toggle-theme', label: 'Toggle Theme', group: 'Actions', action: 'theme' },
+  { id: 'toggle-theme', label: 'Toggle Theme', group: 'Actions', action: 'theme', shortcut: 'T' },
+  { id: 'download-resume', label: 'Download Resume', group: 'Actions', action: 'download', target: '/resume/Dhruv_Singhal_Resume.pdf' },
+  { id: 'copy-url', label: 'Copy Page URL', group: 'Actions', action: 'clipboard', shortcut: 'C' },
 ];
+
+const GROUP_ORDER = ['Pages', 'Case Studies', 'Blog Articles', 'Actions'];
+
+function getRecencyBoost(target: string | undefined, recentSlugs: string[]): number {
+  if (!target) return 0;
+  const idx = recentSlugs.indexOf(target);
+  if (idx === -1) return 0;
+  // Last 5 visited pages get a boost, decaying by position
+  return Math.max(0, 0.3 - idx * 0.06);
+}
 
 export function CommandPalette() {
   const [isOpen, setIsOpen] = useState(false);
   const [query, setQuery] = useState('');
   const [activeIndex, setActiveIndex] = useState(-1);
+  const [toastMessage, setToastMessage] = useState<string | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const listRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
+  const pathname = usePathname();
   const { toggleMode } = useTheme();
+  const { behavior } = useBehavior();
+
+  // Recent pages for recency boost
+  const recentSlugs = useMemo(() => {
+    return behavior.pagesVisited
+      .slice(-5)
+      .reverse()
+      .map((v) => v.slug);
+  }, [behavior.pagesVisited]);
 
   const filtered = useMemo(() => {
-    if (!query.trim()) return ITEMS;
-    const q = query.toLowerCase();
-    return ITEMS.filter(item => item.label.toLowerCase().includes(q));
-  }, [query]);
+    let items = ITEMS;
+    if (query.trim()) {
+      const q = query.toLowerCase();
+      items = items.filter(item => item.label.toLowerCase().includes(q));
+    }
+    // Sort with recency boost
+    return [...items].sort((a, b) => {
+      const boostA = getRecencyBoost(a.target, recentSlugs);
+      const boostB = getRecencyBoost(b.target, recentSlugs);
+      if (boostA !== boostB) return boostB - boostA;
+      // Preserve group order for non-boosted items
+      return GROUP_ORDER.indexOf(a.group) - GROUP_ORDER.indexOf(b.group);
+    });
+  }, [query, recentSlugs]);
 
   const groups = useMemo(() => {
     const map = new Map<string, PaletteItem[]>();
-    for (const item of filtered) {
-      const existing = map.get(item.group) ?? [];
-      existing.push(item);
-      map.set(item.group, existing);
+    for (const group of GROUP_ORDER) {
+      const items = filtered.filter(item => item.group === group);
+      if (items.length > 0) map.set(group, items);
     }
     return map;
   }, [filtered]);
@@ -81,6 +115,15 @@ export function CommandPalette() {
       toggleMode();
     } else if (item.action === 'external' && item.target) {
       window.open(item.target, '_blank', 'noopener,noreferrer');
+    } else if (item.action === 'clipboard') {
+      navigator.clipboard.writeText(window.location.href).then(() => {
+        setToastMessage('URL copied to clipboard');
+      });
+    } else if (item.action === 'download' && item.target) {
+      const a = document.createElement('a');
+      a.href = item.target;
+      a.download = '';
+      a.click();
     }
   }, [close, router, toggleMode]);
 
@@ -110,6 +153,13 @@ export function CommandPalette() {
       requestAnimationFrame(() => inputRef.current?.focus());
     }
   }, [isOpen]);
+
+  // Toast message auto-dismiss
+  useEffect(() => {
+    if (!toastMessage) return;
+    const timer = setTimeout(() => setToastMessage(null), 2500);
+    return () => clearTimeout(timer);
+  }, [toastMessage]);
 
   // Keyboard navigation inside palette
   const handleKeyDown = (e: React.KeyboardEvent) => {
@@ -204,6 +254,9 @@ export function CommandPalette() {
                         type="button"
                       >
                         <span>{item.label}</span>
+                        {item.shortcut && (
+                          <kbd className={styles.shortcutHint}>{item.shortcut}</kbd>
+                        )}
                       </button>
                     );
                   })}

@@ -14,6 +14,47 @@
   text-decoration: none;
   border: none;
   line-height: 1.4;
+  position: relative;
+  overflow: hidden;
+}
+
+.button::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.3), transparent 70%);
+  transform: translate(-50%, -50%);
+  opacity: 0;
+}
+
+.button:active::after {
+  width: 200%;
+  height: 200%;
+  opacity: 1;
+  animation: ripple 0.5s ease-out;
+}
+
+@keyframes ripple {
+  0% {
+    width: 0;
+    height: 0;
+    opacity: 0.6;
+  }
+  100% {
+    width: 200%;
+    height: 200%;
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .button::after {
+    display: none;
+  }
 }
 
 .button:disabled {

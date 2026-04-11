@@ -2,6 +2,7 @@ import { generatePageMetadata, generateBreadcrumbJsonLd } from "@/lib/metadata";
 import { getAllBlogPosts } from "@/lib/content";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { BlogSearch } from "@/components/blog/BlogSearch";
+import { NewsletterSignup } from "@/components/blog/NewsletterSignup";
 
 export const metadata = generatePageMetadata({
   title: "Blog",
@@ -30,6 +31,10 @@ export default function BlogPage() {
       />
 
       <BlogSearch posts={posts} />
+
+      <div style={{ maxWidth: "var(--container-md)", margin: "var(--space-10) auto 0", padding: "0 var(--space-6)" }}>
+        <NewsletterSignup />
+      </div>
     </>
   );
 }

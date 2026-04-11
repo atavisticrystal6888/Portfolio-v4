@@ -75,3 +75,20 @@
   text-align: center;
   padding: var(--space-10) var(--space-6);
 }
+
+.resumeLink {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-6);
+  background: var(--accent);
+  color: var(--surface-primary);
+  border-radius: var(--radius-md);
+  font-weight: 600;
+  text-decoration: none;
+  transition: opacity 0.15s ease;
+}
+
+.resumeLink:hover {
+  opacity: 0.9;
+}

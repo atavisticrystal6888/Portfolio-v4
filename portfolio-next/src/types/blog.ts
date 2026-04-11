@@ -8,6 +8,7 @@ export interface BlogArticleFrontmatter {
   readingTime: string;
   excerpt: string;
   socialImage: string | null;
+  draft?: boolean;
 }
 
 export interface BlogArticle extends BlogArticleFrontmatter {

@@ -3,6 +3,9 @@ export interface CaseStudyMetric {
   value: number;
   displayValue: string;
   chartType: "bar" | "doughnut" | "line";
+  methodology?: string;
+  baseline?: string;
+  timeframe?: string;
 }
 
 export interface Project {
@@ -31,6 +34,9 @@ export interface CaseStudyFrontmatter {
   metrics: CaseStudyMetric[];
   prevSlug: string;
   nextSlug: string;
+  draft?: boolean;
+  demoUrl?: string;
+  videoUrl?: string;
 }
 
 export interface CaseStudy extends CaseStudyFrontmatter {

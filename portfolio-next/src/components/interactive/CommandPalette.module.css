@@ -97,6 +97,20 @@
   transition: background var(--transition-fast);
   text-align: left;
   min-height: 44px;
+  justify-content: space-between;
+}
+
+.shortcutHint {
+  padding: 2px 6px;
+  font-size: 0.65rem;
+  font-family: var(--font-mono, monospace);
+  font-weight: 500;
+  color: var(--text-muted);
+  background: var(--surface-raised);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  flex-shrink: 0;
+  opacity: 0.7;
 }
 
 .item:hover,

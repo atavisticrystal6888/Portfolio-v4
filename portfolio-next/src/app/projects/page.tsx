@@ -1,7 +1,7 @@
 import { generatePageMetadata, generateBreadcrumbJsonLd } from "@/lib/metadata";
 import { getAllProjects } from "@/lib/content";
 import { PageHeader } from "@/components/ui/PageHeader";
-import { ProjectGrid } from "@/components/projects/ProjectGrid";
+import { ProjectsView } from "@/components/projects/ViewToggle";
 
 export const metadata = generatePageMetadata({
   title: "Projects",
@@ -30,7 +30,7 @@ export default function ProjectsPage() {
         badge={`${projects.length} Project${projects.length !== 1 ? "s" : ""}`}
       />
 
-      <ProjectGrid projects={projects} />
+      <ProjectsView projects={projects} />
     </>
   );
 }

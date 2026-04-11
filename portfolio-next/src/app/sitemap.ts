@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
-import { getAllCaseStudySlugs, getAllBlogSlugs } from "@/lib/content";
+import { getAllCaseStudies, getAllBlogPosts } from "@/lib/content";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
 
@@ -13,16 +13,16 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${SITE_URL}/now`, lastModified: new Date(), priority: 0.6 },
   ];
 
-  const caseStudyRoutes: MetadataRoute.Sitemap = getAllCaseStudySlugs().map(
-    (slug) => ({
-      url: `${SITE_URL}/projects/${slug}`,
+  const caseStudyRoutes: MetadataRoute.Sitemap = getAllCaseStudies().map(
+    (cs) => ({
+      url: `${SITE_URL}/projects/${cs.slug}`,
       lastModified: new Date(),
       priority: 0.8,
     })
   );
 
-  const blogRoutes: MetadataRoute.Sitemap = getAllBlogSlugs().map((slug) => ({
-    url: `${SITE_URL}/blog/${slug}`,
+  const blogRoutes: MetadataRoute.Sitemap = getAllBlogPosts().map((post) => ({
+    url: `${SITE_URL}/blog/${post.slug}`,
     lastModified: new Date(),
     priority: 0.7,
   }));

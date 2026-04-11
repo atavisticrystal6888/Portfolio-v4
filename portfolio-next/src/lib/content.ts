@@ -8,6 +8,8 @@ import type { Testimonial } from "@/types/testimonial";
 
 const contentDir = path.join(process.cwd(), "content");
 
+const isDev = process.env.NODE_ENV === "development";
+
 export function getAllProjects(): Project[] {
   const filePath = path.join(contentDir, "projects.json");
   const raw = fs.readFileSync(filePath, "utf-8");
@@ -39,7 +41,8 @@ export function getCaseStudyBySlug(slug: string): CaseStudy | null {
 export function getAllCaseStudies(): CaseStudy[] {
   return getAllCaseStudySlugs()
     .map((slug) => getCaseStudyBySlug(slug))
-    .filter((cs): cs is CaseStudy => cs !== null);
+    .filter((cs): cs is CaseStudy => cs !== null)
+    .filter((cs) => isDev || !cs.draft);
 }
 
 export function getAllBlogSlugs(): string[] {
@@ -63,6 +66,7 @@ export function getAllBlogPosts(): BlogArticle[] {
   return getAllBlogSlugs()
     .map((slug) => getBlogPostBySlug(slug))
     .filter((post): post is BlogArticle => post !== null)
+    .filter((post) => isDev || !post.draft)
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 }
 

@@ -8,6 +8,7 @@ export function CustomCursor() {
   const ringRef = useRef<HTMLDivElement>(null);
   const mousePos = useRef({ x: 0, y: 0 });
   const ringPos = useRef({ x: 0, y: 0 });
+  const magneticTarget = useRef<{ cx: number; cy: number } | null>(null);
   const hovering = useRef(false);
   const rafId = useRef<number>(0);
 
@@ -25,6 +26,18 @@ export function CustomCursor() {
       mousePos.current.y = e.clientY;
       dot.style.left = `${e.clientX}px`;
       dot.style.top = `${e.clientY}px`;
+
+      // Magnetic attraction for data-magnetic elements
+      const target = (e.target as HTMLElement).closest('[data-magnetic]') as HTMLElement | null;
+      if (target) {
+        const rect = target.getBoundingClientRect();
+        magneticTarget.current = {
+          cx: rect.left + rect.width / 2,
+          cy: rect.top + rect.height / 2,
+        };
+      } else {
+        magneticTarget.current = null;
+      }
     };
 
     const hoveringClass = styles.hovering ?? 'hovering';
@@ -71,8 +84,24 @@ export function CustomCursor() {
     ring.style.display = 'block';
 
     const animateRing = () => {
-      ringPos.current.x += (mousePos.current.x - ringPos.current.x) * 0.15;
-      ringPos.current.y += (mousePos.current.y - ringPos.current.y) * 0.15;
+      let targetX = mousePos.current.x;
+      let targetY = mousePos.current.y;
+
+      // Magnetic pull: offset ring toward element center (max 10px)
+      if (magneticTarget.current) {
+        const dx = magneticTarget.current.cx - mousePos.current.x;
+        const dy = magneticTarget.current.cy - mousePos.current.y;
+        const maxPull = 10;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist > 0) {
+          const pull = Math.min(maxPull, dist * 0.3);
+          targetX += (dx / dist) * pull;
+          targetY += (dy / dist) * pull;
+        }
+      }
+
+      ringPos.current.x += (targetX - ringPos.current.x) * 0.15;
+      ringPos.current.y += (targetY - ringPos.current.y) * 0.15;
       if (ringRef.current) {
         ringRef.current.style.left = `${ringPos.current.x}px`;
         ringRef.current.style.top = `${ringPos.current.y}px`;

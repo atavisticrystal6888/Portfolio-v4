@@ -10,6 +10,11 @@ import { MetricChart } from "@/components/case-study/MetricChart";
 import { MdxContent } from "@/components/case-study/MdxContent";
 import { CaseStudyNav } from "@/components/case-study/CaseStudyNav";
 import { GlassCard } from "@/components/ui/GlassCard";
+import { PrintButton } from "@/components/ui/PrintButton";
+import { DemoEmbed } from "@/components/ui/DemoEmbed";
+import { ScrollDepthTracker } from "@/components/analytics/ScrollDepthTracker";
+import { TableOfContents } from "@/components/blog/TableOfContents";
+import { MobileTOC } from "@/components/case-study/MobileTOC";
 import styles from "./case-study.module.css";
 
 interface CaseStudyPageProps {
@@ -70,6 +75,21 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
       {/* Header */}
       <CaseStudyHero caseStudy={caseStudy} />
 
+      {/* Actions */}
+      <div className={styles.actions}>
+        <PrintButton />
+      </div>
+
+      {/* Video/Demo Embed */}
+      {(caseStudy.videoUrl || caseStudy.demoUrl) && (
+        <section className={styles.demoSection} aria-label="Demo">
+          <DemoEmbed
+            url={(caseStudy.videoUrl || caseStudy.demoUrl)!}
+            title={`${caseStudy.title} demo`}
+          />
+        </section>
+      )}
+
       {/* TL;DR */}
       <section className={styles.tldr} aria-label="Summary">
         <GlassCard className={styles.tldrCard}>
@@ -83,13 +103,22 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
         <MetricChart metrics={caseStudy.metrics} />
       </section>
 
-      {/* Content */}
-      <article aria-label="Case study content">
-        <MdxContent html={contentHtml} />
-      </article>
+      {/* Content with sticky TOC */}
+      <div className={styles.contentLayout}>
+        <article className={styles.mainContent} aria-label="Case study content">
+          <MdxContent html={contentHtml} />
+        </article>
+        <aside className={styles.sidebar}>
+          <TableOfContents />
+        </aside>
+      </div>
+
+      {/* Mobile floating TOC */}
+      <MobileTOC />
 
       {/* Navigation */}
       <CaseStudyNav prevSlug={caseStudy.prevSlug} nextSlug={caseStudy.nextSlug} />
+      <ScrollDepthTracker />
     </div>
   );
 }

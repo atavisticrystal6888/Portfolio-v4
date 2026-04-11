@@ -18,6 +18,7 @@ import {
 import type { CaseStudyMetric } from "@/types/project";
 import { useTheme } from "@/hooks/useTheme";
 import { GlassCard } from "@/components/ui/GlassCard";
+import { MetricDetail } from "@/components/ui/MetricDetail";
 import styles from "./MetricChart.module.css";
 
 Chart.register(
@@ -37,9 +38,15 @@ export function MetricChart({ metrics }: MetricChartProps) {
     <div className={styles.grid}>
       {metrics.map((m) => (
         <GlassCard key={m.label} className={styles.card}>
-          <span className={styles.value}>{m.displayValue}</span>
-          <span className={styles.label}>{m.label}</span>
-          <MiniChart metric={m} />
+          <MetricDetail
+            value={m.displayValue}
+            label={m.label}
+            methodology={m.methodology}
+            baseline={m.baseline}
+            timeframe={m.timeframe}
+          >
+            <MiniChart metric={m} />
+          </MetricDetail>
         </GlassCard>
       ))}
     </div>

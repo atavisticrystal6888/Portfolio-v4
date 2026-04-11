@@ -2,11 +2,14 @@ import { generatePageMetadata, generatePersonJsonLd, generateBreadcrumbJsonLd } 
 import { SectionLabel } from "@/components/ui/SectionLabel";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { Button } from "@/components/ui/Button";
+import { TrackedLink } from "@/components/ui/TrackedLink";
 import { GlassCard } from "@/components/ui/GlassCard";
 import { Philosophy } from "@/components/about/Philosophy";
 import { SkillsRadar } from "@/components/about/SkillsRadar";
 import { Timeline } from "@/components/about/Timeline";
 import { Achievements } from "@/components/about/Achievements";
+import { GitHubActivity } from "@/components/about/GitHubActivity";
+import { getGitHubData } from "@/lib/github";
 import styles from "./about.module.css";
 
 export const metadata = generatePageMetadata({
@@ -16,12 +19,13 @@ export const metadata = generatePageMetadata({
   path: "/about",
 });
 
-export default function AboutPage() {
+export default async function AboutPage() {
   const personJsonLd = generatePersonJsonLd();
   const breadcrumbJsonLd = generateBreadcrumbJsonLd([
     { name: "Home", url: "/" },
     { name: "About", url: "/about" },
   ]);
+  const githubData = await getGitHubData();
 
   return (
     <div className={styles.page}>
@@ -111,11 +115,26 @@ export default function AboutPage() {
         </div>
       </section>
 
+      {/* GitHub Activity */}
+      <section aria-label="GitHub activity" data-section="github" className={styles.section}>
+        <div className={styles.sectionHeader}>
+          <SectionLabel>Open Source</SectionLabel>
+          <h2 className={styles.sectionTitle}>GitHub Activity</h2>
+        </div>
+        <GitHubActivity data={githubData} />
+      </section>
+
       {/* Resume CTA */}
       <div className={styles.resumeCta}>
-        <Button href="/resume/dhruv-singhal-resume.pdf">
+        <TrackedLink
+          href="/resume/dhruv-singhal-resume.pdf"
+          download
+          eventName="resume_download"
+          eventData={{ source: "about" }}
+          className={styles.resumeLink}
+        >
           Download Resume
-        </Button>
+        </TrackedLink>
       </div>
     </div>
   );

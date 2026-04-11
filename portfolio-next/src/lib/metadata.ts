@@ -21,12 +21,23 @@ export function generatePageMetadata({
   title,
   description = DEFAULT_DESCRIPTION,
   path = "",
-  ogImage = `/og${path || "/"}`,
+  ogImage,
   ogType = "website",
   article,
 }: PageMetadataOptions): Metadata {
   const url = `${SITE_URL}${path}`;
   const fullTitle = path === "" ? title : `${title} | ${SITE_NAME}`;
+
+  // Build dynamic OG image URL if not explicitly provided
+  const ogImageUrl = ogImage
+    ? `${SITE_URL}${ogImage}`
+    : (() => {
+        const ogParams = new URLSearchParams({ title });
+        if (path.startsWith("/projects/")) ogParams.set("type", "case-study");
+        else if (path.startsWith("/blog/")) ogParams.set("type", "blog");
+        else ogParams.set("type", "page");
+        return `${SITE_URL}/og?${ogParams.toString()}`;
+      })();
 
   return {
     title: fullTitle,
@@ -38,7 +49,7 @@ export function generatePageMetadata({
       url,
       siteName: SITE_NAME,
       type: ogType,
-      images: [{ url: `${SITE_URL}${ogImage}`, width: 1200, height: 630 }],
+      images: [{ url: ogImageUrl, width: 1200, height: 630 }],
       ...(article && {
         publishedTime: article.publishedTime,
         authors: article.author ? [article.author] : undefined,
@@ -48,7 +59,7 @@ export function generatePageMetadata({
       card: "summary_large_image",
       title: fullTitle,
       description,
-      images: [`${SITE_URL}${ogImage}`],
+      images: [ogImageUrl],
     },
   };
 }

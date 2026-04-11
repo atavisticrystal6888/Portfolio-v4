@@ -26,7 +26,7 @@ export async function POST(request: NextRequest) {
 
   try {
     const body = await request.json();
-    const { name, email, subject, message } = body;
+    const { name, email, subject, message, referringPage } = body;
 
     // Server-side validation
     if (!name || typeof name !== "string" || name.trim().length === 0) {
@@ -48,6 +48,10 @@ export async function POST(request: NextRequest) {
       email: email.trim().slice(0, 200),
       subject: subject.trim().slice(0, 100),
       message: message.trim().slice(0, 5000),
+      referringPage:
+        typeof referringPage === "string"
+          ? referringPage.replace(/[?#].*$/, "").slice(0, 200)
+          : "",
     };
 
     // Local mode: log to console instead of sending email

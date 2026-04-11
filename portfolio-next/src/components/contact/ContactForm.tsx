@@ -1,8 +1,33 @@
 "use client";
 
-import { useState, type FormEvent } from "react";
+import { useState, useEffect, type FormEvent } from "react";
 import { Button } from "@/components/ui/Button";
 import styles from "./ContactForm.module.css";
+
+function getReferringPage(): string {
+  if (typeof window === "undefined") return "";
+  try {
+    const behavior = localStorage.getItem("ds-behavior");
+    if (behavior) {
+      const parsed = JSON.parse(behavior);
+      const pages = parsed.pagesVisited;
+      if (Array.isArray(pages) && pages.length > 0) {
+        const last = pages[pages.length - 1];
+        if (typeof last === "string") return last;
+        if (last?.path) return last.path;
+      }
+    }
+  } catch { /* ignore */ }
+  // Fallback to document.referrer (internal paths only)
+  try {
+    const ref = document.referrer;
+    if (ref) {
+      const url = new URL(ref);
+      if (url.origin === window.location.origin) return url.pathname;
+    }
+  } catch { /* ignore */ }
+  return "";
+}
 
 interface FormData {
   name: string;
@@ -22,6 +47,11 @@ export function ContactForm() {
   const [data, setData] = useState<FormData>({ name: "", email: "", subject: "", message: "" });
   const [errors, setErrors] = useState<FormErrors>({});
   const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
+  const [referringPage, setReferringPage] = useState("");
+
+  useEffect(() => {
+    setReferringPage(getReferringPage());
+  }, []);
 
   const validate = (): FormErrors => {
     const errs: FormErrors = {};
@@ -43,7 +73,7 @@ export function ContactForm() {
       const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
+        body: JSON.stringify({ ...data, referringPage }),
       });
       if (res.ok) {
         setStatus("success");
