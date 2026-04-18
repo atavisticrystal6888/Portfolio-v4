@@ -61,7 +61,12 @@ export function TestimonialCarousel({ testimonials }: TestimonialCarouselProps) 
     >
       <GlassCard className={styles.card}>
         <div className={styles.avatar}>
-          {t.name.split(" ").map((n) => n[0]).join("")}
+          {t.avatar ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img src={t.avatar} alt="" aria-hidden="true" />
+          ) : (
+            t.name.split(" ").map((n) => n[0]).join("")
+          )}
         </div>
         <blockquote className={styles.quote}>&ldquo;{t.quote}&rdquo;</blockquote>
         <div className={styles.metric}>

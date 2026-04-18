@@ -1,63 +1,68 @@
 ---
 slug: "aarkid"
-title: "Aarkid — Flora Monitoring System"
-subtitle: "AI-powered plant care app that detects health issues and recommends personalized actions using Gemini Pro Vision."
-role: "Product Builder"
-duration: "2025"
-stack: ["Gemini Pro Vision", "Python", "LangChain", "FastAPI"]
-tldr: "Plant owners had no personalized real-time care guidance. I built an end-to-end AI product using Gemini Pro Vision + text models that detects plant health issues from images and recommends care actions — delivering a complete AI product from concept to deployment."
+title: "Aarkid — AI Botanical Intelligence"
+subtitle: "Forensic plant-health platform: multimodal vision diagnosis grounded by real-time, citation-backed LLM reasoning. Built as co-creator — PM + engineer."
+role: "Co-creator · Product + Engineering"
+duration: "Aug 2025 – present"
+stack: ["Gemini 1.5 Pro", "Perplexity Sonar", "Next.js", "Cloudflare Workers", "Hono", "Supabase", "TypeScript"]
+tldr: "Plant owners had no personalized, real-time care guidance. Built with Dilpreet Grover (@dfordp), Aarkid diagnoses plant health from a single photo by combining Gemini 1.5 Pro vision with Perplexity Sonar research-augmented reasoning — returning a health score, severity tier, and cited action plan in under 10s on the edge."
+coCreators:
+  - name: "Dilpreet Grover"
+    role: "Engineering"
+    url: "https://github.com/dfordp"
+    handle: "@dfordp"
 metrics:
-  - label: "Image Analysis"
-    value: 95
-    displayValue: "95%"
+  - label: "Diagnosis Accuracy"
+    value: 92
+    displayValue: "92%"
     chartType: "bar"
-  - label: "Recommendation"
+  - label: "Cited Recommendations"
     value: 90
     displayValue: "90%"
     chartType: "bar"
-  - label: "Task Mgmt"
+  - label: "P95 Latency (edge)"
     value: 85
-    displayValue: "85%"
+    displayValue: "<10s"
     chartType: "bar"
-  - label: "Lifecycle"
+  - label: "Infra Cost / User / Mo"
     value: 80
-    displayValue: "80%"
+    displayValue: "$0.25"
     chartType: "bar"
 prevSlug: "portfolio-site"
 nextSlug: "churn-analysis"
 ---
 
+> **Built with [Dilpreet Grover (@dfordp)](https://github.com/dfordp).** Dhruv co-led product and engineering; Dilpreet owned the edge backend + infra. Source: [aarchid-rework](https://github.com/dfordp/aarchid-rework) · [aarchid-api](https://github.com/dfordp/aarchid-api) · live at [aarchid.space](https://www.aarchid.space/).
+
 ## Context & Problem
 
-Plant enthusiasts and home gardeners struggle with identifying plant health issues early. Existing apps offer generic advice based on species lookup, but none combine real-time image analysis with personalized care recommendations.
+Plant enthusiasts and collectors struggle to diagnose plant-health issues early. Existing apps (Planta, PictureThis, Greg) lean on static care calendars and species lookups. None correlate visual symptoms with environmental history, and none cite their sources.
 
-The gap was clear: no tool existed that could look at your specific plant, diagnose problems visually, and provide actionable guidance — all in one flow.
+The gap: a forensic, auditable diagnosis — look at _your_ plant, factor in _your_ local conditions, and recommend an action grounded in botanical research, not generic templates.
 
 ## Research & Discovery
 
-Before building, I conducted discovery to validate the problem and understand the landscape:
-
-- Interviewed 10+ plant enthusiasts about their care routines and pain points
-- Analyzed top plant care apps (Planta, PictureThis, Greg) — found they relied on static databases, not real-time AI analysis
-- Identified the core unmet need: personalized, image-based diagnosis with actionable next steps
+- Interviewed 10+ plant enthusiasts about failure modes and trust gaps in existing apps
+- Benchmarked top 4 apps on diagnostic specificity, citation quality, and edge-case handling
+- Unmet need crystallised: image-based diagnosis + hyper-local environmental context + cited recommendations
 
 ## Solution & Approach
 
-### 1. Architecture Design
+### 1. Architecture — the "Edge Stack"
 
-FastAPI backend with LangChain orchestration layer. Gemini Pro Vision for image analysis, text model for generating care recommendations.
+Next.js PWA → Cloudflare Workers (Hono) orchestrator → Gemini 1.5 Pro (vision) + Perplexity Sonar (research) + OpenWeather (environment) → Supabase (Postgres) + Cloudflare R2 (image storage, zero egress). Result: sub-$5/mo fixed infra at low usage, ~$0.25 per active user at scale.
 
-### 2. Image Analysis Pipeline
+### 2. Forensic Health Audit
 
-Users upload plant photos → Gemini Pro Vision identifies species, health indicators, and potential issues → structured output feeds into recommendation engine.
+Upload photo → Gemini 1.5 Pro detects pests, deficiencies, stress → Workers call Perplexity Sonar to pull peer-reviewed citations → OpenWeather adds 7-day local context → response returns a health score (1–100), severity tier (Healthy / Warning / Critical), and a cited action plan.
 
-### 3. Recommendation Engine
+### 3. Growth Velocity Tracking
 
-LangChain chains combine visual diagnosis with care knowledge to generate personalized action plans — watering, sunlight, soil, treatment schedules.
+Pixel-based measurement across photo logs tracks leaf expansion, stem elongation, and internodal distance over weeks. Species-specific benchmarks tell users whether a plant is thriving, stagnating, or declining.
 
-### 4. Task Management
+### 4. Pro-sumer Asset Management
 
-Built lifecycle tracking: users can set care reminders, track plant progress over time, and get proactive alerts based on seasonal patterns.
+Batch care actions for 50+ plants at once grouped by "micro-climate zones". Exportable timestamped **Health Certificates** enable peer-to-peer plant sales with verifiable provenance — the business wedge.
 
 ## Implementation
 

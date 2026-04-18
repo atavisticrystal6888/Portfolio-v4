@@ -8,33 +8,60 @@ import { cn } from '@/lib/utils';
 import { useTheme } from '@/hooks/useTheme';
 import type { PaletteName } from '@/types/theme';
 
+type PaletteAction = 'navigate' | 'theme' | 'palette' | 'external' | 'copy' | 'download';
+
 interface PaletteItem {
   id: string;
   label: string;
   group: string;
-  action: 'navigate' | 'theme' | 'palette' | 'external';
+  action: PaletteAction;
+  /** For navigate/external/palette: URL or palette name. For copy: text. For download: file href. */
   target?: string;
+  /** Extra terms to match on — never shown, only searched. */
+  keywords?: string;
+  /** Optional file name when action === 'download'. */
+  downloadAs?: string;
 }
+
+const EMAIL = 'dhruvsinghal04@gmail.com';
+const GITHUB_URL = 'https://github.com/atavisticrystal6888';
+const LINKEDIN_URL = 'https://linkedin.com/in/dhruvsinghal04';
+const RESUME_HREF = '/resume/dhruv-singhal-resume.pdf';
 
 const ITEMS: PaletteItem[] = [
   // Pages
   { id: 'home', label: 'Go to Home', group: 'Pages', action: 'navigate', target: '/' },
-  { id: 'about', label: 'Go to About', group: 'Pages', action: 'navigate', target: '/about' },
-  { id: 'projects', label: 'Go to Projects', group: 'Pages', action: 'navigate', target: '/projects' },
-  { id: 'blog', label: 'Go to Blog', group: 'Pages', action: 'navigate', target: '/blog' },
+  { id: 'about', label: 'Go to About', group: 'Pages', action: 'navigate', target: '/about', keywords: 'bio background experience' },
+  { id: 'projects', label: 'Go to Projects', group: 'Pages', action: 'navigate', target: '/projects', keywords: 'case studies work portfolio' },
+  { id: 'ai-pm', label: 'Go to AI PM', group: 'Pages', action: 'navigate', target: '/ai-pm', keywords: 'ai product manager playbook llm' },
+  { id: 'blog', label: 'Go to Blog', group: 'Pages', action: 'navigate', target: '/blog', keywords: 'articles writing essays' },
   { id: 'contact', label: 'Go to Contact', group: 'Pages', action: 'navigate', target: '/contact' },
-  { id: 'now', label: 'Go to Now', group: 'Pages', action: 'navigate', target: '/now' },
+  { id: 'now', label: 'Go to Now', group: 'Pages', action: 'navigate', target: '/now', keywords: 'currently working learning' },
+  { id: 'lab', label: 'Go to Lab', group: 'Pages', action: 'navigate', target: '/lab', keywords: 'experiments ideas matrix dashboard' },
+  { id: 'uses', label: 'Go to Uses', group: 'Pages', action: 'navigate', target: '/uses', keywords: 'stack tools setup' },
+  { id: 'bookshelf', label: 'Go to Bookshelf', group: 'Pages', action: 'navigate', target: '/bookshelf', keywords: 'books reading notes' },
+  { id: 'changelog', label: 'Go to Changelog', group: 'Pages', action: 'navigate', target: '/changelog', keywords: 'build log updates releases' },
+
   // Case Studies
-  { id: 'cs-aarkid', label: 'Aarkid — Flora Monitoring', group: 'Case Studies', action: 'navigate', target: '/projects/aarkid' },
-  { id: 'cs-churn', label: 'Customer Churn Analysis', group: 'Case Studies', action: 'navigate', target: '/projects/churn-analysis' },
-  { id: 'cs-marketing', label: 'Marketing Campaign Effectiveness', group: 'Case Studies', action: 'navigate', target: '/projects/marketing-effectiveness' },
-  { id: 'cs-portfolio', label: 'This Portfolio — Meta Case Study', group: 'Case Studies', action: 'navigate', target: '/projects/portfolio-site' },
+  { id: 'cs-aarkid', label: 'Aarkid — AI Botanical Intelligence', group: 'Case Studies', action: 'navigate', target: '/projects/aarkid', keywords: 'ai gemini plants co-creator dfordp' },
+  { id: 'cs-churn', label: 'Customer Churn Analysis', group: 'Case Studies', action: 'navigate', target: '/projects/churn-analysis', keywords: 'data analytics retention' },
+  { id: 'cs-marketing', label: 'Marketing Campaign Effectiveness', group: 'Case Studies', action: 'navigate', target: '/projects/marketing-effectiveness', keywords: 'roi attribution channels' },
+  { id: 'cs-portfolio', label: 'This Portfolio — Meta Case Study', group: 'Case Studies', action: 'navigate', target: '/projects/portfolio-site', keywords: 'next.js react build' },
+
   // Blog Articles
   { id: 'blog-pms', label: 'Why PMs Should Learn to Code', group: 'Blog Articles', action: 'navigate', target: '/blog/why-pms-should-code' },
   { id: 'blog-data', label: 'Data-Driven Product Decisions', group: 'Blog Articles', action: 'navigate', target: '/blog/data-driven-product-decisions' },
   { id: 'blog-thinking', label: 'Structured Thinking Framework', group: 'Blog Articles', action: 'navigate', target: '/blog/structured-thinking-framework' },
-  // Actions
-  { id: 'toggle-theme', label: 'Toggle Dark/Light Mode', group: 'Actions', action: 'theme' },
+
+  // Quick Actions
+  { id: 'copy-email', label: 'Copy email address', group: 'Actions', action: 'copy', target: EMAIL, keywords: 'clipboard mail contact' },
+  { id: 'download-resume', label: 'Download resume (PDF)', group: 'Actions', action: 'download', target: RESUME_HREF, downloadAs: 'dhruv-singhal-resume.pdf', keywords: 'cv curriculum vitae' },
+  { id: 'open-github', label: 'Open GitHub profile', group: 'Actions', action: 'external', target: GITHUB_URL, keywords: 'repos code atavisticrystal6888' },
+  { id: 'open-linkedin', label: 'Open LinkedIn profile', group: 'Actions', action: 'external', target: LINKEDIN_URL },
+  { id: 'send-email', label: 'Send email to Dhruv', group: 'Actions', action: 'external', target: `mailto:${EMAIL}` },
+  { id: 'toggle-theme', label: 'Toggle Dark/Light Mode', group: 'Actions', action: 'theme', keywords: 'dark light mode theme' },
+
+  // Theme Colors
   { id: 'palette-teal', label: 'Accent: Teal', group: 'Theme Colors', action: 'palette', target: 'teal' },
   { id: 'palette-ocean', label: 'Accent: Ocean', group: 'Theme Colors', action: 'palette', target: 'ocean' },
   { id: 'palette-emerald', label: 'Accent: Emerald', group: 'Theme Colors', action: 'palette', target: 'emerald' },
@@ -54,7 +81,12 @@ export function CommandPalette() {
   const filtered = useMemo(() => {
     if (!query.trim()) return ITEMS;
     const q = query.toLowerCase();
-    return ITEMS.filter(item => item.label.toLowerCase().includes(q));
+    return ITEMS.filter(item => {
+      if (item.label.toLowerCase().includes(q)) return true;
+      if (item.group.toLowerCase().includes(q)) return true;
+      if (item.keywords && item.keywords.toLowerCase().includes(q)) return true;
+      return false;
+    });
   }, [query]);
 
   const groups = useMemo(() => {
@@ -89,8 +121,20 @@ export function CommandPalette() {
       setPalette(item.target as PaletteName);
     } else if (item.action === 'external' && item.target) {
       window.open(item.target, '_blank', 'noopener,noreferrer');
+    } else if (item.action === 'copy' && item.target) {
+      if (typeof navigator !== 'undefined' && navigator.clipboard) {
+        navigator.clipboard.writeText(item.target).catch(() => {});
+      }
+    } else if (item.action === 'download' && item.target) {
+      const a = document.createElement('a');
+      a.href = item.target;
+      a.download = item.downloadAs ?? '';
+      a.rel = 'noopener';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
     }
-  }, [close, router, toggleMode]);
+  }, [close, router, toggleMode, setPalette]);
 
   // Keyboard shortcut to open
   useEffect(() => {

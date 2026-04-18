@@ -158,6 +158,30 @@
   box-shadow: 0 4px 16px var(--accent-glow);
 }
 
+/* Resume download link */
+.resumeLink {
+  display: none;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 14px;
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  text-decoration: none;
+  min-height: 44px;
+  transition: color var(--transition-fast), border-color var(--transition-fast), background var(--transition-fast);
+}
+
+.resumeLink:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+  background: var(--chip-bg);
+}
+
 /* Hamburger */
 .hamburger {
   display: flex;
@@ -203,6 +227,7 @@
 .link:focus-visible,
 .cmdTrigger:focus-visible,
 .cta:focus-visible,
+.resumeLink:focus-visible,
 .hamburger:focus-visible,
 .logo:focus-visible {
   outline: 2px solid var(--accent);
@@ -227,11 +252,19 @@
   .cmdTrigger {
     display: inline-flex;
   }
+
+  .resumeLink {
+    display: inline-flex;
+  }
 }
 
 /* ===== Max 767px ===== */
 @media (max-width: 767px) {
   .cmdTrigger {
+    display: none;
+  }
+
+  .resumeLink {
     display: none;
   }
 }

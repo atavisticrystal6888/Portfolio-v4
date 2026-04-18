@@ -18,21 +18,31 @@ export async function GET(
     subtitle = "About — Background, Skills & Experience";
   } else if (path === "projects") {
     subtitle = "Projects — Problem → Action → Outcome";
+  } else if (path === "ai-pm") {
+    subtitle = "AI PM — Playbooks for Shipping LLM Products";
   } else if (path === "blog") {
     subtitle = "Blog — Thoughts on Product, Data & Building";
   } else if (path === "contact") {
     subtitle = "Contact — Let's Build Something Together";
   } else if (path === "now") {
     subtitle = "Now — What I'm Currently Working On";
+  } else if (path === "lab") {
+    subtitle = "Lab — Experiments & Ideas in Motion";
+  } else if (path === "uses") {
+    subtitle = "Uses — Tools, Stack & Daily Drivers";
+  } else if (path === "bookshelf") {
+    subtitle = "Bookshelf — What I'm Reading & Why";
+  } else if (path === "changelog") {
+    subtitle = "Changelog — Build Log of This Portfolio";
   } else if (path.startsWith("projects/")) {
     subtitle = decodeURIComponent(path.replace("projects/", "")).replace(
       /-/g,
       " "
     );
-    subtitle = subtitle.charAt(0).toUpperCase() + subtitle.slice(1);
+    subtitle = subtitle.replace(/\b\w/g, (c) => c.toUpperCase());
   } else if (path.startsWith("blog/")) {
     subtitle = decodeURIComponent(path.replace("blog/", "")).replace(/-/g, " ");
-    subtitle = subtitle.charAt(0).toUpperCase() + subtitle.slice(1);
+    subtitle = subtitle.replace(/\b\w/g, (c) => c.toUpperCase());
   }
 
   return new ImageResponse(
