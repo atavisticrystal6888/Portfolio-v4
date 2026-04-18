@@ -46,6 +46,7 @@
     "@types/three": "^0.183.1",
     "eslint": "^9",
     "eslint-config-next": "16.2.2",
+    "language-subtag-registry": "^0.4.2",
     "playwright": "^1.59.0",
     "typescript": "^5",
     "vitest": "^4.1.2"

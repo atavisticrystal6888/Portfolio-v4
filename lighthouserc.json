@@ -8,6 +8,10 @@
         "http://localhost:3000/projects/aarkid",
         "http://localhost:3000/blog",
         "http://localhost:3000/blog/why-pms-should-code",
+        "http://localhost:3000/blog/shipping-llm-products-eval-harness",
+        "http://localhost:3000/ai-pm",
+        "http://localhost:3000/lab",
+        "http://localhost:3000/uses",
         "http://localhost:3000/contact",
         "http://localhost:3000/now"
       ],

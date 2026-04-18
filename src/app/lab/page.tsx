@@ -39,7 +39,7 @@ export default function LabPage() {
       <p className={styles.kicker}>Ideas in motion</p>
       <h1 className={styles.title}>Lab</h1>
       <p className={styles.lede}>
-        A working matrix of {ideas.length} product ideas I've scoped — each
+        A working matrix of {ideas.length} product ideas I&apos;ve scoped — each
         one a hypothetical build that maps a real PM skill to a real technical
         challenge. Most will stay ideas. A few will become projects. All of
         them are me thinking in public about what&apos;s worth making.

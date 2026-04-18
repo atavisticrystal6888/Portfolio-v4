@@ -160,7 +160,7 @@ export default function AIPMPage() {
 
       <ScrollReveal delay={0.15}>
         <div className={styles.section}>
-          <SectionLabel>What's Next</SectionLabel>
+          <SectionLabel>What&apos;s Next</SectionLabel>
           <h2 className={styles.sectionTitle}>On the bench</h2>
           <ul className={styles.list}>
             <li>
