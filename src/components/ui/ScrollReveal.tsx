@@ -1,6 +1,6 @@
 'use client';
 
-import { type ReactNode, type CSSProperties, type ElementType } from 'react';
+import { type ReactNode, type CSSProperties } from 'react';
 import { useIntersection } from '@/hooks/useIntersection';
 import { useReducedMotion } from '@/hooks/useReducedMotion';
 
@@ -13,7 +13,6 @@ interface ScrollRevealProps {
   duration?: number;
   distance?: number;
   className?: string;
-  as?: ElementType;
   stagger?: number;
   index?: number;
 }
@@ -33,7 +32,6 @@ export function ScrollReveal({
   duration = 0.7,
   distance,
   className,
-  as: Tag = 'div',
   stagger = 0,
   index = 0,
 }: ScrollRevealProps) {

@@ -1,4 +1,3 @@
-import { Badge } from "@/components/ui/Badge";
 import styles from "./AvailabilityBadge.module.css";
 
 export function AvailabilityBadge() {

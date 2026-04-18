@@ -20,7 +20,6 @@ export async function launchARSession(caseStudySlug: string): Promise<void> {
     throw new Error("WebXR not available");
   }
 
-  // eslint-disable-next-line no-console
   console.info(`[AR] Launching immersive session for: ${caseStudySlug}`);
   // Full scene construction would go here (deferred).
 }

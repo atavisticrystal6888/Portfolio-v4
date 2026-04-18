@@ -1,6 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import fs from "fs";
-import path from "path";
 
 // Mock fs so tests don't depend on actual content files
 vi.mock("fs");
