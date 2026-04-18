@@ -8,9 +8,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: SITE_URL, lastModified: new Date(), priority: 1.0 },
     { url: `${SITE_URL}/about`, lastModified: new Date(), priority: 0.8 },
     { url: `${SITE_URL}/projects`, lastModified: new Date(), priority: 0.9 },
+    { url: `${SITE_URL}/ai-pm`, lastModified: new Date(), priority: 0.9 },
     { url: `${SITE_URL}/blog`, lastModified: new Date(), priority: 0.9 },
     { url: `${SITE_URL}/contact`, lastModified: new Date(), priority: 0.7 },
     { url: `${SITE_URL}/now`, lastModified: new Date(), priority: 0.6 },
+    { url: `${SITE_URL}/lab`, lastModified: new Date(), priority: 0.6 },
+    { url: `${SITE_URL}/uses`, lastModified: new Date(), priority: 0.5 },
+    { url: `${SITE_URL}/bookshelf`, lastModified: new Date(), priority: 0.5 },
+    { url: `${SITE_URL}/changelog`, lastModified: new Date(), priority: 0.5 },
   ];
 
   const caseStudyRoutes: MetadataRoute.Sitemap = getAllCaseStudySlugs().map(

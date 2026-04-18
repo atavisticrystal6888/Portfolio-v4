@@ -6,7 +6,7 @@ import type { BlogArticle } from "@/types/blog";
 import { BlogCard } from "./BlogCard";
 import styles from "./BlogSearch.module.css";
 
-const CATEGORIES = ["All", "Product", "Data", "Career"];
+const CATEGORIES = ["All", "Product", "Data", "AI", "Career"];
 
 interface BlogSearchProps {
   posts: BlogArticle[];

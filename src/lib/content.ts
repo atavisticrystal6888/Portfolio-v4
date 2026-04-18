@@ -5,6 +5,7 @@ import type { Project } from "@/types/project";
 import type { CaseStudyFrontmatter, CaseStudy } from "@/types/project";
 import type { BlogArticleFrontmatter, BlogArticle } from "@/types/blog";
 import type { Testimonial } from "@/types/testimonial";
+import type { LabIdea } from "@/types/lab";
 
 const contentDir = path.join(process.cwd(), "content");
 
@@ -68,6 +69,13 @@ export function getAllBlogPosts(): BlogArticle[] {
 
 export function getAllTestimonials(): Testimonial[] {
   const filePath = path.join(contentDir, "testimonials.json");
+  const raw = fs.readFileSync(filePath, "utf-8");
+  return JSON.parse(raw);
+}
+
+export function getAllLabIdeas(): LabIdea[] {
+  const filePath = path.join(contentDir, "lab", "ideas.json");
+  if (!fs.existsSync(filePath)) return [];
   const raw = fs.readFileSync(filePath, "utf-8");
   return JSON.parse(raw);
 }

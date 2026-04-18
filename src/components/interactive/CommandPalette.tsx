@@ -49,6 +49,7 @@ const ITEMS: PaletteItem[] = [
   { id: 'cs-portfolio', label: 'This Portfolio — Meta Case Study', group: 'Case Studies', action: 'navigate', target: '/projects/portfolio-site', keywords: 'next.js react build' },
 
   // Blog Articles
+  { id: 'blog-eval', label: 'Shipping LLM Products Starts With the Eval Harness', group: 'Blog Articles', action: 'navigate', target: '/blog/shipping-llm-products-eval-harness', keywords: 'ai llm eval harness aarkid' },
   { id: 'blog-pms', label: 'Why PMs Should Learn to Code', group: 'Blog Articles', action: 'navigate', target: '/blog/why-pms-should-code' },
   { id: 'blog-data', label: 'Data-Driven Product Decisions', group: 'Blog Articles', action: 'navigate', target: '/blog/data-driven-product-decisions' },
   { id: 'blog-thinking', label: 'Structured Thinking Framework', group: 'Blog Articles', action: 'navigate', target: '/blog/structured-thinking-framework' },

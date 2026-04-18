@@ -3,7 +3,7 @@ export interface BlogArticleFrontmatter {
   title: string;
   date: string;
   updatedDate: string | null;
-  category: "Product" | "Data" | "Career";
+  category: "Product" | "Data" | "Career" | "AI";
   tags: string[];
   readingTime: string;
   excerpt: string;

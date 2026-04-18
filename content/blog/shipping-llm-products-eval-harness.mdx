@@ -1,0 +1,94 @@
+---
+slug: "shipping-llm-products-eval-harness"
+title: "Shipping LLM Products Starts With the Eval Harness, Not the Prompt"
+date: "2026-04-14"
+updatedDate: null
+category: "AI"
+tags: ["ai-pm", "llm", "evaluation", "product-management", "shipping"]
+readingTime: "8 min read"
+excerpt: "A prompt is an artefact. An eval harness is a product. Here's how I scope LLM features so the output doesn't surprise users — or me."
+socialImage: null
+---
+
+## The mistake I see everywhere
+
+A team decides to "add AI". Someone writes a prompt. The demo works on three carefully chosen inputs. The PR ships to 10% of users. Two weeks later, the complaints arrive: the model confabulated a source, gave contradictory advice, and broke gracefully exactly zero of the times it should have.
+
+The bug isn't the prompt. The bug is that there was never an eval.
+
+## A prompt is an artefact. An eval harness is a product.
+
+On [Aarkid](/projects/aarkid) — the AI botanical diagnosis platform I co-created with [Dilpreet Grover](https://github.com/dfordp) — the order was deliberately inverted. Before a single production prompt was written, we had:
+
+1. **A golden set** of 60 plant photos with hand-labelled ground truth: species, condition, severity, recommended action.
+2. **A rubric** with four dimensions: diagnostic accuracy, citation fidelity, severity calibration, and latency.
+3. **A scoring pipeline** that ran the full vision → research → synthesis chain against the golden set and emitted a single comparable score.
+
+Only then did we start iterating on prompts. Every change — model version, system prompt, retrieval strategy, temperature — ran through the harness. We shipped when the score crossed the threshold, not when the demo looked good.
+
+## What "good" looks like for an LLM feature PRD
+
+Most PRDs for LLM features read like: _"The model will answer questions about X."_ That's a capability statement, not a spec.
+
+The spec that actually ships has five parts:
+
+### 1. Behaviour contract
+What must the output always contain? What must it never contain? On Aarkid:
+- Always: health score (1–100), severity tier, at least one cited action.
+- Never: species-identification claims below a confidence floor, recommendations without a source URL, hedging language that obscures severity.
+
+### 2. Golden set
+A small (50–200), diverse, hand-labelled dataset. Grow it from real failure modes. Revisit it every release.
+
+### 3. Rubric
+3–6 axes, each scored 0–5 or 0–1. Resist the urge to collapse it into one number too early — the axes teach you _where_ you're weak.
+
+### 4. Guardrails
+What happens when the model falls off a cliff? Retry, degrade, escalate, or refuse. Aarkid refuses if Gemini returns low confidence on species ID — better silence than a confident wrong answer.
+
+### 5. Cost envelope
+Per-request maths, including retries and retrieval calls. If you can't afford your feature at P95 usage, you don't have a feature.
+
+## The eval loop in practice
+
+```
+┌─────────────┐      ┌──────────────┐      ┌─────────────┐
+│ Golden set  │ ───▶ │  Pipeline    │ ───▶ │   Rubric    │
+│ (60 photos) │      │ (vision+RAG) │      │ (4 axes)    │
+└─────────────┘      └──────────────┘      └─────────────┘
+                                                 │
+                      ┌──────────────────────────┘
+                      ▼
+              ┌────────────────┐
+              │  Score + diff  │
+              │  vs. baseline  │
+              └────────────────┘
+```
+
+Every prompt change, every model upgrade, every retrieval tweak runs the loop. Regressions are caught before a user sees them. Improvements are measurable.
+
+This is not novel. Traditional ML teams have done this forever. The mistake is thinking that because LLMs are "just prompts", they don't need the same discipline. They need **more**, because the failure surface is larger and the confidence is higher.
+
+## Three lessons from Aarkid
+
+**1. Build the harness before the feature.** It feels slow. It isn't. Every other decision gets faster.
+
+**2. Grow the golden set from production failures.** The first 60 photos were easy wins. The next 30 were real-world edge cases that broke v1 — and are now permanent regression checks.
+
+**3. Cost is a first-class axis.** We hit 92% diagnosis accuracy around the same time we hit the $0.25/user/mo envelope. Neither was an accident.
+
+## What to put on the PR-FAQ
+
+When I'm advising teams on their first LLM feature, I ask for three things before I'll sign off on a spec:
+
+- Show me the golden set.
+- Show me the rubric.
+- Show me the cost-per-request maths with retries included.
+
+If those three don't exist, we don't have a feature — we have a demo that will embarrass us at scale.
+
+## The short version
+
+Ship the eval harness. Then ship the feature.
+
+More of this thinking lives on my [AI PM page](/ai-pm). If you're wrestling with scoping your first LLM feature, [get in touch](/contact) — I like these conversations.
