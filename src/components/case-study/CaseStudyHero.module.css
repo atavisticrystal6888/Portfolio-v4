@@ -2,6 +2,31 @@
   padding: calc(var(--nav-height) + var(--space-10)) var(--space-6) var(--space-10);
 }
 
+/* Aarkid: split layout with 3D scene on the right (≥900px) */
+.heroAarkid {
+  position: relative;
+  padding: calc(var(--nav-height) + var(--space-10)) var(--space-6) var(--space-10);
+  min-height: 520px;
+  overflow: hidden;
+}
+
+.heroAarkid .inner {
+  position: relative;
+  z-index: 1;
+}
+
+@media (min-width: 900px) {
+  .heroAarkid {
+    min-height: 600px;
+  }
+  .heroAarkid .inner {
+    max-width: calc(var(--container-md) - 360px);
+    margin-right: auto;
+    margin-left: auto;
+    padding-right: 360px;
+  }
+}
+
 .inner {
   max-width: var(--container-md);
   margin: 0 auto;

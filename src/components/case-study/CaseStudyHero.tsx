@@ -1,6 +1,7 @@
 import type { CaseStudyFrontmatter } from "@/types/project";
 import { Badge } from "@/components/ui/Badge";
 import { CoCreatorChips } from "@/components/ui/CoCreatorChips";
+import { AarkidHeroScene } from "./AarkidHeroScene";
 import styles from "./CaseStudyHero.module.css";
 
 interface CaseStudyHeroProps {
@@ -8,8 +9,14 @@ interface CaseStudyHeroProps {
 }
 
 export function CaseStudyHero({ caseStudy }: CaseStudyHeroProps) {
+  const isAarkid = caseStudy.slug === "aarkid";
+
   return (
-    <section className={styles.hero} aria-label="Case study header">
+    <section
+      className={isAarkid ? styles.heroAarkid : styles.hero}
+      aria-label="Case study header"
+    >
+      {isAarkid && <AarkidHeroScene />}
       <div className={styles.inner}>
         <h1 className={styles.title}>{caseStudy.title}</h1>
         <p className={styles.subtitle}>{caseStudy.subtitle}</p>
