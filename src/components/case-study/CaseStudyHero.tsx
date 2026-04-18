@@ -1,5 +1,6 @@
 import type { CaseStudyFrontmatter } from "@/types/project";
 import { Badge } from "@/components/ui/Badge";
+import { CoCreatorChips } from "@/components/ui/CoCreatorChips";
 import styles from "./CaseStudyHero.module.css";
 
 interface CaseStudyHeroProps {
@@ -17,6 +18,7 @@ export function CaseStudyHero({ caseStudy }: CaseStudyHeroProps) {
           <span className={styles.sep}>·</span>
           <span className={styles.duration}>{caseStudy.duration}</span>
         </div>
+        <CoCreatorChips coCreators={caseStudy.coCreators} variant="byline" />
         <div className={styles.stack}>
           {caseStudy.stack.map((tech) => (
             <Badge key={tech} variant="outline">{tech}</Badge>

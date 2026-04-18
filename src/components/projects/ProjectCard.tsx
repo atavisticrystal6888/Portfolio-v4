@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { Project } from "@/types/project";
 import { Badge } from "@/components/ui/Badge";
 import { GlassCard } from "@/components/ui/GlassCard";
+import { CoCreatorChips } from "@/components/ui/CoCreatorChips";
 import styles from "./ProjectCard.module.css";
 
 interface ProjectCardProps {
@@ -20,6 +21,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
       </h2>
       <p className={styles.role}>{project.role}</p>
       <p className={styles.desc}>{project.description}</p>
+      <CoCreatorChips coCreators={project.coCreators} variant="compact" />
       <div className={styles.metric}>
         <strong>{project.metricValue}</strong> {project.metricLabel}
       </div>

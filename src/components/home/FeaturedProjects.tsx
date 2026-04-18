@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { Project } from "@/types/project";
 import { Badge } from "@/components/ui/Badge";
 import { GlassCard } from "@/components/ui/GlassCard";
+import { CoCreatorChips } from "@/components/ui/CoCreatorChips";
 import styles from "./FeaturedProjects.module.css";
 
 interface FeaturedProjectsProps {
@@ -18,6 +19,7 @@ export function FeaturedProjects({ projects }: FeaturedProjectsProps) {
             <Link href={`/projects/${p.slug}`}>{p.name}</Link>
           </h3>
           <p className={styles.desc}>{p.description}</p>
+          <CoCreatorChips coCreators={p.coCreators} variant="compact" />
           <div className={styles.metric}>
             <strong>{p.metricValue}</strong> {p.metricLabel}
           </div>
