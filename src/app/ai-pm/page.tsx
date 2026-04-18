@@ -3,6 +3,7 @@ import { generatePageMetadata, generateBreadcrumbJsonLd } from "@/lib/metadata";
 import { SectionLabel } from "@/components/ui/SectionLabel";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import { EvalHarnessDemo } from "@/components/ai-pm/EvalHarnessDemo";
+import { CostModelDemo } from "@/components/ai-pm/CostModelDemo";
 import { getAllBlogPosts } from "@/lib/content";
 import styles from "@/styles/content-page.module.css";
 
@@ -98,6 +99,20 @@ export default function AIPMPage() {
             time — this is how I validate an LLM feature before it ships.
           </p>
           <EvalHarnessDemo />
+        </div>
+      </ScrollReveal>
+
+      <ScrollReveal delay={0.05}>
+        <div className={styles.section}>
+          <SectionLabel>Live Demo</SectionLabel>
+          <h2 className={styles.sectionTitle}>Cost modelling, in real time</h2>
+          <p className={styles.lede} style={{ marginBottom: "var(--space-5)" }}>
+            Same harness mindset, applied to economics. Move the sliders to see
+            how batch size, cache hit rate, and request volume reshape the
+            per-user-per-month bill — and whether you stay inside the $0.25
+            envelope.
+          </p>
+          <CostModelDemo />
         </div>
       </ScrollReveal>
 
