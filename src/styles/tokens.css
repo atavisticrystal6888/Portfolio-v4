@@ -1,0 +1,287 @@
+/* ============================================================
+   DESIGN TOKENS — CSS Custom Properties
+   Dark & Light theme system
+   ============================================================ */
+
+:root {
+  /* Typography */
+  --font-display: 'Boska', Georgia, serif;
+  --font-body: 'Satoshi', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+
+  /* Spacing Scale (4px base) */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-7: 32px;
+  --space-8: 40px;
+  --space-9: 48px;
+  --space-10: 64px;
+  --space-11: 80px;
+  --space-12: 100px;
+
+  /* Border Radius */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 20px;
+  --radius-2xl: 28px;
+  --radius-full: 100px;
+
+  /* Transitions */
+  --transition-fast: 0.15s ease;
+  --transition-base: 0.25s ease;
+  --transition-slow: 0.4s ease;
+  --transition-theme: 0.3s ease;
+
+  /* Z-Index Scale */
+  --z-base: 1;
+  --z-dropdown: 100;
+  --z-sticky: 500;
+  --z-overlay: 900;
+  --z-modal: 1000;
+  --z-toast: 1100;
+  --z-cursor: 9999;
+
+  /* Layout */
+  --container-max: 1120px;
+  --container-wide: 1200px;
+  --container-md: 760px;
+  --nav-height: 64px;
+  --page-header-height: 280px;
+  --sidebar-width: 260px;
+  --reading-width: 680px;
+  --toc-width: 220px;
+
+  /* Extra spacing */
+  --space-14: 120px;
+
+  /* Extra radius */
+  --radius-pill: 100px;
+}
+
+[data-theme="dark"] {
+  --bg: #0a0a0b;
+  --bg-alt: #0f0f10;
+  --surface: #141416;
+  --surface-hover: #1c1c1f;
+  --surface-raised: #1e1e21;
+  --text: #d1d1d6;
+  --text-strong: #eaeaef;
+  --text-muted: #6e6e77;
+  --text-body: #d1d1d6;
+  --accent: #5ba4b5;
+  --accent-hover: #6bbfcf;
+  --accent-contrast: #0a0a0b;
+  --accent-glow: rgba(91, 164, 181, 0.15);
+  --accent-subtle: rgba(91, 164, 181, 0.08);
+  --metric: #eab144;
+  --metric-bg: rgba(234, 177, 68, 0.08);
+  --metric-border: rgba(234, 177, 68, 0.15);
+  --success: #4ade80;
+  --error: #f87171;
+  --info: #60a5fa;
+  --border: rgba(255, 255, 255, 0.06);
+  --border-strong: rgba(255, 255, 255, 0.12);
+  --border-accent: rgba(91, 164, 181, 0.3);
+  --nav-bg: rgba(10, 10, 11, 0.82);
+  --glass-bg: rgba(20, 20, 22, 0.6);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --badge-current-bg: rgba(91, 164, 181, 0.12);
+  --badge-current-text: #5ba4b5;
+  --chip-bg: rgba(255, 255, 255, 0.04);
+  --chip-border: rgba(255, 255, 255, 0.08);
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.3);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.4);
+  --shadow-lg: 0 8px 30px rgba(0,0,0,0.5);
+  --shadow-glow: 0 0 40px rgba(91, 164, 181, 0.1);
+  --gradient-text: linear-gradient(135deg, #5ba4b5, #eab144);
+  --gradient-card: linear-gradient(135deg, rgba(91, 164, 181, 0.06), rgba(234, 177, 68, 0.03));
+  --gradient-hero: radial-gradient(ellipse at 50% 0%, rgba(91, 164, 181, 0.08) 0%, transparent 60%);
+  --particle-color: #5ba4b5;
+  --cursor-color: #5ba4b5;
+  --code-bg: #1a1a1d;
+  --code-border: rgba(255, 255, 255, 0.06);
+  --code-text: #c9d1d9;
+  --code-comment: #6e7681;
+  --code-keyword: #ff7b72;
+  --code-string: #a5d6ff;
+  --code-function: #d2a8ff;
+  --code-number: #79c0ff;
+  --callout-tip-bg: rgba(74, 222, 128, 0.08);
+  --callout-tip-border: rgba(74, 222, 128, 0.3);
+  --callout-tip-icon: #4ade80;
+  --callout-warning-bg: rgba(234, 177, 68, 0.08);
+  --callout-warning-border: rgba(234, 177, 68, 0.3);
+  --callout-warning-icon: #eab144;
+  --callout-info-bg: rgba(96, 165, 250, 0.08);
+  --callout-info-border: rgba(96, 165, 250, 0.3);
+  --callout-info-icon: #60a5fa;
+  --process-step-1: #5ba4b5;
+  --process-step-2: #eab144;
+  --process-step-3: #4ade80;
+  --process-step-4: #d2a8ff;
+  --process-connector: rgba(255, 255, 255, 0.1);
+  --divider-opacity: 0.06;
+  color-scheme: dark;
+}
+
+[data-theme="light"] {
+  --bg: #f7f7f8;
+  --bg-alt: #f0f0f2;
+  --surface: #ffffff;
+  --surface-hover: #f5f5f6;
+  --surface-raised: #ffffff;
+  --text: #2c2c31;
+  --text-strong: #18181b;
+  --text-muted: #71717a;
+  --text-body: #2c2c31;
+  --accent: #2d8a9c;
+  --accent-hover: #1f7082;
+  --accent-contrast: #ffffff;
+  --accent-glow: rgba(45, 138, 156, 0.12);
+  --accent-subtle: rgba(45, 138, 156, 0.06);
+  --metric: #8a6a14;
+  --metric-bg: rgba(138, 106, 20, 0.08);
+  --metric-border: rgba(138, 106, 20, 0.18);
+  --success: #22c55e;
+  --error: #ef4444;
+  --info: #3b82f6;
+  --border: rgba(0, 0, 0, 0.06);
+  --border-strong: rgba(0, 0, 0, 0.12);
+  --border-accent: rgba(45, 138, 156, 0.3);
+  --nav-bg: rgba(247, 247, 248, 0.85);
+  --glass-bg: rgba(255, 255, 255, 0.7);
+  --glass-border: rgba(0, 0, 0, 0.06);
+  --badge-current-bg: rgba(45, 138, 156, 0.1);
+  --badge-current-text: #2d8a9c;
+  --chip-bg: rgba(0, 0, 0, 0.03);
+  --chip-border: rgba(0, 0, 0, 0.08);
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
+  --shadow-lg: 0 8px 30px rgba(0,0,0,0.12);
+  --shadow-glow: 0 0 40px rgba(45, 138, 156, 0.08);
+  --gradient-text: linear-gradient(135deg, #2d8a9c, #b8891a);
+  --gradient-card: linear-gradient(135deg, rgba(45, 138, 156, 0.04), rgba(184, 137, 26, 0.02));
+  --gradient-hero: radial-gradient(ellipse at 50% 0%, rgba(45, 138, 156, 0.06) 0%, transparent 60%);
+  --particle-color: #2d8a9c;
+  --cursor-color: #2d8a9c;
+  --code-bg: #f6f8fa;
+  --code-border: rgba(0, 0, 0, 0.08);
+  --code-text: #24292f;
+  --code-comment: #6e7781;
+  --code-keyword: #cf222e;
+  --code-string: #0a3069;
+  --code-function: #8250df;
+  --code-number: #0550ae;
+  --callout-tip-bg: rgba(34, 197, 94, 0.06);
+  --callout-tip-border: rgba(34, 197, 94, 0.3);
+  --callout-tip-icon: #22c55e;
+  --callout-warning-bg: rgba(184, 137, 26, 0.06);
+  --callout-warning-border: rgba(184, 137, 26, 0.3);
+  --callout-warning-icon: #b8891a;
+  --callout-info-bg: rgba(59, 130, 246, 0.06);
+  --callout-info-border: rgba(59, 130, 246, 0.3);
+  --callout-info-icon: #3b82f6;
+  --process-step-1: #2d8a9c;
+  --process-step-2: #b8891a;
+  --process-step-3: #22c55e;
+  --process-step-4: #8250df;
+  --process-connector: rgba(0, 0, 0, 0.1);
+  --divider-opacity: 0.08;
+  color-scheme: light;
+}
+
+.theme-transitioning,
+.theme-transitioning *,
+.theme-transitioning *::before,
+.theme-transitioning *::after {
+  transition: background-color 0.3s ease,
+              color 0.3s ease,
+              border-color 0.3s ease,
+              box-shadow 0.3s ease,
+              fill 0.3s ease,
+              stroke 0.3s ease !important;
+}
+
+/* ===== ACCENT PALETTE OVERRIDES ===== */
+/* Teal (default) — no overrides needed, matches base dark/light tokens */
+
+[data-palette="ocean"] {
+  --accent: #3b82f6;
+  --accent-hover: #2563eb;
+  --accent-glow: rgba(59, 130, 246, 0.15);
+  --accent-subtle: rgba(59, 130, 246, 0.08);
+  --border-accent: rgba(59, 130, 246, 0.3);
+  --badge-current-bg: rgba(59, 130, 246, 0.12);
+  --badge-current-text: #3b82f6;
+  --gradient-text: linear-gradient(135deg, #3b82f6, #f59e0b);
+  --gradient-card: linear-gradient(135deg, rgba(59, 130, 246, 0.06), rgba(245, 158, 11, 0.03));
+  --gradient-hero: radial-gradient(ellipse at 50% 0%, rgba(59, 130, 246, 0.08) 0%, transparent 60%);
+  --particle-color: #3b82f6;
+  --cursor-color: #3b82f6;
+  --shadow-glow: 0 0 40px rgba(59, 130, 246, 0.1);
+  --metric: #f59e0b;
+  --metric-bg: rgba(245, 158, 11, 0.08);
+  --metric-border: rgba(245, 158, 11, 0.15);
+}
+
+[data-palette="emerald"] {
+  --accent: #10b981;
+  --accent-hover: #059669;
+  --accent-glow: rgba(16, 185, 129, 0.15);
+  --accent-subtle: rgba(16, 185, 129, 0.08);
+  --border-accent: rgba(16, 185, 129, 0.3);
+  --badge-current-bg: rgba(16, 185, 129, 0.12);
+  --badge-current-text: #10b981;
+  --gradient-text: linear-gradient(135deg, #10b981, #f97316);
+  --gradient-card: linear-gradient(135deg, rgba(16, 185, 129, 0.06), rgba(249, 115, 22, 0.03));
+  --gradient-hero: radial-gradient(ellipse at 50% 0%, rgba(16, 185, 129, 0.08) 0%, transparent 60%);
+  --particle-color: #10b981;
+  --cursor-color: #10b981;
+  --shadow-glow: 0 0 40px rgba(16, 185, 129, 0.1);
+  --metric: #f97316;
+  --metric-bg: rgba(249, 115, 22, 0.08);
+  --metric-border: rgba(249, 115, 22, 0.15);
+}
+
+[data-palette="amber"] {
+  --accent: #f59e0b;
+  --accent-hover: #d97706;
+  --accent-glow: rgba(245, 158, 11, 0.15);
+  --accent-subtle: rgba(245, 158, 11, 0.08);
+  --border-accent: rgba(245, 158, 11, 0.3);
+  --badge-current-bg: rgba(245, 158, 11, 0.12);
+  --badge-current-text: #f59e0b;
+  --gradient-text: linear-gradient(135deg, #f59e0b, #6366f1);
+  --gradient-card: linear-gradient(135deg, rgba(245, 158, 11, 0.06), rgba(99, 102, 241, 0.03));
+  --gradient-hero: radial-gradient(ellipse at 50% 0%, rgba(245, 158, 11, 0.08) 0%, transparent 60%);
+  --particle-color: #f59e0b;
+  --cursor-color: #f59e0b;
+  --shadow-glow: 0 0 40px rgba(245, 158, 11, 0.1);
+  --metric: #6366f1;
+  --metric-bg: rgba(99, 102, 241, 0.08);
+  --metric-border: rgba(99, 102, 241, 0.15);
+}
+
+[data-palette="mono"] {
+  --accent: #a1a1aa;
+  --accent-hover: #71717a;
+  --accent-glow: rgba(161, 161, 170, 0.15);
+  --accent-subtle: rgba(161, 161, 170, 0.08);
+  --border-accent: rgba(161, 161, 170, 0.3);
+  --badge-current-bg: rgba(161, 161, 170, 0.12);
+  --badge-current-text: #a1a1aa;
+  --gradient-text: linear-gradient(135deg, #a1a1aa, #e4e4e7);
+  --gradient-card: linear-gradient(135deg, rgba(161, 161, 170, 0.06), rgba(228, 228, 231, 0.03));
+  --gradient-hero: radial-gradient(ellipse at 50% 0%, rgba(161, 161, 170, 0.08) 0%, transparent 60%);
+  --particle-color: #a1a1aa;
+  --cursor-color: #a1a1aa;
+  --shadow-glow: 0 0 40px rgba(161, 161, 170, 0.1);
+  --metric: #e4e4e7;
+  --metric-bg: rgba(228, 228, 231, 0.08);
+  --metric-border: rgba(228, 228, 231, 0.15);
+}

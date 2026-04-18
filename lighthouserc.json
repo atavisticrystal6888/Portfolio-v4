@@ -1,0 +1,33 @@
+{
+  "ci": {
+    "collect": {
+      "url": [
+        "http://localhost:3000/",
+        "http://localhost:3000/about",
+        "http://localhost:3000/projects",
+        "http://localhost:3000/projects/aarkid",
+        "http://localhost:3000/blog",
+        "http://localhost:3000/blog/why-pms-should-code",
+        "http://localhost:3000/contact",
+        "http://localhost:3000/now"
+      ],
+      "startServerCommand": "npm run start",
+      "startServerReadyPattern": "Ready",
+      "numberOfRuns": 1
+    },
+    "assert": {
+      "assertions": {
+        "categories:performance": ["warn", { "minScore": 0.9 }],
+        "categories:accessibility": ["error", { "minScore": 0.9 }],
+        "categories:best-practices": ["warn", { "minScore": 0.9 }],
+        "categories:seo": ["error", { "minScore": 0.95 }],
+        "first-contentful-paint": ["warn", { "maxNumericValue": 1800 }],
+        "largest-contentful-paint": ["warn", { "maxNumericValue": 2500 }],
+        "cumulative-layout-shift": ["warn", { "maxNumericValue": 0.1 }]
+      }
+    },
+    "upload": {
+      "target": "temporary-public-storage"
+    }
+  }
+}

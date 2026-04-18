@@ -1,0 +1,173 @@
+/* ============================================================
+   ANIMATIONS — Keyframes, transitions, Framer Motion hooks
+   ============================================================ */
+
+/* ===== KEYFRAMES ===== */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes modalIn {
+  from { opacity: 0; transform: scale(0.95) translateY(10px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(1.2); }
+}
+
+@keyframes scrollDot {
+  0% { opacity: 1; transform: translateY(0); }
+  50% { opacity: 0.3; transform: translateY(8px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes blink-cursor {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes toastIn {
+  from { opacity: 0; transform: translateX(50px) scale(0.95); }
+  to { opacity: 1; transform: translateX(0) scale(1); }
+}
+
+@keyframes toastOut {
+  from { opacity: 1; transform: translateX(0) scale(1); }
+  to { opacity: 0; transform: translateX(50px) scale(0.95); }
+}
+
+@keyframes tiltGlow {
+  0%, 100% { box-shadow: var(--shadow-md); }
+  50% { box-shadow: var(--shadow-glow); }
+}
+
+@keyframes spinSlow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* ===== CASE STUDY ANIMATIONS ===== */
+@keyframes processStepReveal {
+  from { opacity: 0; transform: translateX(-20px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes metricCounterGrow {
+  from { transform: scaleX(0); transform-origin: left; }
+  to { transform: scaleX(1); transform-origin: left; }
+}
+
+/* ===== READING PROGRESS BAR ===== */
+@keyframes progressPulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+/* ===== FADE-IN ON SCROLL ===== */
+.fade-in {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.fade-in.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Stagger Delays */
+.delay-1 { transition-delay: 0.06s; }
+.delay-2 { transition-delay: 0.12s; }
+.delay-3 { transition-delay: 0.18s; }
+.delay-4 { transition-delay: 0.24s; }
+.delay-5 { transition-delay: 0.30s; }
+
+/* Framer Motion — initial states (applied before Framer Motion animates) */
+.motion-fade-up {
+  opacity: 0;
+  transform: translateY(40px);
+}
+
+.motion-fade-left {
+  opacity: 0;
+  transform: translateX(-40px);
+}
+
+.motion-fade-right {
+  opacity: 0;
+  transform: translateX(40px);
+}
+
+.motion-scale-in {
+  opacity: 0;
+  transform: scale(0.9);
+}
+
+/* ===== 3D TILT CARD ===== */
+.tilt-card {
+  transform-style: preserve-3d;
+  perspective: 1000px;
+}
+
+.tilt-card:hover {
+  transform: perspective(1000px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg));
+}
+
+/* ===== REDUCED MOTION ===== */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .fade-in {
+    opacity: 1;
+    transform: none;
+  }
+
+  .motion-fade-up,
+  .motion-fade-left,
+  .motion-fade-right,
+  .motion-scale-in {
+    opacity: 1;
+    transform: none;
+  }
+
+  .hero-badge-dot,
+  .availability-dot {
+    animation: none;
+  }
+
+  .scroll-mouse-dot {
+    animation: none;
+  }
+
+  .typed-cursor {
+    animation: none;
+  }
+}

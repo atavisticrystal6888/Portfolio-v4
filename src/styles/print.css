@@ -1,0 +1,65 @@
+/* ============================================================
+   PRINT — Print-friendly stylesheet
+   Hide interactive elements, show content in readable layout
+   Uses element selectors + aria attributes since CSS Modules
+   hashes class names at build time
+   ============================================================ */
+
+@media print {
+  /* Hide non-content elements — use semantic selectors, not class names */
+  nav,
+  footer,
+  canvas,
+  [aria-hidden="true"],
+  [role="progressbar"],
+  [aria-label="command palette"],
+  [aria-label="Toast notifications"],
+  [data-carousel] button {
+    display: none !important;
+  }
+
+  /* Reset backgrounds and colors for print */
+  body {
+    background: white !important;
+    color: black !important;
+    font-size: 12pt;
+    line-height: 1.5;
+  }
+
+  a {
+    color: black !important;
+    text-decoration: underline;
+  }
+
+  /* Show URLs after links */
+  a[href^="http"]::after {
+    content: " (" attr(href) ")";
+    font-size: 0.8em;
+    color: #666;
+  }
+
+  /* Ensure content isn't clipped */
+  * {
+    overflow: visible !important;
+  }
+
+  main {
+    max-width: 100% !important;
+    padding: 0 !important;
+  }
+
+  /* Avoid page breaks inside key elements */
+  h1, h2, h3, h4 {
+    page-break-after: avoid;
+  }
+
+  article,
+  section {
+    page-break-inside: avoid;
+  }
+
+  img {
+    max-width: 100% !important;
+    page-break-inside: avoid;
+  }
+}

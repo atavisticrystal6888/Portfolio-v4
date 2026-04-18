@@ -1,0 +1,80 @@
+---
+slug: "data-driven-product-decisions"
+title: "Data-Driven Doesn't Mean Dashboard-Driven"
+date: "2026-03-15"
+updatedDate: null
+category: "Product"
+tags: ["data", "product-management", "dashboards", "decision-making", "analytics"]
+readingTime: "5 min read"
+excerpt: "Dashboards are seductive. But confusing dashboards with data-driven culture is one of the most common mistakes product teams make."
+socialImage: null
+---
+
+## The Dashboard Trap
+
+At some point in every product team's life, someone says: "We need to be more data-driven." What follows, almost inevitably, is a dashboard. Lots of dashboards. Dashboards for DAU, MAU, retention curves, funnel conversions, revenue by cohort. Beautiful, interactive, real-time dashboards.
+
+And then nothing changes.
+
+The dashboards exist. People glance at them in Monday standups. The DAU ticks up or down. But no **decisions** are different because of them. This is what I call the Dashboard Trap: the illusion of being data-driven because data is visible.
+
+> **A dashboard without a decision framework is just a screensaver with numbers.**
+
+I've seen this at every company I've worked with. The pattern is consistent: leadership asks for "data," the analytics team builds dashboards, and teams declare themselves data-driven. But the dashboards are rarely connected to specific decisions, hypotheses, or actions.
+
+## Signals vs. Noise
+
+The core problem isn't the dashboards themselves — it's that most dashboards track **vanity metrics** instead of **decision metrics**.
+
+Vanity metrics tell you what happened. Decision metrics tell you what to do next.
+
+- **Vanity:** "DAU is 12,400 today." **Decision:** "Users who complete onboarding in under 3 minutes have 2.4x higher 30-day retention."
+- **Vanity:** "We had 3,200 signups this month." **Decision:** "Organic signups convert to paid at 8% vs. 2% for paid acquisition."
+- **Vanity:** "NPS is 42." **Decision:** "Detractors cite 'slow load times' 3x more than any other issue."
+
+The first column is what most dashboards show. The second column is what actually drives product decisions. The gap between them is where "data-driven" culture fails.
+
+## The Decision Framework
+
+Here's what I've found works better than dashboards-first: **decisions-first data.**
+
+Before looking at any data, start with this template:
+
+1. **What decision needs to be made?** (e.g., "Should we invest in improving onboarding or reducing churn?")
+2. **What data would change the answer?** (e.g., "If onboarding completion correlates with retention above R=0.7, we invest in onboarding.")
+3. **Where does that data live?** (e.g., "Product analytics — events table joined with retention cohorts.")
+4. **What's the threshold for action?** (e.g., "If correlation > 0.7: onboarding. If < 0.4: churn. Between: run an experiment.")
+
+Notice how the dashboard isn't even in the picture yet. You've already defined what matters. If you build a dashboard after this, it'll be a focused, actionable one — not a vanity metrics gallery.
+
+> **The best data products answer specific questions.** The worst ones answer "what happened" without connecting to "what should we do."
+
+## When to Trust Your Gut
+
+Here's the part that makes data purists uncomfortable: sometimes the data is incomplete, noisy, or too slow. And in those moments, **informed intuition beats perfect data.**
+
+Data-driven doesn't mean data-dependent. The best PMs I've worked with treat data as one input alongside user conversations, market context, engineering constraints, and yes — gut instinct built from experience.
+
+At Omniful, we faced a decision about whether to build a mobile-first warehouse interface. The data we had — usage logs from the desktop app — couldn't tell us about mobile demand because the mobile option didn't exist yet. We had to rely on:
+
+- Customer interviews (7 out of 10 warehouse managers mentioned wanting mobile access)
+- Competitive analysis (3 of 5 competitors had mobile apps)
+- An instinct, backed by watching warehouse workers constantly move between desktop terminals
+
+We built it. Adoption was immediate. But a purely dashboard-driven team would have said "no data to support this" and delayed the decision.
+
+## Practical Takeaways
+
+If you're a PM trying to build a genuinely data-driven culture (not just a dashboard-heavy one), here's what works:
+
+- **Kill at least one dashboard.** Seriously. If a dashboard hasn't driven a decision in the last 30 days, it's noise. Remove it to sharpen focus.
+- **Every metric needs an owner and a threshold.** If "DAU drops below X" doesn't trigger a specific action, it shouldn't be on the main dashboard.
+- **Teach your team to ask "so what?"** After every metric review, the next sentence should be "therefore, we should..." If no one can finish that sentence, the metric isn't actionable.
+- **Budget time for ad-hoc analysis.** The most valuable data work isn't on dashboards — it's answering specific questions with SQL, notebooks, and quick models.
+- **Celebrate decisions, not dashboards.** In team retrospectives, highlight moments where data changed a decision. That reinforces the culture you actually want.
+
+## The Bottom Line
+
+"Data-driven" is a culture, not an infrastructure. You can have the best analytics stack in the world and still make gut-driven decisions if the team doesn't connect data to actions. And you can be deeply data-informed with a single SQL editor and a clear decision framework.
+
+Invest in the framework first. The dashboards — if they're still needed — will follow.

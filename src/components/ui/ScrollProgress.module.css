@@ -1,0 +1,22 @@
+.bar {
+  position: fixed;
+  top: var(--nav-height);
+  left: 0;
+  right: 0;
+  height: 3px;
+  z-index: var(--z-sticky);
+  background: transparent;
+}
+
+.fill {
+  height: 100%;
+  background: var(--accent);
+  border-radius: 0 2px 2px 0;
+  transition: width 0.1s linear;
+}
+
+@media print {
+  .bar {
+    display: none;
+  }
+}

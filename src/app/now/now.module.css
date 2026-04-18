@@ -1,0 +1,69 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  max-width: var(--container-md);
+  margin: 0 auto;
+  padding: calc(var(--nav-height) + var(--space-10)) var(--space-6) var(--space-10);
+  width: 100%;
+}
+
+.title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4vw, 2.5rem);
+  font-weight: 700;
+  color: var(--text-strong);
+  margin-bottom: var(--space-2);
+}
+
+.updated {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  margin-bottom: var(--space-8);
+}
+
+.section {
+  margin-bottom: var(--space-8);
+}
+
+.sectionTitle {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text-strong);
+  margin-top: var(--space-2);
+  margin-bottom: var(--space-4);
+}
+
+.list {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.list li {
+  color: var(--text-body);
+  line-height: 1.7;
+  font-size: 0.95rem;
+  padding-left: var(--space-4);
+  position: relative;
+}
+
+.list li::before {
+  content: "→";
+  position: absolute;
+  left: 0;
+  color: var(--accent);
+}
+
+.note {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-top: var(--space-8);
+  padding-top: var(--space-6);
+  border-top: 1px solid var(--border);
+}
+
+.note a {
+  color: var(--accent);
+}

@@ -1,0 +1,44 @@
+[
+  {
+    "id": "sanjay-kumar",
+    "name": "Sanjay Kumar",
+    "title": "Product Lead",
+    "company": "Wipro Aviation OS",
+    "quote": "Dhruv has a rare ability to take ambiguous problems and break them down into actionable steps. His data-first mindset and low-dependency approach made him an invaluable contributor to our Aviation OS platform.",
+    "avatar": null,
+    "projectSlug": "aarkid",
+    "outcomeMetric": {
+      "value": "92%",
+      "label": "Detection Accuracy"
+    },
+    "relationship": "Manager at Wipro"
+  },
+  {
+    "id": "rishabh-prakash",
+    "name": "Rishabh Prakash",
+    "title": "Co-founder",
+    "company": "Odena",
+    "quote": "Working with Dhruv was a masterclass in structured execution. He identified gaps in our analytics pipeline and built dashboards that actually drove decisions — not just vanity metrics.",
+    "avatar": null,
+    "projectSlug": "churn-analysis",
+    "outcomeMetric": {
+      "value": "~15%",
+      "label": "Churn Reduction"
+    },
+    "relationship": "Co-founder at Odena"
+  },
+  {
+    "id": "aditya-mehta",
+    "name": "Aditya Mehta",
+    "title": "Founder",
+    "company": "Read Riches",
+    "quote": "Dhruv brought structure to chaos. He grew our content reach 4× by treating the content pipeline like a product — defining KPIs, running experiments, and iterating on what worked.",
+    "avatar": null,
+    "projectSlug": "marketing-effectiveness",
+    "outcomeMetric": {
+      "value": "+28%",
+      "label": "ROI Improvement"
+    },
+    "relationship": "Founder at Read Riches"
+  }
+]

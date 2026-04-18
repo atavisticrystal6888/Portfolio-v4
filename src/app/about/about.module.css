@@ -1,0 +1,77 @@
+.page {
+  display: flex;
+  flex-direction: column;
+}
+
+.section {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: var(--space-10) var(--space-6);
+  width: 100%;
+}
+
+.sectionNarrow {
+  max-width: var(--container-md);
+  margin: 0 auto;
+  padding: var(--space-10) var(--space-6);
+  width: 100%;
+}
+
+.sectionHeader {
+  margin-bottom: var(--space-6);
+}
+
+.sectionTitle {
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-weight: 700;
+  color: var(--text-strong);
+  margin-top: var(--space-2);
+}
+
+.bio {
+  font-size: 1.05rem;
+  color: var(--text-body);
+  max-width: 640px;
+  line-height: 1.8;
+}
+
+.education {
+  max-width: var(--container-md);
+  margin: 0 auto;
+  padding: var(--space-8) var(--space-6);
+}
+
+.eduTitle {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text-strong);
+}
+
+.eduSub {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  margin-top: var(--space-1);
+}
+
+.values {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: var(--space-4);
+}
+
+.valueCard {
+  padding: var(--space-4);
+  text-align: center;
+}
+
+.valueName {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.resumeCta {
+  text-align: center;
+  padding: var(--space-10) var(--space-6);
+}

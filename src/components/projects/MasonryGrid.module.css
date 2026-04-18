@@ -1,0 +1,66 @@
+.masonry {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-5);
+  padding: var(--space-6);
+  max-width: var(--container-max);
+  margin: 0 auto;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.columnTablet {
+  display: none;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.columnDesktop {
+  display: none;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.mobileRemainder {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.empty {
+  text-align: center;
+  color: var(--text-muted);
+  padding: var(--space-10) var(--space-6);
+  font-size: 0.95rem;
+  grid-column: 1 / -1;
+}
+
+/* Tablet: 2 columns */
+@media (min-width: 640px) {
+  .masonry {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .columnTablet {
+    display: flex;
+  }
+
+  .mobileRemainder {
+    display: none;
+  }
+}
+
+/* Desktop: 3 columns */
+@media (min-width: 1024px) {
+  .masonry {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .columnDesktop {
+    display: flex;
+  }
+}

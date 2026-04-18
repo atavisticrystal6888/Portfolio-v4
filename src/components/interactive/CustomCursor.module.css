@@ -1,0 +1,58 @@
+.dot {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 8px;
+  height: 8px;
+  background: var(--cursor-color, var(--accent));
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: var(--z-cursor);
+  transform: translate(-50%, -50%);
+  transition: width 0.2s ease, height 0.2s ease, background 0.2s ease;
+  mix-blend-mode: difference;
+  display: none;
+}
+
+.ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 36px;
+  height: 36px;
+  border: 1.5px solid var(--cursor-color, var(--accent));
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: var(--z-cursor);
+  transform: translate(-50%, -50%);
+  transition: width 0.3s ease, height 0.3s ease, border-color 0.3s ease, opacity 0.3s ease;
+  opacity: 0.4;
+  display: none;
+}
+
+.dot.hovering {
+  width: 14px;
+  height: 14px;
+}
+
+.ring.hovering {
+  width: 50px;
+  height: 50px;
+  opacity: 0.2;
+}
+
+/* Hide on touch / mobile */
+@media (max-width: 767px), (pointer: coarse) {
+  .dot,
+  .ring {
+    display: none !important;
+  }
+}
+
+/* Print */
+@media print {
+  .dot,
+  .ring {
+    display: none !important;
+  }
+}

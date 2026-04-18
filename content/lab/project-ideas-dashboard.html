@@ -1,0 +1,1004 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Industrial Project Ideas — PM-Centric IT Portfolio</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+        :root {
+            --primary: #1a56db;
+            --primary-light: #e8effc;
+            --accent: #0e9f6e;
+            --accent-light: #def7ec;
+            --warning: #ff5a1f;
+            --warning-light: #feecdc;
+            --purple: #7e3af2;
+            --purple-light: #edebfe;
+            --dark: #111827;
+            --gray-700: #374151;
+            --gray-500: #6b7280;
+            --gray-300: #d1d5db;
+            --gray-100: #f3f4f6;
+            --white: #ffffff;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--gray-100);
+            color: var(--dark);
+            line-height: 1.6;
+        }
+
+        .container { max-width: 1200px; margin: 0 auto; padding: 40px 24px; }
+
+        /* HEADER */
+        .header {
+            background: linear-gradient(135deg, #1a56db 0%, #7e3af2 100%);
+            color: white;
+            padding: 48px 40px;
+            border-radius: 16px;
+            margin-bottom: 32px;
+            position: relative;
+            overflow: hidden;
+        }
+        .header::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 400px;
+            height: 400px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 50%;
+        }
+        .header h1 {
+            font-size: 2.2rem;
+            font-weight: 800;
+            margin-bottom: 8px;
+            position: relative;
+            z-index: 1;
+        }
+        .header p {
+            font-size: 1.05rem;
+            opacity: 0.9;
+            position: relative;
+            z-index: 1;
+        }
+        .header .meta {
+            margin-top: 16px;
+            font-size: 0.85rem;
+            opacity: 0.7;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* SUMMARY STATS */
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            margin-bottom: 36px;
+        }
+        .stat-card {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 24px;
+            text-align: center;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+        }
+        .stat-card .number {
+            font-size: 2.4rem;
+            font-weight: 800;
+            line-height: 1;
+        }
+        .stat-card .label {
+            font-size: 0.8rem;
+            color: var(--gray-500);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-top: 8px;
+        }
+        .stat-card:nth-child(1) .number { color: var(--primary); }
+        .stat-card:nth-child(2) .number { color: var(--accent); }
+        .stat-card:nth-child(3) .number { color: var(--purple); }
+        .stat-card:nth-child(4) .number { color: var(--warning); }
+
+        /* CATEGORY SECTIONS */
+        .category {
+            margin-bottom: 40px;
+        }
+        .category-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        .category-badge {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1rem;
+            color: white;
+            flex-shrink: 0;
+        }
+        .cat-a .category-badge { background: var(--primary); }
+        .cat-b .category-badge { background: var(--accent); }
+        .cat-c .category-badge { background: var(--purple); }
+        .cat-d .category-badge { background: var(--warning); }
+        .cat-e .category-badge { background: #dc2626; }
+        .cat-f .category-badge { background: #0891b2; }
+
+        .category-header h2 {
+            font-size: 1.3rem;
+            font-weight: 700;
+        }
+
+        /* PROJECT CARDS */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+        }
+        .project-card {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+            border-left: 4px solid transparent;
+            transition: transform 0.15s, box-shadow 0.15s;
+        }
+        .project-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+        }
+        .cat-a .project-card { border-left-color: var(--primary); }
+        .cat-b .project-card { border-left-color: var(--accent); }
+        .cat-c .project-card { border-left-color: var(--purple); }
+        .cat-d .project-card { border-left-color: var(--warning); }
+        .cat-e .project-card { border-left-color: #dc2626; }
+        .cat-f .project-card { border-left-color: #0891b2; }
+
+        .project-number {
+            display: inline-block;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: var(--gray-100);
+            text-align: center;
+            line-height: 28px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--gray-700);
+            margin-bottom: 10px;
+        }
+        .project-card h3 {
+            font-size: 1.05rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: var(--dark);
+        }
+        .project-card .problem {
+            font-size: 0.88rem;
+            color: var(--gray-500);
+            margin-bottom: 14px;
+            line-height: 1.5;
+        }
+        .tech-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-bottom: 14px;
+        }
+        .tech-tag {
+            font-size: 0.7rem;
+            padding: 3px 8px;
+            border-radius: 6px;
+            background: var(--gray-100);
+            color: var(--gray-700);
+            font-weight: 500;
+        }
+        .pm-section {
+            background: var(--gray-100);
+            border-radius: 8px;
+            padding: 10px 14px;
+            margin-top: 10px;
+        }
+        .pm-section .pm-label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--gray-500);
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+        .pm-section p {
+            font-size: 0.82rem;
+            color: var(--gray-700);
+            line-height: 1.5;
+        }
+
+        /* DIFFICULTY BADGE */
+        .difficulty {
+            display: inline-block;
+            font-size: 0.68rem;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-weight: 600;
+            margin-left: 8px;
+            vertical-align: middle;
+        }
+        .diff-medium { background: #fef3c7; color: #92400e; }
+        .diff-hard { background: #fee2e2; color: #991b1b; }
+        .diff-expert { background: #ede9fe; color: #5b21b6; }
+
+        /* CAREER MAPPING TABLE */
+        .career-section {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 32px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+            margin-bottom: 36px;
+        }
+        .career-section h2 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 12px 16px;
+            text-align: left;
+            border-bottom: 1px solid var(--gray-300);
+            font-size: 0.9rem;
+        }
+        th {
+            background: var(--gray-100);
+            font-weight: 600;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--gray-500);
+        }
+        td { color: var(--gray-700); }
+        tr:last-child td { border-bottom: none; }
+        .highlight-cell { font-weight: 600; color: var(--primary); }
+
+        /* TECH STACK OVERVIEW */
+        .tech-overview {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-top: 16px;
+        }
+        .tech-overview-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 16px;
+            background: var(--gray-100);
+            border-radius: 8px;
+        }
+        .tech-overview-item .tech-name {
+            font-weight: 600;
+            font-size: 0.88rem;
+        }
+        .tech-overview-item .tech-role {
+            font-size: 0.78rem;
+            color: var(--gray-500);
+        }
+
+        /* COMPARISON TABLE */
+        .comparison-table {
+            overflow-x: auto;
+        }
+        .comparison-table table {
+            min-width: 900px;
+        }
+        .comparison-table th {
+            position: sticky;
+            top: 0;
+        }
+
+        /* PRINT STYLES */
+        @media print {
+            body { background: white; }
+            .container { padding: 0; }
+            .project-card:hover { transform: none; box-shadow: none; }
+            .header { break-after: avoid; }
+            .category { break-inside: avoid; }
+            .project-card { break-inside: avoid; }
+            .stats-row { break-inside: avoid; }
+        }
+
+        @media (max-width: 768px) {
+            .stats-row { grid-template-columns: repeat(2, 1fr); }
+            .projects-grid { grid-template-columns: 1fr; }
+            .tech-overview { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        /* FOOTER */
+        .footer {
+            text-align: center;
+            padding: 24px;
+            color: var(--gray-500);
+            font-size: 0.82rem;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <!-- HEADER -->
+    <div class="header">
+        <h1>Industrial Project Ideas Portfolio</h1>
+        <p>PM-Centric, IT-Aligned Projects for Entry-Level Graduate Engineers</p>
+        <div class="meta">Prepared: March 31, 2026 &nbsp;|&nbsp; 20 Projects &nbsp;|&nbsp; 6 Categories &nbsp;|&nbsp; 20+ Technologies</div>
+    </div>
+
+    <!-- SUMMARY STATS -->
+    <div class="stats-row">
+        <div class="stat-card">
+            <div class="number">20</div>
+            <div class="label">Total Projects</div>
+        </div>
+        <div class="stat-card">
+            <div class="number">6</div>
+            <div class="label">Categories</div>
+        </div>
+        <div class="stat-card">
+            <div class="number">20+</div>
+            <div class="label">Technologies</div>
+        </div>
+        <div class="stat-card">
+            <div class="number">5</div>
+            <div class="label">Career Paths</div>
+        </div>
+    </div>
+
+    <!-- TECH STACK OVERVIEW -->
+    <div class="career-section">
+        <h2>Technology Stack Coverage</h2>
+        <div class="tech-overview">
+            <div class="tech-overview-item">
+                <div><div class="tech-name">Elixir / Erlang</div><div class="tech-role">Backend, Real-time, OTP</div></div>
+            </div>
+            <div class="tech-overview-item">
+                <div><div class="tech-name">Rust</div><div class="tech-role">Performance-critical modules</div></div>
+            </div>
+            <div class="tech-overview-item">
+                <div><div class="tech-name">Python</div><div class="tech-role">ML, NLP, Data Mining</div></div>
+            </div>
+            <div class="tech-overview-item">
+                <div><div class="tech-name">React.js / JS / HTML</div><div class="tech-role">Frontend & Dashboards</div></div>
+            </div>
+            <div class="tech-overview-item">
+                <div><div class="tech-name">C / C++</div><div class="tech-role">SDKs, OOP, Embedded</div></div>
+            </div>
+            <div class="tech-overview-item">
+                <div><div class="tech-name">Kafka</div><div class="tech-role">Event Streaming</div></div>
+            </div>
+            <div class="tech-overview-item">
+                <div><div class="tech-name">PostgreSQL / SQL Server</div><div class="tech-role">Databases</div></div>
+            </div>
+            <div class="tech-overview-item">
+                <div><div class="tech-name">Power BI / Excel</div><div class="tech-role">Analytics & Reporting</div></div>
+            </div>
+            <div class="tech-overview-item">
+                <div><div class="tech-name">Docker / AWS / Git</div><div class="tech-role">DevOps & Infra</div></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== CATEGORY A ===== -->
+    <div class="category cat-a">
+        <div class="category-header">
+            <div class="category-badge">A</div>
+            <h2>Data &amp; Analytics Products</h2>
+        </div>
+        <div class="projects-grid">
+
+            <div class="project-card">
+                <span class="project-number">1</span>
+                <span class="difficulty diff-hard">HARD</span>
+                <h3>Customer 360 Analytics Platform</h3>
+                <p class="problem">Enterprises have customer data scattered across CRM, support tickets, billing, and usage logs. PMs and sales teams can't get a unified view.</p>
+                <div class="tech-tags">
+                    <span class="tech-tag">Kafka</span>
+                    <span class="tech-tag">Python</span>
+                    <span class="tech-tag">Elixir/Phoenix</span>
+                    <span class="tech-tag">PostgreSQL</span>
+                    <span class="tech-tag">SQL Server</span>
+                    <span class="tech-tag">React.js</span>
+                    <span class="tech-tag">Power BI</span>
+                    <span class="tech-tag">Docker</span>
+                    <span class="tech-tag">AWS</span>
+                </div>
+                <div class="pm-section">
+                    <div class="pm-label">PM Artifacts</div>
+                    <p>PRD, user stories, feature prioritization matrix, A/B test plan, OKRs (reduce churn by X%)</p>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <span class="project-number">2</span>
+                <span class="difficulty diff-hard">HARD</span>
+                <h3>Product Usage Analytics &amp; Feature Adoption Tracker</h3>
+                <p class="problem">SaaS companies need to understand which features users adopt, where they drop off, and what drives retention — without expensive third-party tools.</p>
+                <div class="tech-tags">
+                    <span class="tech-tag">Rust</span>
+                    <span class="tech-tag">Kafka</span>
+                    <span class="tech-tag">Elixir</span>
+                    <span class="tech-tag">PostgreSQL</span>
+                    <span class="tech-tag">Python</span>
+                    <span class="tech-tag">React.js</span>
+                    <span class="tech-tag">Power BI</span>
+                    <span class="tech-tag">Excel</span>
+                    <span class="tech-tag">Docker</span>
+                    <span class="tech-tag">AWS</span>
+                </div>
+                <div class="pm-section">
+                    <div class="pm-label">PM Artifacts</div>
+                    <p>Feature adoption funnel specs, retention metric definitions, cohort segmentation rules, usage-based backlog prioritization</p>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <span class="project-number">3</span>
+                <span class="difficulty diff-expert">EXPERT</span>
+                <h3>A/B Testing &amp; Experimentation Platform</h3>
+                <p class="problem">Companies need a self-hosted experimentation engine to test features, pricing, and UX changes with statistical rigor.</p>
+                <div class="tech-tags">
+                    <span class="tech-tag">Rust</span>
+                    <span class="tech-tag">Kafka</span>
+                    <span class="tech-tag">Python</span>
+                    <span class="tech-tag">Elixir/Phoenix</span>
+                    <span class="tech-tag">PostgreSQL</span>
+                    <span class="tech-tag">React.js</span>
+                    <span class="tech-tag">Power BI</span>
+                    <span class="tech-tag">Docker</span>
+                    <span class="tech-tag">AWS</span>
+                </div>
+                <div class="pm-section">
+                    <div class="pm-label">PM Artifacts</div>
+                    <p>Experimentation playbook, sample size calculators, guardrail metrics, experiment review checklist</p>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <span class="project-number">4</span>
+                <span class="difficulty diff-hard">HARD</span>
+                <h3>Business Intelligence Self-Service Portal</h3>
+                <p class="problem">Non-technical stakeholders depend on data teams for every report. A self-service BI tool lets PMs, finance, and ops query data themselves.</p>
+                <div class="tech-tags">
+                    <span class="tech-tag">Rust</span>
+                    <span class="tech-tag">Elixir/Phoenix</span>
+                    <span class="tech-tag">PostgreSQL</span>
+                    <span class="tech-tag">SQL Server</span>
+                    <span class="tech-tag">Python</span>
+                    <span class="tech-tag">React.js</span>
+                    <span class="tech-tag">Excel</span>
+                    <span class="tech-tag">Power BI</span>
+                    <span class="tech-tag">Docker</span>
+                    <span class="tech-tag">AWS</span>
+                </div>
+                <div class="pm-section">
+                    <div class="pm-label">PM Artifacts</div>
+                    <p>User personas (PM, finance analyst, ops lead), query guardrails design, data governance policy</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== CATEGORY B ===== -->
+    <div class="category cat-b">
+        <div class="category-header">
+            <div class="category-badge">B</div>
+            <h2>Platform &amp; Internal Tools</h2>
+        </div>
+        <div class="projects-grid">
+
+            <div class="project-card">
+                <span class="project-number">5</span>
+                <span class="difficulty diff-hard">HARD</span>
+                <h3>Feature Flag &amp; Release Management Platform</h3>
+                <p class="problem">Engineering teams need controlled rollouts (canary, percentage-based) without redeploying. PMs need visibility into what's live.</p>
+                <div class="tech-tags">
+                    <span class="tech-tag">C++</span>
+                    <span class="tech-tag">Rust</span>
+                    <span class="tech-tag">Elixir</span>
+                    <span class="tech-tag">Kafka</span>
+                    <span class="tech-tag">PostgreSQL</span>
+                    <span class="tech-tag">React.js</span>
+                    <span class="tech-tag">Python</span>
+                    <span class="tech-tag">Power BI</span>
+                    <span class="tech-tag">Docker</span>
+                    <span class="tech-tag">AWS</span>
+                </div>
+                <div class="pm-section">
+                    <div class="pm-label">PM Artifacts</div>
+                    <p>Rollout playbook, targeting rule taxonomy, rollback criteria, launch readiness checklist</p>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <span class="project-number">6</span>
+                <span class="difficulty diff-medium">MEDIUM</span>
+                <h3>Incident Management &amp; Postmortem Platform</h3>
+                <p class="problem">When production incidents happen, teams scramble across Slack, PagerDuty, and Jira. A unified incident platform reduces MTTR.</p>
+                <div class="tech-tags">
+                    <span class="tech-tag">Elixir/Erlang</span>
+                    <span class="tech-tag">Kafka</span>
+                    <span class="tech-tag">Python</span>
+                    <span class="tech-tag">PostgreSQL</span>
+                    <span class="tech-tag">React.js</span>
+                    <span class="tech-tag">Power BI</span>
+                    <span class="tech-tag">Excel</span>
+                    <span class="tech-tag">Docker</span>
+                    <span class="tech-tag">AWS</span>
+                </div>
+                <div class="pm-section">
+                    <div class="pm-label">PM Artifacts</div>
+                    <p>Incident severity taxonomy, SLA definitions, postmortem template, reliability OKRs</p>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <span class="project-number">7</span>
+                <span class="difficulty diff-hard">HARD</span>
+                <h3>Internal Developer Portal (Backstage-lite)</h3>
+                <p class="problem">Large orgs have hundreds of microservices with no central catalog. Developers waste time finding service owners, docs, and APIs.</p>
+                <div class="tech-tags">
+                    <span class="tech-tag">Elixir</span>
+                    <span class="tech-tag">Rust</span>
+                    <span class="tech-tag">PostgreSQL</span>
+                    <span class="tech-tag">React.js</span>
+                    <span class="tech-tag">Python</span>
+                    <span class="tech-tag">Docker</span>
+                    <span class="tech-tag">AWS</span>
+                    <span class="tech-tag">Git/GitHub</span>
+                </div>
+                <div class="pm-section">
+                    <div class="pm-label">PM Artifacts</div>
+                    <p>Service maturity model (scorecard), adoption metrics, onboarding funnel for new developers</p>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <span class="project-number">8</span>
+                <span class="difficulty diff-expert">EXPERT</span>
+                <h3>API Gateway &amp; Rate Limiting Platform</h3>
+                <p class="problem">As companies expose APIs to partners, they need usage tracking, rate limiting, key management, and developer documentation.</p>
+                <div class="tech-tags">
+                    <span class="tech-tag">Rust</span>
+                    <span class="tech-tag">Elixir/Phoenix</span>
+                    <span class="tech-tag">Kafka</span>
+                    <span class="tech-tag">Python</span>
+                    <span class="tech-tag">Power BI</span>
+                    <span class="tech-tag">PostgreSQL</span>
+                    <span class="tech-tag">React.js</span>
+                    <span class="tech-tag">Docker</span>
+                    <span class="tech-tag">AWS</span>
+                </div>
+                <div class="pm-section">
+                    <div class="pm-label">PM Artifacts</div>
+                    <p>API tier/plan definitions, rate limit policies, developer onboarding journey, monetization model</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== CATEGORY C ===== -->
+    <div class="category cat-c">
+        <div class="category-header">
+            <div class="category-badge">C</div>
+            <h2>Workflow &amp; Collaboration Products</h2>
+        </div>
+        <div class="projects-grid">
+
+            <div class="project-card">
+                <span class="project-number">9</span>
+                <span class="difficulty diff-medium">MEDIUM</span>
+                <h3>Project &amp; Sprint Management Tool (Jira-lite)</h3>
+                <p class="problem">Teams need a lightweight, opinionated Agile project tracker that enforces good practices without the bloat of enterprise tools.</p>
+                <div class="tech-tags">
+                    <span class="tech-tag">Elixir/Phoenix</span>
+                    <span class="tech-tag">Rust</span>
+                    <span class="tech-tag">PostgreSQL</span>
+                    <span class="tech-tag">React.js</span>
+                    <span class="tech-tag">Power BI</span>
+                    <span class="tech-tag">Excel</span>
+                    <span class="tech-tag">Python</span>
+                    <span class="tech-tag">C++</span>
+                    <span class="tech-tag">Docker</span>
+                    <span class="tech-tag">AWS</span>
+                </div>
+                <div class="pm-section">
+                    <div class="pm-label">PM Artifacts</div>
+                    <p>Sprint ceremony templates, Definition of Done, velocity tracking methodology, product roadmap</p>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <span class="project-number">10</span>
+                <span class="difficulty diff-medium">MEDIUM</span>
+                <h3>Approval Workflow &amp; Document Management</h3>
+                <p class="problem">Enterprises run on approvals — purchase orders, leave requests, compliance reviews — often managed through email chains and spreadsheets.</p>
+                <div class="tech-tags">
+                    <span class="tech-tag">Elixir</span>
+                    <span class="tech-tag">Python</span>
+                    <span class="tech-tag">PostgreSQL</span>
+                    <span class="tech-tag">SQL Server</span>
+                    <span class="tech-tag">React.js</span>
+                    <span class="tech-tag">Power BI</span>
+                    <span class="tech-tag">Excel</span>
+                    <span class="tech-tag">Docker</span>
+                    <span class="tech-tag">AWS</span>
+                </div>
+                <div class="pm-section">
+                    <div class="pm-label">PM Artifacts</div>
+                    <p>Workflow templates for 5+ business processes, SLA definitions, compliance checklist, user role matrix (RBAC)</p>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <span class="project-number">11</span>
+                <span class="difficulty diff-hard">HARD</span>
+                <h3>Customer Support Ticket System with Smart Routing</h3>
+                <p class="problem">Support teams manually triage tickets, leading to misrouting, SLA breaches, and unhappy customers.</p>
+                <div class="tech-tags">
+                    <span class="tech-tag">Kafka</span>
+                    <span class="tech-tag">Python</span>
+                    <span class="tech-tag">Elixir/Phoenix</span>
+                    <span class="tech-tag">PostgreSQL</span>
+                    <span class="tech-tag">React.js</span>
+                    <span class="tech-tag">Power BI</span>
+                    <span class="tech-tag">Excel</span>
+                    <span class="tech-tag">Docker</span>
+                    <span class="tech-tag">AWS</span>
+                </div>
+                <div class="pm-section">
+                    <div class="pm-label">PM Artifacts</div>
+                    <p>Ticket category taxonomy, SLA tiers, escalation rules, CSAT survey design, routing accuracy OKRs</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ===== CATEGORY D ===== -->
+    <div class="category cat-d">
+        <div class="category-header">
+            <div class="category-badge">D</div>
+            <h2>Data Pipeline &amp; Infrastructure Products</h2>
+        </div>
+        <div class="projects-grid">
+
+            <div class="project-card">
+                <span class="project-number">12</span>
+                <span class="difficulty diff-hard">HARD</span>
+                <h3>Event-Driven Notification Service (Multi-Channel)</h3>
+                <p class="problem">Products need to send emails, SMS, push, and in-app messages — each with different delivery guarantees, templates, and user preferences.</p>
+                <div class="tech-tags">
+                    <span class="tech-tag">Kafka</span>
+                    <span class="tech-tag">Elixir/Erlang</span>
+                    <span class="tech-tag">Rust</span>
+                    <span class="tech-tag">PostgreSQL</span>
+                    <span class="tech-tag">Python</span>
+                    <span class="tech-tag">Power BI</span>
+                    <span class="tech-tag">React.js</span>
+                    <span class="tech-tag">Docker</span>
+                    <span class="tech-tag">AWS</span>
+                </div>
+                <div class="pm-section">
+                    <div class="pm-label">PM Artifacts</div>
+                    <p>Notification channel priority matrix, opt-in/opt-out UX flows, delivery SLA per channel, template governance</p>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <span class="project-number">13</span>
+                <span class="difficulty diff-expert">EXPERT</span>
+                <h3>Data Pipeline Orchestration &amp; Monitoring (Airflow-lite)</h3>
+                <p class="problem">Data teams build ETL/ELT pipelines but lack visibility into failures, run times, data quality, and dependencies.</p>
+                <div class="tech-tags">
+                    <span class="tech-tag">Elixir</span>
+                    <span class="tech-tag">Python</span>
+                    <span class="tech-tag">Rust</span>
+                    <span class="tech-tag">Kafka</span>
+                    <span class="tech-tag">PostgreSQL</span>
+                    <span class="tech-tag">React.js</span>
+                    <span class="tech-tag">Power BI</span>
+                    <span class="tech-tag">Excel</span>
+                    <span class="tech-tag">Docker</span>
+                    <span class="tech-tag">AWS</span>
+                </div>
+                <div class="pm-section">
+                    <div class="pm-label">PM Artifacts</div>
+                    <p>Pipeline SLA definitions, alerting escalation rules, data quality scorecard, capacity planning model</p>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <span class="project-number">14</span>
+                <span class="difficulty diff-expert">EXPERT</span>
+                <h3>Change Data Capture (CDC) &amp; Data Sync Platform</h3>
+                <p class="problem">Keeping databases, caches, search indexes, and data warehouses in sync is a universal infrastructure challenge.</p>
+                <div class="tech-tags">
+                    <span class="tech-tag">Rust</span>
+                    <span class="tech-tag">Kafka</span>
+                    <span class="tech-tag">Elixir</span>
+                    <span class="tech-tag">Python</span>
+                    <span class="tech-tag">PostgreSQL</span>
+                    <span class="tech-tag">SQL Server</span>
+                    <span class="tech-tag">React.js</span>
+                    <span class="tech-tag">Power BI</span>
+                    <span class="tech-tag">Docker</span>
+                    <span class="tech-tag">AWS</span>
+                </div>
+                <div class="pm-section">
+                    <div class="pm-label">PM Artifacts</div>
+                    <p>Sync SLA guarantees, data consistency model, onboarding playbook for new sync targets</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ===== CATEGORY E ===== -->
+    <div class="category cat-e">
+        <div class="category-header">
+            <div class="category-badge">E</div>
+            <h2>Security &amp; Compliance Products</h2>
+        </div>
+        <div class="projects-grid">
+
+            <div class="project-card">
+                <span class="project-number">15</span>
+                <span class="difficulty diff-hard">HARD</span>
+                <h3>Role-Based Access Control (RBAC) &amp; Audit Platform</h3>
+                <p class="problem">As orgs scale, managing who can access what across dozens of services becomes a security and compliance nightmare.</p>
+                <div class="tech-tags">
+                    <span class="tech-tag">Rust</span>
+                    <span class="tech-tag">Elixir/Phoenix</span>
+                    <span class="tech-tag">Kafka</span>
+                    <span class="tech-tag">Python</span>
+                    <span class="tech-tag">PostgreSQL</span>
+                    <span class="tech-tag">React.js</span>
+                    <span class="tech-tag">Power BI</span>
+                    <span class="tech-tag">Excel</span>
+                    <span class="tech-tag">Docker</span>
+                    <span class="tech-tag">AWS</span>
+                </div>
+                <div class="pm-section">
+                    <div class="pm-label">PM Artifacts</div>
+                    <p>Permission taxonomy, role hierarchy design, compliance report templates, access review workflow</p>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <span class="project-number">16</span>
+                <span class="difficulty diff-hard">HARD</span>
+                <h3>Vulnerability &amp; Dependency Scanner Dashboard</h3>
+                <p class="problem">Engineering teams use dozens of open-source dependencies. Tracking CVEs, license risks, and outdated packages across repos is manual and error-prone.</p>
+                <div class="tech-tags">
+                    <span class="tech-tag">Rust</span>
+                    <span class="tech-tag">Kafka</span>
+                    <span class="tech-tag">Elixir/Phoenix</span>
+                    <span class="tech-tag">Python</span>
+                    <span class="tech-tag">PostgreSQL</span>
+                    <span class="tech-tag">React.js</span>
+                    <span class="tech-tag">Power BI</span>
+                    <span class="tech-tag">Excel</span>
+                    <span class="tech-tag">Docker</span>
+                    <span class="tech-tag">AWS</span>
+                    <span class="tech-tag">Git/GitHub</span>
+                </div>
+                <div class="pm-section">
+                    <div class="pm-label">PM Artifacts</div>
+                    <p>Risk scoring methodology, remediation SLA by severity, compliance posture dashboard, SBOM definition</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ===== CATEGORY F ===== -->
+    <div class="category cat-f">
+        <div class="category-header">
+            <div class="category-badge">F</div>
+            <h2>User-Facing SaaS Products</h2>
+        </div>
+        <div class="projects-grid">
+
+            <div class="project-card">
+                <span class="project-number">17</span>
+                <span class="difficulty diff-expert">EXPERT</span>
+                <h3>Multi-Tenant SaaS Subscription &amp; Billing Platform</h3>
+                <p class="problem">Every SaaS product needs subscription management, usage metering, invoicing, and plan upgrades — building it is complex but educational.</p>
+                <div class="tech-tags">
+                    <span class="tech-tag">Kafka</span>
+                    <span class="tech-tag">Elixir</span>
+                    <span class="tech-tag">Rust</span>
+                    <span class="tech-tag">PostgreSQL</span>
+                    <span class="tech-tag">SQL Server</span>
+                    <span class="tech-tag">React.js</span>
+                    <span class="tech-tag">Power BI</span>
+                    <span class="tech-tag">Excel</span>
+                    <span class="tech-tag">Python</span>
+                    <span class="tech-tag">Docker</span>
+                    <span class="tech-tag">AWS</span>
+                </div>
+                <div class="pm-section">
+                    <div class="pm-label">PM Artifacts</div>
+                    <p>Pricing model (flat/tiered/usage), plan comparison matrix, billing FAQ, revenue OKRs, upgrade/downgrade flows</p>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <span class="project-number">18</span>
+                <span class="difficulty diff-medium">MEDIUM</span>
+                <h3>URL Shortener with Enterprise Analytics</h3>
+                <p class="problem">Marketing teams need branded short links with click analytics, A/B redirect testing, and campaign attribution.</p>
+                <div class="tech-tags">
+                    <span class="tech-tag">Rust</span>
+                    <span class="tech-tag">Kafka</span>
+                    <span class="tech-tag">Elixir/Phoenix</span>
+                    <span class="tech-tag">Python</span>
+                    <span class="tech-tag">Power BI</span>
+                    <span class="tech-tag">PostgreSQL</span>
+                    <span class="tech-tag">React.js</span>
+                    <span class="tech-tag">Docker</span>
+                    <span class="tech-tag">AWS</span>
+                </div>
+                <div class="pm-section">
+                    <div class="pm-label">PM Artifacts</div>
+                    <p>Campaign attribution model, link expiry policies, team/workspace RBAC, UTM parameter strategy</p>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <span class="project-number">19</span>
+                <span class="difficulty diff-medium">MEDIUM</span>
+                <h3>Feedback &amp; Survey Platform (Typeform-lite)</h3>
+                <p class="problem">Product teams need continuous user feedback but rely on expensive tools. A self-hosted survey platform gives full data ownership.</p>
+                <div class="tech-tags">
+                    <span class="tech-tag">Elixir/Phoenix</span>
+                    <span class="tech-tag">Kafka</span>
+                    <span class="tech-tag">Python</span>
+                    <span class="tech-tag">PostgreSQL</span>
+                    <span class="tech-tag">React.js</span>
+                    <span class="tech-tag">Power BI</span>
+                    <span class="tech-tag">Excel</span>
+                    <span class="tech-tag">Rust</span>
+                    <span class="tech-tag">Docker</span>
+                    <span class="tech-tag">AWS</span>
+                </div>
+                <div class="pm-section">
+                    <div class="pm-label">PM Artifacts</div>
+                    <p>Survey templates (NPS, CSAT, PMF), response rate optimization, feedback loop process documentation</p>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <span class="project-number">20</span>
+                <span class="difficulty diff-hard">HARD</span>
+                <h3>Job Board &amp; Applicant Tracking System (ATS)</h3>
+                <p class="problem">Startups and mid-size companies need affordable ATS solutions with job posting, applicant pipeline tracking, and hiring analytics.</p>
+                <div class="tech-tags">
+                    <span class="tech-tag">Elixir/Phoenix</span>
+                    <span class="tech-tag">Python</span>
+                    <span class="tech-tag">Rust</span>
+                    <span class="tech-tag">Kafka</span>
+                    <span class="tech-tag">PostgreSQL</span>
+                    <span class="tech-tag">React.js</span>
+                    <span class="tech-tag">Power BI</span>
+                    <span class="tech-tag">Excel</span>
+                    <span class="tech-tag">Docker</span>
+                    <span class="tech-tag">AWS</span>
+                </div>
+                <div class="pm-section">
+                    <div class="pm-label">PM Artifacts</div>
+                    <p>Hiring pipeline stages, candidate scoring rubric, DEI reporting specs, job posting templates, recruiter journey map</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CAREER MAPPING TABLE -->
+    <div class="career-section">
+        <h2>Career Path Mapping</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>If Targeting...</th>
+                    <th>Recommended Projects</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="highlight-cell">Product Management</td>
+                    <td>#2 Usage Analytics, #3 A/B Testing, #9 Sprint Tracker, #19 Survey Platform</td>
+                </tr>
+                <tr>
+                    <td class="highlight-cell">Data / Analytics Engineering</td>
+                    <td>#1 Customer 360, #4 Self-Service BI, #13 Pipeline Orchestration, #14 CDC &amp; Sync</td>
+                </tr>
+                <tr>
+                    <td class="highlight-cell">Platform / Infra Engineering</td>
+                    <td>#5 Feature Flags, #8 API Gateway, #12 Notification Service, #14 CDC &amp; Sync</td>
+                </tr>
+                <tr>
+                    <td class="highlight-cell">Full-Stack SaaS Development</td>
+                    <td>#17 SaaS Billing, #18 URL Shortener, #20 ATS / Job Board</td>
+                </tr>
+                <tr>
+                    <td class="highlight-cell">DevOps / SRE</td>
+                    <td>#6 Incident Management, #13 Pipeline Orchestration, #16 Vuln Scanner</td>
+                </tr>
+                <tr>
+                    <td class="highlight-cell">Security / Compliance</td>
+                    <td>#15 RBAC &amp; Audit, #16 Vuln Scanner</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- FULL COMPARISON TABLE -->
+    <div class="career-section comparison-table">
+        <h2>Full Comparison Matrix</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Project</th>
+                    <th>Category</th>
+                    <th>Difficulty</th>
+                    <th>Key PM Skill</th>
+                    <th>Hardest Tech</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>1</td><td>Customer 360 Analytics</td><td>Data &amp; Analytics</td><td>Hard</td><td>User research, data strategy</td><td>Kafka + Python ML</td></tr>
+                <tr><td>2</td><td>Usage Analytics Tracker</td><td>Data &amp; Analytics</td><td>Hard</td><td>Product metrics, retention</td><td>Rust SDK + Elixir streams</td></tr>
+                <tr><td>3</td><td>A/B Testing Platform</td><td>Data &amp; Analytics</td><td>Expert</td><td>Experimentation, statistics</td><td>Python Bayesian + Rust</td></tr>
+                <tr><td>4</td><td>Self-Service BI Portal</td><td>Data &amp; Analytics</td><td>Hard</td><td>Stakeholder empowerment</td><td>Rust SQL parser</td></tr>
+                <tr><td>5</td><td>Feature Flag Platform</td><td>Platform Tools</td><td>Hard</td><td>Release management</td><td>C++ SDK + Elixir PubSub</td></tr>
+                <tr><td>6</td><td>Incident Management</td><td>Platform Tools</td><td>Medium</td><td>SLA ownership, reliability</td><td>Elixir OTP + Kafka</td></tr>
+                <tr><td>7</td><td>Developer Portal</td><td>Platform Tools</td><td>Hard</td><td>Internal product, adoption</td><td>Rust search + Elixir</td></tr>
+                <tr><td>8</td><td>API Gateway</td><td>Platform Tools</td><td>Expert</td><td>Monetization, partners</td><td>Rust networking</td></tr>
+                <tr><td>9</td><td>Sprint Management Tool</td><td>Workflow</td><td>Medium</td><td>Agile, backlog management</td><td>Elixir Channels + React</td></tr>
+                <tr><td>10</td><td>Approval Workflows</td><td>Workflow</td><td>Medium</td><td>Process design, compliance</td><td>Elixir state machines</td></tr>
+                <tr><td>11</td><td>Support Ticket System</td><td>Workflow</td><td>Hard</td><td>Customer experience, SLAs</td><td>Python NLP + Kafka</td></tr>
+                <tr><td>12</td><td>Notification Service</td><td>Data Pipeline</td><td>Hard</td><td>Channel strategy</td><td>Erlang/OTP concurrency</td></tr>
+                <tr><td>13</td><td>Pipeline Orchestration</td><td>Data Pipeline</td><td>Expert</td><td>Data ops, observability</td><td>Elixir DAG scheduler</td></tr>
+                <tr><td>14</td><td>CDC &amp; Data Sync</td><td>Data Pipeline</td><td>Expert</td><td>Data architecture</td><td>Rust WAL reader</td></tr>
+                <tr><td>15</td><td>RBAC &amp; Audit</td><td>Security</td><td>Hard</td><td>Security, compliance</td><td>Rust policy engine</td></tr>
+                <tr><td>16</td><td>Vulnerability Scanner</td><td>Security</td><td>Hard</td><td>Risk management</td><td>Rust + GitHub integration</td></tr>
+                <tr><td>17</td><td>SaaS Billing Platform</td><td>User-Facing SaaS</td><td>Expert</td><td>Pricing strategy, revenue</td><td>Elixir billing logic</td></tr>
+                <tr><td>18</td><td>URL Shortener</td><td>User-Facing SaaS</td><td>Medium</td><td>Marketing analytics</td><td>Rust redirect engine</td></tr>
+                <tr><td>19</td><td>Survey Platform</td><td>User-Facing SaaS</td><td>Medium</td><td>User research, feedback</td><td>Python NLP + Elixir</td></tr>
+                <tr><td>20</td><td>ATS / Job Board</td><td>User-Facing SaaS</td><td>Hard</td><td>Hiring funnel, marketplace</td><td>Python NLP + Rust search</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="footer">
+        Industrial Project Ideas Portfolio &mdash; Generated March 31, 2026<br>
+        <em>Open this file in a browser &rarr; Press Ctrl+P &rarr; Save as PDF</em>
+    </div>
+
+</div>
+</body>
+</html>

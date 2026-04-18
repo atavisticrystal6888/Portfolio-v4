@@ -1,0 +1,41 @@
+.divider {
+  position: absolute;
+  top: 0;
+  width: 80px;
+  height: 100%;
+  overflow: hidden;
+  display: none;
+  pointer-events: none;
+}
+
+.left {
+  left: 0;
+}
+
+.right {
+  right: 0;
+}
+
+.pattern {
+  position: absolute;
+  inset: 0;
+  width: 80px;
+  height: 100%;
+  border: 1px solid var(--border);
+  opacity: var(--divider-opacity, 0.06);
+  background-image: repeating-linear-gradient(
+    -45deg,
+    transparent,
+    transparent 2px,
+    var(--text-muted) 2px,
+    var(--text-muted) 3px,
+    transparent 3px,
+    transparent 6px
+  );
+}
+
+@media (min-width: 768px) {
+  .divider {
+    display: block;
+  }
+}
