@@ -2,6 +2,7 @@ import Link from "next/link";
 import { generatePageMetadata, generateBreadcrumbJsonLd } from "@/lib/metadata";
 import { SectionLabel } from "@/components/ui/SectionLabel";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
+import { EvalHarnessDemo } from "@/components/ai-pm/EvalHarnessDemo";
 import { getAllBlogPosts } from "@/lib/content";
 import styles from "@/styles/content-page.module.css";
 
@@ -84,6 +85,19 @@ export default function AIPMPage() {
               </div>
             ))}
           </div>
+        </div>
+      </ScrollReveal>
+
+      <ScrollReveal delay={0.05}>
+        <div className={styles.section}>
+          <SectionLabel>Live Demo</SectionLabel>
+          <h2 className={styles.sectionTitle}>An eval harness, in your browser</h2>
+          <p className={styles.lede} style={{ marginBottom: "var(--space-5)" }}>
+            Six plant-diagnosis cases. Two model versions. One confidence gate.
+            Toggle the controls and watch the same golden set re-score in real
+            time — this is how I validate an LLM feature before it ships.
+          </p>
+          <EvalHarnessDemo />
         </div>
       </ScrollReveal>
 
