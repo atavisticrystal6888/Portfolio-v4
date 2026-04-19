@@ -90,22 +90,3 @@ export function useTheme() {
     setPalette,
   };
 }
-
-/**
- * Inline script to prevent FOUC. Insert in <head> via dangerouslySetInnerHTML.
- */
-export const themeInitScript = `
-(function() {
-  try {
-    var stored = localStorage.getItem('${STORAGE_KEY}');
-    var config = stored ? JSON.parse(stored) : null;
-    var mode = config ? config.mode : (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-    var palette = config ? config.palette : 'teal';
-    document.documentElement.setAttribute('data-theme', mode);
-    document.documentElement.setAttribute('data-palette', palette);
-  } catch(e) {
-    document.documentElement.setAttribute('data-theme', 'dark');
-    document.documentElement.setAttribute('data-palette', 'teal');
-  }
-})();
-`;

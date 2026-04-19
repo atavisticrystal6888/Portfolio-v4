@@ -1,249 +1,134 @@
 [
-    {
-        "id":  0,
-        "name":  null,
-        "category":  null,
-        "difficulty":  null,
-        "problem":  null,
-        "pmSkill":  null,
-        "hardestTech":  null,
-        "stack":  [
-                      ""
-                  ],
-        "artifacts":  null
-    },
-    {
-        "id":  0,
-        "name":  null,
-        "category":  null,
-        "difficulty":  null,
-        "problem":  null,
-        "pmSkill":  null,
-        "hardestTech":  null,
-        "stack":  [
-                      ""
-                  ],
-        "artifacts":  null
-    },
-    {
-        "id":  0,
-        "name":  null,
-        "category":  null,
-        "difficulty":  null,
-        "problem":  null,
-        "pmSkill":  null,
-        "hardestTech":  null,
-        "stack":  [
-                      ""
-                  ],
-        "artifacts":  null
-    },
-    {
-        "id":  0,
-        "name":  null,
-        "category":  null,
-        "difficulty":  null,
-        "problem":  null,
-        "pmSkill":  null,
-        "hardestTech":  null,
-        "stack":  [
-                      ""
-                  ],
-        "artifacts":  null
-    },
-    {
-        "id":  0,
-        "name":  null,
-        "category":  null,
-        "difficulty":  null,
-        "problem":  null,
-        "pmSkill":  null,
-        "hardestTech":  null,
-        "stack":  [
-                      ""
-                  ],
-        "artifacts":  null
-    },
-    {
-        "id":  0,
-        "name":  null,
-        "category":  null,
-        "difficulty":  null,
-        "problem":  null,
-        "pmSkill":  null,
-        "hardestTech":  null,
-        "stack":  [
-                      ""
-                  ],
-        "artifacts":  null
-    },
-    {
-        "id":  0,
-        "name":  null,
-        "category":  null,
-        "difficulty":  null,
-        "problem":  null,
-        "pmSkill":  null,
-        "hardestTech":  null,
-        "stack":  [
-                      ""
-                  ],
-        "artifacts":  null
-    },
-    {
-        "id":  0,
-        "name":  null,
-        "category":  null,
-        "difficulty":  null,
-        "problem":  null,
-        "pmSkill":  null,
-        "hardestTech":  null,
-        "stack":  [
-                      ""
-                  ],
-        "artifacts":  null
-    },
-    {
-        "id":  0,
-        "name":  null,
-        "category":  null,
-        "difficulty":  null,
-        "problem":  null,
-        "pmSkill":  null,
-        "hardestTech":  null,
-        "stack":  [
-                      ""
-                  ],
-        "artifacts":  null
-    },
-    {
-        "id":  0,
-        "name":  null,
-        "category":  null,
-        "difficulty":  null,
-        "problem":  null,
-        "pmSkill":  null,
-        "hardestTech":  null,
-        "stack":  [
-                      ""
-                  ],
-        "artifacts":  null
-    },
-    {
-        "id":  0,
-        "name":  null,
-        "category":  null,
-        "difficulty":  null,
-        "problem":  null,
-        "pmSkill":  null,
-        "hardestTech":  null,
-        "stack":  [
-                      ""
-                  ],
-        "artifacts":  null
-    },
-    {
-        "id":  0,
-        "name":  null,
-        "category":  null,
-        "difficulty":  null,
-        "problem":  null,
-        "pmSkill":  null,
-        "hardestTech":  null,
-        "stack":  [
-                      ""
-                  ],
-        "artifacts":  null
-    },
-    {
-        "id":  0,
-        "name":  null,
-        "category":  null,
-        "difficulty":  null,
-        "problem":  null,
-        "pmSkill":  null,
-        "hardestTech":  null,
-        "stack":  [
-                      ""
-                  ],
-        "artifacts":  null
-    },
-    {
-        "id":  0,
-        "name":  null,
-        "category":  null,
-        "difficulty":  null,
-        "problem":  null,
-        "pmSkill":  null,
-        "hardestTech":  null,
-        "stack":  [
-                      ""
-                  ],
-        "artifacts":  null
-    },
-    {
-        "id":  0,
-        "name":  null,
-        "category":  null,
-        "difficulty":  null,
-        "problem":  null,
-        "pmSkill":  null,
-        "hardestTech":  null,
-        "stack":  [
-                      ""
-                  ],
-        "artifacts":  null
-    },
-    {
-        "id":  0,
-        "name":  null,
-        "category":  null,
-        "difficulty":  null,
-        "problem":  null,
-        "pmSkill":  null,
-        "hardestTech":  null,
-        "stack":  [
-                      ""
-                  ],
-        "artifacts":  null
-    },
-    {
-        "id":  0,
-        "name":  null,
-        "category":  null,
-        "difficulty":  null,
-        "problem":  null,
-        "pmSkill":  null,
-        "hardestTech":  null,
-        "stack":  [
-                      ""
-                  ],
-        "artifacts":  null
-    },
-    {
-        "id":  0,
-        "name":  null,
-        "category":  null,
-        "difficulty":  null,
-        "problem":  null,
-        "pmSkill":  null,
-        "hardestTech":  null,
-        "stack":  [
-                      ""
-                  ],
-        "artifacts":  null
-    },
-    {
-        "id":  0,
-        "name":  null,
-        "category":  null,
-        "difficulty":  null,
-        "problem":  null,
-        "pmSkill":  null,
-        "hardestTech":  null,
-        "stack":  [
-                      ""
-                  ],
-        "artifacts":  null
-    }
+  {
+    "id": 1,
+    "name": "Eval Harness as a Service",
+    "category": "AI Infra",
+    "difficulty": "Hard",
+    "problem": "Small AI-PM teams keep rebuilding the same golden-set → re-score → diff pipeline. Offer it as a hosted tool with a drop-in SDK, shadow-traffic mode, and per-prompt-version accuracy deltas.",
+    "pmSkill": "Developer-tool PM, eval design",
+    "hardestTech": "Deterministic re-scoring at scale, drift detection",
+    "stack": ["Next.js", "tRPC", "Postgres", "OpenAI/Gemini SDKs", "pgvector"],
+    "artifacts": "PRD, rubric template, pricing model"
+  },
+  {
+    "id": 2,
+    "name": "Cost-Per-Answer Calculator",
+    "category": "AI Infra",
+    "difficulty": "Medium",
+    "problem": "Every AI team underestimates unit economics until an invoice lands. A live calculator that takes model, tokens-in, tokens-out, cache hit rate, and batch size → returns $/request + $/user/month + envelope check.",
+    "pmSkill": "Unit-economics thinking, pricing",
+    "hardestTech": "Keeping provider pricing fresh without manual updates",
+    "stack": ["Next.js", "GitHub Actions (daily sync)", "TypeScript"],
+    "artifacts": "Open-source calculator (shipped embedded on /ai-pm)"
+  },
+  {
+    "id": 3,
+    "name": "PRD → Eval Set Converter",
+    "category": "AI Tooling",
+    "difficulty": "Hard",
+    "problem": "PMs write PRDs; engineers ship without measurable acceptance. Parse a PRD's success criteria into a structured eval set (golden cases, scoring rubric, pass/fail gate) before a single line of code.",
+    "pmSkill": "Structured thinking, acceptance criteria",
+    "hardestTech": "Extracting testable behaviour from prose",
+    "stack": ["Claude/GPT", "Zod schemas", "Markdown parser"],
+    "artifacts": "Spec, prompt chain, sample output"
+  },
+  {
+    "id": 4,
+    "name": "Churn-Risk Explainer",
+    "category": "Data Product",
+    "difficulty": "Medium",
+    "problem": "Churn models output a score; CS teams need a *reason*. Produce a one-sentence, feature-level explanation per at-risk user, ranked by recoverability.",
+    "pmSkill": "Data-driven retention, narrative from numbers",
+    "hardestTech": "SHAP → natural language without hallucinating",
+    "stack": ["Python", "SHAP", "DuckDB", "Streamlit"],
+    "artifacts": "Notebook + demo dashboard"
+  },
+  {
+    "id": 5,
+    "name": "Plant-Health Citizen Dataset",
+    "category": "AI Product",
+    "difficulty": "Medium",
+    "problem": "Aarkid's golden set is 50 photos. Crowdsource a labelled dataset (10k+ photos across failure modes) with contributor attribution and licence clarity.",
+    "pmSkill": "Marketplace liquidity, contributor incentives",
+    "hardestTech": "Quality control without a paid review team",
+    "stack": ["Supabase", "R2", "Label Studio", "Next.js"],
+    "artifacts": "Contributor flow, QC rubric"
+  },
+  {
+    "id": 6,
+    "name": "Meeting → Decision Log",
+    "category": "Productivity",
+    "difficulty": "Medium",
+    "problem": "Transcripts are noise. Extract *decisions made*, *blockers raised*, and *owners assigned* into a searchable log that survives the meeting.",
+    "pmSkill": "Information architecture, decision hygiene",
+    "hardestTech": "Distinguishing decisions from discussion",
+    "stack": ["Whisper", "Claude", "SQLite", "Tauri"],
+    "artifacts": "Desktop prototype"
+  },
+  {
+    "id": 7,
+    "name": "Interview-Loop Feedback Aggregator",
+    "category": "HR Tech",
+    "difficulty": "Easy",
+    "problem": "Hiring loops collect 4 independent writeups, then drown in a debrief Slack thread. Aggregate them into a structured rubric summary + dissenting-opinion highlight before the debrief.",
+    "pmSkill": "Hiring process design, signal vs noise",
+    "hardestTech": "Calibrating across interviewer styles",
+    "stack": ["Next.js", "Supabase", "LLM summarisation"],
+    "artifacts": "Flow diagram, rubric JSON"
+  },
+  {
+    "id": 8,
+    "name": "Aviation Ops Anomaly Feed",
+    "category": "Vertical AI",
+    "difficulty": "Expert",
+    "problem": "Aviation ops teams drown in green-dashboard fatigue. A feed that only surfaces anomalies (delay drivers, crew-conflict clusters, gate-change cascades) with root-cause breadcrumbs.",
+    "pmSkill": "Domain modelling, alert-fatigue management",
+    "hardestTech": "Cross-system joins, false-positive suppression",
+    "stack": ["Snowflake", "dbt", "Python", "Metabase"],
+    "artifacts": "Anomaly taxonomy, alert rubric"
+  },
+  {
+    "id": 9,
+    "name": "Reading-Log → Idea Graph",
+    "category": "Personal Tooling",
+    "difficulty": "Medium",
+    "problem": "Highlights sit in Readwise; ideas sit in notes; neither talk. Build a graph view where highlights cluster by concept and surface adjacency between books.",
+    "pmSkill": "Information design, spaced repetition",
+    "hardestTech": "Embeddings + clustering that survives new additions",
+    "stack": ["Readwise API", "pgvector", "D3", "Next.js"],
+    "artifacts": "Graph prototype"
+  },
+  {
+    "id": 10,
+    "name": "Open-Source Contribution Scout",
+    "category": "Developer Tooling",
+    "difficulty": "Hard",
+    "problem": "First-time contributors can't find tractable issues. Given a GitHub profile + stack, surface good-first-issues across repos filtered by real complexity (not just the label).",
+    "pmSkill": "Funnel design, trust metrics",
+    "hardestTech": "Inferring issue difficulty from diff patterns",
+    "stack": ["GitHub API", "pgvector", "Railway"],
+    "artifacts": "Scoring rubric, sample matches"
+  },
+  {
+    "id": 11,
+    "name": "Micro-SaaS Unit-Economics Sim",
+    "category": "Finance Tooling",
+    "difficulty": "Easy",
+    "problem": "Solo founders need a back-of-envelope that accepts MRR curve, CAC, churn, infra cost/user, and returns month-by-month cash + break-even date without a spreadsheet.",
+    "pmSkill": "Business modelling, scenario planning",
+    "hardestTech": "Sensible defaults so the UI isn't a tax return",
+    "stack": ["Next.js", "Zustand", "Recharts"],
+    "artifacts": "Hosted calculator"
+  },
+  {
+    "id": 12,
+    "name": "AI-PM Interview Prep Kit",
+    "category": "Career",
+    "difficulty": "Medium",
+    "problem": "AI-PM interview loops are new enough that nobody has a clean rubric. Ship a structured practice kit: problem framings, eval-design exercises, cost-envelope drills, mock transcripts with feedback.",
+    "pmSkill": "Pedagogy, interview-loop design",
+    "hardestTech": "Grading open-ended answers consistently",
+    "stack": ["Next.js", "MDX", "Claude for grading"],
+    "artifacts": "Curriculum outline, sample drills"
+  }
 ]

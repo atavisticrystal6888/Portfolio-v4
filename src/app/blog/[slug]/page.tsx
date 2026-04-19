@@ -9,6 +9,7 @@ import { ReadingProgress } from "@/components/blog/ReadingProgress";
 import { ShareButtons } from "@/components/blog/ShareButtons";
 import { RelatedArticles } from "@/components/blog/RelatedArticles";
 import { MdxContent } from "@/components/case-study/MdxContent";
+import { JsonLd } from "@/components/ui/JsonLd";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import styles from "./article.module.css";
 
@@ -65,14 +66,8 @@ export default async function BlogArticlePage({
 
   return (
     <div className={styles.page}>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}
-      />
+      <JsonLd id="blog-article-breadcrumb-jsonld" data={breadcrumbJsonLd} />
+      <JsonLd id="blog-article-jsonld" data={articleJsonLd} />
 
       <ReadingProgress />
 

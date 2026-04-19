@@ -11,6 +11,7 @@ import { TestimonialCarousel } from "@/components/home/TestimonialCarousel";
 import { BlogTeaser } from "@/components/home/BlogTeaser";
 import { Suggestions } from "@/components/home/Suggestions";
 import { DiagonalDivider } from "@/components/ui/DiagonalDivider";
+import { JsonLd } from "@/components/ui/JsonLd";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import styles from "./home.module.css";
 
@@ -30,14 +31,8 @@ export default function Home() {
 
   return (
     <div className={styles.page}>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(webSiteJsonLd) }}
-      />
+      <JsonLd id="home-person-jsonld" data={personJsonLd} />
+      <JsonLd id="home-website-jsonld" data={webSiteJsonLd} />
 
       {/* Hero */}
       <div style={{ position: "relative" }}>

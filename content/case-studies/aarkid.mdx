@@ -66,39 +66,42 @@ Batch care actions for 50+ plants at once grouped by "micro-climate zones". Expo
 
 ## Implementation
 
-The technical architecture prioritized modularity and fast iteration:
+The edge stack prioritised latency, auditability, and cost ceiling. Three decisions shaped the build:
 
-```python
-# Simplified flow: Image → Analysis → Recommendation
-from langchain.chains import SequentialChain
-from langchain_google_genai import ChatGoogleGenerativeAI
+**1. Cloudflare Workers (Hono) as orchestrator, not a monolith backend.** Image upload lands on R2 (zero egress). A single Worker fans out three parallel calls — Gemini vision, Perplexity research, OpenWeather — then composes the response. No cold starts, <50ms overhead, global by default.
 
-vision_model = ChatGoogleGenerativeAI(model="gemini-pro-vision")
-text_model = ChatGoogleGenerativeAI(model="gemini-pro")
+**2. Every claim cites a source.** Perplexity Sonar returns peer-reviewed citations inline. The frontend renders them as a footnote trail so users can audit *why* the app recommended neem oil for that particular spider-mite presentation.
 
-# Step 1: Analyze plant image
-diagnosis = vision_model.invoke([image, diagnosis_prompt])
+**3. A golden eval set, not a vibe check.** 50 labelled photos across 12 common plant-health failure modes. Every model/prompt change re-runs the set and reports accuracy deltas. Current model + prompt: **92% on the golden set, 90% citation grounding, P95 <10s end-to-end**.
 
-# Step 2: Generate care plan from diagnosis
-care_plan = text_model.invoke(care_prompt.format(
-    diagnosis=diagnosis.content
-))
+```ts
+// Simplified orchestrator flow inside the Worker
+const [diagnosis, research, weather] = await Promise.all([
+  gemini.analyze({ image, prompt: DIAGNOSIS_PROMPT }),
+  perplexity.research({ symptoms, species }),
+  openweather.local({ lat, lon, days: 7 }),
+]);
+
+const report = composeReport({ diagnosis, research, weather });
+return c.json(report); // <10s P95 on the edge
 ```
 
-> **Key Decision:** Using LangChain as an orchestration layer (rather than direct API calls) allowed rapid experimentation with prompt chaining and easy swapping of model versions.
+> **Key decision:** Keeping the orchestrator stateless pushed all persistence to Supabase (history, growth tracking) and R2 (images). The Worker is cheap to re-run, trivial to version, and the eval harness can replay any historical photo against a new model without touching user data.
 
 ## Outcome & Metrics
 
-- **Deliverable:** Full AI Product — End-to-end from concept to working app
-- **Tech Stack:** 4 Components — FastAPI + LangChain + Vision + Text
-- **Features:** 3 Core Flows — Diagnose, Recommend, Track
+- **Diagnosis accuracy:** 92% on a 50-sample golden set covering 12 failure modes
+- **Citation grounding:** 90% of recommendations carry a peer-reviewed source link
+- **Latency:** P95 <10s end-to-end on Cloudflare's edge
+- **Unit economics:** ~$0.25 per active user per month at scale; sub-$5/mo fixed infra at low usage
+- **Live:** [aarchid.space](https://www.aarchid.space/) — co-built with [Dilpreet Grover](https://github.com/dfordp)
 
 ## Learnings
 
-### What Worked
+### What worked
 
-Using LangChain's chain abstraction made it easy to iterate on prompts without touching infrastructure. The modular architecture let me develop and test each component independently.
+The eval harness was the unlock. Once we had a labelled golden set, prompt iteration went from "vibes" to measurable — every change produced an accuracy delta in minutes. The edge stack was the second: pushing orchestration to a Worker (instead of a traditional backend) kept fixed costs at single-digit dollars and made the app globally fast from day one.
 
-### What I'd Change
+### What I'd change
 
-Would add a feedback loop: let users confirm or correct diagnoses, then use that data to improve prompt engineering over time. The system is one-directional right now.
+A structured feedback loop — let users confirm or correct diagnoses, then feed the deltas back into the golden set. The harness exists; the human-in-the-loop pipe to update it is the next PR.

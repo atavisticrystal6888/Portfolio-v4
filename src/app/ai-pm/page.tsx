@@ -2,6 +2,7 @@ import Link from "next/link";
 import { generatePageMetadata, generateBreadcrumbJsonLd } from "@/lib/metadata";
 import { SectionLabel } from "@/components/ui/SectionLabel";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
+import { JsonLd } from "@/components/ui/JsonLd";
 import { EvalHarnessDemo } from "@/components/ai-pm/EvalHarnessDemo";
 import { CostModelDemo } from "@/components/ai-pm/CostModelDemo";
 import { getAllBlogPosts } from "@/lib/content";
@@ -50,10 +51,7 @@ export default function AIPMPage() {
 
   return (
     <div className={styles.page}>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
-      />
+      <JsonLd id="ai-pm-breadcrumb-jsonld" data={breadcrumbJsonLd} />
 
       <p className={styles.kicker}>Specialization</p>
       <h1 className={styles.title}>AI PM — where product thinking meets the model</h1>

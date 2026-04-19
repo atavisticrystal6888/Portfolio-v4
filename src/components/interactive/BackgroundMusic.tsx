@@ -63,6 +63,11 @@ export function BackgroundMusic() {
             }, 1000);
           }
         },
+        onloaderror: () => {
+          // Audio file is optional — silently disable music when missing.
+          soundRef.current = null;
+          globalController = null;
+        },
       });
     } catch (err) {
       console.warn('BackgroundMusic: Howler.js initialization failed:', err);

@@ -10,6 +10,7 @@ import { Timeline } from "@/components/about/Timeline";
 import { Achievements } from "@/components/about/Achievements";
 import { GitHubStats } from "@/components/about/GitHubStats";
 import { DiagonalDivider } from "@/components/ui/DiagonalDivider";
+import { JsonLd } from "@/components/ui/JsonLd";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import Link from "next/link";
 import styles from "./about.module.css";
@@ -31,14 +32,8 @@ export default async function AboutPage() {
 
   return (
     <div className={styles.page}>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
-      />
+      <JsonLd id="about-person-jsonld" data={personJsonLd} />
+      <JsonLd id="about-breadcrumb-jsonld" data={breadcrumbJsonLd} />
 
       {/* Header */}
       <PageHeader

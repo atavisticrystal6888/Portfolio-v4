@@ -5,6 +5,7 @@ import { ContactForm } from "@/components/contact/ContactForm";
 import { FAQAccordion } from "@/components/contact/FAQAccordion";
 import { AvailabilityBadge } from "@/components/contact/AvailabilityBadge";
 import { DirectLinks } from "@/components/contact/DirectLinks";
+import { JsonLd } from "@/components/ui/JsonLd";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import styles from "./contact.module.css";
 
@@ -62,14 +63,8 @@ export default function ContactPage() {
 
   return (
     <div className={styles.page}>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
-      />
+      <JsonLd id="contact-breadcrumb-jsonld" data={breadcrumbJsonLd} />
+      <JsonLd id="contact-faq-jsonld" data={faqJsonLd} />
 
       <PageHeader
         title="Let's Build Something Together"

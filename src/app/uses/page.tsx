@@ -1,4 +1,5 @@
 import { generatePageMetadata, generateBreadcrumbJsonLd } from "@/lib/metadata";
+import { JsonLd } from "@/components/ui/JsonLd";
 import { SectionLabel } from "@/components/ui/SectionLabel";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import styles from "@/styles/content-page.module.css";
@@ -71,10 +72,7 @@ export default function UsesPage() {
 
   return (
     <div className={styles.page}>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
-      />
+      <JsonLd id="uses-breadcrumb-jsonld" data={breadcrumbJsonLd} />
 
       <p className={styles.kicker}>Stack & tools</p>
       <h1 className={styles.title}>Uses</h1>

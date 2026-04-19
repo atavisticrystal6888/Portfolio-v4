@@ -1,4 +1,5 @@
 import { generatePageMetadata, generateBreadcrumbJsonLd } from "@/lib/metadata";
+import { JsonLd } from "@/components/ui/JsonLd";
 import { SectionLabel } from "@/components/ui/SectionLabel";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import styles from "./now.module.css";
@@ -18,10 +19,7 @@ export default function NowPage() {
 
   return (
     <div className={styles.page}>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
-      />
+      <JsonLd id="now-breadcrumb-jsonld" data={breadcrumbJsonLd} />
 
       <h1 className={styles.title}>What I&apos;m Doing Now</h1>
       <p className={styles.updated}>

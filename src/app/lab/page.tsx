@@ -1,4 +1,5 @@
 import { generatePageMetadata, generateBreadcrumbJsonLd } from "@/lib/metadata";
+import { JsonLd } from "@/components/ui/JsonLd";
 import { SectionLabel } from "@/components/ui/SectionLabel";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import { getAllLabIdeas } from "@/lib/content";
@@ -7,7 +8,7 @@ import styles from "@/styles/content-page.module.css";
 export const metadata = generatePageMetadata({
   title: "Lab",
   description:
-    "19 product ideas at the intersection of PM and engineering — mapped by category, difficulty, and the PM skill they exercise. Some I'll ship. Most won't. Thinking in public.",
+    "A working matrix of product ideas at the intersection of PM and engineering — mapped by category, difficulty, and the PM skill they exercise. Some I'll ship. Most won't. Thinking in public.",
   path: "/lab",
 });
 
@@ -31,10 +32,7 @@ export default function LabPage() {
 
   return (
     <div className={styles.page}>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
-      />
+      <JsonLd id="lab-breadcrumb-jsonld" data={breadcrumbJsonLd} />
 
       <p className={styles.kicker}>Ideas in motion</p>
       <h1 className={styles.title}>Lab</h1>

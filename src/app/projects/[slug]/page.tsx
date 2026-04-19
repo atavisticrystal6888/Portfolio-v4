@@ -12,6 +12,7 @@ import { MdxContent } from "@/components/case-study/MdxContent";
 import { CaseStudyNav } from "@/components/case-study/CaseStudyNav";
 import { RelatedWork } from "@/components/case-study/RelatedWork";
 import { GlassCard } from "@/components/ui/GlassCard";
+import { JsonLd } from "@/components/ui/JsonLd";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import styles from "./case-study.module.css";
 
@@ -64,14 +65,8 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
 
   return (
     <div className={styles.page}>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(creativeWorkJsonLd) }}
-      />
+      <JsonLd id="case-study-breadcrumb-jsonld" data={breadcrumbJsonLd} />
+      <JsonLd id="case-study-creative-work-jsonld" data={creativeWorkJsonLd} />
 
       {/* Header */}
       <CaseStudyHero caseStudy={caseStudy} />

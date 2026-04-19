@@ -4,6 +4,7 @@ import { getGitHubProfile } from "@/lib/github";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { ProjectGrid } from "@/components/projects/ProjectGrid";
 import { GitHubActivity } from "@/components/projects/GitHubActivity";
+import { JsonLd } from "@/components/ui/JsonLd";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 
 export const metadata = generatePageMetadata({
@@ -23,10 +24,7 @@ export default async function ProjectsPage() {
 
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
-      />
+      <JsonLd id="projects-breadcrumb-jsonld" data={breadcrumbJsonLd} />
 
       <PageHeader
         title="Projects"
