@@ -12,6 +12,7 @@ import { ScrollProgress } from "@/components/ui/ScrollProgress";
 import { LoadingScreen } from "@/components/ui/LoadingScreen";
 import { ErrorBoundary } from "@/components/ui/ErrorBoundary";
 import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 export const metadata: Metadata = {
   title: "Dhruv Singhal - Product Analyst & Builder",
@@ -93,6 +94,7 @@ export default function RootLayout({
           <CommandPalette />
         </ToastProvider>
         {process.env.VERCEL && <Analytics />}
+        {process.env.VERCEL && <SpeedInsights />}
       </body>
     </html>
   );
