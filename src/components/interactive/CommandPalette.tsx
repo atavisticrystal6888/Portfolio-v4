@@ -53,6 +53,8 @@ const ITEMS: PaletteItem[] = [
   { id: 'blog-pms', label: 'Why PMs Should Learn to Code', group: 'Blog Articles', action: 'navigate', target: '/blog/why-pms-should-code' },
   { id: 'blog-data', label: 'Data-Driven Product Decisions', group: 'Blog Articles', action: 'navigate', target: '/blog/data-driven-product-decisions' },
   { id: 'blog-thinking', label: 'Structured Thinking Framework', group: 'Blog Articles', action: 'navigate', target: '/blog/structured-thinking-framework' },
+  { id: 'blog-portfolio', label: 'Building My Portfolio Like a Product', group: 'Blog Articles', action: 'navigate', target: '/blog/building-portfolio-as-product', keywords: 'iteration shipping versions' },
+  { id: 'blog-metrics', label: 'The Three Metrics That Actually Matter for PMs', group: 'Blog Articles', action: 'navigate', target: '/blog/metrics-that-matter-for-pms', keywords: 'kpis okrs health focus guardrail' },
 
   // Quick Actions
   { id: 'copy-email', label: 'Copy email address', group: 'Actions', action: 'copy', target: EMAIL, keywords: 'clipboard mail contact' },
