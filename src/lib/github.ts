@@ -80,7 +80,8 @@ const QUERY = `
 const REPO_SLUG_MAP: Record<string, string> = {
   aarkid: "aarkid",
   "churn-analysis": "churn-analysis",
-  "marketing-effectiveness": "marketing-effectiveness",
+  "TCS-NQT-Prep-Hub": "tcs-nqt-prep-hub",
+  "Kite-edge": "kite-edge",
   portfolio: "portfolio-site",
 };
 

@@ -25,7 +25,7 @@ interface PaletteItem {
 
 const EMAIL = 'dhruvsinghal04@gmail.com';
 const GITHUB_URL = 'https://github.com/atavisticrystal6888';
-const LINKEDIN_URL = 'https://linkedin.com/in/dhruvsinghal04';
+const LINKEDIN_URL = 'https://linkedin.com/in/dhruvsinghal6888';
 const RESUME_HREF = '/resume/dhruv-singhal-resume.pdf';
 
 const ITEMS: PaletteItem[] = [
@@ -44,9 +44,8 @@ const ITEMS: PaletteItem[] = [
 
   // Case Studies
   { id: 'cs-aarkid', label: 'Aarkid — AI Botanical Intelligence', group: 'Case Studies', action: 'navigate', target: '/projects/aarkid', keywords: 'ai gemini plants co-creator dfordp' },
-  { id: 'cs-churn', label: 'Customer Churn Analysis', group: 'Case Studies', action: 'navigate', target: '/projects/churn-analysis', keywords: 'data analytics retention' },
-  { id: 'cs-marketing', label: 'Marketing Campaign Effectiveness', group: 'Case Studies', action: 'navigate', target: '/projects/marketing-effectiveness', keywords: 'roi attribution channels' },
-  { id: 'cs-portfolio', label: 'This Portfolio — Meta Case Study', group: 'Case Studies', action: 'navigate', target: '/projects/portfolio-site', keywords: 'next.js react build' },
+  { id: 'cs-churn', label: 'Customer Churn Analysis', group: 'Case Studies', action: 'navigate', target: '/projects/churn-analysis', keywords: 'data analytics retention' },  { id: 'cs-tcs-nqt', label: 'TCS NQT Prep Hub', group: 'Case Studies', action: 'navigate', target: '/projects/tcs-nqt-prep-hub', keywords: 'pwa exam preparation questions offline' },
+  { id: 'cs-kite-edge', label: 'KiteEdge \u2014 Portfolio Intelligence', group: 'Case Studies', action: 'navigate', target: '/projects/kite-edge', keywords: 'elixir finance analytics zerodha stocks' },  { id: 'cs-portfolio', label: 'This Portfolio — Meta Case Study', group: 'Case Studies', action: 'navigate', target: '/projects/portfolio-site', keywords: 'next.js react build' },
 
   // Blog Articles
   { id: 'blog-eval', label: 'Shipping LLM Products Starts With the Eval Harness', group: 'Blog Articles', action: 'navigate', target: '/blog/shipping-llm-products-eval-harness', keywords: 'ai llm eval harness aarkid' },

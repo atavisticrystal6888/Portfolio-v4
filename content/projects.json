@@ -37,18 +37,33 @@
     "order": 2
   },
   {
-    "slug": "marketing-effectiveness",
-    "name": "Marketing Effectiveness Analysis",
-    "category": "data",
-    "description": "Data-driven budget optimization at Read Riches across marketing channels that improved ROI by 28%.",
-    "stack": ["Python", "Pandas", "Matplotlib", "SQL", "Power BI"],
-    "metricValue": "+28%",
-    "metricLabel": "ROI Improvement",
+    "slug": "tcs-nqt-prep-hub",
+    "name": "TCS NQT Prep Hub",
+    "category": "technical",
+    "description": "Open-source TCS NQT preparation platform — 424+ practice questions, 10 previous papers, and an installable PWA with quizzes, flashcards, analytics, and offline support.",
+    "stack": ["JavaScript", "HTML/CSS", "PWA", "Service Workers"],
+    "metricValue": "424+",
+    "metricLabel": "Practice Questions",
     "featured": true,
-    "githubUrl": null,
-    "duration": "Feb 2026 – Mar 2026",
-    "role": "Marketing Analyst",
+    "githubUrl": "https://github.com/atavisticrystal6888/TCS-NQT-Prep-Hub",
+    "liveUrl": "https://atavisticrystal6888.github.io/TCS-NQT-Prep-Hub/",
+    "duration": "Mar 2026 – May 2026",
+    "role": "Creator & Lead Developer",
     "order": 3
+  },
+  {
+    "slug": "kite-edge",
+    "name": "KiteEdge — Portfolio Intelligence",
+    "category": "technical",
+    "description": "Self-hosted analytics platform for Zerodha Kite — 43+ technical indicators, risk analytics with Monte Carlo VaR, and ARIMA/Prophet forecasting.",
+    "stack": ["Elixir", "Phoenix", "Python", "FastAPI", "React", "TypeScript", "PostgreSQL", "Kafka"],
+    "metricValue": "43+",
+    "metricLabel": "Technical Indicators",
+    "featured": true,
+    "githubUrl": "https://github.com/atavisticrystal6888/Kite-edge",
+    "duration": "May 2026 – present",
+    "role": "Full-Stack Developer & Architect",
+    "order": 4
   },
   {
     "slug": "portfolio-site",
@@ -62,6 +77,6 @@
     "githubUrl": "https://github.com/atavisticrystal6888/Portfolio-v4",
     "duration": "Mar 2026 – Apr 2026",
     "role": "Full-Stack Developer & Product Manager",
-    "order": 4
+    "order": 5
   }
 ]

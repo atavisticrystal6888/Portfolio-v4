@@ -71,7 +71,7 @@ export default function RootLayout({
               "knowsAbout": ["Product Analytics", "Data Science", "AI/ML", "Product Management"],
               "sameAs": [
                 "https://github.com/atavisticrystal6888",
-                "https://linkedin.com/in/dhruv-singhal-ds"
+                "https://linkedin.com/in/dhruvsinghal6888"
               ]
             }),
           }}

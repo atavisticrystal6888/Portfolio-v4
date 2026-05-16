@@ -114,7 +114,7 @@ export default function Home() {
           <div className={styles.ctaButtons}>
             <Button href="mailto:dhruvsinghal04@gmail.com" external>Email Me</Button>
             <Button
-              href="https://linkedin.com/in/dhruvsinghal04"
+              href="https://linkedin.com/in/dhruvsinghal6888"
               variant="secondary"
               external
             >
