@@ -10,6 +10,10 @@ const QUICK_LINKS = [
   { href: '/blog', label: 'Blog' },
   { href: '/contact', label: 'Contact' },
   { href: '/now', label: 'Now' },
+  { href: '/lab', label: 'Lab' },
+  { href: '/uses', label: 'Uses' },
+  { href: '/bookshelf', label: 'Bookshelf' },
+  { href: '/changelog', label: 'Changelog' },
 ];
 
 const SOCIAL_LINKS = [
