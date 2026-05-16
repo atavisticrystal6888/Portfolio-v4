@@ -10,7 +10,7 @@ export interface Testimonial {
   company: string;
   quote: string;
   avatar: string | null;
-  projectSlug: string;
+  projectSlug: string | null;
   outcomeMetric: TestimonialMetric;
   relationship: string;
 }

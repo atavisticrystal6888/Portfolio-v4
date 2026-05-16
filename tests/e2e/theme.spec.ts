@@ -60,10 +60,14 @@ test.describe("Theme toggle and palette persistence", () => {
   });
 
   test("command palette opens with Ctrl+K", async ({ page }) => {
-    await page.goto("/");
-    await page.keyboard.press("Control+K");
+    await page.goto("/", { waitUntil: "networkidle" });
+    // Wait for hydration — theme toggle is a client component that mounts after hydration
+    await expect(page.getByRole("button", { name: /toggle theme|theme/i })).toBeVisible({ timeout: 5000 });
+    // Click body to ensure page has keyboard focus
+    await page.locator("body").click();
+    await page.keyboard.press("Control+k");
     // Command palette dialog should become visible
     const dialog = page.getByRole("dialog").first();
-    await expect(dialog).toBeVisible({ timeout: 3000 });
+    await expect(dialog).toBeVisible({ timeout: 5000 });
   });
 });

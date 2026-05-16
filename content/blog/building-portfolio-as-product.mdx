@@ -1,0 +1,79 @@
+---
+slug: "building-portfolio-as-product"
+title: "Building My Portfolio Like a Product"
+date: "2026-04-22"
+updatedDate: null
+category: "Technical"
+tags: ["portfolio", "product-thinking", "next.js", "iteration", "case-study"]
+readingTime: "6 min read"
+excerpt: "Five versions, three frameworks, and zero regrets. What treating a personal site like a real product taught me about scope, speed, and shipping."
+socialImage: null
+---
+
+## Version 1: The 2-Hour HTML Page
+
+My first portfolio was a single `index.html` with inline CSS. No JavaScript, no animations, no case studies. Just my name, a link to my resume, and three bullet points about what I do.
+
+It shipped in 2 hours. And it worked — I got my first interview through it.
+
+But it taught me nothing about how to present work in a way that builds trust. A resume link is not a product. It's a file download.
+
+## Why I Kept Iterating
+
+Each version solved a specific failure mode of the previous:
+
+| Version | Problem Solved | Stack | Time |
+|---------|---------------|-------|------|
+| v1 | "I don't have a site" | HTML/CSS | 2 hours |
+| v2 | "Nobody understands my work" | Static HTML, GSAP, CDN libs | 3 weeks |
+| v3 | "Can't maintain 14 HTML files" | Next.js 14, TypeScript | 2 weeks |
+| v4 | "Performance + SEO + accessibility gaps" | Next.js 16, React 19 | 1 week |
+| v5 | "Polish, trust signals, real content" | Same stack, content focus | 3 days |
+
+The key insight: **each version was a response to real user feedback**, not a tech upgrade for its own sake. v2 happened because interviewers said "I don't understand what you actually do." v3 happened because I kept forgetting to update all 14 HTML files. v4 happened because Lighthouse scores mattered for SEO.
+
+## Product Thinking Applied
+
+### 1. Define Success Before Building
+
+For v5, I defined exactly what "launch-ready" means:
+- Lighthouse > 90 across all categories
+- Real testimonials with verifiable context
+- Case studies with measurable outcomes
+- Zero broken links, zero console errors
+
+Without this definition, "improvements" would never end.
+
+### 2. Scope Ruthlessly
+
+My initial v5 improvement list had 32 items. I ranked them by effort × impact and cut 40% as "nice-to-have." The portfolio didn't need a CMS, analytics dashboards, or AI chatbot features. It needed **trust signals** and **clear copy**.
+
+### 3. Ship Incremental Value
+
+I didn't rebuild from scratch. Each change was atomic and independently valuable:
+- Better tagline → immediate clarity improvement
+- Security headers → immediate trust improvement
+- Headshot → immediate personal connection
+
+No change depended on another. If I stopped after 10 items, the site was still better.
+
+## Technical Decisions Worth Noting
+
+**Why Next.js?** Static HTML worked but didn't scale. With 4 case studies, 4 blog articles, and 14 pages, any content change meant touching multiple files. Next.js gives me component reuse, MDX for content, and SSG for performance.
+
+**Why not a CMS?** I write in VS Code. Adding Sanity or Contentful would add a build step, a dependency, and a failure mode — all for content I update monthly. MDX files in `/content/` work perfectly.
+
+**Why CSS Modules over Tailwind?** Personal preference. I think in components and want co-located styles. Tailwind's utility classes make diffs harder to review and increase cognitive load for style debugging.
+
+## Lessons for Other Builders
+
+1. **Ship v1 in a day.** A live URL beats a perfect Figma. Get feedback on real content, not mockups.
+2. **Version based on failure modes.** Don't rebuild because a new framework dropped. Rebuild because users told you something doesn't work.
+3. **Measure what matters.** For a portfolio, the metric is "did I get the interview." Everything else is vanity.
+4. **Content > Code.** A beautifully-engineered site with generic copy loses to an ugly site with compelling case studies.
+
+## What's Next
+
+v5 is the first version I'd call "complete." Not perfect — but sufficient for its job: earning interviews through demonstrated competence. The next iteration will be driven by the next failure mode I discover.
+
+And if that failure mode is "nobody found my site" — then the next version will be about distribution, not design.

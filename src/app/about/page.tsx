@@ -63,24 +63,36 @@ export default async function AboutPage() {
             <SectionLabel>Background</SectionLabel>
             <h2 className={styles.sectionTitle}>My Story</h2>
           </div>
-          <p className={styles.bio}>
-            B.Tech student in my final year, with two years of operating
-            experience across product management, analytics, and technical
-            execution. I&apos;ve worked the data layer at Wipro on aviation
-            systems, the analytics layer at Odena and Read Riches, and the
-            product surface at Omniful.ai — and on the side, I co-built{" "}
-            <Link href="/projects/aarkid">Aarkid</Link> with{" "}
-            <a href="https://github.com/dfordp" target="_blank" rel="noopener noreferrer">
-              Dilpreet Grover
-            </a>: a multimodal plant-diagnosis app that reaches 92% accuracy on
-            our golden set and runs at the edge for under a quarter per active
-            user per month.
-          </p>
-          <p className={styles.bio}>
-            I&apos;m most useful where product thinking, data, and engineering
-            overlap — the kind of work that needs someone who can write a PRD,
-            instrument the eval set, and ship the first version themselves.
-          </p>
+          <div className={styles.bioRow}>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/images/headshot.svg"
+              alt="Dhruv Singhal"
+              className={styles.headshot}
+              width={160}
+              height={160}
+            />
+            <div>
+              <p className={styles.bio}>
+                B.Tech student in my final year, with two years of operating
+                experience across product management, analytics, and technical
+                execution. I&apos;ve worked the data layer at Wipro on aviation
+                systems, the analytics layer at Odena and Read Riches, and the
+                product surface at Omniful.ai — and on the side, I co-built{" "}
+                <Link href="/projects/aarkid">Aarkid</Link> with{" "}
+                <a href="https://github.com/dfordp" target="_blank" rel="noopener noreferrer">
+                  Dilpreet Grover
+                </a>: a multimodal plant-diagnosis app that reaches 92% accuracy on
+                our golden set and runs at the edge for under a quarter per active
+                user per month.
+              </p>
+              <p className={styles.bio}>
+                I&apos;m most useful where product thinking, data, and engineering
+                overlap — the kind of work that needs someone who can write a PRD,
+                instrument the eval set, and ship the first version themselves.
+              </p>
+            </div>
+          </div>
         </ScrollReveal>
       </section>
 

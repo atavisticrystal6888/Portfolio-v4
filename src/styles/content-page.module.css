@@ -194,7 +194,7 @@
   font-size: 0.7rem;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  color: var(--accent);
+  color: var(--accent-hover);
   background: var(--accent-subtle);
   border: 1px solid var(--accent);
   border-radius: 999px;

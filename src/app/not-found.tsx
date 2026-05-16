@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback, useEffect } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/Button";
 
@@ -20,16 +20,8 @@ const SUGGESTED = [
 ];
 
 export default function NotFound() {
-  // Use a fixed initial quote to avoid hydration mismatch, then randomize on mount
-  const [quote, setQuote] = useState(PM_QUOTES[0]!);
-
-  const randomizeQuote = useCallback(() => {
-    setQuote(PM_QUOTES[Math.floor(Math.random() * PM_QUOTES.length)]!);
-  }, []);
-
-  useEffect(() => {
-    randomizeQuote();
-  }, [randomizeQuote]);
+  // Randomize on initial render; suppressHydrationWarning handles server/client mismatch
+  const [quote] = useState(() => PM_QUOTES[Math.floor(Math.random() * PM_QUOTES.length)]!);
 
   return (
     <section
@@ -66,6 +58,7 @@ export default function NotFound() {
         404
       </h1>
       <p
+        suppressHydrationWarning
         style={{
           marginTop: "1.25rem",
           fontSize: "1.15rem",

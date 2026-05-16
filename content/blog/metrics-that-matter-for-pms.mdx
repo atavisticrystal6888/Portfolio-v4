@@ -1,0 +1,78 @@
+---
+slug: "metrics-that-matter-for-pms"
+title: "The Three Metrics That Actually Matter for PMs"
+date: "2026-05-10"
+updatedDate: null
+category: "Product"
+tags: ["metrics", "product-management", "analytics", "okrs", "kpis"]
+readingTime: "4 min read"
+excerpt: "Most product teams track too many metrics and act on too few. Here's the framework I use to cut through metric noise and focus on decisions."
+socialImage: null
+---
+
+## The Metric Overload Problem
+
+Every product team I've worked with has the same disease: metric overload. They track DAU, WAU, MAU, D1/D7/D30 retention, session length, pages per session, conversion rate, NPS, CSAT, time-to-value, feature adoption, activation rate...
+
+And somehow, with all this data, decisions still get made in meetings based on whoever argues loudest.
+
+The problem isn't insufficient data. It's insufficient **decision architecture** — the connection between a metric moving and a team taking action.
+
+## My Three-Metric Framework
+
+After working across analytics at Wipro, churn prediction at Odena, and marketing attribution at Read Riches, I've landed on a framework I use for every product context:
+
+### 1. The Health Metric (Are we okay?)
+
+This is the one number that tells you whether the product is fundamentally working. It should:
+- Be measurable weekly
+- Have a clear "danger zone"
+- Not be gameable by a single team
+
+**Examples:** 7-day retention for consumer apps. Monthly active revenue for B2B. Task completion rate for tools.
+
+At Odena, our health metric was **monthly recurring revenue at risk** — the dollar value of accounts showing churn signals. When this crossed 15% of total MRR, we knew we had a systemic problem, not isolated cases.
+
+### 2. The Focus Metric (What are we improving?)
+
+This is the OKR-level metric your team owns for this quarter. It should:
+- Be directly influenced by the team's work
+- Move within 4-8 weeks of shipping changes
+- Connect to the health metric via a clear hypothesis
+
+**Example:** "If we improve onboarding completion from 40% to 65%, we expect D7 retention to improve by 10pp because users who complete onboarding are 3x more likely to return."
+
+This is where most teams fail. They pick focus metrics that are too lagging (revenue), too leading (button clicks), or too disconnected from the health metric.
+
+### 3. The Guardrail Metric (What can't we break?)
+
+Every improvement has a cost. The guardrail tells you when you've gone too far:
+- Speed improvements can't hurt accuracy
+- Engagement can't come from dark patterns
+- Conversion can't sacrifice long-term retention
+
+**At Read Riches**, when optimizing marketing spend allocation, our guardrail was **customer acquisition cost (CAC) payback period**. We could move budget freely between channels, but if payback exceeded 6 months on any cohort, we'd overcorrected.
+
+## Why Three, Not Ten
+
+Three metrics fit in working memory. A PM should be able to answer three questions without opening a dashboard:
+
+1. "Is the product healthy?" (Health metric: green/yellow/red)
+2. "Is our current bet working?" (Focus metric: trending up/flat/down)
+3. "Are we breaking anything?" (Guardrail: within bounds/approaching limit)
+
+If you need to open a dashboard to answer these, your metrics aren't embedded in the team's workflow. They're just charts.
+
+## Implementing This in Practice
+
+**Weekly:** Check health metric. 30 seconds. If green, ignore it. If yellow, dig deeper.
+
+**Bi-weekly:** Report focus metric progress. Connect it to specific shipped changes. If it's flat despite shipping, your hypothesis might be wrong.
+
+**On every launch:** Check guardrails. Did this feature improve the focus metric without triggering the guardrail? Ship and move on. Did it trigger the guardrail? Roll back and understand why.
+
+## The Meta-Lesson
+
+The hardest part of this framework isn't picking the three metrics. It's **saying no to the others**. Teams love to add "just one more metric" until they're back to tracking 40 things and acting on none.
+
+Resist. Three metrics. Three questions. Three decisions. Everything else is analysis, not product management.

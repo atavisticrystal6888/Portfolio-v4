@@ -21,7 +21,7 @@ export function ScrollProgress() {
   }, [onScroll]);
 
   return (
-    <div className={styles.bar} role="progressbar" aria-valuenow={Math.round(progress)} aria-valuemin={0} aria-valuemax={100}>
+    <div className={styles.bar} role="progressbar" aria-label="Page scroll progress" aria-valuenow={Math.round(progress)} aria-valuemin={0} aria-valuemax={100}>
       <div className={styles.fill} style={{ width: `${progress}%` }} />
     </div>
   );

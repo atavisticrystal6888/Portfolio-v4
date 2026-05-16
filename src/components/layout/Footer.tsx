@@ -59,7 +59,7 @@ export function Footer() {
 
         <div className={styles.bottom}>
           <p className={styles.copy}>
-            &copy; {new Date().getFullYear()} Dhruv Singhal. Crafted with intention.
+            &copy; {new Date().getFullYear()} Dhruv Singhal. Built with Next.js 16 &amp; TypeScript.
           </p>
           <BackToTop className={styles.backToTop} />
         </div>

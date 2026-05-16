@@ -76,7 +76,7 @@ export default function NowPage() {
           <h2 className={styles.sectionTitle}>Side Projects</h2>
           <ul className={styles.list}>
             <li>
-              <strong>Portfolio v4</strong> — this site. Next.js 16 + React
+              <strong>Portfolio v5</strong> — this site. Next.js 16 + React
               19, two interactive AI-PM demos, a 3D Aarkid hero.
             </li>
             <li>

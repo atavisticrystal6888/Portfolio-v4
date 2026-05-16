@@ -4,12 +4,13 @@
  * For full MDX support, swap to @next/mdx or mdx-bundler.
  */
 export function markdownToHtml(md: string): string {
-  let html = md;
+  // Normalize line endings to LF
+  let html = md.replace(/\r\n/g, '\n').replace(/\r/g, '\n');
 
   // Code blocks (``` ... ```)
   html = html.replace(/```(\w*)\n([\s\S]*?)```/g, (_m, lang, code) => {
     const escaped = escapeHtml(code.trim());
-    return `<pre><code class="language-${lang}">${escaped}</code></pre>`;
+    return `<pre tabindex="0"><code class="language-${lang}">${escaped}</code></pre>`;
   });
 
   // Inline code
@@ -42,8 +43,11 @@ export function markdownToHtml(md: string): string {
   html = html.replace(/^- (.+)$/gm, "<li>$1</li>");
   html = html.replace(/((?:<li>.*<\/li>\n?)+)/g, "<ul>$1</ul>");
 
-  // Ordered lists
-  html = html.replace(/^\d+\. (.+)$/gm, "<li>$1</li>");
+  // Ordered lists — wrap consecutive numbered lines in <ol>
+  html = html.replace(/((?:^\d+\. .+$\n?)+)/gm, (match) => {
+    const items = match.replace(/^\d+\. (.+)$/gm, "<li>$1</li>");
+    return `<ol>${items}</ol>`;
+  });
 
   // Paragraphs — wrap remaining text blocks
   html = html

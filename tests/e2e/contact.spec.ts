@@ -15,7 +15,7 @@ test.describe("Contact form", () => {
     await page.getByLabel(/email/i).first().fill("not-an-email");
     const subject = page.getByLabel(/subject/i).first();
     if (await subject.isVisible().catch(() => false)) {
-      await subject.fill("Test subject");
+      await subject.selectOption({ label: "Other" });
     }
     await page
       .getByLabel(/message/i)

@@ -19,10 +19,20 @@ const ROUTES = [
   "/now",
 ];
 
+// Disable animations so axe sees elements at full opacity
+test.use({ reducedMotion: "reduce" });
+
 test.describe("Accessibility (WCAG 2.1 AA)", () => {
   for (const route of ROUTES) {
     test(`${route} has no critical a11y violations`, async ({ page }) => {
-      await page.goto(route);
+      test.setTimeout(120_000);
+      await page.goto(route, { waitUntil: "networkidle" });
+      // Wait for React hydration to settle (SSR renders with opacity animations,
+      // then hydration detects prefers-reduced-motion and removes them)
+      await page.waitForFunction(
+        () => !document.querySelector('[style*="opacity: 0"]'),
+        { timeout: 5000 }
+      );
 
       const results = await new AxeBuilder({ page })
         .withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa"])

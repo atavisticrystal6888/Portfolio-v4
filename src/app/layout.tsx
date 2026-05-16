@@ -59,6 +59,23 @@ export default function RootLayout({
         />
         <meta name="theme-color" content="#0a0a0b" media="(prefers-color-scheme: dark)" />
         <meta name="theme-color" content="#f7f7f8" media="(prefers-color-scheme: light)" />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Person",
+              "name": "Dhruv Singhal",
+              "url": process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000",
+              "jobTitle": "Product Analyst & Builder",
+              "knowsAbout": ["Product Analytics", "Data Science", "AI/ML", "Product Management"],
+              "sameAs": [
+                "https://github.com/atavisticrystal6888",
+                "https://linkedin.com/in/dhruv-singhal-ds"
+              ]
+            }),
+          }}
+        />
       </head>
       <body>
         <ToastProvider>
@@ -75,7 +92,7 @@ export default function RootLayout({
           <Footer />
           <CommandPalette />
         </ToastProvider>
-        <Analytics />
+        {process.env.VERCEL && <Analytics />}
       </body>
     </html>
   );

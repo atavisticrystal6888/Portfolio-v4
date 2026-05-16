@@ -5,17 +5,17 @@ const CARDS = [
   {
     icon: "🎯",
     title: "Outcome > Output",
-    desc: "Impact matters more than activity. Measure what moves the needle, not what fills the calendar.",
+    desc: "At Odena, I killed a dashboard with 40+ charts because only 3 drove decisions. Impact > activity.",
   },
   {
     icon: "📊",
     title: "Data Informs, Intuition Decides",
-    desc: "Let numbers guide, not dictate. The best decisions blend quantitative rigor with qualitative insight.",
+    desc: "Aarkid's eval harness told us accuracy was 92% — but user interviews revealed trust was the real bottleneck. Both signals matter.",
   },
   {
     icon: "🚀",
     title: "Ship, Measure, Iterate",
-    desc: "Progress beats perfection. Get to market fast, learn from real users, and course-correct with data.",
+    desc: "This portfolio went live in 3 weeks, then I iterated through 5 versions. Perfection is the enemy of learning.",
   },
 ];
 

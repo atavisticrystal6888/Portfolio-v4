@@ -43,6 +43,50 @@
   transition: transform 0.4s ease;
 }
 
+/* Category-specific gradients */
+.visual[data-category="ai"] .gradient {
+  background: 
+    linear-gradient(135deg, rgba(210, 168, 255, 0.15) 0%, transparent 50%),
+    linear-gradient(225deg, rgba(96, 165, 250, 0.1) 0%, transparent 50%),
+    var(--gradient-card);
+}
+
+.visual[data-category="data"] .gradient {
+  background: 
+    linear-gradient(135deg, rgba(74, 222, 128, 0.12) 0%, transparent 50%),
+    linear-gradient(225deg, rgba(234, 177, 68, 0.1) 0%, transparent 50%),
+    var(--gradient-card);
+}
+
+.visual[data-category="product"] .gradient {
+  background: 
+    linear-gradient(135deg, rgba(91, 164, 181, 0.15) 0%, transparent 50%),
+    linear-gradient(225deg, rgba(248, 113, 113, 0.08) 0%, transparent 50%),
+    var(--gradient-card);
+}
+
+.visual[data-category="technical"] .gradient {
+  background: 
+    linear-gradient(135deg, rgba(234, 177, 68, 0.12) 0%, transparent 50%),
+    linear-gradient(225deg, rgba(91, 164, 181, 0.1) 0%, transparent 50%),
+    var(--gradient-card);
+}
+
+.icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 2.5rem;
+  opacity: 0.4;
+  transition: opacity 0.3s ease, transform 0.4s ease;
+}
+
+.card:hover .icon {
+  opacity: 0.6;
+  transform: translate(-50%, -50%) scale(1.1);
+}
+
 .card:hover .gradient {
   transform: scale(1.05);
 }

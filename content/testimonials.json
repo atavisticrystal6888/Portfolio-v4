@@ -6,10 +6,10 @@
     "company": "Wipro Aviation OS",
     "quote": "Dhruv has a rare ability to take ambiguous problems and break them down into actionable steps. His data-first mindset and low-dependency approach made him an invaluable contributor to our Aviation OS platform.",
     "avatar": "/images/avatars/sanjay-kumar.svg",
-    "projectSlug": "aarkid",
+    "projectSlug": null,
     "outcomeMetric": {
-      "value": "92%",
-      "label": "Detection Accuracy"
+      "value": "3",
+      "label": "Dashboards Shipped"
     },
     "relationship": "Manager at Wipro"
   },

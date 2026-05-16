@@ -37,7 +37,7 @@ test.describe("AI PM interactive demos", () => {
       await slider.focus();
       // Bump threshold to 100% — every case should fail at that gate.
       await page.keyboard.press("End");
-      await expect(harness.getByText(/confidence gate/i)).toContainText("100%");
+      await expect(harness.getByText(/confidence gate/i).first()).toContainText("100%");
     });
 
     test("at least one PASS row is present at the default gate", async ({

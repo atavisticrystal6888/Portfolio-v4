@@ -8,17 +8,25 @@ const MOBILE_VIEWPORTS = [
 
 const ROUTES = ["/", "/about", "/projects", "/blog", "/contact"];
 
+// Disable animations so axe sees elements at full opacity
+test.use({ reducedMotion: "reduce" });
+
 test.describe("Touch target sizing (WCAG 2.5.8)", () => {
   for (const viewport of MOBILE_VIEWPORTS) {
     for (const route of ROUTES) {
       test(`${route} @ ${viewport.name} — target-size rule`, async ({
         page,
       }) => {
+        test.setTimeout(60_000);
         await page.setViewportSize({
           width: viewport.width,
           height: viewport.height,
         });
-        await page.goto(route);
+        await page.goto(route, { waitUntil: "networkidle" });
+        await page.waitForFunction(
+          () => !document.querySelector('[style*="opacity: 0"]'),
+          { timeout: 5000 }
+        );
 
         const results = await new AxeBuilder({ page })
           .withRules(["target-size"])

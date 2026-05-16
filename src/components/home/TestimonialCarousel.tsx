@@ -77,9 +77,11 @@ export function TestimonialCarousel({ testimonials }: TestimonialCarouselProps) 
           <span>{t.title}, {t.company}</span>
           <span className={styles.relationship}>{t.relationship}</span>
         </div>
-        <Link href={`/projects/${t.projectSlug}`} className={styles.link}>
-          View Case Study →
-        </Link>
+        {t.projectSlug && (
+          <Link href={`/projects/${t.projectSlug}`} className={styles.link}>
+            View Case Study →
+          </Link>
+        )}
       </GlassCard>
 
       <div className={styles.controls}>

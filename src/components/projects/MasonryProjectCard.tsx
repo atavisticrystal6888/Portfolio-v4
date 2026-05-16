@@ -9,13 +9,26 @@ interface MasonryProjectCardProps {
   project: Project;
 }
 
+function categoryIcon(category: string): string {
+  switch (category) {
+    case 'ai': return '🧠';
+    case 'data': return '📊';
+    case 'product': return '🚀';
+    case 'technical': return '⚙️';
+    default: return '📁';
+  }
+}
+
 export function MasonryProjectCard({ project }: MasonryProjectCardProps) {
   return (
     <Link href={`/projects/${project.slug}`} className={styles.link}>
       <article className={styles.card}>
         {/* Visual area */}
-        <div className={styles.visual}>
+        <div className={styles.visual} data-category={project.category}>
           <div className={styles.gradient} />
+          <div className={styles.icon}>
+            {categoryIcon(project.category)}
+          </div>
           <div className={styles.overlay}>
             <h3 className={styles.title}>{project.name}</h3>
           </div>

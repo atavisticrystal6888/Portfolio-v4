@@ -92,6 +92,13 @@ a {
   transition: color var(--transition-fast);
 }
 
+/* Links within text blocks need underline for WCAG link-in-text-block */
+p a, li a, td a, dd a, blockquote a, figcaption a {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+}
+
 a:hover {
   color: var(--accent-hover);
 }
