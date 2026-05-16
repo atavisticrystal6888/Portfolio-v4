@@ -9,7 +9,7 @@ const MOBILE_VIEWPORTS = [
 const ROUTES = ["/", "/about", "/projects", "/blog", "/contact"];
 
 // Disable animations so axe sees elements at full opacity
-test.use({ reducedMotion: "reduce" });
+test.use({ reducedMotion: "reduce" } as Parameters<typeof test.use>[0]);
 
 test.describe("Touch target sizing (WCAG 2.5.8)", () => {
   for (const viewport of MOBILE_VIEWPORTS) {

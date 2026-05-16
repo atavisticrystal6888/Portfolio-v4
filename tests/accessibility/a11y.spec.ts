@@ -20,7 +20,7 @@ const ROUTES = [
 ];
 
 // Disable animations so axe sees elements at full opacity
-test.use({ reducedMotion: "reduce" });
+test.use({ reducedMotion: "reduce" } as Parameters<typeof test.use>[0]);
 
 test.describe("Accessibility (WCAG 2.1 AA)", () => {
   for (const route of ROUTES) {
