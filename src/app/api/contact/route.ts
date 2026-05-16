@@ -57,9 +57,10 @@ export async function POST(request: NextRequest) {
 
     // Send email via Resend if configured, otherwise log
     if (resend) {
-      const toEmail = process.env.CONTACT_EMAIL || "dhruv@example.com";
+      const toEmail = process.env.CONTACT_EMAIL || "dhruvsinghal04@gmail.com";
+      const fromEmail = process.env.RESEND_FROM_EMAIL || "Portfolio Contact <onboarding@resend.dev>";
       await resend.emails.send({
-        from: "Portfolio Contact <onboarding@resend.dev>",
+        from: fromEmail,
         to: toEmail,
         subject: `[Portfolio] ${sanitized.subject}`,
         replyTo: sanitized.email,

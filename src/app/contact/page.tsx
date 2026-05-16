@@ -3,7 +3,6 @@ import { SectionLabel } from "@/components/ui/SectionLabel";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { ContactForm } from "@/components/contact/ContactForm";
 import { FAQAccordion } from "@/components/contact/FAQAccordion";
-import { AvailabilityBadge } from "@/components/contact/AvailabilityBadge";
 import { DirectLinks } from "@/components/contact/DirectLinks";
 import { JsonLd } from "@/components/ui/JsonLd";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
@@ -71,12 +70,6 @@ export default function ContactPage() {
         subtitle="Looking for a Product Analyst, APM, or data-driven PM to join your team? Let's talk."
         badge="Open to Opportunities"
       />
-
-      <ScrollReveal>
-        <div className={styles.section}>
-          <AvailabilityBadge />
-        </div>
-      </ScrollReveal>
 
       {/* Contact Form */}
       <ScrollReveal delay={0.1}>

@@ -12,9 +12,9 @@ const QUICK_LINKS = [
 ];
 
 const SOCIAL_LINKS = [
-  { href: 'https://github.com/dhruvsinghal', label: 'GitHub' },
-  { href: 'https://linkedin.com/in/dhruvsinghal6888', label: 'LinkedIn' },
-  { href: 'mailto:dhruvsinghal6888@gmail.com', label: 'Email' },
+  { href: 'https://github.com/atavisticrystal6888', label: 'GitHub' },
+  { href: 'https://linkedin.com/in/dhruvsinghal04', label: 'LinkedIn' },
+  { href: 'mailto:dhruvsinghal04@gmail.com', label: 'Email' },
 ];
 
 export function Footer() {

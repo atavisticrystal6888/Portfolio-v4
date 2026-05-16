@@ -13,19 +13,11 @@ export function LoadingScreen() {
       setTimeout(() => setVisible(false), 400);
     };
 
-    if (document.readyState === 'complete') {
-      // Already loaded — still show briefly for smooth appearance
-      const timer = setTimeout(hide, 200);
-      return () => clearTimeout(timer);
-    }
-
-    window.addEventListener('load', hide, { once: true });
-    // Fallback: never stay longer than 3s
-    const fallback = setTimeout(hide, 3000);
-    return () => {
-      window.removeEventListener('load', hide);
-      clearTimeout(fallback);
-    };
+    // Always dismiss quickly — the loading screen is a brief brand impression,
+    // not a dependency gate. Use a short fixed delay so it works reliably
+    // regardless of readyState or hot-reload timing.
+    const timer = setTimeout(hide, 600);
+    return () => clearTimeout(timer);
   }, []);
 
   if (!visible) return null;

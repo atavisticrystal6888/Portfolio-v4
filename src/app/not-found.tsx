@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/Button";
 
@@ -20,9 +20,12 @@ const SUGGESTED = [
 ];
 
 export default function NotFound() {
-  const [quote] = useState(
-    () => PM_QUOTES[Math.floor(Math.random() * PM_QUOTES.length)]
-  );
+  // Use a fixed initial quote to avoid hydration mismatch, then randomize on mount
+  const [quote, setQuote] = useState(PM_QUOTES[0]!);
+
+  useEffect(() => {
+    setQuote(PM_QUOTES[Math.floor(Math.random() * PM_QUOTES.length)]!);
+  }, []);
 
   return (
     <section
