@@ -1,4 +1,4 @@
-# Portfolio v4 — Deployment Guide
+# Portfolio v4 - Deployment Guide
 
 Production deployment to **Vercel**.
 
@@ -6,7 +6,7 @@ Production deployment to **Vercel**.
 
 - Vercel account connected to the GitHub repository
 - Resend account (for contact form email delivery)
-- GitHub Personal Access Token (classic) with `read:user` and `public_repo` scopes — used for the GitHub GraphQL API on the Projects/About pages
+- GitHub Personal Access Token (classic) with `read:user` and `public_repo` scopes - used for the GitHub GraphQL API on the Projects/About pages
 
 ## Environment Variables
 
@@ -62,7 +62,7 @@ Then in a browser:
 ## ISR / Revalidation
 
 - `getGitHubProfile()` uses `fetch(..., { next: { revalidate: 3600 } })`
-  — GitHub data refreshes at most once per hour.
+  - GitHub data refreshes at most once per hour.
 - Static pages are fully prerendered at build time.
 - Dynamic routes (`/api/contact`, `/og/[...slug]`) run per request.
 

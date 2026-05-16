@@ -12,7 +12,7 @@ const SEGMENT_LABELS: Record<string, string> = {
   contact: 'Contact',
   now: 'Now',
   'case-studies': 'Case Studies',
-  aarkid: 'Aarkid',
+  aarchid: 'Aarchid',
   'churn-analysis': 'Churn Analysis',
   'portfolio-site': 'Portfolio Site',
   'tcs-nqt-prep-hub': 'TCS NQT Prep Hub',

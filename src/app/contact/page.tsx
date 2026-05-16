@@ -11,7 +11,7 @@ import styles from "./contact.module.css";
 export const metadata = generatePageMetadata({
   title: "Contact",
   description:
-    "Get in touch with Dhruv Singhal — open to Product Analyst, APM, and data-driven PM roles.",
+    "Get in touch with Dhruv Singhal - open to Product Analyst, APM, and data-driven PM roles.",
   path: "/contact",
 });
 
@@ -54,7 +54,7 @@ export default function ContactPage() {
         name: "Do you take freelance or consulting work?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "Selectively — for product strategy, analytics setup, or dashboard projects.",
+          text: "Selectively - for product strategy, analytics setup, or dashboard projects.",
         },
       },
     ],

@@ -5,7 +5,7 @@ const ROUTES = [
   "/",
   "/about",
   "/projects",
-  "/projects/aarkid",
+  "/projects/aarchid",
   "/projects/churn-analysis",
   "/blog",
   "/blog/why-pms-should-code",

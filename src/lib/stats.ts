@@ -1,7 +1,7 @@
 import { getAllBlogPosts, getAllCaseStudies, getAllProjects } from "./content";
 
 /**
- * Home metrics derived from actual content — not hardcoded.
+ * Home metrics derived from actual content - not hardcoded.
  * Used by {@link MetricsGrid}.
  *
  * Single source of truth: content in `/content/**`.
@@ -24,7 +24,7 @@ export function getHomeMetrics(): HomeMetric[] {
   const caseStudies = getAllCaseStudies();
   const posts = getAllBlogPosts();
 
-  // Surface the two strongest quantitative outcomes (featured first, Aarkid is a known win).
+  // Surface the two strongest quantitative outcomes (featured first, Aarchid is a known win).
   const featuredOutcomes = projects
     .filter((p) => p.featured)
     .slice(0, 2)

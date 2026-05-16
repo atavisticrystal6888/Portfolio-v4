@@ -19,8 +19,8 @@ vi.mock("gray-matter", () => ({
 
 const PROJECTS_JSON = JSON.stringify([
   {
-    slug: "aarkid",
-    name: "Aarkid",
+    slug: "aarchid",
+    name: "Aarchid",
     category: "product",
     description: "EdTech",
     stack: ["React"],
@@ -76,16 +76,16 @@ describe("getAllProjects", () => {
     const projects = getAllProjects();
     expect(projects).toHaveLength(2);
     expect(projects[0]!.slug).toBe("churn"); // order 1
-    expect(projects[1]!.slug).toBe("aarkid"); // order 2
+    expect(projects[1]!.slug).toBe("aarchid"); // order 2
   });
 });
 
 describe("getProjectBySlug", () => {
   it("returns matching project", async () => {
     const { getProjectBySlug } = await import("@/lib/content");
-    const project = getProjectBySlug("aarkid");
+    const project = getProjectBySlug("aarchid");
     expect(project).toBeDefined();
-    expect(project!.name).toBe("Aarkid");
+    expect(project!.name).toBe("Aarchid");
   });
 
   it("returns undefined for missing slug", async () => {

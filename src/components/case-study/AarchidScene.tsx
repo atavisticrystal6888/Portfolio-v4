@@ -4,10 +4,10 @@ import { useRef, useMemo } from "react";
 import { Canvas, useFrame, type ThreeElements } from "@react-three/fiber";
 import * as THREE from "three";
 import { useTheme } from "@/hooks/useTheme";
-import styles from "./AarkidScene.module.css";
+import styles from "./AarchidScene.module.css";
 
 /**
- * Stylised potted plant — procedural geometry, no external models.
+ * Stylised potted plant - procedural geometry, no external models.
  * Theme-reactive (leaf colour shifts with dark/light), gently drifting
  * to suggest "alive". Sits behind the hero copy, decorative only.
  */
@@ -150,12 +150,12 @@ function Plant({ palette }: { palette: Palette }) {
   );
 }
 
-interface AarkidSceneProps {
+interface AarchidSceneProps {
   /** Pause when the hero is offscreen to save CPU/GPU. */
   active: boolean;
 }
 
-export function AarkidScene({ active }: AarkidSceneProps) {
+export function AarchidScene({ active }: AarchidSceneProps) {
   const { mode } = useTheme();
   const palette = mode === "light" ? THEME.light : THEME.dark;
 
@@ -176,4 +176,4 @@ export function AarkidScene({ active }: AarkidSceneProps) {
   );
 }
 
-export default AarkidScene;
+export default AarchidScene;

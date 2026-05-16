@@ -1,6 +1,6 @@
 /**
  * Simple markdown-to-HTML converter for case study and blog content.
- * Handles: headings, paragraphs, bold, italic, code, links, lists, blockquotes, hr, images.
+ * Handles: headings, paragraphs, bold, italic, code, links, lists, blockquotes, hr, images, tables.
  * For full MDX support, swap to @next/mdx or mdx-bundler.
  */
 export function markdownToHtml(md: string): string {
@@ -39,17 +39,55 @@ export function markdownToHtml(md: string): string {
   // Blockquotes
   html = html.replace(/^> (.+)$/gm, "<blockquote><p>$1</p></blockquote>");
 
+  // Tables - match consecutive pipe-delimited lines (header | separator | rows)
+  html = html.replace(
+    /((?:^\|.+\|$\n?){2,})/gm,
+    (tableBlock) => {
+      const lines = tableBlock.trim().split('\n').filter((l) => l.trim());
+      if (lines.length < 2) return tableBlock;
+
+      // First line is the header, second is the separator (|---|---|)
+      const headerLine = lines[0]!;
+      const separatorLine = lines[1]!;
+
+      // Verify the second line is a separator
+      if (!/^\|[\s\-:|]+\|$/.test(separatorLine)) return tableBlock;
+
+      const parseRow = (line: string) =>
+        line.split('|').slice(1, -1).map((cell) => cell.trim());
+
+      const headers = parseRow(headerLine);
+      const dataRows = lines.slice(2);
+
+      let tableHtml = '<table><thead><tr>';
+      for (const h of headers) {
+        tableHtml += `<th>${h}</th>`;
+      }
+      tableHtml += '</tr></thead><tbody>';
+      for (const row of dataRows) {
+        const cells = parseRow(row);
+        tableHtml += '<tr>';
+        for (const cell of cells) {
+          tableHtml += `<td>${cell}</td>`;
+        }
+        tableHtml += '</tr>';
+      }
+      tableHtml += '</tbody></table>';
+      return tableHtml;
+    }
+  );
+
   // Unordered lists
   html = html.replace(/^- (.+)$/gm, "<li>$1</li>");
   html = html.replace(/((?:<li>.*<\/li>\n?)+)/g, "<ul>$1</ul>");
 
-  // Ordered lists — wrap consecutive numbered lines in <ol>
+  // Ordered lists - wrap consecutive numbered lines in <ol>
   html = html.replace(/((?:^\d+\. .+$\n?)+)/gm, (match) => {
     const items = match.replace(/^\d+\. (.+)$/gm, "<li>$1</li>");
     return `<ol>${items}</ol>`;
   });
 
-  // Paragraphs — wrap remaining text blocks
+  // Paragraphs - wrap remaining text blocks
   html = html
     .split("\n\n")
     .map((block) => {

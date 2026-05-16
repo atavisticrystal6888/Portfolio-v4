@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
 const SITE_NAME = "Dhruv Singhal";
 const DEFAULT_DESCRIPTION =
-  "Portfolio of Dhruv Singhal — Product Analyst & Builder. Case studies, blog articles, and projects showcasing data-driven product thinking.";
+  "Portfolio of Dhruv Singhal - Product Analyst & Builder. Case studies, blog articles, and projects showcasing data-driven product thinking.";
 
 interface PageMetadataOptions {
   title: string;

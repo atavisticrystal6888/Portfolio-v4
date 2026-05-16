@@ -5,11 +5,11 @@ import styles from "./CostModelDemo.module.css";
 
 /**
  * Per-1k-token / per-call costs grounded in publicly listed pricing
- * for the Aarkid stack. Numbers are illustrative, not contractual.
+ * for the Aarchid stack. Numbers are illustrative, not contractual.
  */
 const PRICES = {
   visionPerCall: 0.0035, // Gemini 1.5 Pro vision call w/ ~1MP image
-  retrievalPerCall: 0.005, // Perplexity Sonar grounded query
+  retrievalPerCall: 0.005, // Exa AI API grounded query
   embedPerCall: 0.0001, // text-embedding-3-small for cache lookup
   workerPerCall: 0.0000005, // Cloudflare Workers per-request
 };
@@ -158,7 +158,7 @@ export function CostModelDemo() {
             </span>
           </li>
           <li>
-            <span className={styles.bdLabel}>Retrieval (Perplexity Sonar)</span>
+            <span className={styles.bdLabel}>Retrieval (Exa AI API)</span>
             <span className={styles.bdValue}>
               {formatUsd(PRICES.retrievalPerCall, 5)}
             </span>
@@ -179,8 +179,8 @@ export function CostModelDemo() {
       </div>
 
       <p className={styles.note}>
-        The Aarkid envelope is <strong>$0.25 / active user / month</strong>.
-        Vision is the dominant cost — batching it across multiple images
+        The Aarchid envelope is <strong>$0.25 / active user / month</strong>.
+        Vision is the dominant cost - batching it across multiple images
         (gallery upload, time-lapse) and caching repeat diagnoses by perceptual
         hash are the two levers that keep us under budget at scale.
       </p>

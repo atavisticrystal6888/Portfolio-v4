@@ -11,16 +11,9 @@ interface TimelineItem {
 const EXPERIENCE: TimelineItem[] = [
   {
     company: "Wipro",
-    role: "Product Intern — Aviation OS",
-    period: "2025 – Present",
-    description: "Leading product analytics for the Aviation OS vertical. Building dashboards, defining KPIs, and driving data-informed feature prioritization.",
-    current: true,
-  },
-  {
-    company: "Odena",
-    role: "Analytics Consultant",
-    period: "2025 – Present",
-    description: "Advising on analytics strategy. Built churn prediction models and customer segmentation frameworks.",
+    role: "Product Intern",
+    period: "2025 - Present",
+    description: "Leading product analytics. Building dashboards, defining KPIs, and driving data-informed feature prioritization.",
     current: true,
   },
   {

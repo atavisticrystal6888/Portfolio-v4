@@ -18,7 +18,7 @@ import styles from "./about.module.css";
 export const metadata = generatePageMetadata({
   title: "About",
   description:
-    "Learn about Dhruv Singhal — a Product Analyst & Builder with experience in product management, data analytics, and technical execution.",
+    "Learn about Dhruv Singhal - a Product Analyst & Builder with experience in product management, data analytics, and technical execution.",
   path: "/about",
 });
 
@@ -38,7 +38,7 @@ export default async function AboutPage() {
       {/* Header */}
       <PageHeader
         title="Dhruv Singhal"
-        subtitle="Product Analyst & Builder — turning ambiguous problems into structured execution through data-driven product thinking."
+        subtitle="Product Analyst & Builder - turning ambiguous problems into structured execution through data-driven product thinking."
       />
 
       {/* Philosophy */}
@@ -77,9 +77,9 @@ export default async function AboutPage() {
                 B.Tech student in my final year, with two years of operating
                 experience across product management, analytics, and technical
                 execution. I&apos;ve worked the data layer at Wipro on aviation
-                systems, the analytics layer at Odena and Read Riches, and the
-                product surface at Omniful.ai — and on the side, I co-built{" "}
-                <Link href="/projects/aarkid">Aarkid</Link> with{" "}
+                systems, the analytics layer at Read Riches, and the
+                product surface at Omniful.ai - and on the side, I co-built{" "}
+                <Link href="/projects/aarchid">Aarchid</Link> with{" "}
                 <a href="https://github.com/dfordp" target="_blank" rel="noopener noreferrer">
                   Dilpreet Grover
                 </a>: a multimodal plant-diagnosis app that reaches 92% accuracy on
@@ -88,7 +88,7 @@ export default async function AboutPage() {
               </p>
               <p className={styles.bio}>
                 I&apos;m most useful where product thinking, data, and engineering
-                overlap — the kind of work that needs someone who can write a PRD,
+                overlap - the kind of work that needs someone who can write a PRD,
                 instrument the eval set, and ship the first version themselves.
               </p>
             </div>

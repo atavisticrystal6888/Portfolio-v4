@@ -14,9 +14,9 @@ import { ErrorBoundary } from "@/components/ui/ErrorBoundary";
 import { Analytics } from "@vercel/analytics/react";
 
 export const metadata: Metadata = {
-  title: "Dhruv Singhal — Product Analyst & Builder",
+  title: "Dhruv Singhal - Product Analyst & Builder",
   description:
-    "Portfolio of Dhruv Singhal — Product Analyst & Builder. Case studies, blog articles, and projects showcasing data-driven product thinking.",
+    "Portfolio of Dhruv Singhal - Product Analyst & Builder. Case studies, blog articles, and projects showcasing data-driven product thinking.",
   metadataBase: new URL(
     process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"
   ),
@@ -54,7 +54,7 @@ export default function RootLayout({
         <link
           rel="alternate"
           type="application/rss+xml"
-          title="Dhruv Singhal — Blog RSS"
+          title="Dhruv Singhal - Blog RSS"
           href="/rss.xml"
         />
         <meta name="theme-color" content="#0a0a0b" media="(prefers-color-scheme: dark)" />

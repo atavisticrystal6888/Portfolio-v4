@@ -1,5 +1,5 @@
 /* ============================================================
-   ANIMATIONS — Keyframes, transitions, Framer Motion hooks
+   ANIMATIONS - Keyframes, transitions, Framer Motion hooks
    ============================================================ */
 
 /* ===== KEYFRAMES ===== */
@@ -105,7 +105,7 @@
 .delay-4 { transition-delay: 0.24s; }
 .delay-5 { transition-delay: 0.30s; }
 
-/* Framer Motion — initial states (applied before Framer Motion animates) */
+/* Framer Motion - initial states (applied before Framer Motion animates) */
 .motion-fade-up {
   opacity: 0;
   transform: translateY(40px);

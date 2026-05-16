@@ -1,12 +1,12 @@
 /* ============================================================
-   PRINT — Print-friendly stylesheet
+   PRINT - Print-friendly stylesheet
    Hide interactive elements, show content in readable layout
    Uses element selectors + aria attributes since CSS Modules
    hashes class names at build time
    ============================================================ */
 
 @media print {
-  /* Hide non-content elements — use semantic selectors, not class names */
+  /* Hide non-content elements - use semantic selectors, not class names */
   nav,
   footer,
   canvas,

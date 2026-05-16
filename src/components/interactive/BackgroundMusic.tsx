@@ -64,7 +64,7 @@ export function BackgroundMusic() {
           }
         },
         onloaderror: () => {
-          // Audio file is optional — silently disable music when missing.
+          // Audio file is optional - silently disable music when missing.
           soundRef.current = null;
           globalController = null;
         },

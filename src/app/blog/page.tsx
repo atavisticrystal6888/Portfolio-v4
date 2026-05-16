@@ -8,7 +8,7 @@ import { ScrollReveal } from "@/components/ui/ScrollReveal";
 export const metadata = generatePageMetadata({
   title: "Blog",
   description:
-    "Thoughts on product management, data analytics, and building — by Dhruv Singhal.",
+    "Thoughts on product management, data analytics, and building - by Dhruv Singhal.",
   path: "/blog",
 });
 

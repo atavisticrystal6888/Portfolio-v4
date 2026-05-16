@@ -13,7 +13,7 @@ export function LoadingScreen() {
       setTimeout(() => setVisible(false), 400);
     };
 
-    // Always dismiss quickly — the loading screen is a brief brand impression,
+    // Always dismiss quickly - the loading screen is a brief brand impression,
     // not a dependency gate. Use a short fixed delay so it works reliably
     // regardless of readyState or hot-reload timing.
     const timer = setTimeout(hide, 600);

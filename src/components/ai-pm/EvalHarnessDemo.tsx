@@ -24,10 +24,10 @@ type ModelId = "v1-baseline" | "v2-grounded";
 
 const MODELS: { id: ModelId; name: string; tag: string }[] = [
   { id: "v1-baseline", name: "v1 · vision-only", tag: "Gemini 1.5 Pro, no retrieval" },
-  { id: "v2-grounded", name: "v2 · grounded", tag: "+ Perplexity Sonar citations" },
+  { id: "v2-grounded", name: "v2 · grounded", tag: "+ Exa AI API citations" },
 ];
 
-/** Hand-picked plant-diagnosis cases, mirroring the kind of golden set used on Aarkid. */
+/** Hand-picked plant-diagnosis cases, mirroring the kind of golden set used on Aarchid. */
 const GOLDEN_SET: GoldenCase[] = [
   {
     id: "yellow-monstera",
@@ -224,7 +224,7 @@ export function EvalHarnessDemo() {
       <p className={styles.note}>
         Toggle between the v1 baseline and the grounded v2 stack, or raise the
         confidence gate, to see how the same golden set re-scores. This is the
-        same shape of harness we used on Aarkid to validate the 92% diagnosis
+        same shape of harness we used on Aarchid to validate the 92% diagnosis
         accuracy claim before any user saw the model in production.
       </p>
     </div>

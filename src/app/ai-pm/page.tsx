@@ -11,19 +11,19 @@ import styles from "@/styles/content-page.module.css";
 export const metadata = generatePageMetadata({
   title: "AI PM",
   description:
-    "Playbooks, experiments, and shipped work at the intersection of product management and AI. Evaluation frameworks, cost modelling, and the Aarkid case study.",
+    "Playbooks, experiments, and shipped work at the intersection of product management and AI. Evaluation frameworks, cost modelling, and the Aarchid case study.",
   path: "/ai-pm",
 });
 
 const PLAYBOOKS = [
   {
     title: "Scoping an LLM feature",
-    body: "How to write a PRD when the model is the product. Success criteria, eval harness, guardrails, and cost envelope — before a single prompt is written.",
+    body: "How to write a PRD when the model is the product. Success criteria, eval harness, guardrails, and cost envelope - before a single prompt is written.",
     meta: "Framework",
   },
   {
     title: "Eval-driven development",
-    body: "Treat your golden set like a test suite. Offline evals → shadow traffic → A/B. How we validated 92% diagnosis accuracy on Aarkid.",
+    body: "Treat your golden set like a test suite. Offline evals → shadow traffic → A/B. How we validated 92% diagnosis accuracy on Aarchid.",
     meta: "Method",
   },
   {
@@ -54,13 +54,13 @@ export default function AIPMPage() {
       <JsonLd id="ai-pm-breadcrumb-jsonld" data={breadcrumbJsonLd} />
 
       <p className={styles.kicker}>Specialization</p>
-      <h1 className={styles.title}>AI PM — where product thinking meets the model</h1>
+      <h1 className={styles.title}>AI PM - where product thinking meets the model</h1>
       <p className={styles.lede}>
         I build LLM products the way a PM ships any other product: with a crisp
         problem, an eval rubric, a cost envelope, and a way to roll back. This
         page collects the playbooks, artefacts, and shipped work behind that
-        stance — most of it learned building{" "}
-        <Link href="/projects/aarkid">Aarkid</Link> with{" "}
+        stance - most of it learned building{" "}
+        <Link href="/projects/aarchid">Aarchid</Link> with{" "}
         <a
           href="https://github.com/dfordp"
           target="_blank"
@@ -94,7 +94,7 @@ export default function AIPMPage() {
           <p className={styles.lede} style={{ marginBottom: "var(--space-5)" }}>
             Six plant-diagnosis cases. Two model versions. One confidence gate.
             Toggle the controls and watch the same golden set re-score in real
-            time — this is how I validate an LLM feature before it ships.
+            time - this is how I validate an LLM feature before it ships.
           </p>
           <EvalHarnessDemo />
         </div>
@@ -107,7 +107,7 @@ export default function AIPMPage() {
           <p className={styles.lede} style={{ marginBottom: "var(--space-5)" }}>
             Same harness mindset, applied to economics. Move the sliders to see
             how batch size, cache hit rate, and request volume reshape the
-            per-user-per-month bill — and whether you stay inside the $0.25
+            per-user-per-month bill - and whether you stay inside the $0.25
             envelope.
           </p>
           <CostModelDemo />
@@ -117,17 +117,17 @@ export default function AIPMPage() {
       <ScrollReveal delay={0.05}>
         <div className={styles.section}>
           <SectionLabel>Case Study</SectionLabel>
-          <h2 className={styles.sectionTitle}>Aarkid — shipped proof</h2>
+          <h2 className={styles.sectionTitle}>Aarchid - shipped proof</h2>
           <div className={styles.card}>
             <h3>AI Botanical Intelligence · 92% diagnosis accuracy</h3>
             <p>
               Co-created with Dilpreet Grover. Multimodal vision (Gemini 1.5
-              Pro) grounded by research-augmented reasoning (Perplexity Sonar),
+              Pro) grounded by research-augmented reasoning (Exa AI API),
               running on Cloudflare Workers. Sub-10s P95, $0.25 per active user
               per month at scale.
             </p>
             <span className={styles.meta}>
-              <Link href="/projects/aarkid">Read the case study →</Link>
+              <Link href="/projects/aarchid">Read the case study →</Link>
             </span>
           </div>
         </div>
@@ -162,16 +162,16 @@ export default function AIPMPage() {
           <h2 className={styles.sectionTitle}>On the bench</h2>
           <ul className={styles.list}>
             <li>
-              <strong>AI PM interview prep kit</strong> — deconstructed case
+              <strong>AI PM interview prep kit</strong> - deconstructed case
               questions, eval-harness design, and model economics cheatsheets.
             </li>
             <li>
-              <strong>Second Aarkid-scale build</strong> — applying the same
+              <strong>Second Aarchid-scale build</strong> - applying the same
               Edge Stack pattern to a different problem domain.
             </li>
             <li>
               <strong>Essay series: &ldquo;The PRD is dead, long live the eval
-              set&rdquo;</strong> — in progress.
+              set&rdquo;</strong> - in progress.
             </li>
           </ul>
         </div>

@@ -1,5 +1,5 @@
 /* ============================================================
-   BASE — Reset, Typography, Layout
+   BASE - Reset, Typography, Layout
    ============================================================ */
 
 /* Self-hosted fonts (replacing Fontshare CDN) */
@@ -109,7 +109,7 @@ a:hover {
   border-radius: var(--radius-sm);
 }
 
-/* Skip Link — hidden until focused */
+/* Skip Link - hidden until focused */
 .skip-link {
   position: absolute;
   top: -100%;
@@ -330,7 +330,7 @@ html, body {
   }
 }
 
-/* Touch target enforcement — all interactive elements */
+/* Touch target enforcement - all interactive elements */
 button,
 a,
 input,
@@ -342,7 +342,7 @@ select,
   min-width: 44px;
 }
 
-/* Exception for inline links in text — don't enforce min height */
+/* Exception for inline links in text - don't enforce min height */
 p a,
 li a,
 .article-body a {

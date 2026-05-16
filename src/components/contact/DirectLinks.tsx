@@ -21,7 +21,7 @@ export function DirectLinks() {
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     } catch {
-      /* clipboard unavailable — user can still use the Email link */
+      /* clipboard unavailable - user can still use the Email link */
     }
   };
 

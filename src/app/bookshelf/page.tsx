@@ -22,7 +22,7 @@ const CURRENT: Book[] = [
   {
     title: "Inspired",
     author: "Marty Cagan",
-    note: "The source text for how empowered product teams actually work. Re-reading with the Aarkid project as the case study in my head.",
+    note: "The source text for how empowered product teams actually work. Re-reading with the Aarchid project as the case study in my head.",
     status: "reading",
   },
   {
@@ -57,7 +57,7 @@ const SHAPED_ME: Book[] = [
   {
     title: "Designing Data-Intensive Applications",
     author: "Martin Kleppmann",
-    note: "Not a PM book — but the single best source for reasoning about the systems my products actually run on.",
+    note: "Not a PM book - but the single best source for reasoning about the systems my products actually run on.",
   },
   {
     title: "The Mom Test",
@@ -75,7 +75,7 @@ const NEXT_UP: Book[] = [
   {
     title: "The Scout Mindset",
     author: "Julia Galef",
-    note: "Calibration and updating beliefs — core PM meta-skill.",
+    note: "Calibration and updating beliefs - core PM meta-skill.",
   },
   {
     title: "AI Engineering",
@@ -120,7 +120,7 @@ export default function BookshelfPage() {
       <h1 className={styles.title}>Bookshelf</h1>
       <p className={styles.lede}>
         The books I credit for shaping how I think about product, systems, and
-        building. Not a reading list — a working bibliography.
+        building. Not a reading list - a working bibliography.
       </p>
 
       <ScrollReveal>
@@ -149,7 +149,7 @@ export default function BookshelfPage() {
 
       <p className={styles.note}>
         Think I&apos;m missing one?{" "}
-        <a href="mailto:dhruvsinghal04@gmail.com">Tell me</a> — reading
+        <a href="mailto:dhruvsinghal04@gmail.com">Tell me</a> - reading
         recommendations are welcome currency.
       </p>
     </div>

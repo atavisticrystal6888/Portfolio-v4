@@ -1,12 +1,11 @@
 import { generatePageMetadata, generatePersonJsonLd, generateWebSiteJsonLd } from "@/lib/metadata";
-import { getAllProjects } from "@/lib/content";
-import { getAllBlogPosts, getAllTestimonials } from "@/lib/content";
+import { getAllProjects, getAllBlogPosts, getAllTestimonials } from "@/lib/content";
 import { SectionLabel } from "@/components/ui/SectionLabel";
 import { Button } from "@/components/ui/Button";
 import { HeroVisuals } from "@/components/home/HeroVisuals";
 import { HeroSection } from "@/components/home/HeroSection";
 import { MetricsGrid } from "@/components/home/MetricsGrid";
-import { FeaturedProjects } from "@/components/home/FeaturedProjects";
+import { ExperienceTimeline } from "@/components/home/ExperienceTimeline";
 import { TestimonialCarousel } from "@/components/home/TestimonialCarousel";
 import { BlogTeaser } from "@/components/home/BlogTeaser";
 import { Suggestions } from "@/components/home/Suggestions";
@@ -16,14 +15,13 @@ import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import styles from "./home.module.css";
 
 export const metadata = generatePageMetadata({
-  title: "Dhruv Singhal — Product Analyst & Builder",
+  title: "Dhruv Singhal - Product Analyst & Builder",
   description:
-    "Portfolio of Dhruv Singhal — Product Analyst & Builder. Case studies, blog articles, and projects showcasing data-driven product thinking.",
+    "Portfolio of Dhruv Singhal - Product Analyst & Builder. Case studies, blog articles, and projects showcasing data-driven product thinking.",
 });
 
 export default function Home() {
   const allProjects = getAllProjects();
-  const projects = allProjects.filter((p) => p.featured);
   const posts = getAllBlogPosts();
   const testimonials = getAllTestimonials();
   const personJsonLd = generatePersonJsonLd();
@@ -55,17 +53,17 @@ export default function Home() {
         <DiagonalDivider side="right" />
       </section>
 
-      {/* Featured Projects */}
-      <section aria-label="Featured projects" data-section="featured-projects" className={styles.section} style={{ position: 'relative' }}>
+      {/* Experience */}
+      <section aria-label="Experience" data-section="experience" className={styles.section} style={{ position: 'relative' }}>
         <DiagonalDivider side="left" />
         <ScrollReveal>
           <div className={styles.sectionHeader}>
-            <SectionLabel>Featured Work</SectionLabel>
-            <h2 className={styles.sectionTitle}>Selected Projects</h2>
+            <SectionLabel>Career</SectionLabel>
+            <h2 className={styles.sectionTitle}>Experience</h2>
           </div>
         </ScrollReveal>
         <ScrollReveal delay={0.15}>
-          <FeaturedProjects projects={projects} />
+          <ExperienceTimeline />
         </ScrollReveal>
         <DiagonalDivider side="right" />
       </section>

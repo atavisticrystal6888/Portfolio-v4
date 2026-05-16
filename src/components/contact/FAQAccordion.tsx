@@ -13,7 +13,7 @@ const FAQ_ITEMS: FAQItem[] = [
   { question: "What roles are you looking for?", answer: "Product Analyst, Associate Product Manager (APM), or data-driven PM roles where I can blend analytics with product strategy." },
   { question: "Are you open to remote or relocation?", answer: "Yes to both. I'm based in India and open to remote roles or relocation for the right opportunity." },
   { question: "What's the best way to reach you?", answer: "Email at dhruvsinghal04@gmail.com or connect on LinkedIn. I typically respond within 24 hours." },
-  { question: "Do you take freelance or consulting work?", answer: "Selectively — for product strategy, analytics setup, or dashboard projects. Reach out with details." },
+  { question: "Do you take freelance or consulting work?", answer: "Selectively - for product strategy, analytics setup, or dashboard projects. Reach out with details." },
 ];
 
 export function FAQAccordion() {

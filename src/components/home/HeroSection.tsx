@@ -21,7 +21,7 @@ export function HeroSection() {
         </h1>
         <p className={styles.role}>{ROLES[0]}</p>
         <p className={styles.statement}>
-          I turn messy data into product decisions that ship — from churn
+          I turn messy data into product decisions that ship - from churn
           models to AI diagnostics, I build what I spec.
         </p>
         <div className={styles.ctas}>

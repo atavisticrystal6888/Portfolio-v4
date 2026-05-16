@@ -78,7 +78,7 @@ const QUERY = `
 
 // Slug mapping: GitHub repo name → portfolio project slug
 const REPO_SLUG_MAP: Record<string, string> = {
-  aarkid: "aarkid",
+  aarchid: "aarchid",
   "churn-analysis": "churn-analysis",
   "TCS-NQT-Prep-Hub": "tcs-nqt-prep-hub",
   "Kite-edge": "kite-edge",

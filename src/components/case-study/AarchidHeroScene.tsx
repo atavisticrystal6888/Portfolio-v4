@@ -4,10 +4,10 @@ import dynamic from "next/dynamic";
 import { useIntersection } from "@/hooks/useIntersection";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
 import { useGPUTier } from "@/hooks/useGPUTier";
-import styles from "./AarkidScene.module.css";
+import styles from "./AarchidScene.module.css";
 
-const AarkidScene = dynamic(
-  () => import("./AarkidScene").then((m) => m.AarkidScene),
+const AarchidScene = dynamic(
+  () => import("./AarchidScene").then((m) => m.AarchidScene),
   {
     ssr: false,
     loading: () => <PlantSilhouette />,
@@ -50,7 +50,7 @@ function PlantSilhouette() {
   );
 }
 
-export function AarkidHeroScene() {
+export function AarchidHeroScene() {
   const { ref, isIntersecting } = useIntersection<HTMLDivElement>({
     threshold: 0.05,
     rootMargin: "200px",
@@ -66,7 +66,7 @@ export function AarkidHeroScene() {
   // Defer the heavy import until the hero is near the viewport.
   return (
     <div ref={ref} style={{ position: "absolute", inset: 0 }}>
-      {isIntersecting ? <AarkidScene active={isIntersecting} /> : <PlantSilhouette />}
+      {isIntersecting ? <AarchidScene active={isIntersecting} /> : <PlantSilhouette />}
     </div>
   );
 }

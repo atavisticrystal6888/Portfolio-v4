@@ -1,4 +1,4 @@
-/* Global CSS — design tokens, base reset, animations, print */
+/* Global CSS - design tokens, base reset, animations, print */
 @import '../styles/tokens.css';
 @import '../styles/base.css';
 @import '../styles/animations.css';

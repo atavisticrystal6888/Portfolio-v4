@@ -36,7 +36,7 @@ export function CoCreatorChips({
               target="_blank"
               rel="noopener noreferrer"
               className={styles.link}
-              aria-label={`${c.name} (${c.role}) — opens in new tab`}
+              aria-label={`${c.name} (${c.role}) - opens in new tab`}
             >
               <span className={styles.name}>{c.name}</span>
               {c.handle && <span className={styles.handle}>{c.handle}</span>}

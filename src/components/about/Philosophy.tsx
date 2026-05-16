@@ -5,12 +5,12 @@ const CARDS = [
   {
     icon: "🎯",
     title: "Outcome > Output",
-    desc: "At Odena, I killed a dashboard with 40+ charts because only 3 drove decisions. Impact > activity.",
+    desc: "I killed a dashboard with 40+ charts because only 3 drove decisions. Impact > activity.",
   },
   {
     icon: "📊",
     title: "Data Informs, Intuition Decides",
-    desc: "Aarkid's eval harness told us accuracy was 92% — but user interviews revealed trust was the real bottleneck. Both signals matter.",
+    desc: "Aarchid's eval harness told us accuracy was 92% - but user interviews revealed trust was the real bottleneck. Both signals matter.",
   },
   {
     icon: "🚀",

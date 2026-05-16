@@ -31,7 +31,7 @@ test.describe("Navigation", () => {
   });
 
   test("case study pages load", async ({ page }) => {
-    const response = await page.goto("/projects/aarkid");
+    const response = await page.goto("/projects/aarchid");
     expect(response?.status()).toBeLessThan(400);
     await expect(page.locator("h1").first()).toBeVisible();
   });

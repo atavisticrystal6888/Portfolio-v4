@@ -1,5 +1,5 @@
 /* ============================================================
-   DESIGN TOKENS — CSS Custom Properties
+   DESIGN TOKENS - CSS Custom Properties
    Dark & Light theme system
    ============================================================ */
 
@@ -208,7 +208,7 @@
 }
 
 /* ===== ACCENT PALETTE OVERRIDES ===== */
-/* Teal (default) — no overrides needed, matches base dark/light tokens */
+/* Teal (default) - no overrides needed, matches base dark/light tokens */
 
 [data-palette="ocean"] {
   --accent: #3b82f6;

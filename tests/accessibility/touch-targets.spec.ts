@@ -14,7 +14,7 @@ test.use({ reducedMotion: "reduce" } as Parameters<typeof test.use>[0]);
 test.describe("Touch target sizing (WCAG 2.5.8)", () => {
   for (const viewport of MOBILE_VIEWPORTS) {
     for (const route of ROUTES) {
-      test(`${route} @ ${viewport.name} — target-size rule`, async ({
+      test(`${route} @ ${viewport.name} - target-size rule`, async ({
         page,
       }) => {
         test.setTimeout(60_000);

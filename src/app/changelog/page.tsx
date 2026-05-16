@@ -7,7 +7,7 @@ import styles from "@/styles/content-page.module.css";
 export const metadata = generatePageMetadata({
   title: "Changelog",
   description:
-    "Build log of this portfolio — versions, phases, and the product thinking behind every release.",
+    "Build log of this portfolio - versions, phases, and the product thinking behind every release.",
   path: "/changelog",
 });
 
@@ -22,33 +22,33 @@ interface Release {
 
 const RELEASES: Release[] = [
   {
-    version: "v4.2 — Phase 2",
+    version: "v4.2 - Phase 2",
     date: "April 2026",
     title: "Depth pages & AI PM landing",
     badge: "in-progress",
-    body: "The specialization layer. Shipped /ai-pm as the single place to route AI-PM conversations, plus /lab, /uses, /bookshelf — the pages that make this feel like a person, not a résumé.",
+    body: "The specialization layer. Shipped /ai-pm as the single place to route AI-PM conversations, plus /lab, /uses, /bookshelf - the pages that make this feel like a person, not a résumé.",
     highlights: [
-      "/ai-pm — playbooks, Aarkid case study link, AI-focused writing index",
-      "/lab — 19 product ideas from the original matrix, now queryable",
-      "/uses and /bookshelf — the signals behind how I work and think",
+      "/ai-pm - playbooks, Aarchid case study link, AI-focused writing index",
+      "/lab - 19 product ideas from the original matrix, now queryable",
+      "/uses and /bookshelf - the signals behind how I work and think",
       "Second AI-PM essay in the writing queue",
     ],
   },
   {
-    version: "v4.1 — Phase 1",
+    version: "v4.1 - Phase 1",
     date: "April 2026",
     title: "Identity, truth, and UX depth",
     badge: "shipped",
-    body: "Closed the gap between what the site claimed and what's actually true. Every Aarkid surface now credits Dilpreet Grover as co-creator, stacks reflect reality, and the command palette gained the actions a power user expects.",
+    body: "Closed the gap between what the site claimed and what's actually true. Every Aarchid surface now credits Dilpreet Grover as co-creator, stacks reflect reality, and the command palette gained the actions a power user expects.",
     highlights: [
-      "Aarkid case study rewritten with the real Edge Stack (Gemini + Perplexity Sonar + Cloudflare Workers)",
-      "Home metrics derive from content — no more hardcoded numbers",
+      "Aarchid case study rewritten with the real Edge Stack (Gemini + Exa AI API + Cloudflare Workers)",
+      "Home metrics derive from content - no more hardcoded numbers",
       "Command palette: copy-email, download-resume, socials, keyword search",
       "Navbar resume download, richer 404, testimonial avatars wired up",
     ],
   },
   {
-    version: "v4.0 — Phase 0",
+    version: "v4.0 - Phase 0",
     date: "April 2026",
     title: "Consolidation",
     badge: "shipped",
@@ -60,18 +60,18 @@ const RELEASES: Release[] = [
     ],
   },
   {
-    version: "v3 — archived",
+    version: "v3 - archived",
     date: "March 2026",
     title: "Next.js experiment",
     badge: "shipped",
-    body: "First Next.js rewrite — validated the App Router + MDX pattern that v4 is built on. Shipped, learned, archived.",
+    body: "First Next.js rewrite - validated the App Router + MDX pattern that v4 is built on. Shipped, learned, archived.",
     highlights: [
       "Proved App Router + MDX for long-form case studies",
       "Surfaced the conditional-loading architecture v2 used",
     ],
   },
   {
-    version: "v2 — archived",
+    version: "v2 - archived",
     date: "February 2026",
     title: "Static multipage portfolio",
     badge: "shipped",
@@ -83,7 +83,7 @@ const RELEASES: Release[] = [
     ],
   },
   {
-    version: "v1 — archived",
+    version: "v1 - archived",
     date: "January 2026",
     title: "First public portfolio",
     badge: "shipped",
@@ -93,9 +93,9 @@ const RELEASES: Release[] = [
 ];
 
 const UPCOMING = [
-  "Phase 3 — Signature: 3D Aarkid hero, eval-harness micro-demo, case-study animated charts",
-  "Phase 4 — Proof: Lighthouse 95+ everywhere, axe-core CI, Playwright smoke suite",
-  "Phase 5 — Hardening: OG review, sitemap integrity, deploy preview automation",
+  "Phase 3 - Signature: 3D Aarchid hero, eval-harness micro-demo, case-study animated charts",
+  "Phase 4 - Proof: Lighthouse 95+ everywhere, axe-core CI, Playwright smoke suite",
+  "Phase 5 - Hardening: OG review, sitemap integrity, deploy preview automation",
 ];
 
 function badgeLabel(b?: Release["badge"]): string {
@@ -119,7 +119,7 @@ export default function ChangelogPage() {
       <h1 className={styles.title}>Changelog</h1>
       <p className={styles.lede}>
         Every PM should eat their own dog food. This is the release log for
-        this portfolio — what shipped, when, and why. Each release is treated
+        this portfolio - what shipped, when, and why. Each release is treated
         like a real product increment.
       </p>
 
@@ -132,7 +132,7 @@ export default function ChangelogPage() {
               <div key={r.version} className={styles.timelineItem}>
                 <span className={styles.timelineDate}>{r.date}</span>
                 <h3 className={styles.timelineTitle}>
-                  {r.version} — {r.title}
+                  {r.version} - {r.title}
                   {r.badge && (
                     <span className={styles.badge}>{badgeLabel(r.badge)}</span>
                   )}

@@ -4,7 +4,7 @@ const routes = [
   "/",
   "/about",
   "/projects",
-  "/projects/aarkid",
+  "/projects/aarchid",
   "/blog",
   "/blog/why-pms-should-code",
   "/contact",

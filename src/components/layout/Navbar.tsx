@@ -13,6 +13,7 @@ const NAV_LINKS = [
   { href: '/', label: 'Home' },
   { href: '/about', label: 'About' },
   { href: '/projects', label: 'Projects' },
+  { href: '/ai-pm', label: 'AI PM' },
   { href: '/blog', label: 'Blog' },
   { href: '/contact', label: 'Contact' },
 ];
@@ -48,7 +49,7 @@ export function Navbar() {
         aria-label="Main navigation"
       >
         <div className={styles.inner}>
-          <Link href="/" className={styles.logo} aria-label="Dhruv Singhal — Home">
+          <Link href="/" className={styles.logo} aria-label="Dhruv Singhal - Home">
             <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
               <rect width="36" height="36" rx="8" fill="currentColor" opacity="0.1" />
               <text x="50%" y="55%" dominantBaseline="middle" textAnchor="middle" fontFamily="Boska, serif" fontWeight="700" fontSize="18" fill="currentColor">DS</text>

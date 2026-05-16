@@ -35,7 +35,7 @@ test.describe("AI PM interactive demos", () => {
       const slider = harness.getByLabel(/minimum confidence threshold/i);
 
       await slider.focus();
-      // Bump threshold to 100% — every case should fail at that gate.
+      // Bump threshold to 100% - every case should fail at that gate.
       await page.keyboard.press("End");
       await expect(harness.getByText(/confidence gate/i).first()).toContainText("100%");
     });

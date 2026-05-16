@@ -7,7 +7,7 @@ import styles from "./now.module.css";
 export const metadata = generatePageMetadata({
   title: "Now",
   description:
-    "What Dhruv Singhal is doing now — current work, learning, reading, and building.",
+    "What Dhruv Singhal is doing now - current work, learning, reading, and building.",
   path: "/now",
 });
 
@@ -32,14 +32,8 @@ export default function NowPage() {
           <h2 className={styles.sectionTitle}>Current Roles</h2>
           <ul className={styles.list}>
             <li>
-              <strong>Wipro</strong> — Aviation OS modernisation, working
-              the data + product layer that surfaces operational truth to
-              ground crews.
-            </li>
-            <li>
-              <strong>Odena</strong> — Analytics consultant; instrumenting
-              early-stage product loops and designing the eval rubrics behind
-              a few quietly shipping AI features.
+              <strong>Wipro</strong> - Product intern, working
+              the data + product layer.
             </li>
           </ul>
         </div>
@@ -52,7 +46,7 @@ export default function NowPage() {
           <ul className={styles.list}>
             <li>LLM evaluation harnesses (golden sets, shadow traffic, A/B)</li>
             <li>Edge-runtime cost modelling for multimodal pipelines</li>
-            <li>Going deeper on system design — reading DDIA cover-to-cover</li>
+            <li>Going deeper on system design - reading DDIA cover-to-cover</li>
           </ul>
         </div>
       </ScrollReveal>
@@ -62,9 +56,9 @@ export default function NowPage() {
           <SectionLabel>Reading</SectionLabel>
           <h2 className={styles.sectionTitle}>On My Shelf</h2>
           <ul className={styles.list}>
-            <li><em>Inspired</em> — Marty Cagan</li>
-            <li><em>Designing Data-Intensive Applications</em> — Martin Kleppmann</li>
-            <li><em>Thinking in Systems</em> — Donella Meadows</li>
+            <li><em>Inspired</em> - Marty Cagan</li>
+            <li><em>Designing Data-Intensive Applications</em> - Martin Kleppmann</li>
+            <li><em>Thinking in Systems</em> - Donella Meadows</li>
             <li>Lenny&apos;s Newsletter, Latent Space, Stratechery</li>
           </ul>
         </div>
@@ -76,15 +70,15 @@ export default function NowPage() {
           <h2 className={styles.sectionTitle}>Side Projects</h2>
           <ul className={styles.list}>
             <li>
-              <strong>Portfolio v5</strong> — this site. Next.js 16 + React
-              19, two interactive AI-PM demos, a 3D Aarkid hero.
+              <strong>Portfolio v5</strong> - this site. Next.js 16 + React
+              19, two interactive AI-PM demos, a 3D Aarchid hero.
             </li>
             <li>
-              <strong>Aarkid</strong> with{" "}
+              <strong>Aarchid</strong> with{" "}
               <a href="https://github.com/dfordp" target="_blank" rel="noopener noreferrer">
                 Dilpreet Grover
               </a>{" "}
-              — multimodal plant-diagnosis app, edge stack, 92% accuracy on golden set.
+              - multimodal plant-diagnosis app, edge stack, 92% accuracy on golden set.
             </li>
             <li>An eval-driven AI-PM interview prep kit (in progress).</li>
           </ul>
