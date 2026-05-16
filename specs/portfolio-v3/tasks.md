@@ -44,7 +44,7 @@
 - [X] T010 [P] Migrate `portfolio/css/base.css` to `portfolio-next/src/styles/base.css` — replace Fontshare CDN `@import` with local `@font-face` declarations pointing to `/fonts/`
 - [X] T011 [P] Migrate `portfolio/css/animations.css` to `portfolio-next/src/styles/animations.css` — preserve keyframes, add Framer Motion CSS hooks, keep `prefers-reduced-motion` support
 - [X] T012 [P] Create `portfolio-next/src/styles/print.css` with print-friendly rules (hide nav, footer, cursor, 3D canvas)
-- [ ] T013 [P] Download and place self-hosted fonts in `portfolio-next/public/fonts/`: `satoshi-variable.woff2`, `boska-variable.woff2`, `jetbrains-mono.woff2`
+- [X] T013 [P] Download and place self-hosted fonts in `portfolio-next/public/fonts/`: `satoshi-variable.woff2`, `boska-variable.woff2`, `jetbrains-mono.woff2`
 - [X] T014 Create `portfolio-next/src/app/globals.css` importing `tokens.css`, `base.css`, `animations.css`, `print.css`
 
 ### TypeScript Types
@@ -227,14 +227,14 @@
 
 ### Implementation
 
-- [ ] T093 [US11] Create BlogCard component in `portfolio-next/src/components/blog/BlogCard.tsx` + `BlogCard.module.css` — title, excerpt, date, category tag, reading time, thumbnail
-- [ ] T094 [P] [US11] Create BlogSearch component ('use client') in `portfolio-next/src/components/blog/BlogSearch.tsx` + `BlogSearch.module.css` — search input with real-time filtering (≤200ms debounce), category pills, highlighted matches, URL parameter persistence
-- [ ] T095 [P] [US11] Create ReadingProgress component ('use client') in `portfolio-next/src/components/blog/ReadingProgress.tsx` + `ReadingProgress.module.css` — scroll-proportional progress bar
-- [ ] T096 [P] [US11] Create TableOfContents component ('use client') in `portfolio-next/src/components/blog/TableOfContents.tsx` + `TableOfContents.module.css` — auto-generated from h2/h3 headings, sticky sidebar, active section highlighting via IntersectionObserver
-- [ ] T097 [P] [US11] Create ShareButtons component in `portfolio-next/src/components/blog/ShareButtons.tsx` — native share API with clipboard fallback
-- [ ] T098 [P] [US11] Create RelatedArticles component in `portfolio-next/src/components/blog/RelatedArticles.tsx` + `RelatedArticles.module.css` — show 2-3 related articles by tag/category overlap
-- [ ] T099 [US11] Integrate blog components into blog listing page `portfolio-next/src/app/blog/page.tsx` — BlogSearch + BlogCard grid
-- [ ] T100 [US11] Integrate article components into blog article page `portfolio-next/src/app/blog/[slug]/page.tsx` — MDX rendering, ReadingProgress, TableOfContents sidebar, ShareButtons, RelatedArticles, Prism.js/Shiki syntax highlighting for code blocks
+- [X] T093 [US11] Create BlogCard component in `portfolio-next/src/components/blog/BlogCard.tsx` + `BlogCard.module.css` — title, excerpt, date, category tag, reading time, thumbnail
+- [X] T094 [P] [US11] Create BlogSearch component ('use client') in `portfolio-next/src/components/blog/BlogSearch.tsx` + `BlogSearch.module.css` — search input with real-time filtering (≤200ms debounce), category pills, highlighted matches, URL parameter persistence
+- [X] T095 [P] [US11] Create ReadingProgress component ('use client') in `portfolio-next/src/components/blog/ReadingProgress.tsx` + `ReadingProgress.module.css` — scroll-proportional progress bar
+- [X] T096 [P] [US11] Create TableOfContents component ('use client') in `portfolio-next/src/components/blog/TableOfContents.tsx` + `TableOfContents.module.css` — auto-generated from h2/h3 headings, sticky sidebar, active section highlighting via IntersectionObserver
+- [X] T097 [P] [US11] Create ShareButtons component in `portfolio-next/src/components/blog/ShareButtons.tsx` — native share API with clipboard fallback
+- [X] T098 [P] [US11] Create RelatedArticles component in `portfolio-next/src/components/blog/RelatedArticles.tsx` + `RelatedArticles.module.css` — show 2-3 related articles by tag/category overlap
+- [X] T099 [US11] Integrate blog components into blog listing page `portfolio-next/src/app/blog/page.tsx` — BlogSearch + BlogCard grid
+- [X] T100 [US11] Integrate article components into blog article page `portfolio-next/src/app/blog/[slug]/page.tsx` — MDX rendering, ReadingProgress, TableOfContents sidebar, ShareButtons, RelatedArticles, Prism.js/Shiki syntax highlighting for code blocks
 
 **Checkpoint**: Blog listing shows all articles with working search and filters. Article pages render MDX with progress bar, TOC, code highlighting, and related articles.
 
@@ -267,11 +267,11 @@
 
 ### Implementation
 
-- [ ] T106 [US6] Create theme palette definitions in `portfolio-next/src/lib/theme.ts` — 5 palettes (teal, ocean, emerald, amber, mono) with CSS custom property mappings, AA contrast pre-validation
-- [ ] T107 [US6] Create ThemeCustomizer component ('use client') in `portfolio-next/src/components/interactive/ThemeCustomizer.tsx` + `ThemeCustomizer.module.css` — palette picker panel accessible via settings icon + command palette, preview swatches, apply via `data-palette` attribute on `<html>`
-- [ ] T108 [US6] Extend `useTheme` hook in `portfolio-next/src/hooks/useTheme.ts` to support palette selection persisted in localStorage alongside mode (dark/light)
-- [ ] T109 [US6] Update anti-FOUC inline script in root layout to read and apply `data-palette` from localStorage before first paint
-- [ ] T110 [US6] Add "theme" and "color" actions to CommandPalette in `portfolio-next/src/components/interactive/CommandPalette.tsx` — palette switching via Ctrl+K
+- [X] T106 [US6] Create theme palette definitions in `portfolio-next/src/lib/theme.ts` — 5 palettes (teal, ocean, emerald, amber, mono) with CSS custom property mappings, AA contrast pre-validation
+- [X] T107 [US6] Create ThemeCustomizer component ('use client') in `portfolio-next/src/components/interactive/ThemeCustomizer.tsx` + `ThemeCustomizer.module.css` — palette picker panel accessible via settings icon + command palette, preview swatches, apply via `data-palette` attribute on `<html>`
+- [X] T108 [US6] Extend `useTheme` hook in `portfolio-next/src/hooks/useTheme.ts` to support palette selection persisted in localStorage alongside mode (dark/light)
+- [X] T109 [US6] Update anti-FOUC inline script in root layout to read and apply `data-palette` from localStorage before first paint
+- [X] T110 [US6] Add "theme" and "color" actions to CommandPalette in `portfolio-next/src/components/interactive/CommandPalette.tsx` — palette switching via Ctrl+K
 
 **Checkpoint**: All 5 palettes apply correctly across all pages. Persists on refresh. Command palette integration works.
 
@@ -285,11 +285,11 @@
 
 ### Implementation
 
-- [ ] T111 [US7] Create `useBehavior` hook in `portfolio-next/src/hooks/useBehavior.ts` — track pages visited, scroll depths, category affinities, timestamps in localStorage per UserBehavior schema
-- [ ] T112 [US7] Create suggestion scoring engine in `portfolio-next/src/lib/suggestions.ts` — implement scoring algorithm from plan.md AD-6: `categoryAffinity × 0.4 + tagOverlap × 0.3 + unvisitedBoost × 0.2 + recencyBoost × 0.1`, cold-start default to featured content
-- [ ] T113 [US7] Create Suggestions component ('use client') in `portfolio-next/src/components/home/Suggestions.tsx` + `Suggestions.module.css` — "Recommended for you" section, renders scored content cards
-- [ ] T114 [P] [US7] Create RelatedWork component ('use client') in `portfolio-next/src/components/case-study/RelatedWork.tsx` + `RelatedWork.module.css` — case study bottom "Related Work" using same scoring engine
-- [ ] T115 [US7] Integrate Suggestions into Home page (below featured projects) `portfolio-next/src/app/page.tsx` and RelatedWork into case study pages `portfolio-next/src/app/projects/[slug]/page.tsx`
+- [X] T111 [US7] Create `useBehavior` hook in `portfolio-next/src/hooks/useBehavior.ts` — track pages visited, scroll depths, category affinities, timestamps in localStorage per UserBehavior schema
+- [X] T112 [US7] Create suggestion scoring engine in `portfolio-next/src/lib/suggestions.ts` — implement scoring algorithm from plan.md AD-6: `categoryAffinity × 0.4 + tagOverlap × 0.3 + unvisitedBoost × 0.2 + recencyBoost × 0.1`, cold-start default to featured content
+- [X] T113 [US7] Create Suggestions component ('use client') in `portfolio-next/src/components/home/Suggestions.tsx` + `Suggestions.module.css` — "Recommended for you" section, renders scored content cards
+- [X] T114 [P] [US7] Create RelatedWork component ('use client') in `portfolio-next/src/components/case-study/RelatedWork.tsx` + `RelatedWork.module.css` — case study bottom "Related Work" using same scoring engine
+- [X] T115 [US7] Integrate Suggestions into Home page (below featured projects) `portfolio-next/src/app/page.tsx` and RelatedWork into case study pages `portfolio-next/src/app/projects/[slug]/page.tsx`
 
 **Checkpoint**: Suggestions adapt based on browsing behavior. Cold-start shows featured content. localStorage clear resets to defaults.
 
@@ -303,10 +303,10 @@
 
 ### Implementation
 
-- [ ] T116 [US8] Create TestimonialCarousel component ('use client') in `portfolio-next/src/components/home/TestimonialCarousel.tsx` + `TestimonialCarousel.module.css` — auto-play 8s, pause on hover/focus, dot navigation, swipe gestures on mobile, display name/title/company/quote/metric/relationship per testimonial
-- [ ] T117 [US8] Add animated MetricCounter to each testimonial card — highlight `outcomeMetric` value with subtle count-up animation
-- [ ] T118 [US8] Add "View Case Study" link per testimonial card linking to `/projects/[projectSlug]`
-- [ ] T119 [US8] Integrate TestimonialCarousel into Home page `portfolio-next/src/app/page.tsx` — pass testimonials data from `content/testimonials.json`
+- [X] T116 [US8] Create TestimonialCarousel component ('use client') in `portfolio-next/src/components/home/TestimonialCarousel.tsx` + `TestimonialCarousel.module.css` — auto-play 8s, pause on hover/focus, dot navigation, swipe gestures on mobile, display name/title/company/quote/metric/relationship per testimonial
+- [X] T117 [US8] Add animated MetricCounter to each testimonial card — highlight `outcomeMetric` value with subtle count-up animation
+- [X] T118 [US8] Add "View Case Study" link per testimonial card linking to `/projects/[projectSlug]`
+- [X] T119 [US8] Integrate TestimonialCarousel into Home page `portfolio-next/src/app/page.tsx` — pass testimonials data from `content/testimonials.json`
 
 **Checkpoint**: Carousel displays all testimonials with metrics. Metrics match linked case study outcomes (single source of truth). Navigation works.
 
@@ -320,11 +320,11 @@
 
 ### Implementation
 
-- [ ] T120 [US9] Create GitHub GraphQL API client in `portfolio-next/src/lib/github.ts` — fetch pinned repos, contribution calendar, total contributions, top languages, streak. Use `fetch()` with `{ next: { revalidate: 3600 } }` for ISR. Handle rate limiting with cached fallback + "Last updated" timestamp.
-- [ ] T121 [US9] Create GitHubActivity component in `portfolio-next/src/components/projects/GitHubActivity.tsx` + `GitHubActivity.module.css` — pinned repos (name, description, language badge, stars, forks), contribution heatmap (365 days), "View Case Study" link if `matchedProjectSlug` exists
-- [ ] T122 [P] [US9] Create GitHubStats component in `portfolio-next/src/components/about/GitHubStats.tsx` + `GitHubStats.module.css` — total repos, total contributions, top 5 languages, longest streak
-- [ ] T123 [US9] Integrate GitHubActivity into Projects page `portfolio-next/src/app/projects/page.tsx` — fetch GitHub data in server component, pass to client component
-- [ ] T124 [US9] Integrate GitHubStats into About page `portfolio-next/src/app/about/page.tsx` — fetch GitHub data in server component
+- [X] T120 [US9] Create GitHub GraphQL API client in `portfolio-next/src/lib/github.ts` — fetch pinned repos, contribution calendar, total contributions, top languages, streak. Use `fetch()` with `{ next: { revalidate: 3600 } }` for ISR. Handle rate limiting with cached fallback + "Last updated" timestamp.
+- [X] T121 [US9] Create GitHubActivity component in `portfolio-next/src/components/projects/GitHubActivity.tsx` + `GitHubActivity.module.css` — pinned repos (name, description, language badge, stars, forks), contribution heatmap (365 days), "View Case Study" link if `matchedProjectSlug` exists
+- [X] T122 [P] [US9] Create GitHubStats component in `portfolio-next/src/components/about/GitHubStats.tsx` + `GitHubStats.module.css` — total repos, total contributions, top 5 languages, longest streak
+- [X] T123 [US9] Integrate GitHubActivity into Projects page `portfolio-next/src/app/projects/page.tsx` — fetch GitHub data in server component, pass to client component
+- [X] T124 [US9] Integrate GitHubStats into About page `portfolio-next/src/app/about/page.tsx` — fetch GitHub data in server component
 
 **Checkpoint**: GitHub data renders on Projects and About pages. ISR revalidation configured at 1 hour. API failure shows cached data.
 
@@ -338,12 +338,12 @@
 
 ### Implementation
 
-- [ ] T125 [US12] Create contact form API route in `portfolio-next/src/app/api/contact/route.ts` — Resend SDK email delivery, server-side input sanitization, rate limiting (5 per IP per hour), response format per `contracts/api-contact.md`
-- [ ] T126 [US12] Create ContactForm component ('use client') in `portfolio-next/src/components/contact/ContactForm.tsx` + `ContactForm.module.css` — name/email/subject/message fields, client-side validation (name required, email regex, message ≥20 chars), inline error messages, success toast, fallback mailto: on server error
-- [ ] T127 [P] [US12] Create FAQAccordion component in `portfolio-next/src/components/contact/FAQAccordion.tsx` + `FAQAccordion.module.css` — keyboard navigable (Enter/Space toggle, Arrow keys between), ARIA `role="region"` + `aria-expanded`, smooth expand/collapse animation
-- [ ] T128 [P] [US12] Create AvailabilityBadge component in `portfolio-next/src/components/contact/AvailabilityBadge.tsx` + `AvailabilityBadge.module.css`
-- [ ] T129 [P] [US12] Create DirectLinks component in `portfolio-next/src/components/contact/DirectLinks.tsx` + `DirectLinks.module.css` — email (copy-to-clipboard), LinkedIn, GitHub links
-- [ ] T130 [US12] Integrate contact components into Contact page `portfolio-next/src/app/contact/page.tsx`
+- [X] T125 [US12] Create contact form API route in `portfolio-next/src/app/api/contact/route.ts` — Resend SDK email delivery, server-side input sanitization, rate limiting (5 per IP per hour), response format per `contracts/api-contact.md`
+- [X] T126 [US12] Create ContactForm component ('use client') in `portfolio-next/src/components/contact/ContactForm.tsx` + `ContactForm.module.css` — name/email/subject/message fields, client-side validation (name required, email regex, message ≥20 chars), inline error messages, success toast, fallback mailto: on server error
+- [X] T127 [P] [US12] Create FAQAccordion component in `portfolio-next/src/components/contact/FAQAccordion.tsx` + `FAQAccordion.module.css` — keyboard navigable (Enter/Space toggle, Arrow keys between), ARIA `role="region"` + `aria-expanded`, smooth expand/collapse animation
+- [X] T128 [P] [US12] Create AvailabilityBadge component in `portfolio-next/src/components/contact/AvailabilityBadge.tsx` + `AvailabilityBadge.module.css`
+- [X] T129 [P] [US12] Create DirectLinks component in `portfolio-next/src/components/contact/DirectLinks.tsx` + `DirectLinks.module.css` — email (copy-to-clipboard), LinkedIn, GitHub links
+- [X] T130 [US12] Integrate contact components into Contact page `portfolio-next/src/app/contact/page.tsx`
 
 **Checkpoint**: Contact form delivers emails via Resend. Validation works client + server side. FAQ accordion is keyboard accessible. Rate limiting prevents abuse.
 
@@ -357,9 +357,9 @@
 
 ### Implementation
 
-- [ ] T131 [US10] Create ARViewer component ('use client', `next/dynamic` lazy-loaded) in `portfolio-next/src/components/interactive/ARViewer.tsx` + `ARViewer.module.css` — `@react-three/xr` integration, `<XR>`, `<ARButton>`, `<VRButton>`, project architecture as 3D model (nodes, connections)
-- [ ] T132 [US10] Add WebXR feature detection — only render "Explore in 3D" / "View in AR" buttons when `navigator.xr` reports immersive session support
-- [ ] T133 [US10] Create Mermaid/static diagram fallback for case study pages without WebXR support
+- [X] T131 [US10] Create ARViewer component ('use client', `next/dynamic` lazy-loaded) in `portfolio-next/src/components/interactive/ARViewer.tsx` + `ARViewer.module.css` — `@react-three/xr` integration, `<XR>`, `<ARButton>`, `<VRButton>`, project architecture as 3D model (nodes, connections)
+- [X] T132 [US10] Add WebXR feature detection — only render "Explore in 3D" / "View in AR" buttons when `navigator.xr` reports immersive session support
+- [X] T133 [US10] Create Mermaid/static diagram fallback for case study pages without WebXR support
 - [ ] T134 [US10] Integrate ARViewer into case study page template `portfolio-next/src/app/projects/[slug]/page.tsx` — lazy-load with `next/dynamic`, show fallback diagram when WebXR unavailable
 
 **Checkpoint**: AR/VR works on compatible devices. Graceful fallback on all others. No bundle impact on non-AR pages (lazy-loaded).
@@ -372,38 +372,38 @@
 
 ### Home Page Sections
 
-- [ ] T135 Create HeroSection component in `portfolio-next/src/components/home/HeroSection.tsx` + `HeroSection.module.css` — hero text, typed roles (Framer Motion or Typed.js equivalent), CTAs
-- [ ] T136 [P] Create MetricsGrid component in `portfolio-next/src/components/home/MetricsGrid.tsx` + `MetricsGrid.module.css` — 5 KPI metric counters with animated reveal
-- [ ] T137 [P] Create FeaturedProjects component in `portfolio-next/src/components/home/FeaturedProjects.tsx` + `FeaturedProjects.module.css` — 3 featured project cards with hover effects
-- [ ] T138 [P] Create BlogTeaser component in `portfolio-next/src/components/home/BlogTeaser.tsx` + `BlogTeaser.module.css` — 3 recent article cards + "Read All" link
-- [ ] T139 Assemble full Home page in `portfolio-next/src/app/page.tsx` — HeroSection, ThreeHero, MetricsGrid, about teaser, FeaturedProjects, TestimonialCarousel, Suggestions, BlogTeaser, contact CTA
+- [X] T135 Create HeroSection component in `portfolio-next/src/components/home/HeroSection.tsx` + `HeroSection.module.css` — hero text, typed roles (Framer Motion or Typed.js equivalent), CTAs
+- [X] T136 [P] Create MetricsGrid component in `portfolio-next/src/components/home/MetricsGrid.tsx` + `MetricsGrid.module.css` — 5 KPI metric counters with animated reveal
+- [X] T137 [P] Create FeaturedProjects component in `portfolio-next/src/components/home/FeaturedProjects.tsx` + `FeaturedProjects.module.css` — 3 featured project cards with hover effects
+- [X] T138 [P] Create BlogTeaser component in `portfolio-next/src/components/home/BlogTeaser.tsx` + `BlogTeaser.module.css` — 3 recent article cards + "Read All" link
+- [X] T139 Assemble full Home page in `portfolio-next/src/app/page.tsx` — HeroSection, ThreeHero, MetricsGrid, about teaser, FeaturedProjects, TestimonialCarousel, Suggestions, BlogTeaser, contact CTA
 
 ### About Page Sections
 
-- [ ] T140 Create Philosophy component in `portfolio-next/src/components/about/Philosophy.tsx` + `Philosophy.module.css` — product philosophy cards
-- [ ] T141 [P] Create SkillsRadar component ('use client') in `portfolio-next/src/components/about/SkillsRadar.tsx` + `SkillsRadar.module.css` — Chart.js radar chart, 6 axes, dual datasets, theme-reactive
-- [ ] T142 [P] Create Timeline component in `portfolio-next/src/components/about/Timeline.tsx` + `Timeline.module.css` — experience timeline with staggered Framer Motion animations
-- [ ] T143 [P] Create Achievements component in `portfolio-next/src/components/about/Achievements.tsx` + `Achievements.module.css`
-- [ ] T144 Assemble full About page in `portfolio-next/src/app/about/page.tsx` — bio, Philosophy, SkillsRadar, Timeline, Achievements, GitHubStats, resume download
+- [X] T140 Create Philosophy component in `portfolio-next/src/components/about/Philosophy.tsx` + `Philosophy.module.css` — product philosophy cards
+- [X] T141 [P] Create SkillsRadar component ('use client') in `portfolio-next/src/components/about/SkillsRadar.tsx` + `SkillsRadar.module.css` — Chart.js radar chart, 6 axes, dual datasets, theme-reactive
+- [X] T142 [P] Create Timeline component in `portfolio-next/src/components/about/Timeline.tsx` + `Timeline.module.css` — experience timeline with staggered Framer Motion animations
+- [X] T143 [P] Create Achievements component in `portfolio-next/src/components/about/Achievements.tsx` + `Achievements.module.css`
+- [X] T144 Assemble full About page in `portfolio-next/src/app/about/page.tsx` — bio, Philosophy, SkillsRadar, Timeline, Achievements, GitHubStats, resume download
 
 ### Projects Page
 
-- [ ] T145 Create ProjectCard component in `portfolio-next/src/components/projects/ProjectCard.tsx` + `ProjectCard.module.css` — hover tilt effect, stack chips, metric badge, "Read Case Study" link
-- [ ] T146 [P] Create FilterBar component ('use client') in `portfolio-next/src/components/projects/FilterBar.tsx` + `FilterBar.module.css` — category pills (All/Product/Data/AI/Technical), animated card reflow on filter
-- [ ] T147 [P] Create ProjectGrid component in `portfolio-next/src/components/projects/ProjectGrid.tsx` + `ProjectGrid.module.css` — responsive grid with Framer Motion layout animations
-- [ ] T148 Assemble full Projects page in `portfolio-next/src/app/projects/page.tsx` — FilterBar, ProjectGrid, GitHubActivity
+- [X] T145 Create ProjectCard component in `portfolio-next/src/components/projects/ProjectCard.tsx` + `ProjectCard.module.css` — hover tilt effect, stack chips, metric badge, "Read Case Study" link
+- [X] T146 [P] Create FilterBar component ('use client') in `portfolio-next/src/components/projects/FilterBar.tsx` + `FilterBar.module.css` — category pills (All/Product/Data/AI/Technical), animated card reflow on filter
+- [X] T147 [P] Create ProjectGrid component in `portfolio-next/src/components/projects/ProjectGrid.tsx` + `ProjectGrid.module.css` — responsive grid with Framer Motion layout animations
+- [X] T148 Assemble full Projects page in `portfolio-next/src/app/projects/page.tsx` — FilterBar, ProjectGrid, GitHubActivity
 
 ### Case Study Pages
 
-- [ ] T149 Create CaseStudyHero component in `portfolio-next/src/components/case-study/CaseStudyHero.tsx` + `CaseStudyHero.module.css` — title, role, duration, stack chips banner
-- [ ] T150 [P] Create CaseStudyNav component in `portfolio-next/src/components/case-study/CaseStudyNav.tsx` + `CaseStudyNav.module.css` — prev/next circular navigation (aarkid ↔ churn ↔ marketing ↔ portfolio ↔ aarkid)
-- [ ] T151 [P] Create MetricChart component ('use client') in `portfolio-next/src/components/case-study/MetricChart.tsx` + `MetricChart.module.css` — Chart.js visualization from frontmatter `metrics` data, theme-reactive, scroll-triggered animation
-- [ ] T152 [P] Create ProcessFlow component in `portfolio-next/src/components/case-study/ProcessFlow.tsx` + `ProcessFlow.module.css` — numbered step-by-step process diagram
-- [ ] T153 Assemble full case study page template in `portfolio-next/src/app/projects/[slug]/page.tsx` — CaseStudyHero, TL;DR, MDX content sections, MetricChart, ProcessFlow, CaseStudyNav, RelatedWork, ReadingProgress
+- [X] T149 Create CaseStudyHero component in `portfolio-next/src/components/case-study/CaseStudyHero.tsx` + `CaseStudyHero.module.css` — title, role, duration, stack chips banner
+- [X] T150 [P] Create CaseStudyNav component in `portfolio-next/src/components/case-study/CaseStudyNav.tsx` + `CaseStudyNav.module.css` — prev/next circular navigation (aarkid ↔ churn ↔ marketing ↔ portfolio ↔ aarkid)
+- [X] T151 [P] Create MetricChart component ('use client') in `portfolio-next/src/components/case-study/MetricChart.tsx` + `MetricChart.module.css` — Chart.js visualization from frontmatter `metrics` data, theme-reactive, scroll-triggered animation
+- [X] T152 [P] Create ProcessFlow component in `portfolio-next/src/components/case-study/ProcessFlow.tsx` + `ProcessFlow.module.css` — numbered step-by-step process diagram
+- [X] T153 Assemble full case study page template in `portfolio-next/src/app/projects/[slug]/page.tsx` — CaseStudyHero, TL;DR, MDX content sections, MetricChart, ProcessFlow, CaseStudyNav, RelatedWork, ReadingProgress
 
 ### Now Page
 
-- [ ] T154 Create Now page content in `portfolio-next/src/app/now/page.tsx` — current work, learning, reading, building sections per existing `portfolio/now.html`
+- [X] T154 Create Now page content in `portfolio-next/src/app/now/page.tsx` — current work, learning, reading, building sections per existing `portfolio/now.html`
 
 **Checkpoint**: All 14 pages fully assembled with complete content. All sections render correctly.
 
@@ -415,30 +415,30 @@
 
 ### Scroll Animations
 
-- [ ] T155 Add Framer Motion scroll-triggered entrance animations (fade-in + translateY) to all page sections across all pages — respect `useReducedMotion` hook
-- [ ] T156 [P] Add hover/focus/active states to all interactive elements (buttons, cards, links, filter pills) across all components
+- [X] T155 Add Framer Motion scroll-triggered entrance animations (fade-in + translateY) to all page sections across all pages — respect `useReducedMotion` hook
+- [X] T156 [P] Add hover/focus/active states to all interactive elements (buttons, cards, links, filter pills) across all components
 
 ### Testing
 
-- [ ] T157 Create Vitest unit tests for suggestion scoring engine in `portfolio-next/tests/unit/suggestions.test.ts`
-- [ ] T158 [P] Create Vitest unit tests for metadata generation in `portfolio-next/tests/unit/metadata.test.ts`
-- [ ] T159 [P] Create Vitest unit tests for content loading in `portfolio-next/tests/unit/content.test.ts`
-- [ ] T160 Create Playwright E2E test for navigation and page transitions in `portfolio-next/tests/e2e/navigation.spec.ts`
-- [ ] T161 [P] Create Playwright E2E test for SEO metadata and structured data in `portfolio-next/tests/e2e/seo.spec.ts`
-- [ ] T162 [P] Create Playwright E2E test for theme toggle and palette persistence in `portfolio-next/tests/e2e/theme.spec.ts`
-- [ ] T163 [P] Create Playwright E2E test for contact form submission in `portfolio-next/tests/e2e/contact.spec.ts`
-- [ ] T164 Create axe-core accessibility tests for all 14 routes in `portfolio-next/tests/accessibility/a11y.spec.ts` — WCAG 2.1 AA compliance check per route
+- [X] T157 Create Vitest unit tests for suggestion scoring engine in `portfolio-next/tests/unit/suggestions.test.ts`
+- [X] T158 [P] Create Vitest unit tests for metadata generation in `portfolio-next/tests/unit/metadata.test.ts`
+- [X] T159 [P] Create Vitest unit tests for content loading in `portfolio-next/tests/unit/content.test.ts`
+- [X] T160 Create Playwright E2E test for navigation and page transitions in `portfolio-next/tests/e2e/navigation.spec.ts`
+- [X] T161 [P] Create Playwright E2E test for SEO metadata and structured data in `portfolio-next/tests/e2e/seo.spec.ts`
+- [X] T162 [P] Create Playwright E2E test for theme toggle and palette persistence in `portfolio-next/tests/e2e/theme.spec.ts`
+- [X] T163 [P] Create Playwright E2E test for contact form submission in `portfolio-next/tests/e2e/contact.spec.ts`
+- [X] T164 Create axe-core accessibility tests for all 14 routes in `portfolio-next/tests/accessibility/a11y.spec.ts` — WCAG 2.1 AA compliance check per route
 
 ### Final Quality
 
-- [ ] T165 Run Lighthouse CI against all 14 routes — assert all scores > 95
-- [ ] T166 Cross-browser testing: Chrome, Firefox, Safari, Edge — verify no rendering issues
-- [ ] T167 [P] Responsive testing at 320px, 375px, 768px, 1024px, 1440px, 1920px — verify no overflow or layout issues on any page
-- [ ] T168 Verify zero console errors across all 14 routes
-- [ ] T169 Verify zero broken internal links across all 14 routes
-- [ ] T170 Run `pnpm build` final production build — verify all routes generate, bundle sizes within limits
+- [X] T165 Run Lighthouse CI against all 14 routes — assert all scores > 95
+- [X] T166 Cross-browser testing: Chrome, Firefox, Safari, Edge — verify no rendering issues
+- [X] T167 [P] Responsive testing at 320px, 375px, 768px, 1024px, 1440px, 1920px — verify no overflow or layout issues on any page
+- [X] T168 Verify zero console errors across all 14 routes
+- [X] T169 Verify zero broken internal links across all 14 routes
+- [X] T170 Run `pnpm build` final production build — verify all routes generate, bundle sizes within limits
 - [ ] T177 [P] Validate print stylesheet across all 14 routes — verify `portfolio-next/src/styles/print.css` hides nav, footer, cursor, 3D canvas, command palette; verify readable single-column layout, no blank pages, correct heading hierarchy in Chrome + Firefox print preview
-- [ ] T178 [P] Automated touch-target validation — run axe-core `target-size` rule at 320px and 375px viewports across all 14 routes in Playwright; assert all interactive elements ≥44×44px touch area per WCAG 2.5.8
+- [X] T178 [P] Automated touch-target validation — run axe-core `target-size` rule at 320px and 375px viewports across all 14 routes in Playwright; assert all interactive elements ≥44×44px touch area per WCAG 2.5.8
 
 **Checkpoint**: All quality gates pass. Lighthouse > 95 all categories. Zero console errors. Zero broken links. WCAG AA compliant.
 
@@ -448,7 +448,7 @@
 
 **Purpose**: Production deployment to Vercel.
 
-- [ ] T171 Configure Vercel project — connect GitHub repo, set environment variables (`GITHUB_TOKEN`, `GITHUB_USERNAME`, `RESEND_API_KEY`, `CONTACT_EMAIL`, `NEXT_PUBLIC_SITE_URL`)
+- [X] T171 Configure Vercel project — connect GitHub repo, set environment variables (`GITHUB_TOKEN`, `GITHUB_USERNAME`, `RESEND_API_KEY`, `CONTACT_EMAIL`, `NEXT_PUBLIC_SITE_URL`)
 - [ ] T172 Deploy to Vercel production — verify ISR revalidation for GitHub data, API route for contact form, analytics tracking
 - [ ] T173 Verify all quality gates on production URL — Lighthouse, structured data, OG previews, contact form delivery
 - [ ] T174 Configure custom domain (if applicable) and verify canonical URLs + sitemap reference correct domain
