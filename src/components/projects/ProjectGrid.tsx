@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import type { Project } from "@/types/project";
 import { FilterBar } from "@/components/projects/FilterBar";
 import { ProjectCard } from "@/components/projects/ProjectCard";
@@ -15,13 +15,11 @@ interface ProjectGridProps {
 
 export function ProjectGrid({ projects }: ProjectGridProps) {
   const [filtered, setFiltered] = useState(projects);
-  const [layout, setLayout] = useState<LayoutMode>("masonry");
-
-  // Persist layout preference
-  useEffect(() => {
+  const [layout, setLayout] = useState<LayoutMode>(() => {
+    if (typeof window === "undefined") return "masonry";
     const saved = localStorage.getItem("project-layout") as LayoutMode | null;
-    if (saved === "grid" || saved === "masonry") setLayout(saved);
-  }, []);
+    return saved === "grid" || saved === "masonry" ? saved : "masonry";
+  });
 
   const handleLayout = (mode: LayoutMode) => {
     setLayout(mode);
