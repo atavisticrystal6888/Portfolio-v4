@@ -49,3 +49,20 @@
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
+
+.viewAll {
+  text-align: center;
+  margin-top: var(--space-6);
+}
+
+.viewAllLink {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--accent);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+.viewAllLink:hover {
+  color: var(--accent-hover);
+}

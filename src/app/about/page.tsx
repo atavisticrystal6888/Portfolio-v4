@@ -96,6 +96,13 @@ export default async function AboutPage() {
         </ScrollReveal>
       </section>
 
+      {/* Education */}
+      <div className={styles.education}>
+        <SectionLabel>Education</SectionLabel>
+        <h3 className={styles.eduTitle}>B.Tech Electronics &amp; Computer Engineering</h3>
+        <p className={styles.eduSub}>J.C. Bose University, 2022–2026</p>
+      </div>
+
       {/* Skills */}
       <section aria-label="Skills" data-section="skills" className={styles.section} style={{ position: 'relative' }}>
         <DiagonalDivider side="left" />
@@ -124,13 +131,6 @@ export default async function AboutPage() {
         </ScrollReveal>
       </section>
 
-      {/* Education */}
-      <div className={styles.education}>
-        <SectionLabel>Education</SectionLabel>
-        <h3 className={styles.eduTitle}>B.Tech Electronics &amp; Computer Engineering</h3>
-        <p className={styles.eduSub}>J.C. Bose University, 2022–2026</p>
-      </div>
-
       {/* Achievements */}
       <section aria-label="Achievements" data-section="achievements" className={styles.section}>
         <div className={styles.sectionHeader}>
@@ -153,15 +153,21 @@ export default async function AboutPage() {
         </ScrollReveal>
       </section>
 
-      {/* Core Values */}
-      <section aria-label="Core values" data-section="values" className={styles.sectionNarrow}>
+      {/* How I Work */}
+      <section aria-label="How I work" data-section="how-i-work" className={styles.sectionNarrow}>
         <div className={styles.sectionHeader}>
-          <SectionLabel>Core Values</SectionLabel>
+          <SectionLabel>How I Work</SectionLabel>
         </div>
         <div className={styles.values}>
-          {["High-Ownership", "Low-Dependency", "Data-First", "Fast Execution"].map((v) => (
-            <GlassCard key={v} className={styles.valueCard}>
-              <span className={styles.valueName}>{v}</span>
+          {[
+            { label: "High-Ownership", detail: "Killed 37 low-signal dashboard charts at Wipro — kept the 3 that drove decisions" },
+            { label: "Low-Dependency", detail: "Wrote the PRD, built the eval harness, and shipped v1 of Aarchid myself" },
+            { label: "Data-First", detail: "Every feature proposal comes with a success metric and a kill criteria" },
+            { label: "Fast Execution", detail: "Portfolio went v1→v5 in 3 months — each version shipped in under a week" },
+          ].map((v) => (
+            <GlassCard key={v.label} className={styles.valueCard}>
+              <span className={styles.valueName}>{v.label}</span>
+              <span className={styles.valueDetail}>{v.detail}</span>
             </GlassCard>
           ))}
         </div>

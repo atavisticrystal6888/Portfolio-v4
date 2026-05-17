@@ -26,14 +26,13 @@ export function generatePageMetadata({
   article,
 }: PageMetadataOptions): Metadata {
   const url = `${SITE_URL}${path}`;
-  const fullTitle = path === "" ? title : `${title} | ${SITE_NAME}`;
 
   return {
-    title: fullTitle,
+    title: path === "" ? { absolute: title } : title,
     description,
     alternates: { canonical: url },
     openGraph: {
-      title: fullTitle,
+      title: `${title} | ${SITE_NAME}`,
       description,
       url,
       siteName: SITE_NAME,
@@ -46,7 +45,7 @@ export function generatePageMetadata({
     },
     twitter: {
       card: "summary_large_image",
-      title: fullTitle,
+      title: `${title} | ${SITE_NAME}`,
       description,
       images: [`${SITE_URL}${ogImage}`],
     },
@@ -60,6 +59,15 @@ export function generatePersonJsonLd() {
     name: "Dhruv Singhal",
     jobTitle: "Product Analyst & Builder",
     url: SITE_URL,
+    alumniOf: {
+      "@type": "CollegeOrUniversity",
+      name: "J.C. Bose University",
+    },
+    knowsAbout: ["Product Analytics", "Data Science", "AI/ML", "Product Management"],
+    sameAs: [
+      "https://github.com/atavisticrystal6888",
+      "https://linkedin.com/in/dhruvsinghal6888",
+    ],
   };
 }
 

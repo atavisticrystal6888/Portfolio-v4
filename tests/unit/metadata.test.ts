@@ -8,17 +8,17 @@ import {
 } from "@/lib/metadata";
 
 describe("generatePageMetadata", () => {
-  it("generates metadata with full title for non-root pages", () => {
+  it("generates metadata with plain title for non-root pages (template applied by layout)", () => {
     const meta = generatePageMetadata({
       title: "About",
       path: "/about",
     });
-    expect(meta.title).toBe("About | Dhruv Singhal");
+    expect(meta.title).toBe("About");
   });
 
-  it("uses plain title for the root page", () => {
+  it("uses absolute title for the root page", () => {
     const meta = generatePageMetadata({ title: "Dhruv Singhal", path: "" });
-    expect(meta.title).toBe("Dhruv Singhal");
+    expect(meta.title).toEqual({ absolute: "Dhruv Singhal" });
   });
 
   it("sets canonical URL", () => {

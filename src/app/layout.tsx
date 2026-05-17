@@ -15,12 +15,53 @@ import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 
 export const metadata: Metadata = {
-  title: "Dhruv Singhal - Product Analyst & Builder",
+  title: {
+    default: "Dhruv Singhal — Product Analyst & Builder",
+    template: "%s | Dhruv Singhal",
+  },
   description:
-    "Portfolio of Dhruv Singhal - Product Analyst & Builder. Case studies, blog articles, and projects showcasing data-driven product thinking.",
+    "Portfolio of Dhruv Singhal — Product Analyst & Builder. Case studies in AI diagnostics, churn prediction, and marketing analytics. Blog on data-driven product thinking.",
   metadataBase: new URL(
     process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"
   ),
+  keywords: [
+    "Dhruv Singhal",
+    "Product Analyst",
+    "Product Manager",
+    "Data Analytics",
+    "AI PM",
+    "Portfolio",
+    "Case Studies",
+    "APM",
+  ],
+  authors: [{ name: "Dhruv Singhal", url: "https://dhruvsinghal.codes" }],
+  creator: "Dhruv Singhal",
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    siteName: "Dhruv Singhal",
+    title: "Dhruv Singhal — Product Analyst & Builder",
+    description:
+      "Case studies, blog articles, and projects showcasing data-driven product thinking.",
+    images: [{ url: "/og/", width: 1200, height: 630 }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Dhruv Singhal — Product Analyst & Builder",
+    description:
+      "Case studies, blog articles, and projects showcasing data-driven product thinking.",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
 };
 
 export default function RootLayout({
@@ -67,9 +108,14 @@ export default function RootLayout({
               "@context": "https://schema.org",
               "@type": "Person",
               "name": "Dhruv Singhal",
-              "url": process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000",
+              "url": "https://dhruvsinghal.codes",
               "jobTitle": "Product Analyst & Builder",
-              "knowsAbout": ["Product Analytics", "Data Science", "AI/ML", "Product Management"],
+              "description": "Product Analyst & Builder turning messy data into product decisions that ship — from churn models to AI diagnostics.",
+              "knowsAbout": ["Product Analytics", "Data Science", "AI/ML", "Product Management", "Python", "SQL", "Next.js"],
+              "alumniOf": {
+                "@type": "CollegeOrUniversity",
+                "name": "J.C. Bose University"
+              },
               "sameAs": [
                 "https://github.com/atavisticrystal6888",
                 "https://linkedin.com/in/dhruvsinghal6888"
