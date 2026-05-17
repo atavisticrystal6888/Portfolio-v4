@@ -75,10 +75,11 @@ export default async function AboutPage() {
             <div>
               <p className={styles.bio}>
                 B.Tech student in my final year, with two years of operating
-                experience across product management, analytics, and technical
-                execution. I&apos;ve worked the data layer at Wipro on aviation
-                systems, the analytics layer at Read Riches, and the
-                product surface at Omniful.ai - and on the side, I co-built{" "}
+                experience across product management, aviation ops, and technical
+                execution. I&apos;ve worked the product layer at Wipro on aviation
+                ground ops, owned growth end-to-end from the founder&apos;s office at
+                Read Riches, and scoped features at Omniful.ai - and on the side,
+                I co-built{" "}
                 <Link href="/projects/aarchid">Aarchid</Link> with{" "}
                 <a href="https://github.com/dfordp" target="_blank" rel="noopener noreferrer">
                   Dilpreet Grover
@@ -87,9 +88,10 @@ export default async function AboutPage() {
                 user per month.
               </p>
               <p className={styles.bio}>
-                I&apos;m most useful where product thinking, data, and engineering
-                overlap - the kind of work that needs someone who can write a PRD,
-                instrument the eval set, and ship the first version themselves.
+                I&apos;m most useful where product thinking, domain expertise, and
+                engineering overlap - the kind of work that needs someone who can
+                write a PRD, instrument the eval set, and ship the first version
+                themselves.
               </p>
             </div>
           </div>

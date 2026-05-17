@@ -15,9 +15,9 @@ import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import styles from "./home.module.css";
 
 export const metadata = generatePageMetadata({
-  title: "Dhruv Singhal — Product Analyst & Builder",
+  title: "Dhruv Singhal — Product Manager & Builder",
   description:
-    "Portfolio of Dhruv Singhal — Product Analyst & Builder. Case studies in AI diagnostics, churn prediction, and marketing analytics. Blog on data-driven product thinking.",
+    "Portfolio of Dhruv Singhal — Product Manager & Builder. Aviation product management, AI diagnostics, churn prediction, and operational analytics.",
 });
 
 export default function Home() {

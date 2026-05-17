@@ -16,18 +16,18 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 
 export const metadata: Metadata = {
   title: {
-    default: "Dhruv Singhal — Product Analyst & Builder",
+    default: "Dhruv Singhal — Product Manager & Builder",
     template: "%s | Dhruv Singhal",
   },
   description:
-    "Portfolio of Dhruv Singhal — Product Analyst & Builder. Case studies in AI diagnostics, churn prediction, and marketing analytics. Blog on data-driven product thinking.",
+    "Portfolio of Dhruv Singhal — Product Manager & Builder. Aviation product management, AI diagnostics, churn prediction, and operational analytics. Blog on data-driven product thinking.",
   metadataBase: new URL(
     process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"
   ),
   keywords: [
     "Dhruv Singhal",
-    "Product Analyst",
     "Product Manager",
+    "Aviation PM",
     "Data Analytics",
     "AI PM",
     "Portfolio",
@@ -40,16 +40,16 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_US",
     siteName: "Dhruv Singhal",
-    title: "Dhruv Singhal — Product Analyst & Builder",
+    title: "Dhruv Singhal — Product Manager & Builder",
     description:
-      "Case studies, blog articles, and projects showcasing data-driven product thinking.",
+      "Aviation product management, AI diagnostics, and operational analytics.",
     images: [{ url: "/og/", width: 1200, height: 630 }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Dhruv Singhal — Product Analyst & Builder",
+    title: "Dhruv Singhal — Product Manager & Builder",
     description:
-      "Case studies, blog articles, and projects showcasing data-driven product thinking.",
+      "Aviation product management, AI diagnostics, and operational analytics.",
   },
   robots: {
     index: true,

@@ -11,7 +11,7 @@ export async function GET(
   const path = slug?.join("/") || "";
 
   const title = "Dhruv Singhal";
-  let subtitle = "Product Analyst & Builder";
+  let subtitle = "Product Manager & Builder";
   let kicker = "Portfolio";
 
   if (path === "about") {

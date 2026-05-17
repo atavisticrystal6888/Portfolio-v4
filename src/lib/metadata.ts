@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
 const SITE_NAME = "Dhruv Singhal";
 const DEFAULT_DESCRIPTION =
-  "Portfolio of Dhruv Singhal - Product Analyst & Builder. Case studies, blog articles, and projects showcasing data-driven product thinking.";
+  "Portfolio of Dhruv Singhal - Product Manager & Builder. Aviation product management, AI diagnostics, and operational analytics.";
 
 interface PageMetadataOptions {
   title: string;
@@ -57,13 +57,13 @@ export function generatePersonJsonLd() {
     "@context": "https://schema.org",
     "@type": "Person",
     name: "Dhruv Singhal",
-    jobTitle: "Product Analyst & Builder",
+    jobTitle: "Product Manager & Builder",
     url: SITE_URL,
     alumniOf: {
       "@type": "CollegeOrUniversity",
       name: "J.C. Bose University",
     },
-    knowsAbout: ["Product Analytics", "Data Science", "AI/ML", "Product Management"],
+    knowsAbout: ["Aviation Product Management", "Product Analytics", "AI/ML", "Data Science"],
     sameAs: [
       "https://github.com/atavisticrystal6888",
       "https://linkedin.com/in/dhruvsinghal6888",

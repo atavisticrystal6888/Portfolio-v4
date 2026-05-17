@@ -28,7 +28,7 @@ export function Footer() {
       <div className={styles.inner}>
         <div className={styles.brand}>
           <span className={styles.logo}>Dhruv Singhal</span>
-          <p className={styles.tagline}>Product Analyst &amp; Builder</p>
+          <p className={styles.tagline}>Product Manager &amp; Builder</p>
         </div>
 
         <nav className={styles.links} aria-label="Footer navigation">

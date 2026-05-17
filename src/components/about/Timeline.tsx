@@ -12,18 +12,18 @@ interface TimelineItem {
 const EXPERIENCE: TimelineItem[] = [
   {
     company: "Wipro",
-    role: "Product Intern",
-    type: "Internship",
+    role: "Product Trainee",
+    type: "Full-time",
     period: "2025 - Present",
-    description: "Shipped 3 operational dashboards for aviation ground crews. Defined KPIs across 4 product surfaces and drove data-informed feature prioritization.",
+    description: "Shipped 3 operational dashboards for aviation ground crews. Defined KPIs across 4 product surfaces and drove data-informed feature prioritization for airline ops.",
     current: true,
   },
   {
     company: "Read Riches",
-    role: "Growth & Content PM",
+    role: "Founder's Office",
     type: "Consulting",
     period: "2024 – 2025",
-    description: "Grew content reach 4× across 3 channels through a data-driven content pipeline. Improved marketing ROI by 28% via attribution modelling.",
+    description: "Owned growth strategy end-to-end from the founder's office. Grew content reach 4× across 3 channels and improved marketing ROI by 28% via attribution modelling.",
   },
   {
     company: "Omniful.ai",

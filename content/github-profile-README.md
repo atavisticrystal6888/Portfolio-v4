@@ -1,6 +1,6 @@
 # Dhruv Singhal
 
-**Product Analyst & Builder** - I turn ambiguous problems into structured execution.
+**Product Manager & Builder** - I turn ambiguous problems into structured execution.
 Low-dependency, outcome-driven - I ship data-backed products, build dashboards that drive decisions, and lead 0 → 1 efforts end-to-end.
 
 Specializing in **AI product management** - shipping features powered by LLMs, vision models, and retrieval systems.
@@ -11,7 +11,7 @@ Specializing in **AI product management** - shipping features powered by LLMs, v
 💼 **LinkedIn** → [linkedin.com/in/dhruv-singhal](https://linkedin.com/in/dhruv-singhal) <!-- {LINKEDIN} -->
 🧭 **What I'm doing now** → [dhruvsinghal.dev/now](https://dhruvsinghal.dev/now)
 
-> 📬 **Open to:** Product Analyst · APM · AI PM · data-driven PM roles (mid-2026)
+> 📬 **Open to:** Product Manager · APM · AI PM · Aviation PM roles (mid-2026)
 
 ---
 
@@ -58,10 +58,10 @@ Specializing in **AI product management** - shipping features powered by LLMs, v
 
 ### 📍 Currently
 
-- **Working on** - Product Intern @ Wipro
+- **Working on** - Product Trainee @ Wipro
 - **Shipping** - Aarchid (AI plant care, with [@dfordp](https://github.com/dfordp)) · this portfolio (v4)
 - **Learning** - LLM evaluation frameworks · growth experimentation · systems design
-- **Looking for** - Full-time Product Analyst / APM / AI PM roles
+- **Looking for** - Full-time Product Manager / APM / AI PM roles
 
 ---
 

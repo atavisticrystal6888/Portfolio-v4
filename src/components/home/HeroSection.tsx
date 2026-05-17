@@ -5,10 +5,10 @@ import { Button } from "@/components/ui/Button";
 import styles from "./HeroSection.module.css";
 
 const ROLES = [
-  "Product Analyst",
+  "Product Manager",
+  "Aviation PM",
   "Data-Driven Builder",
   "Technical PM",
-  "Analytics Engineer",
 ];
 
 export function HeroSection() {
@@ -21,8 +21,8 @@ export function HeroSection() {
         </h1>
         <p className={styles.role}>{ROLES[0]}</p>
         <p className={styles.statement}>
-          I turn messy data into product decisions that ship - from churn
-          models to AI diagnostics, I build what I spec.
+          I build products at the intersection of aviation ops and data — from
+          ground-crew dashboards to AI diagnostics, I ship what I spec.
         </p>
         <div className={styles.ctas}>
           <Button href="/projects" data-magnetic>Explore Work</Button>

@@ -12,18 +12,18 @@ interface ExperienceEntry {
 const EXPERIENCE: ExperienceEntry[] = [
   {
     company: "Wipro",
-    role: "Product Intern",
+    role: "Product Trainee",
     period: "2025 - Present",
     description:
-      "Leading product analytics. Building dashboards, defining KPIs, and driving data-informed feature prioritization.",
+      "Building aviation operations products. Shipping dashboards for ground crews, defining KPIs, and driving data-informed feature prioritization.",
     current: true,
   },
   {
     company: "Read Riches",
-    role: "Growth & Content PM",
+    role: "Founder's Office",
     period: "2024 - 2025",
     description:
-      "Grew content reach 4x through a data-driven content pipeline. Defined and tracked content KPIs across channels.",
+      "Owned growth strategy end-to-end from the founder's office. Grew content reach 4× and tracked KPIs across channels.",
   },
   {
     company: "Omniful.ai",
