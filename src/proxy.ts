@@ -1,7 +1,19 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
+import { SITE_HOST, SITE_URL, WWW_SITE_HOST } from "@/lib/site";
 
-export function proxy(_request: NextRequest) {
+export function proxy(request: NextRequest) {
+  const requestHost =
+    request.headers.get("x-forwarded-host") || request.headers.get("host");
+
+  if (requestHost === WWW_SITE_HOST) {
+    const redirectUrl = request.nextUrl.clone();
+    redirectUrl.host = SITE_HOST;
+    redirectUrl.protocol = new URL(SITE_URL).protocol;
+
+    return NextResponse.redirect(redirectUrl, 308);
+  }
+
   const response = NextResponse.next();
 
   // Security headers
@@ -36,6 +48,6 @@ export function proxy(_request: NextRequest) {
 export const config = {
   matcher: [
     // Match all routes except static files and API routes
-    "/((?!_next/static|_next/image|favicon.ico|icon.svg|images|fonts|audio|resume).*)",
+    "/((?!_next/static|_next/image|images|fonts|audio|resume).*)",
   ],
 };

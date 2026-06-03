@@ -1,11 +1,12 @@
 import { ImageResponse } from "next/og";
 import { NextRequest } from "next/server";
+import { SITE_DOMAIN } from "@/lib/site";
 
 export const runtime = "edge";
 
 export async function GET(
-  request: NextRequest,
-  { params }: { params: Promise<{ slug: string[] }> }
+  _request: NextRequest,
+  { params }: { params: Promise<{ slug?: string[] }> }
 ) {
   const { slug } = await params;
   const path = slug?.join("/") || "";
@@ -19,7 +20,7 @@ export async function GET(
     subtitle = "Background, Skills & Experience";
   } else if (path === "projects") {
     kicker = "Projects";
-    subtitle = "Problem → Action → Outcome";
+    subtitle = "Problem -> Action -> Outcome";
   } else if (path === "ai-pm") {
     kicker = "AI PM";
     subtitle = "Playbooks for Shipping LLM Products";
@@ -48,12 +49,12 @@ export async function GET(
     kicker = "Case Study";
     subtitle = decodeURIComponent(path.replace("projects/", ""))
       .replace(/-/g, " ")
-      .replace(/\b\w/g, (c) => c.toUpperCase());
+      .replace(/\b\w/g, (char) => char.toUpperCase());
   } else if (path.startsWith("blog/")) {
     kicker = "Article";
     subtitle = decodeURIComponent(path.replace("blog/", ""))
       .replace(/-/g, " ")
-      .replace(/\b\w/g, (c) => c.toUpperCase());
+      .replace(/\b\w/g, (char) => char.toUpperCase());
   }
 
   const accent = "#5ba4b5";
@@ -61,11 +62,6 @@ export async function GET(
   const bg = "#0a0a0b";
   const textStrong = "#eaeaef";
   const textMuted = "#7c7c85";
-  const domain =
-    process.env.NEXT_PUBLIC_SITE_URL?.replace(/^https?:\/\//, "").replace(
-      /\/$/,
-      ""
-    ) || "dhruvsinghal.com";
 
   return new ImageResponse(
     (
@@ -81,7 +77,6 @@ export async function GET(
           position: "relative",
         }}
       >
-        {/* Left accent rail */}
         <div
           style={{
             display: "flex",
@@ -90,7 +85,6 @@ export async function GET(
           }}
         />
 
-        {/* Content column */}
         <div
           style={{
             display: "flex",
@@ -101,7 +95,6 @@ export async function GET(
             position: "relative",
           }}
         >
-          {/* Top kicker */}
           <div
             style={{
               display: "flex",
@@ -130,7 +123,6 @@ export async function GET(
             </div>
           </div>
 
-          {/* Title */}
           <div
             style={{
               fontSize: "76px",
@@ -144,7 +136,6 @@ export async function GET(
             {title}
           </div>
 
-          {/* Subtitle */}
           <div
             style={{
               fontSize: "36px",
@@ -157,7 +148,6 @@ export async function GET(
             {subtitle}
           </div>
 
-          {/* Footer rail */}
           <div
             style={{
               position: "absolute",
@@ -181,7 +171,7 @@ export async function GET(
                   boxShadow: `0 0 12px ${accent}`,
                 }}
               />
-              <span>{domain}</span>
+              <span>{SITE_DOMAIN}</span>
             </div>
             <div style={{ fontStyle: "italic" }}>Product · Data · AI</div>
           </div>

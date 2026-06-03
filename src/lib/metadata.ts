@@ -1,9 +1,18 @@
 import type { Metadata } from "next";
+import {
+  absoluteUrl,
+  CONTACT_EMAIL,
+  GITHUB_URL,
+  HEADSHOT_PATH,
+  LINKEDIN_URL,
+  PERSON_TITLE,
+  SITE_DESCRIPTION,
+  SITE_NAME,
+  SITE_TITLE,
+  SITE_URL,
+} from "@/lib/site";
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
-const SITE_NAME = "Dhruv Singhal";
-const DEFAULT_DESCRIPTION =
-  "Portfolio of Dhruv Singhal - Product Manager & Builder. Aviation product management, AI diagnostics, and operational analytics.";
+const DEFAULT_DESCRIPTION = SITE_DESCRIPTION;
 
 interface PageMetadataOptions {
   title: string;
@@ -11,6 +20,8 @@ interface PageMetadataOptions {
   path?: string;
   ogImage?: string;
   ogType?: "website" | "article";
+  keywords?: string[];
+  category?: string;
   article?: {
     publishedTime?: string;
     author?: string;
@@ -21,23 +32,29 @@ export function generatePageMetadata({
   title,
   description = DEFAULT_DESCRIPTION,
   path = "",
-  ogImage = `/og${path || "/"}`,
+  ogImage = path ? `/og${path}` : "/og",
   ogType = "website",
+  keywords,
+  category,
   article,
 }: PageMetadataOptions): Metadata {
-  const url = `${SITE_URL}${path}`;
+  const url = absoluteUrl(path || "/");
+  const socialTitle = title === SITE_TITLE || title === SITE_NAME ? title : `${title} | ${SITE_NAME}`;
 
   return {
     title: path === "" ? { absolute: title } : title,
     description,
+    ...(keywords?.length ? { keywords } : {}),
+    ...(category ? { category } : {}),
     alternates: { canonical: url },
     openGraph: {
-      title: `${title} | ${SITE_NAME}`,
+      title: socialTitle,
       description,
       url,
       siteName: SITE_NAME,
+      locale: "en_US",
       type: ogType,
-      images: [{ url: `${SITE_URL}${ogImage}`, width: 1200, height: 630 }],
+      images: [{ url: absoluteUrl(ogImage), width: 1200, height: 630, alt: socialTitle }],
       ...(article && {
         publishedTime: article.publishedTime,
         authors: article.author ? [article.author] : undefined,
@@ -45,9 +62,9 @@ export function generatePageMetadata({
     },
     twitter: {
       card: "summary_large_image",
-      title: `${title} | ${SITE_NAME}`,
+      title: socialTitle,
       description,
-      images: [`${SITE_URL}${ogImage}`],
+      images: [absoluteUrl(ogImage)],
     },
   };
 }
@@ -56,18 +73,18 @@ export function generatePersonJsonLd() {
   return {
     "@context": "https://schema.org",
     "@type": "Person",
-    name: "Dhruv Singhal",
-    jobTitle: "Product Manager & Builder",
+    name: SITE_NAME,
+    jobTitle: PERSON_TITLE,
     url: SITE_URL,
+    image: absoluteUrl(HEADSHOT_PATH),
+    description: SITE_DESCRIPTION,
+    email: CONTACT_EMAIL,
     alumniOf: {
       "@type": "CollegeOrUniversity",
       name: "J.C. Bose University",
     },
     knowsAbout: ["Aviation Product Management", "Product Analytics", "AI/ML", "Data Science"],
-    sameAs: [
-      "https://github.com/atavisticrystal6888",
-      "https://linkedin.com/in/dhruvsinghal6888",
-    ],
+    sameAs: [GITHUB_URL, LINKEDIN_URL],
   };
 }
 
@@ -77,6 +94,13 @@ export function generateWebSiteJsonLd() {
     "@type": "WebSite",
     name: SITE_NAME,
     url: SITE_URL,
+    description: SITE_DESCRIPTION,
+    inLanguage: "en-US",
+    publisher: {
+      "@type": "Person",
+      name: SITE_NAME,
+      url: SITE_URL,
+    },
   };
 }
 
@@ -90,7 +114,7 @@ export function generateBreadcrumbJsonLd(
       "@type": "ListItem",
       position: index + 1,
       name: item.name,
-      item: `${SITE_URL}${item.url}`,
+      item: absoluteUrl(item.url),
     })),
   };
 }
@@ -112,9 +136,17 @@ export function generateArticleJsonLd(article: {
     dateModified: article.dateModified || article.datePublished,
     author: {
       "@type": "Person",
-      name: "Dhruv Singhal",
+      name: SITE_NAME,
+      url: SITE_URL,
     },
-    url: `${SITE_URL}${article.url}`,
-    ...(article.image && { image: `${SITE_URL}${article.image}` }),
+    publisher: {
+      "@type": "Person",
+      name: SITE_NAME,
+      url: SITE_URL,
+      image: absoluteUrl(HEADSHOT_PATH),
+    },
+    mainEntityOfPage: absoluteUrl(article.url),
+    url: absoluteUrl(article.url),
+    image: absoluteUrl(article.image || `/og${article.url}`),
   };
 }

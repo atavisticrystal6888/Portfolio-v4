@@ -11,19 +11,37 @@ import { SkipLink } from "@/components/ui/SkipLink";
 import { ScrollProgress } from "@/components/ui/ScrollProgress";
 import { LoadingScreen } from "@/components/ui/LoadingScreen";
 import { ErrorBoundary } from "@/components/ui/ErrorBoundary";
+import { generatePersonJsonLd } from "@/lib/metadata";
+import { absoluteUrl, SITE_DESCRIPTION, SITE_NAME, SITE_TITLE, SITE_URL } from "@/lib/site";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 
 export const metadata: Metadata = {
   title: {
-    default: "Dhruv Singhal — Product Manager & Builder",
-    template: "%s | Dhruv Singhal",
+    default: SITE_TITLE,
+    template: `%s | ${SITE_NAME}`,
   },
-  description:
-    "Portfolio of Dhruv Singhal — Product Manager & Builder. Aviation product management, AI diagnostics, churn prediction, and operational analytics. Blog on data-driven product thinking.",
-  metadataBase: new URL(
-    process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"
-  ),
+  applicationName: SITE_NAME,
+  description: SITE_DESCRIPTION,
+  metadataBase: new URL(SITE_URL),
+  alternates: {
+    canonical: SITE_URL,
+  },
+  manifest: "/manifest.webmanifest",
+  referrer: "origin-when-cross-origin",
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
+  icons: {
+    icon: [
+      { url: "/icon", sizes: "96x96", type: "image/png" },
+      { url: "/icon.svg", type: "image/svg+xml" },
+    ],
+    apple: [{ url: "/apple-icon", sizes: "180x180", type: "image/png" }],
+    shortcut: ["/favicon.ico"],
+  },
   keywords: [
     "Dhruv Singhal",
     "Product Manager",
@@ -33,23 +51,27 @@ export const metadata: Metadata = {
     "Portfolio",
     "Case Studies",
     "APM",
+    "Product Analytics",
+    "SQL",
+    "Python",
   ],
-  authors: [{ name: "Dhruv Singhal", url: "https://dhruvsinghal.codes" }],
-  creator: "Dhruv Singhal",
+  authors: [{ name: SITE_NAME, url: SITE_URL }],
+  creator: SITE_NAME,
+  category: "technology",
   openGraph: {
     type: "website",
     locale: "en_US",
-    siteName: "Dhruv Singhal",
-    title: "Dhruv Singhal — Product Manager & Builder",
-    description:
-      "Aviation product management, AI diagnostics, and operational analytics.",
-    images: [{ url: "/og/", width: 1200, height: 630 }],
+    url: SITE_URL,
+    siteName: SITE_NAME,
+    title: SITE_TITLE,
+    description: SITE_DESCRIPTION,
+    images: [{ url: absoluteUrl("/og"), width: 1200, height: 630, alt: SITE_TITLE }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Dhruv Singhal — Product Manager & Builder",
-    description:
-      "Aviation product management, AI diagnostics, and operational analytics.",
+    title: SITE_TITLE,
+    description: SITE_DESCRIPTION,
+    images: [absoluteUrl("/og")],
   },
   robots: {
     index: true,
@@ -63,6 +85,8 @@ export const metadata: Metadata = {
     },
   },
 };
+
+const personJsonLd = generatePersonJsonLd();
 
 export default function RootLayout({
   children,
@@ -92,7 +116,6 @@ export default function RootLayout({
           type="font/woff2"
           crossOrigin="anonymous"
         />
-        <link rel="icon" href="/icon.svg" type="image/svg+xml" />
         <link
           rel="alternate"
           type="application/rss+xml"
@@ -104,23 +127,7 @@ export default function RootLayout({
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "Person",
-              "name": "Dhruv Singhal",
-              "url": "https://dhruvsinghal.codes",
-              "jobTitle": "Product Manager & Builder",
-              "description": "Early-career product manager turning ambiguous domain inputs into specs, metrics, and shipped systems across aviation, AI, and analytics.",
-              "knowsAbout": ["Product Analytics", "Data Science", "AI/ML", "Product Management", "Python", "SQL", "Next.js"],
-              "alumniOf": {
-                "@type": "CollegeOrUniversity",
-                "name": "J.C. Bose University"
-              },
-              "sameAs": [
-                "https://github.com/atavisticrystal6888",
-                "https://linkedin.com/in/dhruvsinghal6888"
-              ]
-            }),
+            __html: JSON.stringify(personJsonLd),
           }}
         />
       </head>

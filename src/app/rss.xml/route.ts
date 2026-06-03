@@ -1,7 +1,5 @@
 import { getAllBlogSlugs, getBlogPostBySlug } from "@/lib/content";
-
-const SITE_URL =
-  process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
+import { SITE_URL } from "@/lib/site";
 
 function escapeXml(unsafe: string): string {
   return unsafe
