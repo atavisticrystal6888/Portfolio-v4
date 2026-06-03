@@ -2,19 +2,19 @@
    BASE - Reset, Typography, Layout
    ============================================================ */
 
-/* Self-hosted fonts (replacing Fontshare CDN) */
+/* Self-hosted fonts */
 @font-face {
-  font-family: 'Satoshi';
-  src: url('/fonts/satoshi-variable.woff2') format('woff2');
-  font-weight: 300 900;
+  font-family: 'Manrope';
+  src: url('/fonts/manrope-variable.woff2') format('woff2');
+  font-weight: 200 800;
   font-display: swap;
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'Boska';
-  src: url('/fonts/boska-variable.woff2') format('woff2');
-  font-weight: 300 900;
+  font-family: 'Fraunces';
+  src: url('/fonts/fraunces-variable.woff2') format('woff2');
+  font-weight: 100 900;
   font-display: swap;
   font-style: normal;
 }

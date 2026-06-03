@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import styles from './Footer.module.css';
 import { BackToTop } from './BackToTop';
+import { CONTACT_EMAIL_HREF } from '@/lib/site';
 
 const QUICK_LINKS = [
   { href: '/', label: 'Home' },
@@ -19,7 +20,7 @@ const QUICK_LINKS = [
 const SOCIAL_LINKS = [
   { href: 'https://github.com/atavisticrystal6888', label: 'GitHub' },
   { href: 'https://linkedin.com/in/dhruvsinghal6888', label: 'LinkedIn' },
-  { href: 'mailto:dhruvsinghal04@gmail.com', label: 'Email' },
+  { href: CONTACT_EMAIL_HREF, label: 'Email' },
 ];
 
 export function Footer() {

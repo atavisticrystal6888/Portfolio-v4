@@ -47,3 +47,21 @@ export function slugify(text: string): string {
 export function cn(...classes: (string | undefined | null | false)[]): string {
   return classes.filter(Boolean).join(" ");
 }
+
+/**
+ * Convert internal category keys into user-facing labels.
+ */
+export function formatCategoryLabel(category: string): string {
+  switch (category.toLowerCase()) {
+    case "ai":
+      return "AI";
+    case "product":
+      return "Product";
+    case "data":
+      return "Data";
+    case "technical":
+      return "Technical";
+    default:
+      return category;
+  }
+}

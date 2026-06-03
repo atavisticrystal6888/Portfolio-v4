@@ -4,6 +4,8 @@
     "name": "Aarchid - AI Botanical Intelligence",
     "category": "ai",
     "description": "Forensic plant-health platform: multimodal vision diagnosis grounded by real-time research-augmented LLM reasoning. Built as co-creator - PM + engineer.",
+    "imageUrl": "/images/projects/aarchid/hero.png",
+    "imageAlt": "Aarchid landing page showing the AI plant diagnosis interface and digital twin positioning.",
     "stack": ["Gemini 1.5 Pro", "Exa AI API", "Next.js", "Cloudflare Workers", "Hono", "Supabase", "TypeScript"],
     "metricValue": "92%",
     "metricLabel": "Diagnosis Accuracy (200-sample golden set)",
@@ -23,6 +25,20 @@
     "order": 1
   },
   {
+    "slug": "hackmate",
+    "name": "Hackmate - Co-Founder Matchmaking Platform",
+    "category": "product",
+    "description": "Swipe-based co-founder matchmaking product shaped around founder-discovery pain points, matching logic, and community-led iteration.",
+    "stack": ["Next.js", "TypeScript", "PostgreSQL", "Redis", "Vercel"],
+    "metricValue": "300+",
+    "metricLabel": "Organic Users",
+    "featured": true,
+    "githubUrl": "https://github.com/atavisticrystal6888/hackmate-rework",
+    "duration": "2025 – present",
+    "role": "Co-Builder · Product",
+    "order": 2
+  },
+  {
     "slug": "churn-analysis",
     "name": "Customer Churn Analysis",
     "category": "data",
@@ -31,16 +47,18 @@
     "metricValue": "~15%",
     "metricLabel": "Churn Reduction",
     "featured": true,
-    "githubUrl": null,
+    "githubUrl": "https://github.com/atavisticrystal6888/Customer-churn-analysis",
     "duration": "Jan 2026 – Mar 2026",
     "role": "Data Analyst",
-    "order": 2
+    "order": 3
   },
   {
     "slug": "tcs-nqt-prep-hub",
     "name": "TCS NQT Prep Hub",
     "category": "technical",
     "description": "Open-source TCS NQT preparation platform - 424+ practice questions, 10 previous papers, and an installable PWA with quizzes, flashcards, analytics, and offline support.",
+    "imageUrl": "/images/projects/tcs-nqt-prep-hub/dashboard.png",
+    "imageAlt": "TCS NQT Prep Hub dashboard showing topic progress, recent activity, and study metrics.",
     "stack": ["JavaScript", "HTML/CSS", "PWA", "Service Workers"],
     "metricValue": "424+",
     "metricLabel": "Practice Questions",
@@ -49,7 +67,7 @@
     "liveUrl": "https://atavisticrystal6888.github.io/TCS-NQT-Prep-Hub/",
     "duration": "Mar 2026 – May 2026",
     "role": "Creator & Lead Developer",
-    "order": 3
+    "order": 4
   },
   {
     "slug": "kite-edge",
@@ -63,13 +81,15 @@
     "githubUrl": "https://github.com/atavisticrystal6888/Kite-edge",
     "duration": "May 2026 – present",
     "role": "Full-Stack Developer & Architect",
-    "order": 4
+    "order": 5
   },
   {
     "slug": "portfolio-site",
     "name": "This Portfolio - Meta Case Study",
     "category": "technical",
     "description": "Applied PM thinking to build a production portfolio - from spec to deployment with 95+ Lighthouse scores.",
+    "imageUrl": "/images/projects/portfolio-site/home.png",
+    "imageAlt": "Portfolio home page showing the Dhruv Singhal hero section and product-focused positioning.",
     "stack": ["Next.js", "React", "TypeScript", "Three.js", "MDX"],
     "metricValue": "95+",
     "metricLabel": "Lighthouse Score",
@@ -77,6 +97,6 @@
     "githubUrl": "https://github.com/atavisticrystal6888/Portfolio-v4",
     "duration": "Mar 2026 – Apr 2026",
     "role": "Full-Stack Developer & Product Manager",
-    "order": 5
+    "order": 6
   }
 ]

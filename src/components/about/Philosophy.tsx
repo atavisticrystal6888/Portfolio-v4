@@ -5,7 +5,7 @@ const CARDS = [
   {
     icon: "🎯",
     title: "Outcome > Output",
-    desc: "I killed a dashboard with 40+ charts because only 3 drove decisions. Impact > activity.",
+    desc: "I cut dashboards and features that do not change a decision, then align stakeholders around the few workflows that actually deserve priority.",
   },
   {
     icon: "📊",

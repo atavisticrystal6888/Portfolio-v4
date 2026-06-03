@@ -12,10 +12,10 @@ interface TimelineItem {
 const EXPERIENCE: TimelineItem[] = [
   {
     company: "Wipro",
-    role: "Product Trainee",
-    type: "Full-time",
-    period: "2025 - Present",
-    description: "Shipped 3 operational dashboards for aviation ground crews. Defined KPIs across 4 product surfaces and drove data-informed feature prioritization for airline ops.",
+    role: "Product Intern",
+    type: "Internship",
+    period: "2026 - Present",
+    description: "Scoped Crew Mobile and Non-Crew Records workflows across 12+ aviation scenarios, surfaced edge cases early, and aligned feature success criteria with engineering and QA.",
     current: true,
   },
   {
@@ -23,14 +23,14 @@ const EXPERIENCE: TimelineItem[] = [
     role: "Founder's Office",
     type: "Consulting",
     period: "2024 – 2025",
-    description: "Owned growth strategy end-to-end from the founder's office. Grew content reach 4× across 3 channels and improved marketing ROI by 28% via attribution modelling.",
+    description: "Ran content-led growth experiments, managed a 4-person research and content team, and contributed to a 4x retention improvement through better publishing cadence and feedback loops.",
   },
   {
     company: "Omniful.ai",
     role: "Business Analyst Intern",
     type: "Internship",
     period: "2024",
-    description: "Conducted competitive analysis across 8 logistics SaaS players. Created PRDs for 3 features adopted into the product roadmap.",
+    description: "Defined prospect scoring using firmographic and behavioral signals, scaled qualified prospects from about 10 per day to 200+ per day, and supported 10 client acquisitions.",
   },
 ];
 

@@ -6,12 +6,13 @@ import { FAQAccordion } from "@/components/contact/FAQAccordion";
 import { DirectLinks } from "@/components/contact/DirectLinks";
 import { JsonLd } from "@/components/ui/JsonLd";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
+import { CONTACT_EMAIL } from "@/lib/site";
 import styles from "./contact.module.css";
 
 export const metadata = generatePageMetadata({
   title: "Contact",
   description:
-    "Get in touch with Dhruv Singhal - open to Product Analyst, APM, and data-driven PM roles.",
+    "Get in touch with Dhruv Singhal - open to Product Manager, APM, and AI product roles.",
   path: "/contact",
 });
 
@@ -30,7 +31,7 @@ export default function ContactPage() {
         name: "What roles are you looking for?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "Product Analyst, Associate Product Manager (APM), or data-driven PM roles where I can blend analytics with product strategy.",
+          text: "Product Manager, Associate Product Manager (APM), or aviation and AI product roles where I can blend domain context, analytics, and execution.",
         },
       },
       {
@@ -46,7 +47,7 @@ export default function ContactPage() {
         name: "What's the best way to reach you?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "Email at dhruvsinghal04@gmail.com or connect on LinkedIn. Typically respond within 24 hours.",
+          text: `Email at ${CONTACT_EMAIL} or connect on LinkedIn. Typically respond within 24 hours.`,
         },
       },
       {
@@ -54,7 +55,7 @@ export default function ContactPage() {
         name: "Do you take freelance or consulting work?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "Selectively - for product strategy, analytics setup, or dashboard projects.",
+          text: "Selectively, but I am primarily focused on full-time Product, APM, and AI product roles right now.",
         },
       },
     ],
@@ -66,8 +67,8 @@ export default function ContactPage() {
       <JsonLd id="contact-faq-jsonld" data={faqJsonLd} />
 
       <PageHeader
-        title="Let's Build Something Together"
-        subtitle="Looking for a Product Analyst, APM, or data-driven PM to join your team? Let's talk."
+        title="Let's Talk Product"
+        subtitle="Hiring for Product, APM, or AI product roles? I would love to talk."
         badge="Open to Opportunities"
       />
 

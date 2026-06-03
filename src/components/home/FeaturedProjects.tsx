@@ -3,6 +3,7 @@ import type { Project } from "@/types/project";
 import { Badge } from "@/components/ui/Badge";
 import { GlassCard } from "@/components/ui/GlassCard";
 import { CoCreatorChips } from "@/components/ui/CoCreatorChips";
+import { formatCategoryLabel } from "@/lib/utils";
 import styles from "./FeaturedProjects.module.css";
 
 interface FeaturedProjectsProps {
@@ -14,7 +15,7 @@ export function FeaturedProjects({ projects }: FeaturedProjectsProps) {
     <div className={styles.grid}>
       {projects.map((p) => (
         <GlassCard key={p.slug} as="article" hover className={styles.card}>
-          <Badge variant="accent">{p.category}</Badge>
+          <Badge variant="accent">{formatCategoryLabel(p.category)}</Badge>
           <h3 className={styles.title}>
             <Link href={`/projects/${p.slug}`}>{p.name}</Link>
           </h3>

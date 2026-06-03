@@ -12,10 +12,10 @@ interface ExperienceEntry {
 const EXPERIENCE: ExperienceEntry[] = [
   {
     company: "Wipro",
-    role: "Product Trainee",
-    period: "2025 - Present",
+    role: "Product Intern",
+    period: "2026 - Present",
     description:
-      "Building aviation operations products. Shipping dashboards for ground crews, defining KPIs, and driving data-informed feature prioritization.",
+      "Scoped crew mobile and records workflows across 12+ aviation scenarios, translated SME input into build-ready specs, and aligned success criteria with engineering and QA.",
     current: true,
   },
   {
@@ -23,14 +23,14 @@ const EXPERIENCE: ExperienceEntry[] = [
     role: "Founder's Office",
     period: "2024 - 2025",
     description:
-      "Owned growth strategy end-to-end from the founder's office. Grew content reach 4× and tracked KPIs across channels.",
+      "Ran content-led growth experiments, managed a 4-person research and content team, and helped drive a 4x retention improvement through sharper operating cadence.",
   },
   {
     company: "Omniful.ai",
     role: "Business Analyst Intern",
     period: "2024",
     description:
-      "Conducted market research and competitor analysis for the logistics SaaS platform. Created PRDs for 3 features.",
+      "Defined prospect scoring with firmographic and behavioral signals, scaled qualified prospects from roughly 10 per day to 200+ per day, and supported 10 client acquisitions.",
   },
 ];
 

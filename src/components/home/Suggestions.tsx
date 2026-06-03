@@ -4,6 +4,7 @@ import { useMemo } from "react";
 import Link from "next/link";
 import { useBehavior } from "@/hooks/useBehavior";
 import { scoreSuggestions } from "@/lib/suggestions";
+import { formatCategoryLabel } from "@/lib/utils";
 import { Badge } from "@/components/ui/Badge";
 import { GlassCard } from "@/components/ui/GlassCard";
 import { SectionLabel } from "@/components/ui/SectionLabel";
@@ -27,12 +28,12 @@ export function Suggestions({ projects, posts }: SuggestionsProps) {
   if (suggestions.length === 0) return null;
 
   return (
-    <section aria-label="Recommended for you" className={styles.wrapper}>
-      <SectionLabel>Recommended For You</SectionLabel>
+    <section aria-label="Recommended for You" className={styles.wrapper}>
+      <SectionLabel>Recommended for You</SectionLabel>
       <div className={styles.grid}>
         {suggestions.map((item) => (
           <GlassCard key={item.slug} as="article" hover className={styles.card}>
-            <Badge variant="accent">{item.category}</Badge>
+            <Badge variant="accent">{formatCategoryLabel(item.category)}</Badge>
             <h3 className={styles.title}>
               <Link href={item.href}>{item.title}</Link>
             </h3>

@@ -16,7 +16,7 @@ const SUGGESTED = [
   { href: "/projects", label: "Projects", desc: "Case studies with real outcomes." },
   { href: "/ai-pm", label: "AI PM", desc: "Playbooks for shipping LLM products." },
   { href: "/blog", label: "Blog", desc: "Essays on product, data & building." },
-  { href: "/contact", label: "Contact", desc: "Let's build something together." },
+  { href: "/contact", label: "Contact", desc: "Talk product, roles, and opportunities." },
 ];
 
 export default function NotFound() {

@@ -12,6 +12,7 @@ import { Suggestions } from "@/components/home/Suggestions";
 import { DiagonalDivider } from "@/components/ui/DiagonalDivider";
 import { JsonLd } from "@/components/ui/JsonLd";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
+import { CONTACT_EMAIL_HREF } from "@/lib/site";
 import styles from "./home.module.css";
 
 export const metadata = generatePageMetadata({
@@ -108,9 +109,9 @@ export default function Home() {
       {/* Contact CTA */}
       <section aria-label="Contact" data-section="contact-cta" className={styles.ctaSection}>
         <ScrollReveal>
-          <h2 className={styles.ctaTitle}>Let&apos;s Build Together</h2>
+          <h2 className={styles.ctaTitle}>Let&apos;s Talk Product</h2>
           <div className={styles.ctaButtons}>
-            <Button href="mailto:dhruvsinghal04@gmail.com" external>Email Me</Button>
+            <Button href={CONTACT_EMAIL_HREF} external>Email Me</Button>
             <Button
               href="https://linkedin.com/in/dhruvsinghal6888"
               variant="secondary"

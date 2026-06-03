@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { Resend } from "resend";
+import { CONTACT_EMAIL } from "@/lib/site";
 
 const resend = process.env.RESEND_API_KEY
   ? new Resend(process.env.RESEND_API_KEY)
@@ -57,7 +58,7 @@ export async function POST(request: NextRequest) {
 
     // Send email via Resend if configured, otherwise log
     if (resend) {
-      const toEmail = process.env.CONTACT_EMAIL || "dhruvsinghal04@gmail.com";
+      const toEmail = process.env.CONTACT_EMAIL || CONTACT_EMAIL;
       const fromEmail = process.env.RESEND_FROM_EMAIL || "Portfolio Contact <onboarding@resend.dev>";
       await resend.emails.send({
         from: fromEmail,

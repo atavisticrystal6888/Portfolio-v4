@@ -1,68 +1,118 @@
 # Dhruv Singhal
 
-**Product Manager & Builder** - I turn ambiguous problems into structured execution.
-Low-dependency, outcome-driven - I ship data-backed products, build dashboards that drive decisions, and lead 0 → 1 efforts end-to-end.
+Product manager and AI product builder working across product scoping, analytics, and LLM-powered systems.
 
-Specializing in **AI product management** - shipping features powered by LLMs, vision models, and retrieval systems.
+I turn ambiguous business and workflow problems into specs, metrics, dashboards, and shipped products. At Wipro Aviation OS, I work on enterprise crew and operations workflows. Outside work, I build AI and analytics products such as Aarchid, Hackmate, and KiteEdge.
 
-<!-- TODO: fill placeholders below before making this repo public -->
-🌐 **Portfolio** → [dhruvsinghal.dev](https://dhruvsinghal.dev) <!-- {SITE_URL} -->
-✉️ **Email** → [hello@dhruvsinghal.dev](mailto:hello@dhruvsinghal.dev) <!-- {EMAIL} -->
-💼 **LinkedIn** → [linkedin.com/in/dhruv-singhal](https://linkedin.com/in/dhruv-singhal) <!-- {LINKEDIN} -->
-🧭 **What I'm doing now** → [dhruvsinghal.dev/now](https://dhruvsinghal.dev/now)
+Portfolio: [dhruvsinghal.codes](https://dhruvsinghal.codes)  
+LinkedIn: [linkedin.com/in/dhruvsinghal6888](https://linkedin.com/in/dhruvsinghal6888)  
+GitHub: [github.com/atavisticrystal6888](https://github.com/atavisticrystal6888)  
+Email: [dhruvsinghal6888@gmail.com](mailto:dhruvsinghal6888@gmail.com)  
+More: [Now](https://dhruvsinghal.codes/now) · [AI PM](https://dhruvsinghal.codes/ai-pm) · [Lab](https://dhruvsinghal.codes/lab) · [Uses](https://dhruvsinghal.codes/uses) · [Bookshelf](https://dhruvsinghal.codes/bookshelf)
 
-> 📬 **Open to:** Product Manager · APM · AI PM · Aviation PM roles (mid-2026)
-
----
-
-### 🛠️ What I'm building
-
-| Project | What it is | Stack | Outcome |
-|---|---|---|---|
-| 🌿 **Aarchid** *(with [@dfordp](https://github.com/dfordp))* | AI botanical intelligence - forensic plant diagnosis via multimodal vision + research-augmented LLMs | Gemini 1.5 Pro · Exa AI API · Next.js · Cloudflare Workers · Hono · Supabase · R2 | 92% diagnosis accuracy |
-| 📊 **Customer Churn Analysis** | Predictive churn model + Power BI cohort dashboards | Python · Pandas · scikit-learn · SQL · Power BI | ~15% churn reduction |
-| 📈 **Marketing Effectiveness** | Multi-channel ROI attribution framework | Python · SQL · Power BI | +28% optimized spend |
-| 🧪 **[This portfolio](https://github.com/atavisticrystal6888/portfolio-v4)** | Next.js 16 + MDX + Three.js + edge-deployed | Next.js · React 19 · TypeScript · Framer Motion · Chart.js | LCP < 2s, A11y 100 |
-
-**Repos:** [portfolio-v4](https://github.com/atavisticrystal6888/portfolio-v4) · [aarchid-api (fork)](https://github.com/atavisticrystal6888/aarchid-api) · [aarchid-rework (upstream, @dfordp)](https://github.com/dfordp/aarchid-rework)
+Open to: Product Manager, APM, AI product roles.
 
 ---
 
-### 🧠 How I work
+## Highlights
 
-- **Outcome > Output.** I ship decisions, not features.
-- **Data informs, judgment decides.** Dashboards don't replace hypotheses.
-- **Low dependency, high velocity.** I'd rather learn the stack than file a ticket.
-- **Write the spec, read the code.** PM + engineer is one role in my head.
-
----
-
-### 📖 Writing
-
-- [**Data-Driven Doesn't Mean Dashboard-Driven**](https://dhruvsinghal.dev/blog/data-driven-product-decisions) - why metrics ≠ decisions
-- [**Why PMs Should Learn to Code**](https://dhruvsinghal.dev/blog/why-pms-should-code) - the minimum viable technical PM
-- [**A Structured Thinking Framework**](https://dhruvsinghal.dev/blog/structured-thinking-framework) - from ambiguity to ship
-
-*Dropping within 30 days →* [**Evaluating LLM Features: the metrics I actually used on Aarchid**](https://dhruvsinghal.dev/blog/evaluating-llm-features-aarkid) · anchor essay: [**My AI PM Playbook**](https://dhruvsinghal.dev/ai-pm)
+- Scoped enterprise product workflows at Wipro Aviation OS, including Crew Mobile Microapp and Non-Crew Records
+- Redesigned lead scoring at Omniful.ai, scaling qualified prospects from about 10 per day to 200+ per day and supporting 10 client acquisitions
+- Ran growth and onboarding experiments at Read Riches that improved user retention by 4x
+- Built Aarchid, an AI botanical intelligence product with 92% diagnosis accuracy using Gemini 1.5 Pro and RAG
+- Built Hackmate, a live co-founder matchmaking product used by 300+ users
+- Building KiteEdge, a portfolio intelligence platform with 43+ indicators, Monte Carlo VaR, and forecasting workflows
 
 ---
 
-### ⚙️ Stack I reach for
+## Featured Work
 
-**Product & Analytics** · Amplitude · Mixpanel · Figma · Notion · Linear · Power BI · Tableau
-**Data** · Python · SQL · Pandas · scikit-learn · NumPy
-**Build** · TypeScript · Next.js · React · FastAPI · Postgres · Cloudflare Workers
-**AI** · Gemini · OpenAI · LangChain · Exa AI · prompt evals · RAG
+### [Aarchid](https://dhruvsinghal.codes/projects/aarchid)
+
+AI botanical intelligence platform with diagnosis, severity scoring, and citation-backed recommendations.
+
+- 92% diagnosis accuracy
+- Built with Gemini 1.5 Pro, Exa AI API, Next.js, Cloudflare Workers, and Supabase
+- Links: [Case study](https://dhruvsinghal.codes/projects/aarchid) · [API repo](https://github.com/atavisticrystal6888/aarchid-api)
+
+### [Hackmate](https://dhruvsinghal.codes/projects/hackmate)
+
+Co-founder matchmaking product with swipe-based discovery, matching flows, and activation loops.
+
+- 300+ users
+- Defined product flow, matching logic, and iteration loop from feedback to shipped improvements
+- Built with Next.js, Redis, PostgreSQL, and Vercel
+- Link: [Case study](https://dhruvsinghal.codes/projects/hackmate)
+
+### [KiteEdge](https://dhruvsinghal.codes/projects/kite-edge)
+
+Portfolio intelligence platform for Zerodha Kite with risk analytics, indicators, and ML forecasting.
+
+- 43+ technical indicators, Monte Carlo VaR, and ARIMA/Prophet forecasting
+- Built with Elixir, FastAPI, React, PostgreSQL, Kafka, and Python-based analytics services
+- Link: [Case study](https://dhruvsinghal.codes/projects/kite-edge)
+
+### [Customer Churn Analysis](https://dhruvsinghal.codes/projects/churn-analysis)
+
+Retention analysis project focused on EDA, segmentation, predictive scoring, and dashboarding.
+
+- ~15% projected churn reduction
+- Built with Python, SQL, scikit-learn, and Power BI
+- Link: [Case study](https://dhruvsinghal.codes/projects/churn-analysis)
+
+### [This Portfolio](https://dhruvsinghal.codes/projects/portfolio-site)
+
+Built the portfolio itself like a product, iterating from a static page to a case-study-driven Next.js site.
+
+- 95+ Lighthouse, 100 accessibility, 5 shipped iterations
+- Built with Next.js 16, React 19, TypeScript, MDX, and Three.js
+- Links: [Case study](https://dhruvsinghal.codes/projects/portfolio-site) · [Repo](https://github.com/atavisticrystal6888/Portfolio-v4)
 
 ---
 
-### 📍 Currently
+## Experience
 
-- **Working on** - Product Trainee @ Wipro
-- **Shipping** - Aarchid (AI plant care, with [@dfordp](https://github.com/dfordp)) · this portfolio (v4)
-- **Learning** - LLM evaluation frameworks · growth experimentation · systems design
-- **Looking for** - Full-time Product Manager / APM / AI PM roles
+- **Wipro, Product Intern (Aviation OS):** authored specs for Crew Mobile Microapp and Non-Crew Records, defined acceptance criteria and validation rules, and identified 5+ workflow gaps through audits and data-flow analysis.
+- **Omniful.ai, Business Analyst Intern:** defined prospect scoring using firmographic and behavioral signals, built prioritized lead workflows, and helped scale qualified prospects from about 10 per day to 200+ per day.
+- **Read Riches, Founder's Office Intern:** used engagement metrics and content experiments to improve retention by 4x while managing research and editorial execution.
 
 ---
 
-<sub>Built in Delhi 🇮🇳 · Last updated April 2026 · <a href="https://dhruvsinghal.dev">dhruvsinghal.dev</a></sub>
+## Writing
+
+- [Data-Driven Product Decisions](https://dhruvsinghal.codes/blog/data-driven-product-decisions)
+- [Why PMs Should Code](https://dhruvsinghal.codes/blog/why-pms-should-code)
+- [Structured Thinking Framework](https://dhruvsinghal.codes/blog/structured-thinking-framework)
+- [Shipping LLM Products: Eval Harness](https://dhruvsinghal.codes/blog/shipping-llm-products-eval-harness)
+- [Metrics That Matter for PMs](https://dhruvsinghal.codes/blog/metrics-that-matter-for-pms)
+
+---
+
+## What I Work With
+
+- **Product:** PRDs and specs, feature scoping, requirements definition, KPI design, prioritization, roadmap thinking, stakeholder communication
+- **Analytics:** SQL, Python, Excel, Power BI, EDA, customer segmentation, cohort analysis, funnel analysis, experimentation
+- **AI Product:** Prompt engineering, model selection, RAG pipelines, AI evaluation, confidence calibration, prompt evals
+- **Build:** TypeScript, Next.js, React, FastAPI, PostgreSQL, Redis, Kafka, Cloudflare Workers
+- **Tools:** Jira, Linear, Figma, Mixpanel, CleverTap, Amplitude, Datadog
+
+---
+
+## How I work
+
+- Outcome over output
+- Data informs, judgment decides
+- Write the spec, read the code
+- Fast iteration with measurable success criteria
+- Comfortable moving between product docs, dashboards, SQL, and implementation details
+
+---
+
+## Current focus
+
+- Shipping enterprise product workflows with clear delivery and success metrics
+- Building robust eval loops for LLM-powered features
+- Growing at the intersection of product, analytics, and AI systems
+- Looking for full-time Product Manager, APM, and AI product roles in 2026
+
+<sub>Built in India. Last updated June 2026.</sub>

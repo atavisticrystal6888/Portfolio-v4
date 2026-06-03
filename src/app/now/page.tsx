@@ -32,7 +32,7 @@ export default function NowPage() {
           <h2 className={styles.sectionTitle}>Current Roles</h2>
           <ul className={styles.list}>
             <li>
-              <strong>Wipro</strong> - Product Trainee, building
+              <strong>Wipro</strong> - Product Intern, building
               aviation operations products.
             </li>
           </ul>
@@ -70,8 +70,9 @@ export default function NowPage() {
           <h2 className={styles.sectionTitle}>Side Projects</h2>
           <ul className={styles.list}>
             <li>
-              <strong>Portfolio v5</strong> - this site. Next.js 16 + React
-              19, two interactive AI-PM demos, a 3D Aarchid hero.
+              <strong>This site</strong> - ongoing portfolio iteration in
+              Next.js 16 + React 19, with interactive AI PM demos and a 3D
+              Aarchid hero.
             </li>
             <li>
               <strong>Aarchid</strong> with{" "}

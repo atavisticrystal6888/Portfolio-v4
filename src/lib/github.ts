@@ -78,11 +78,12 @@ const QUERY = `
 
 // Slug mapping: GitHub repo name → portfolio project slug
 const REPO_SLUG_MAP: Record<string, string> = {
-  aarchid: "aarchid",
-  "churn-analysis": "churn-analysis",
-  "TCS-NQT-Prep-Hub": "tcs-nqt-prep-hub",
-  "Kite-edge": "kite-edge",
-  portfolio: "portfolio-site",
+  "aarchid-api": "aarchid",
+  "hackmate-rework": "hackmate",
+  "customer-churn-analysis": "churn-analysis",
+  "tcs-nqt-prep-hub": "tcs-nqt-prep-hub",
+  "kite-edge": "kite-edge",
+  "portfolio-v4": "portfolio-site",
 };
 
 function calculateStreak(

@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import styles from './CommandPalette.module.css';
 import { cn } from '@/lib/utils';
 import { useTheme } from '@/hooks/useTheme';
+import { CONTACT_EMAIL, GITHUB_URL, LINKEDIN_URL, RESUME_FILE_NAME, RESUME_HREF } from '@/lib/site';
 import type { PaletteName } from '@/types/theme';
 
 type PaletteAction = 'navigate' | 'theme' | 'palette' | 'external' | 'copy' | 'download';
@@ -23,11 +24,6 @@ interface PaletteItem {
   downloadAs?: string;
 }
 
-const EMAIL = 'dhruvsinghal04@gmail.com';
-const GITHUB_URL = 'https://github.com/atavisticrystal6888';
-const LINKEDIN_URL = 'https://linkedin.com/in/dhruvsinghal6888';
-const RESUME_HREF = '/resume/dhruv-singhal-resume.pdf';
-
 const ITEMS: PaletteItem[] = [
   // Pages
   { id: 'home', label: 'Go to Home', group: 'Pages', action: 'navigate', target: '/' },
@@ -43,9 +39,12 @@ const ITEMS: PaletteItem[] = [
   { id: 'changelog', label: 'Go to Changelog', group: 'Pages', action: 'navigate', target: '/changelog', keywords: 'build log updates releases' },
 
   // Case Studies
+  { id: 'cs-hackmate', label: 'Hackmate - Co-Founder Matchmaking', group: 'Case Studies', action: 'navigate', target: '/projects/hackmate', keywords: 'founders matching swipe startup community' },
   { id: 'cs-aarchid', label: 'Aarchid - AI Botanical Intelligence', group: 'Case Studies', action: 'navigate', target: '/projects/aarchid', keywords: 'ai gemini plants co-creator dfordp' },
-  { id: 'cs-churn', label: 'Customer Churn Analysis', group: 'Case Studies', action: 'navigate', target: '/projects/churn-analysis', keywords: 'data analytics retention' },  { id: 'cs-tcs-nqt', label: 'TCS NQT Prep Hub', group: 'Case Studies', action: 'navigate', target: '/projects/tcs-nqt-prep-hub', keywords: 'pwa exam preparation questions offline' },
-  { id: 'cs-kite-edge', label: 'KiteEdge \u2014 Portfolio Intelligence', group: 'Case Studies', action: 'navigate', target: '/projects/kite-edge', keywords: 'elixir finance analytics zerodha stocks' },  { id: 'cs-portfolio', label: 'This Portfolio - Meta Case Study', group: 'Case Studies', action: 'navigate', target: '/projects/portfolio-site', keywords: 'next.js react build' },
+  { id: 'cs-churn', label: 'Customer Churn Analysis', group: 'Case Studies', action: 'navigate', target: '/projects/churn-analysis', keywords: 'data analytics retention' },
+  { id: 'cs-tcs-nqt', label: 'TCS NQT Prep Hub', group: 'Case Studies', action: 'navigate', target: '/projects/tcs-nqt-prep-hub', keywords: 'pwa exam preparation questions offline' },
+  { id: 'cs-kite-edge', label: 'KiteEdge \u2014 Portfolio Intelligence', group: 'Case Studies', action: 'navigate', target: '/projects/kite-edge', keywords: 'elixir finance analytics zerodha stocks' },
+  { id: 'cs-portfolio', label: 'This Portfolio - Meta Case Study', group: 'Case Studies', action: 'navigate', target: '/projects/portfolio-site', keywords: 'next.js react build' },
 
   // Blog Articles
   { id: 'blog-eval', label: 'Shipping LLM Products Starts With the Eval Harness', group: 'Blog Articles', action: 'navigate', target: '/blog/shipping-llm-products-eval-harness', keywords: 'ai llm eval harness aarchid' },
@@ -56,11 +55,11 @@ const ITEMS: PaletteItem[] = [
   { id: 'blog-metrics', label: 'The Three Metrics That Actually Matter for PMs', group: 'Blog Articles', action: 'navigate', target: '/blog/metrics-that-matter-for-pms', keywords: 'kpis okrs health focus guardrail' },
 
   // Quick Actions
-  { id: 'copy-email', label: 'Copy email address', group: 'Actions', action: 'copy', target: EMAIL, keywords: 'clipboard mail contact' },
-  { id: 'download-resume', label: 'Download resume (PDF)', group: 'Actions', action: 'download', target: RESUME_HREF, downloadAs: 'dhruv-singhal-resume.pdf', keywords: 'cv curriculum vitae' },
+  { id: 'copy-email', label: 'Copy email address', group: 'Actions', action: 'copy', target: CONTACT_EMAIL, keywords: 'clipboard mail contact' },
+  { id: 'download-resume', label: 'Download resume (PDF)', group: 'Actions', action: 'download', target: RESUME_HREF, downloadAs: RESUME_FILE_NAME, keywords: 'cv curriculum vitae' },
   { id: 'open-github', label: 'Open GitHub profile', group: 'Actions', action: 'external', target: GITHUB_URL, keywords: 'repos code atavisticrystal6888' },
   { id: 'open-linkedin', label: 'Open LinkedIn profile', group: 'Actions', action: 'external', target: LINKEDIN_URL },
-  { id: 'send-email', label: 'Send email to Dhruv', group: 'Actions', action: 'external', target: `mailto:${EMAIL}` },
+  { id: 'send-email', label: 'Send email to Dhruv', group: 'Actions', action: 'external', target: `mailto:${CONTACT_EMAIL}` },
   { id: 'toggle-theme', label: 'Toggle Dark/Light Mode', group: 'Actions', action: 'theme', keywords: 'dark light mode theme' },
 
   // Theme Colors

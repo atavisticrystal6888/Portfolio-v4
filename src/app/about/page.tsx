@@ -12,13 +12,15 @@ import { GitHubStats } from "@/components/about/GitHubStats";
 import { DiagonalDivider } from "@/components/ui/DiagonalDivider";
 import { JsonLd } from "@/components/ui/JsonLd";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
+import Image from "next/image";
 import Link from "next/link";
+import dhruvImage from "../../../Dhruv_Image.jpg";
 import styles from "./about.module.css";
 
 export const metadata = generatePageMetadata({
   title: "About",
   description:
-    "Learn about Dhruv Singhal - a Product Analyst & Builder with experience in product management, data analytics, and technical execution.",
+    "Learn about Dhruv Singhal - a Product Manager & Builder with experience across aviation workflows, AI products, analytics, and technical execution.",
   path: "/about",
 });
 
@@ -38,7 +40,7 @@ export default async function AboutPage() {
       {/* Header */}
       <PageHeader
         title="Dhruv Singhal"
-        subtitle="Product Analyst & Builder - turning ambiguous problems into structured execution through data-driven product thinking."
+        subtitle="Product Manager & Builder - turning ambiguous domain problems into product decisions, specs, and shipped systems."
       />
 
       {/* Philosophy */}
@@ -64,22 +66,21 @@ export default async function AboutPage() {
             <h2 className={styles.sectionTitle}>My Story</h2>
           </div>
           <div className={styles.bioRow}>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="/images/headshot.svg"
-              alt="Dhruv Singhal"
+            <Image
+              src={dhruvImage}
+              alt="Portrait of Dhruv Singhal"
               className={styles.headshot}
-              width={160}
-              height={160}
+              sizes="(max-width: 640px) 220px, 280px"
+              priority
             />
             <div>
               <p className={styles.bio}>
-                B.Tech student in my final year, with two years of operating
-                experience across product management, aviation ops, and technical
-                execution. I&apos;ve worked the product layer at Wipro on aviation
-                ground ops, owned growth end-to-end from the founder&apos;s office at
-                Read Riches, and scoped features at Omniful.ai - and on the side,
-                I co-built{" "}
+                Final-year B.Tech student with operating experience across
+                product management, aviation workflows, and technical execution.
+                I currently scope aviation operations features at Wipro as a
+                Product Intern, owned growth from the founder&apos;s office at Read
+                Riches, and helped define prospecting systems at Omniful.ai. On
+                the side, I co-built{" "}
                 <Link href="/projects/aarchid">Aarchid</Link> with{" "}
                 <a href="https://github.com/dfordp" target="_blank" rel="noopener noreferrer">
                   Dilpreet Grover
@@ -165,7 +166,7 @@ export default async function AboutPage() {
             { label: "High-Ownership", detail: "Killed 37 low-signal dashboard charts at Wipro — kept the 3 that drove decisions" },
             { label: "Low-Dependency", detail: "Wrote the PRD, built the eval harness, and shipped v1 of Aarchid myself" },
             { label: "Data-First", detail: "Every feature proposal comes with a success metric and a kill criteria" },
-            { label: "Fast Execution", detail: "Portfolio went v1→v5 in 3 months — each version shipped in under a week" },
+            { label: "Fast Execution", detail: "Portfolio shipped through 5 iterations in 3 months, using feedback to sharpen positioning, content, and navigation." },
           ].map((v) => (
             <GlassCard key={v.label} className={styles.valueCard}>
               <span className={styles.valueName}>{v.label}</span>

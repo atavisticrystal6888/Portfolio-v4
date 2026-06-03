@@ -1,3 +1,7 @@
 # portfolio-v4 lives in its own repo at github.com/atavisticrystal6888/Portfolio-v4
 # This parent workspace does not track its contents.
 portfolio-v4/
+node_modules/
+.next/
+.vercel/
+next-env.d.ts

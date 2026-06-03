@@ -149,7 +149,7 @@ export default function BookshelfPage() {
 
       <p className={styles.note}>
         Think I&apos;m missing one?{" "}
-        <a href="mailto:dhruvsinghal04@gmail.com">Tell me</a> - reading
+        <a href="mailto:dhruvsinghal6888@gmail.com">Tell me</a> - reading
         recommendations are welcome currency.
       </p>
     </div>

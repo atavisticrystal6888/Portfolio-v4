@@ -2,6 +2,7 @@
 
 import { useState, type FormEvent } from "react";
 import { Button } from "@/components/ui/Button";
+import { CONTACT_EMAIL_HREF } from "@/lib/site";
 import styles from "./ContactForm.module.css";
 
 interface FormData {
@@ -111,7 +112,7 @@ export function ContactForm() {
       {status === "success" && <p className={styles.success}>Message sent successfully! I&apos;ll get back to you soon.</p>}
       {status === "error" && (
         <p className={styles.errorMsg}>
-          Something went wrong. Please try <a href="mailto:dhruvsinghal04@gmail.com">emailing directly</a>.
+          Something went wrong. Please try <a href={CONTACT_EMAIL_HREF}>emailing directly</a>.
         </p>
       )}
     </form>

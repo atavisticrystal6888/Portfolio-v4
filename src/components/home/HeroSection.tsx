@@ -21,8 +21,8 @@ export function HeroSection() {
         </h1>
         <p className={styles.role}>{ROLES[0]}</p>
         <p className={styles.statement}>
-          I build products at the intersection of aviation ops and data — from
-          ground-crew dashboards to AI diagnostics, I ship what I spec.
+          I scope and ship aviation and AI products - turning SME input, user
+          research, and product specs into decisions teams can build.
         </p>
         <div className={styles.ctas}>
           <Button href="/projects" data-magnetic>Explore Work</Button>

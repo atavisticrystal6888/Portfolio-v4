@@ -4,12 +4,12 @@
     "name": "Subrat Gaur",
     "title": "Product Lead",
     "company": "Wipro",
-    "quote": "Dhruv has a rare ability to take ambiguous problems and break them down into actionable steps. His data-first mindset and low-dependency approach made him an invaluable contributor to our platform.",
+    "quote": "Dhruv brought structure to messy aviation workflows quickly. He turned SME inputs into clear product specs, surfaced edge cases before handoff, and consistently made cross-functional conversations easier for engineering and QA.",
     "avatar": "/images/avatars/subrat-gaur.svg",
     "projectSlug": null,
     "outcomeMetric": {
-      "value": "3",
-      "label": "Dashboards Shipped"
+      "value": "12+",
+      "label": "Workflow Scenarios Scoped"
     },
     "relationship": "Manager at Wipro"
   },
@@ -18,12 +18,12 @@
     "name": "Pranay Aggarwal",
     "title": "Founder",
     "company": "Read Riches",
-    "quote": "Dhruv brought structure to chaos. He grew our content reach 4× by treating the content pipeline like a product - defining KPIs, running experiments, and iterating on what worked.",
+    "quote": "Dhruv treated growth like a Product problem. He built the operating rhythm for experiments, helped manage the research and content team, and kept decisions grounded in user behavior instead of guesswork.",
     "avatar": "/images/avatars/pranay-aggarwal.svg",
     "projectSlug": null,
     "outcomeMetric": {
-      "value": "+28%",
-      "label": "ROI Improvement"
+      "value": "4x",
+      "label": "Retention Improvement"
     },
     "relationship": "Founder at Read Riches"
   }

@@ -1,6 +1,6 @@
-# Portfolio v4 - Deployment Guide
+# Portfolio Deployment Guide
 
-Production deployment to **Vercel**.
+Production deployment to **Vercel** for the root Next.js app in this repository.
 
 ## Prerequisites
 
@@ -25,11 +25,13 @@ Set these in **Vercel Project Settings → Environment Variables** for the
 
 1. Import the repository in Vercel (`vercel.com/new`).
 2. Framework preset: **Next.js** (auto-detected).
-3. Root Directory: `portfolio-v4`.
+3. Root Directory: leave blank / use the repository root (`.`).
 4. Build Command: `npm run build` (default).
 5. Output: `.next` (default).
 6. Add the environment variables above.
 7. Deploy.
+
+`portfolio-v4/` exists in this workspace only as an ignored legacy folder and should not be used as the Vercel root.
 
 ## Post-deployment Verification
 

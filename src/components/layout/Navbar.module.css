@@ -30,7 +30,7 @@
 .logo {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
   font-family: var(--font-display);
   font-weight: 700;
   font-size: 1.25rem;
@@ -43,9 +43,25 @@
   color: var(--accent);
 }
 
-.logo svg {
-  width: 36px;
-  height: 36px;
+.mark {
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  overflow: hidden;
+  flex-shrink: 0;
+  border: 1px solid var(--border-accent);
+  background: var(--surface-raised);
+  box-shadow: var(--shadow-md);
+}
+
+.markImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.logoText {
+  display: inline-block;
 }
 
 /* Nav links */

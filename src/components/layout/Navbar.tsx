@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -8,6 +9,7 @@ import { cn } from '@/lib/utils';
 import { ThemeToggle } from '@/components/interactive/ThemeToggle';
 import { MusicToggle } from '@/components/interactive/MusicToggle';
 import { MobileNav } from './MobileNav';
+import dhruvImage from '../../../Dhruv_Image.jpg';
 
 const NAV_LINKS = [
   { href: '/', label: 'Home' },
@@ -50,11 +52,15 @@ export function Navbar() {
       >
         <div className={styles.inner}>
           <Link href="/" className={styles.logo} aria-label="Dhruv Singhal - Home">
-            <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-              <rect width="36" height="36" rx="8" fill="currentColor" opacity="0.1" />
-              <text x="50%" y="55%" dominantBaseline="middle" textAnchor="middle" fontFamily="Boska, serif" fontWeight="700" fontSize="18" fill="currentColor">DS</text>
-            </svg>
-            Dhruv Singhal
+            <span className={styles.mark} aria-hidden="true">
+              <Image
+                src={dhruvImage}
+                alt=""
+                className={styles.markImage}
+                sizes="40px"
+              />
+            </span>
+            <span className={styles.logoText}>Dhruv Singhal</span>
           </Link>
 
           <ul className={styles.links}>

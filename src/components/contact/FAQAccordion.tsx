@@ -3,6 +3,7 @@
 import { useState } from "react";
 import styles from "./FAQAccordion.module.css";
 import { cn } from "@/lib/utils";
+import { CONTACT_EMAIL } from "@/lib/site";
 
 interface FAQItem {
   question: string;
@@ -10,10 +11,10 @@ interface FAQItem {
 }
 
 const FAQ_ITEMS: FAQItem[] = [
-  { question: "What roles are you looking for?", answer: "Product Manager, Associate Product Manager (APM), or aviation/AI PM roles where I can blend domain expertise with product strategy." },
+  { question: "What roles are you looking for?", answer: "Product Manager, Associate Product Manager (APM), or aviation and AI product roles where I can blend domain context, analytics, and execution." },
   { question: "Are you open to remote or relocation?", answer: "Yes to both. I'm based in India and open to remote roles or relocation for the right opportunity." },
-  { question: "What's the best way to reach you?", answer: "Email at dhruvsinghal04@gmail.com or connect on LinkedIn. I typically respond within 24 hours." },
-  { question: "Do you take freelance or consulting work?", answer: "Selectively - for product strategy, analytics setup, or dashboard projects. Reach out with details." },
+  { question: "What's the best way to reach you?", answer: `Email at ${CONTACT_EMAIL} or connect on LinkedIn. I typically respond within 24 hours.` },
+  { question: "Do you take freelance or consulting work?", answer: "Selectively, but I am primarily focused on full-time Product, APM, and AI product roles right now." },
 ];
 
 export function FAQAccordion() {

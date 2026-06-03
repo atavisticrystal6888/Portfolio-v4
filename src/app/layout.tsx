@@ -80,14 +80,14 @@ export default function RootLayout({
       <head>
         <link
           rel="preload"
-          href="/fonts/satoshi-variable.woff2"
+          href="/fonts/manrope-variable.woff2"
           as="font"
           type="font/woff2"
           crossOrigin="anonymous"
         />
         <link
           rel="preload"
-          href="/fonts/boska-variable.woff2"
+          href="/fonts/fraunces-variable.woff2"
           as="font"
           type="font/woff2"
           crossOrigin="anonymous"
@@ -109,8 +109,8 @@ export default function RootLayout({
               "@type": "Person",
               "name": "Dhruv Singhal",
               "url": "https://dhruvsinghal.codes",
-              "jobTitle": "Product Analyst & Builder",
-              "description": "Product Analyst & Builder turning messy data into product decisions that ship — from churn models to AI diagnostics.",
+              "jobTitle": "Product Manager & Builder",
+              "description": "Early-career product manager turning ambiguous domain inputs into specs, metrics, and shipped systems across aviation, AI, and analytics.",
               "knowsAbout": ["Product Analytics", "Data Science", "AI/ML", "Product Management", "Python", "SQL", "Next.js"],
               "alumniOf": {
                 "@type": "CollegeOrUniversity",

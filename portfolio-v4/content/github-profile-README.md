@@ -1,9 +1,9 @@
 # Dhruv Singhal
 
-**Product Analyst & Builder** — I turn ambiguous problems into structured execution.
-Low-dependency, outcome-driven — I ship data-backed products, build dashboards that drive decisions, and lead 0 → 1 efforts end-to-end.
+**Product Manager & Builder** - I turn ambiguous problems into structured execution.
+Low-dependency, outcome-driven - I ship data-backed products, build dashboards that drive decisions, and lead 0 → 1 efforts end-to-end.
 
-Specializing in **AI product management** — shipping features powered by LLMs, vision models, and retrieval systems.
+Specializing in **AI product management** - shipping features powered by LLMs, vision models, and retrieval systems.
 
 <!-- TODO: fill placeholders below before making this repo public -->
 🌐 **Portfolio** → [dhruvsinghal.dev](https://dhruvsinghal.dev) <!-- {SITE_URL} -->
@@ -11,7 +11,7 @@ Specializing in **AI product management** — shipping features powered by LLMs,
 💼 **LinkedIn** → [linkedin.com/in/dhruv-singhal](https://linkedin.com/in/dhruv-singhal) <!-- {LINKEDIN} -->
 🧭 **What I'm doing now** → [dhruvsinghal.dev/now](https://dhruvsinghal.dev/now)
 
-> 📬 **Open to:** Product Analyst · APM · AI PM · data-driven PM roles (mid-2026)
+> 📬 **Open to:** Product Manager · APM · AI PM · Aviation PM roles (mid-2026)
 
 ---
 
@@ -19,7 +19,7 @@ Specializing in **AI product management** — shipping features powered by LLMs,
 
 | Project | What it is | Stack | Outcome |
 |---|---|---|---|
-| 🌿 **Aarkid** *(with [@dfordp](https://github.com/dfordp))* | AI botanical intelligence — forensic plant diagnosis via multimodal vision + research-augmented LLMs | Gemini 1.5 Pro · Perplexity Sonar · Next.js · Cloudflare Workers · Hono · Supabase · R2 | 92% diagnosis accuracy |
+| 🌿 **Aarchid** *(with [@dfordp](https://github.com/dfordp))* | AI botanical intelligence - forensic plant diagnosis via multimodal vision + research-augmented LLMs | Gemini 1.5 Pro · Exa AI API · Next.js · Cloudflare Workers · Hono · Supabase · R2 | 92% diagnosis accuracy |
 | 📊 **Customer Churn Analysis** | Predictive churn model + Power BI cohort dashboards | Python · Pandas · scikit-learn · SQL · Power BI | ~15% churn reduction |
 | 📈 **Marketing Effectiveness** | Multi-channel ROI attribution framework | Python · SQL · Power BI | +28% optimized spend |
 | 🧪 **[This portfolio](https://github.com/atavisticrystal6888/portfolio-v4)** | Next.js 16 + MDX + Three.js + edge-deployed | Next.js · React 19 · TypeScript · Framer Motion · Chart.js | LCP < 2s, A11y 100 |
@@ -39,11 +39,11 @@ Specializing in **AI product management** — shipping features powered by LLMs,
 
 ### 📖 Writing
 
-- [**Data-Driven Doesn't Mean Dashboard-Driven**](https://dhruvsinghal.dev/blog/data-driven-product-decisions) — why metrics ≠ decisions
-- [**Why PMs Should Learn to Code**](https://dhruvsinghal.dev/blog/why-pms-should-code) — the minimum viable technical PM
-- [**A Structured Thinking Framework**](https://dhruvsinghal.dev/blog/structured-thinking-framework) — from ambiguity to ship
+- [**Data-Driven Doesn't Mean Dashboard-Driven**](https://dhruvsinghal.dev/blog/data-driven-product-decisions) - why metrics ≠ decisions
+- [**Why PMs Should Learn to Code**](https://dhruvsinghal.dev/blog/why-pms-should-code) - the minimum viable technical PM
+- [**A Structured Thinking Framework**](https://dhruvsinghal.dev/blog/structured-thinking-framework) - from ambiguity to ship
 
-*Dropping within 30 days →* [**Evaluating LLM Features: the metrics I actually used on Aarkid**](https://dhruvsinghal.dev/blog/evaluating-llm-features-aarkid) · anchor essay: [**My AI PM Playbook**](https://dhruvsinghal.dev/ai-pm)
+*Dropping within 30 days →* [**Evaluating LLM Features: the metrics I actually used on Aarchid**](https://dhruvsinghal.dev/blog/evaluating-llm-features-aarkid) · anchor essay: [**My AI PM Playbook**](https://dhruvsinghal.dev/ai-pm)
 
 ---
 
@@ -52,16 +52,16 @@ Specializing in **AI product management** — shipping features powered by LLMs,
 **Product & Analytics** · Amplitude · Mixpanel · Figma · Notion · Linear · Power BI · Tableau
 **Data** · Python · SQL · Pandas · scikit-learn · NumPy
 **Build** · TypeScript · Next.js · React · FastAPI · Postgres · Cloudflare Workers
-**AI** · Gemini · OpenAI · LangChain · Perplexity · prompt evals · RAG
+**AI** · Gemini · OpenAI · LangChain · Exa AI · prompt evals · RAG
 
 ---
 
 ### 📍 Currently
 
-- **Working on** — Product Intern @ Wipro Aviation OS · Consulting @ Odena
-- **Shipping** — Aarkid (AI plant care, with [@dfordp](https://github.com/dfordp)) · this portfolio (v4)
-- **Learning** — LLM evaluation frameworks · growth experimentation · systems design
-- **Looking for** — Full-time Product Analyst / APM / AI PM roles
+- **Working on** - Product Trainee @ Wipro
+- **Shipping** - Aarchid (AI plant care, with [@dfordp](https://github.com/dfordp)) · this portfolio (v4)
+- **Learning** - LLM evaluation frameworks · growth experimentation · systems design
+- **Looking for** - Full-time Product Manager / APM / AI PM roles
 
 ---
 

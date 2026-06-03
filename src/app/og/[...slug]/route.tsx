@@ -28,7 +28,7 @@ export async function GET(
     subtitle = "Thoughts on Product, Data & Building";
   } else if (path === "contact") {
     kicker = "Contact";
-    subtitle = "Let's Build Something Together";
+    subtitle = "Let's Talk Product";
   } else if (path === "now") {
     kicker = "Now";
     subtitle = "What I'm Currently Working On";

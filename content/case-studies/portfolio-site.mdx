@@ -1,11 +1,11 @@
 ---
 slug: "portfolio-site"
 title: "This Portfolio - A Product in Itself"
-subtitle: "Applied PM thinking to build a production-grade portfolio through 4 iterative versions - from a single HTML file to a Next.js app with 95+ Lighthouse scores."
+subtitle: "Applied PM thinking to build a production-grade portfolio through 5 shipped iterations - from a single HTML file to a Next.js app with 95+ Lighthouse scores."
 role: "Full-Stack Developer & Product Manager"
 duration: "2025 – 2026"
 stack: ["Next.js", "React", "TypeScript", "Three.js", "MDX", "Framer Motion"]
-tldr: "Needed to stand out as a PM candidate with limited traditional PM experience. I treated the portfolio itself as a product - conducting user research, writing specs, and building iteratively across 4 versions. v1 was a single HTML file; v4 is a Next.js app with MDX case studies, Three.js hero, dynamic OG images, ISR, and 95+ Lighthouse scores."
+tldr: "Needed to stand out as a PM candidate with a non-traditional path into product. I treated the portfolio itself as a product - conducting user research, writing specs, and shipping 5 iterations in 3 months. v1 was a single HTML file; the current build is a Next.js app with MDX case studies, dynamic OG images, ISR, and 95+ Lighthouse scores."
 metrics:
   - label: "Lighthouse Score"
     value: 95
@@ -16,15 +16,15 @@ metrics:
     displayValue: "14+"
     chartType: "bar"
   - label: "Versions"
-    value: 4
-    displayValue: "4"
+    value: 5
+    displayValue: "5"
     chartType: "bar"
   - label: "Accessibility"
     value: 100
     displayValue: "100"
     chartType: "bar"
 prevSlug: "kite-edge"
-nextSlug: "aarchid"
+nextSlug: "hackmate"
 ---
 
 ## Context & Problem
@@ -58,9 +58,38 @@ Ported the static site to Next.js with App Router. Gained SSR, image optimisatio
 
 Ground-up rebuild with a mature component architecture. MDX for case studies (write in Markdown, render with React components), dynamic OG image generation via Edge functions, GitHub API integration for live project stats, ISR for data freshness, Framer Motion for performant animations, and full accessibility (axe-core + Playwright tests).
 
+### v5: Hiring-Focused Refinement
+
+Refined the production build around sharper positioning, stronger case-study writing, canonical resume sync, and more intentional recruiter flows. The product did not need a visual redesign - it needed clearer proof, tighter messaging, and better consistency across the site.
+
+## Visual Tour
+
+The current build is intentionally multi-surface: the home page establishes positioning, the Projects page makes proof easy to skim, and the About page adds credibility without turning into a biography dump.
+
+<div class="case-gallery">
+  <figure class="case-gallery__figure">
+    <a class="case-gallery__link" href="/images/projects/portfolio-site/home.png" target="_blank" rel="noopener noreferrer">
+      <img src="/images/projects/portfolio-site/home.png" alt="Portfolio home page showing the hero section and product-focused positioning." loading="lazy" />
+    </a>
+    <figcaption>Home: headline, positioning, and CTA structure are optimised for recruiter skim in the first screenful.</figcaption>
+  </figure>
+  <figure class="case-gallery__figure">
+    <a class="case-gallery__link" href="/images/projects/portfolio-site/projects.png" target="_blank" rel="noopener noreferrer">
+      <img src="/images/projects/portfolio-site/projects.png" alt="Portfolio projects page showing filter controls and screenshot-backed project cards." loading="lazy" />
+    </a>
+    <figcaption>Projects: the portfolio now behaves like a proof library, with screenshot-backed cards and case-study navigation.</figcaption>
+  </figure>
+  <figure class="case-gallery__figure">
+    <a class="case-gallery__link" href="/images/projects/portfolio-site/about.png" target="_blank" rel="noopener noreferrer">
+      <img src="/images/projects/portfolio-site/about.png" alt="Portfolio about page showing the headshot, narrative, and philosophy section." loading="lazy" />
+    </a>
+    <figcaption>About: narrative depth and the real headshot reinforce credibility without sacrificing the product lens.</figcaption>
+  </figure>
+</div>
+
 ## Implementation
 
-Five decisions defined the v4 architecture:
+Five decisions shaped the current architecture:
 
 **1. MDX for case studies - content as code.** Each case study is a `.mdx` file with YAML frontmatter (metrics, navigation, stack) and Markdown body. The build system compiles them into React pages with automatic prev/next navigation, breadcrumbs, and SEO metadata. Adding a case study is a single-file operation.
 
@@ -98,18 +127,19 @@ npm run build         # Next.js production build
 
 ## Outcome & Metrics
 
-| Version | Architecture | Files | Key Features |
+| Version | Architecture | Focus | Key Features |
 |---------|-------------|-------|-------------|
-| v1 | Single HTML | 1 | Content validation |
-| v2 | Multi-page static | 42 | Three.js, GSAP, command palette, 14 pages |
-| v3 | Next.js (migration) | 60+ | SSR, image optimisation, App Router |
-| v4 | Next.js (rebuild) | 80+ | MDX, OG images, ISR, GitHub API, a11y tests |
+| v1 | Single HTML | Content validation | Narrative and proof-of-work baseline |
+| v2 | Multi-page static | Interaction design | Three.js, GSAP, command palette, 14 pages |
+| v3 | Next.js migration | Framework foundations | App Router, SSR, route-level organisation |
+| v4 | Production rebuild | Scalable content system | MDX, OG images, ISR, GitHub API, a11y tests |
+| v5 | Hiring-focused refinement | Narrative clarity | Resume sync, stronger case-study writing, tighter recruiter flows |
 
 - **Lighthouse:** 95+ Performance, 100 Accessibility, 95+ Best Practices, 100 SEO
 - **Pages:** 14+ including case studies, blog articles, and utility pages
-- **Versions:** 4 iterative builds over 12 months
+- **Versions:** 5 shipped iterations in 3 months
 - **Testing:** Unit (Vitest), E2E (Playwright), Accessibility (axe-core), Lighthouse CI
-- **Live:** [dhruvsinghal.vercel.app](https://dhruvsinghal.vercel.app)
+- **Live:** [dhruvsinghal.codes](https://dhruvsinghal.codes)
 - **Source:** [github.com/atavisticrystal6888/Portfolio-v4](https://github.com/atavisticrystal6888/Portfolio-v4)
 
 ## Learnings

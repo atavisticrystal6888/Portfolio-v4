@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { Project } from "@/types/project";
 import { Badge } from "@/components/ui/Badge";
 import { GlassCard } from "@/components/ui/GlassCard";
+import { formatCategoryLabel } from "@/lib/utils";
 import styles from "./RelatedWork.module.css";
 
 interface RelatedWorkProps {
@@ -38,7 +39,7 @@ export function RelatedWork({
             hover
             className={styles.card}
           >
-            <Badge variant="accent">{project.category}</Badge>
+            <Badge variant="accent">{formatCategoryLabel(project.category)}</Badge>
             <h4 className={styles.title}>
               <Link href={`/projects/${project.slug}`}>{project.name}</Link>
             </h4>

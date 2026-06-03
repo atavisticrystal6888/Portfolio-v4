@@ -1,0 +1,92 @@
+---
+slug: "hackmate"
+title: "Hackmate - Co-Founder Matchmaking Platform"
+subtitle: "Validated founder-discovery pain points, scoped a swipe-based matching MVP, and grew to 300+ users through community-led iteration."
+role: "Co-Builder · Product"
+duration: "2025 – present"
+stack: ["Next.js", "TypeScript", "PostgreSQL", "Redis", "Vercel"]
+tldr: "Early-stage founders struggle to find aligned collaborators beyond warm intros and noisy communities. I helped shape Hackmate as a skill-first matchmaking product - defining discovery flows, matching logic, and feedback loops that grew the product to 300+ organic users."
+metrics:
+  - label: "Organic Users"
+    value: 300
+    displayValue: "300+"
+    chartType: "bar"
+  - label: "Matching Signals"
+    value: 3
+    displayValue: "3"
+    chartType: "bar"
+  - label: "Core Surfaces"
+    value: 4
+    displayValue: "4"
+    chartType: "bar"
+prevSlug: "portfolio-site"
+nextSlug: "aarchid"
+---
+
+## Context & Problem
+
+Finding a co-founder usually happens through warm intros, college circles, or crowded startup communities. That works if you already know the right people. It breaks down for early builders who have intent but no discovery layer for skills, goals, and stage fit.
+
+The gap: founder discovery needed to feel more like product matching than social networking - less noise, faster qualification, and clearer signals about who should actually talk.
+
+> Source: [hackmate-rework](https://github.com/atavisticrystal6888/hackmate-rework)
+
+## Research & Discovery
+
+- Talked to founders and student builders about where current discovery broke down - most pain came from low-signal communities and shallow profiles
+- Reviewed how users evaluated a potential co-founder: capability, seriousness, domain interest, and build stage mattered more than polished bios
+- Identified the activation constraint early: people would sign up only if discovery felt fast and the first useful match arrived quickly
+
+## Solution & Approach
+
+### 1. Skill-First Profiles
+
+Profiles focused on what a founder could do, what they wanted to build, and what stage they were in. This reduced vague networking behavior and pushed users toward intent-rich profiles.
+
+### 2. Swipe-Based Discovery
+
+Instead of long directory browsing, Hackmate used a quick yes/no discovery flow that made matching feel lightweight. The goal was to reduce browsing fatigue and get users to a meaningful conversation faster.
+
+### 3. Feedback-Driven Matching Loop
+
+Post-launch feedback shaped what signals mattered most. Matching logic prioritised three inputs - skills overlap, product ambition, and build-stage fit - because those were the strongest predictors of whether a conversation was worth having.
+
+### 4. Notifications & Re-Engagement
+
+Real-time notifications and lightweight nudges kept users aware of new matches and prompted follow-up. The product needed to do more than create a match; it needed to keep the conversation alive.
+
+## Implementation
+
+Three product decisions shaped the build:
+
+**1. Optimize for speed-to-first-match.** The onboarding and profile setup were intentionally light so users could start discovering people quickly. Long forms would have killed activation.
+
+**2. Keep the matching logic legible.** Users needed to understand why a match felt relevant. We focused on a small number of high-signal inputs instead of a black-box score.
+
+**3. Treat launch as a feedback system.** The first release was an MVP for learning, not a finished network. Usage patterns and direct feedback shaped the next set of improvements.
+
+```ts
+const matchScore = weightedScore({
+  skillsOverlap,
+  goalsAlignment,
+  buildStageFit,
+});
+```
+
+## Outcome & Metrics
+
+- **300+ organic users** reached through community-led adoption
+- **3 primary matching signals** - skills, goals, and stage fit
+- **4 core surfaces** - onboarding, discovery, matches, and notifications
+- **Live product** with iterative improvements shipped from post-launch feedback
+- **Source:** [github.com/atavisticrystal6888/hackmate-rework](https://github.com/atavisticrystal6888/hackmate-rework)
+
+## Learnings
+
+### What Worked
+
+Making founder discovery feel lightweight was the unlock. Users did not want another social profile to maintain; they wanted fast signal on who was worth talking to. Product framing mattered more than feature volume.
+
+### What I'd Change
+
+I would add stronger post-match quality loops - conversation outcomes, follow-up prompts, and better signal on whether a match actually led to collaboration. Growth matters, but marketplace quality compounds faster than raw signups.

@@ -1,8 +1,10 @@
 'use client';
 
+import Image from 'next/image';
 import Link from 'next/link';
 import type { Project } from '@/types/project';
 import { Badge } from '@/components/ui/Badge';
+import { formatCategoryLabel } from '@/lib/utils';
 import styles from './MasonryProjectCard.module.css';
 
 interface MasonryProjectCardProps {
@@ -25,10 +27,22 @@ export function MasonryProjectCard({ project }: MasonryProjectCardProps) {
       <article className={styles.card}>
         {/* Visual area */}
         <div className={styles.visual} data-category={project.category}>
-          <div className={styles.gradient} />
-          <div className={styles.icon}>
-            {categoryIcon(project.category)}
-          </div>
+          {project.imageUrl ? (
+            <Image
+              src={project.imageUrl}
+              alt={project.imageAlt ?? `${project.name} screenshot`}
+              fill
+              className={styles.coverImage}
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            />
+          ) : (
+            <>
+              <div className={styles.gradient} />
+              <div className={styles.icon}>
+                {categoryIcon(project.category)}
+              </div>
+            </>
+          )}
           <div className={styles.overlay}>
             <h3 className={styles.title}>{project.name}</h3>
           </div>
@@ -37,7 +51,7 @@ export function MasonryProjectCard({ project }: MasonryProjectCardProps) {
         {/* Content */}
         <div className={styles.content}>
           <div className={styles.meta}>
-            <Badge variant="accent">{project.category}</Badge>
+            <Badge variant="accent">{formatCategoryLabel(project.category)}</Badge>
             <span className={styles.role}>{project.role}</span>
           </div>
           <p className={styles.desc}>{project.description}</p>

@@ -1,12 +1,13 @@
 # Elixir-project
 
-Personal workspace for POCs, experiments, and iteration on [**portfolio-v4**](./portfolio-v4) — the current production version of [Dhruv Singhal's](https://github.com/atavisticrystal6888) portfolio.
+Personal workspace for POCs, experiments, and iteration on the current production version of [Dhruv Singhal's](https://github.com/atavisticrystal6888) portfolio.
 
 ## Active work
 
 | Path | What it is |
 |---|---|
-| [`portfolio-v4/`](./portfolio-v4) | **Production portfolio** — Next.js 16 · React 19 · MDX · TypeScript. Source of truth. |
+| [`./`](./) | **Production portfolio** — Next.js 16 · React 19 · MDX · TypeScript. Source of truth. |
+| [`portfolio-v4/`](./portfolio-v4) | Ignored legacy workspace copy. Not the deploy target for this repo. |
 | [`specs/`](./specs) | Design specs, constitutions, and execution plans. |
 | [`prompt/`](./prompt) | Prompt library + agent configuration. |
 
@@ -20,13 +21,12 @@ Earlier portfolio iterations are preserved in [`archive/`](./archive) for refere
 - `archive/portfolio/` — scratch static copy
 - `archive/portfolio-next/` — earlier Next.js experiment
 
-## Getting started (portfolio-v4)
+## Getting started (production app)
 
 ```bash
-cd portfolio-v4
 npm install
 npm run dev
 ```
 
-See [`portfolio-v4/README.md`](./portfolio-v4/README.md) for the full workflow, scripts, and content authoring guide.
+See [`DEPLOYMENT.md`](./DEPLOYMENT.md) for Vercel deployment details. App code lives at the repo root, with content sourced from [`content/`](./content).
 

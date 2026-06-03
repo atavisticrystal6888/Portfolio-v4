@@ -21,6 +21,9 @@ export interface Project {
   name: string;
   category: "product" | "data" | "ai" | "technical";
   description: string;
+  /** Optional screenshot used in project cards. */
+  imageUrl?: string | null;
+  imageAlt?: string;
   stack: string[];
   metricValue: string;
   metricLabel: string;

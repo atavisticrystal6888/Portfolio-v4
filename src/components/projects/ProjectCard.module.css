@@ -6,8 +6,28 @@
   transition: transform 0.2s ease;
 }
 
+.media {
+  position: relative;
+  width: calc(100% + (var(--space-6) * 2));
+  height: 180px;
+  margin: calc(var(--space-6) * -1) calc(var(--space-6) * -1) 0;
+  overflow: hidden;
+  border-radius: calc(var(--radius-lg) - 2px) calc(var(--radius-lg) - 2px) 0 0;
+  background: var(--surface-hover);
+}
+
+.mediaImage {
+  object-fit: cover;
+  object-position: top center;
+  transition: transform 0.35s ease;
+}
+
 .card:hover { transform: translateY(-4px); }
 .card:active { transform: translateY(-2px) scale(0.99); }
+
+.card:hover .mediaImage {
+  transform: scale(1.04);
+}
 
 .title a:focus-visible {
   outline: 2px solid var(--accent);
