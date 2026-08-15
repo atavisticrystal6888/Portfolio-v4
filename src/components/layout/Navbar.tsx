@@ -9,7 +9,7 @@ import { cn } from '@/lib/utils';
 import { ThemeToggle } from '@/components/interactive/ThemeToggle';
 import { MusicToggle } from '@/components/interactive/MusicToggle';
 import { MobileNav } from './MobileNav';
-import dhruvImage from '../../../Dhruv_Image.jpg';
+import dhruvImage from '@/assets/Dhruv_Image.jpg';
 
 const NAV_LINKS = [
   { href: '/', label: 'Home' },

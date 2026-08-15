@@ -2,6 +2,7 @@
 # This parent workspace does not track its contents.
 portfolio-v4/
 node_modules/
+.font-tmp/
 .next/
 .vercel/
 next-env.d.ts

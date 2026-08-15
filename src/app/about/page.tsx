@@ -14,7 +14,7 @@ import { JsonLd } from "@/components/ui/JsonLd";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import Image from "next/image";
 import Link from "next/link";
-import dhruvImage from "../../../Dhruv_Image.jpg";
+import dhruvImage from "@/assets/Dhruv_Image.jpg";
 import styles from "./about.module.css";
 
 export const metadata = generatePageMetadata({

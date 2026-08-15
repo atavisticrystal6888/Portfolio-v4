@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { useState, useEffect } from "react";
 import styles from "./LoadingScreen.module.css";
-import dhruvImage from "../../../Dhruv_Image.jpg";
+import dhruvImage from "@/assets/Dhruv_Image.jpg";
 
 export function LoadingScreen() {
   const [visible, setVisible] = useState(true);
