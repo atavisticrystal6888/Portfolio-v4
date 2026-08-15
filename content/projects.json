@@ -73,7 +73,7 @@
     "slug": "kite-edge",
     "name": "KiteEdge - Portfolio Intelligence",
     "category": "technical",
-    "description": "[In active development] Self-hosted analytics platform for Zerodha Kite — 43+ technical indicators, risk analytics with Monte Carlo VaR, and ARIMA/Prophet forecasting.",
+    "description": "[In active development] Self-hosted analytics platform for Zerodha Kite — 43+ indicators, Monte Carlo VaR, ensemble forecasting, a NIFTY 500 screener, FIFO trade journal, and Power BI export across 50 API endpoints.",
     "stack": ["Elixir", "Phoenix", "Python", "FastAPI", "React", "TypeScript", "PostgreSQL", "Kafka"],
     "metricValue": "43+",
     "metricLabel": "Technical Indicators",
