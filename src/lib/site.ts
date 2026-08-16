@@ -6,7 +6,7 @@ export const SITE_URL = (
 export const SITE_NAME = "Dhruv Singhal";
 export const SITE_TITLE = "Dhruv Singhal — Product Manager & Builder";
 export const SITE_DESCRIPTION =
-	"Portfolio of Dhruv Singhal — Product Manager & Builder. Aviation product management, AI diagnostics, churn prediction, and operational analytics.";
+	"Portfolio of Dhruv Singhal — Product Manager & Builder. D2C e-commerce growth, enterprise AI workflows, AI diagnostics, and operational analytics.";
 export const SITE_DOMAIN = SITE_URL.replace(/^https?:\/\//, "");
 export const SITE_HOST = new URL(SITE_URL).host;
 export const WWW_SITE_HOST = SITE_HOST.startsWith("www.")

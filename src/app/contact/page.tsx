@@ -31,7 +31,7 @@ export default function ContactPage() {
         name: "What roles are you looking for?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "Product Manager, Associate Product Manager (APM), or aviation and AI product roles where I can blend domain context, analytics, and execution.",
+          text: "Product Manager, Associate Product Manager (APM), or e-commerce and AI product roles where I can blend domain context, analytics, and execution.",
         },
       },
       {

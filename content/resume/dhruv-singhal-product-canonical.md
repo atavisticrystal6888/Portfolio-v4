@@ -1,6 +1,6 @@
 # DHRUV SINGHAL
 
-**Product Manager | User Research · Product Specs · 0-to-1 Building · Analytics**
+**Associate Product Manager | Product Discovery · Feature Scoping · Prioritization · Stakeholder Alignment**
 
 LinkedIn: linkedin.com/in/dhruvsinghal6888 | GitHub: github.com/atavisticrystal6888 | Portfolio: dhruvsinghal.codes
 Email: dhruvsinghal6888@gmail.com | Phone: +91 7015131885
@@ -9,30 +9,31 @@ Email: dhruvsinghal6888@gmail.com | Phone: +91 7015131885
 
 ## SUMMARY
 
-Early-career product professional with hands-on experience scoping enterprise workflows at Wipro Aviation OS and building 0-to-1 products across AI, marketplaces, and analytics. Translate ambiguous user and domain inputs into specs, metrics, and launchable product decisions. Co-built Hackmate (300+ users) and led product thinking for Aarchid (92% diagnosis accuracy), combining user research, analytics, and technical fluency.
+Associate Product Manager candidate with experience in enterprise SaaS and D2C e-commerce, currently driving product initiatives at The Sleep Company and previously contributing as an AI Product Intern at Wipro TOPS. Led feature discovery and specification for ReX and crew operations workflows, alongside vendor evaluation, AI-driven workflow automation, Shopify catalog operations, PDP user flow design, and data quality initiatives. Brings expertise in product discovery, user research, PRD/spec writing, prioritization, roadmap planning, stakeholder management, automation, and data-informed execution.
 
 ---
 
 ## WORK EXPERIENCE
 
-### Wipro - Product Intern, Aviation OS | Feb 2026 - Present
+### The Sleep Company - Product Manager Intern, Growth | July 2026 - Present
 
-- Scoped **Crew Mobile Microapp** across 12+ crew scheduling, assignment, and compliance scenarios; translated SME inputs into development-ready specs.
-- Owned **Non-Crew Records** definition end-to-end; surfaced 3 data-integrity risks and edge cases before handoff.
-- Identified 5+ cross-module workflow gaps and created standardized documentation that improved onboarding and implementation clarity.
-- Defined feature success criteria with engineering, QA, and domain experts under aviation operations and regulatory constraints.
+- Led evaluation and finalization of **BSPs, CRMs, Payment Aggregators, OMS, and WMS** through market research, requirement gathering, and stakeholder discussions.
+- Built AI-powered operational agents and a centralized knowledge repository to automate research, documentation, and internal workflows.
+- Established data operations and quality control processes while standardizing the **Shopify Master Catalogue** for scalable product management.
+- Mapped end-to-end **Product Display Page (PDP)** user flows to optimize customer experience and launch readiness.
+- Implemented Shopify product automation workflows to streamline catalog management and reduce manual effort.
 
-### Read Riches - Founder's Office Intern | Mar 2025 - Jun 2025
+### Wipro - AI Product Intern, Wipro TOPS | Feb 2026 - July 2026
 
-- Ran content-led growth experiments using engagement data and user behavior signals, contributing to **4x retention improvement**.
-- Managed a 4-person research and content team; improved publishing cadence and expanded weekly readership.
-- Authored 10+ equity research reports, sharpening structured analysis and stakeholder-ready communication.
+- Scoped **Auriga ReX**, an internal AI-powered enterprise workflow platform, defining product flows from transcript ingestion and AI extraction to governed CSS/FSBCD/URS/FSD generation.
+- Prioritized roadmap requirements across RTM traceability, codebase compliance mapping, AI effort estimation, role-based approvals, and audit controls for PM, SME, and engineering users.
+- Defined and aligned **Crew Mobile Microapp** workflows across 12+ scheduling, assignment, and compliance scenarios; delivered specs that moved the feature into active sprint development.
+- Owned **Non-Crew Records** end-to-end by defining acceptance criteria, validation rules, and edge cases; de-risked handoff by surfacing 3 data integrity issues before development.
 
 ### Omniful.ai - Business Analyst Intern | Jun 2024 - Aug 2024
 
-- Defined prospect scoring using firmographic and behavioral signals, scaling qualified prospects from ~10/day to 200+/day and supporting **10 client acquisitions**.
-- Built prioritized prospect datasets and qualification logic that helped sales focus on higher-conversion accounts.
-- Analyzed lead funnel patterns to improve prospect qualification and reduce wasted outreach.
+- Redesigned prospect qualification workflow and lead scoring using 8+ firmographic and behavioral signals; scaled qualified prospects from ~10/day to 200+/day, linked to **10 B2B acquisitions**.
+- Structured 10,000+ prospect records into prioritized lead segments and weekly pipeline views, giving sales a clearer account view for higher-conversion outreach.
 
 ---
 
@@ -43,45 +44,40 @@ Early-career product professional with hands-on experience scoping enterprise wo
 _Next.js · Redis · PostgreSQL · Vercel_
 [GitHub](https://github.com/atavisticrystal6888/hackmate-rework)
 
-- Validated founder-discovery pain points through interviews and community research; defined MVP scope, user flows, and matching logic.
-- Built and launched swipe-based co-founder matching with skill-first profiles and real-time notifications; grew to **300+ users organically**.
-- Used post-launch feedback to diagnose drop-offs and ship iterative product improvements.
+- Validated product discovery through founder interviews and community research; defined PRD, user flows, and matching logic for co-founder discovery.
+- Grew to **300+ users organically**; diagnosed funnel drop-offs, prioritized feedback, and shipped user-requested improvements after launch.
 
-### Aarchid - AI Botanical Intelligence Platform | Product Lead
+### Aarchid - AI Botanical Intelligence Platform | Product Lead | Live
 
-_Gemini 1.5 Pro · Exa AI API · Next.js · Cloudflare Workers · Supabase_
+_Gemini 1.5 Pro · Exa AI API (RAG) · Next.js · Cloudflare Workers · Supabase_
 [GitHub](https://github.com/atavisticrystal6888/aarchid-api) · [Live](https://www.aarchid.space/)
 
-- Defined product vision, AI trust model, and evaluation workflow for plant-health diagnosis.
-- Designed severity scoring, citation-backed recommendations, and progressive-disclosure UX; achieved **92% diagnosis accuracy**.
-- Shaped pricing and go-to-market assumptions while translating product requirements into edge-stack implementation decisions.
+- Defined product vision, diagnosis UX, and AI evaluation framework; designed prompt chains achieving **92% diagnosis accuracy** across 200+ test images and 15 disease categories.
+- Modeled unit economics (96% margin, breakeven at 50 users), user segmentation, and GTM strategy for a pay-per-audit and pro plan.
 
 ### KiteEdge - Portfolio Analytics Platform for Zerodha Kite | Solo Builder | In Progress
 
 _Elixir/Phoenix · Python · React · Kafka · PostgreSQL_
 [GitHub](https://github.com/atavisticrystal6888/Kite-edge)
 
-- Designing self-serve analytics for retail investors across risk, indicators, forecasting, and trade-review workflows.
-- Scoped platform modules covering **43+ indicators**, portfolio risk metrics, and forecasting experiences across a polyglot architecture.
+- Framed the product around retail investor workflows, scoping 4 core modules covering risk analytics, forecasting, trade review, and portfolio diagnostics.
+- Defined roadmap for a self-serve analytics experience with **43+ indicators**, exports, and dashboard workflows for investor decision-making.
 
 ---
 
 ## ACHIEVEMENTS & LEADERSHIP
 
-- **3rd Place, Techstars Startup Weekend (DTU)** - Led problem discovery, market sizing, go-to-market strategy, and pitch to an investor panel.
-- **Secretary, Institution's Innovation Council** - Organized 10+ events reaching 3,000+ students.
-- **Top 5, Smart India Hackathon** | **Top 10, Code Clash (VIT Vellore)**
-- **Lead Organizer**, 3 hackathons: TechnicaX, IEEE HIZe, IEEE MNIT Fest
+- **3rd Place, Techstars Startup Weekend (DTU)** - Led problem discovery, market sizing, GTM strategy, and pitch for a job matching platform.
+- **Top 5, Smart India Hackathon** | Led organization of 3 hackathons reaching 3,000+ students.
 
 ---
 
 ## SKILLS
 
-**Product:** User Research · PRD/Specs · Requirements Definition · Feature Scoping · Prioritization · KPI Design · Go-to-Market
-**Analytics:** SQL · Python · Excel · Power BI · Funnel Analysis · Retention Metrics · Experimentation
-**AI Product:** Gemini API · Prompt Design · Evaluation Frameworks · Research-Augmented Workflows
-**Tools:** Jira · Linear · Figma · Mixpanel · Amplitude · CleverTap
-**Technical:** Next.js · TypeScript · PostgreSQL · Redis · Cloudflare Workers
+**Product:** Product Discovery · User Research · PRD/Specs · Feature Scoping · Requirements Gathering · User Stories · Backlog Prioritization · Roadmap Planning · KPI Design · A/B Testing · Stakeholder Alignment · Go-to-Market
+**Analytics & Tools:** SQL · Excel · Power BI · Mixpanel · Figma · Datadog
+**Methodology:** Agile · Sprint Planning · Cross-Functional Delivery
+**Certification:** Data Analytics with SQL, Excel and Case studies; AI Engineer Agentic Track: The Complete Agent Course
 
 ---
 

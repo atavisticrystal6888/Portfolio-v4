@@ -11,12 +11,19 @@ interface TimelineItem {
 
 const EXPERIENCE: TimelineItem[] = [
   {
-    company: "Wipro",
-    role: "Product Intern",
+    company: "The Sleep Company",
+    role: "Product Manager Intern, Growth",
     type: "Internship",
-    period: "2026 - Present",
-    description: "Scoped Crew Mobile and Non-Crew Records workflows across 12+ aviation scenarios, surfaced edge cases early, and aligned feature success criteria with engineering and QA.",
+    period: "Jul 2026 - Present",
+    description: "Driving growth product initiatives for a D2C sleep brand: vendor evaluation across BSPs, CRMs, payment aggregators, OMS, and WMS; AI-powered operational agents and a centralized knowledge repository; Shopify Master Catalogue standardization and PDP user-flow mapping.",
     current: true,
+  },
+  {
+    company: "Wipro",
+    role: "AI Product Intern, Wipro TOPS",
+    type: "Internship",
+    period: "Feb - Jul 2026",
+    description: "Scoped Auriga ReX, an AI-powered enterprise workflow platform, plus Crew Mobile and Non-Crew Records workflows across 12+ aviation scenarios - surfacing edge cases early and moving specs into active sprint development.",
   },
   {
     company: "Read Riches",

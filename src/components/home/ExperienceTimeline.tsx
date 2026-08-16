@@ -11,12 +11,19 @@ interface ExperienceEntry {
 
 const EXPERIENCE: ExperienceEntry[] = [
   {
-    company: "Wipro",
-    role: "Product Intern",
-    period: "2026 - Present",
+    company: "The Sleep Company",
+    role: "Product Manager Intern, Growth",
+    period: "Jul 2026 - Present",
     description:
-      "Scoped crew mobile and records workflows across 12+ aviation scenarios, translated SME input into build-ready specs, and aligned success criteria with engineering and QA.",
+      "Driving growth product initiatives: vendor evaluation (BSP/CRM/payments/OMS/WMS), AI-powered operational agents, Shopify Master Catalogue standardization, and PDP user-flow mapping.",
     current: true,
+  },
+  {
+    company: "Wipro",
+    role: "AI Product Intern, Wipro TOPS",
+    period: "Feb - Jul 2026",
+    description:
+      "Scoped Auriga ReX (AI enterprise workflow platform) plus crew mobile and records workflows across 12+ aviation scenarios, translating SME input into build-ready specs.",
   },
   {
     company: "Read Riches",

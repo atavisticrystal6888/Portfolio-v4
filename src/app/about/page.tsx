@@ -20,7 +20,7 @@ import styles from "./about.module.css";
 export const metadata = generatePageMetadata({
   title: "About",
   description:
-    "Learn about Dhruv Singhal - a Product Manager & Builder with experience across aviation workflows, AI products, analytics, and technical execution.",
+    "Learn about Dhruv Singhal - a Product Manager & Builder with experience across D2C e-commerce, enterprise AI workflows, analytics, and technical execution.",
   path: "/about",
 });
 
@@ -76,11 +76,12 @@ export default async function AboutPage() {
             <div>
               <p className={styles.bio}>
                 Final-year B.Tech student with operating experience across
-                product management, aviation workflows, and technical execution.
-                I currently scope aviation operations features at Wipro as a
-                Product Intern, owned growth from the founder&apos;s office at Read
-                Riches, and helped define prospecting systems at Omniful.ai. On
-                the side, I co-built{" "}
+                product management, D2C e-commerce, and enterprise AI workflows.
+                I currently drive growth product initiatives at The Sleep
+                Company as a Product Manager Intern, scoped AI-powered
+                enterprise workflows at Wipro TOPS, owned growth from the
+                founder&apos;s office at Read Riches, and helped define
+                prospecting systems at Omniful.ai. On the side, I co-built{" "}
                 <Link href="/projects/aarchid">Aarchid</Link> with{" "}
                 <a href="https://github.com/dfordp" target="_blank" rel="noopener noreferrer">
                   Dilpreet Grover

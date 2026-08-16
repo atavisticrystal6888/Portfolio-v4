@@ -32,8 +32,9 @@ export default function NowPage() {
           <h2 className={styles.sectionTitle}>Current Roles</h2>
           <ul className={styles.list}>
             <li>
-              <strong>Wipro</strong> - Product Intern, building
-              aviation operations products.
+              <strong>The Sleep Company</strong> - Product Manager Intern,
+              Growth: vendor evaluation, AI-powered operational agents, and
+              Shopify catalog operations for a D2C sleep brand.
             </li>
           </ul>
         </div>
@@ -105,7 +106,7 @@ export default function NowPage() {
           <h2 className={styles.sectionTitle}>Next Step</h2>
           <p style={{ color: "var(--text-body)", lineHeight: 1.7 }}>
             Full-time <strong>Product Manager / APM</strong> roles starting
-            mid-2026. Bias toward aviation, AI-native products, and
+            mid-2026. Bias toward AI-native products, D2C e-commerce, and
             teams where product, data, and engineering aren&apos;t separate jobs.{" "}
             <a href="/contact">Get in touch</a>.
           </p>

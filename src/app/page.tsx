@@ -18,7 +18,7 @@ import styles from "./home.module.css";
 export const metadata = generatePageMetadata({
   title: "Dhruv Singhal — Product Manager & Builder",
   description:
-    "Portfolio of Dhruv Singhal — Product Manager & Builder. Aviation product management, AI diagnostics, churn prediction, and operational analytics.",
+    "Portfolio of Dhruv Singhal — Product Manager & Builder. D2C e-commerce growth, enterprise AI workflows, AI diagnostics, and operational analytics.",
 });
 
 export default function Home() {

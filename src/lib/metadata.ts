@@ -83,7 +83,7 @@ export function generatePersonJsonLd() {
       "@type": "CollegeOrUniversity",
       name: "J.C. Bose University",
     },
-    knowsAbout: ["Aviation Product Management", "Product Analytics", "AI/ML", "Data Science"],
+    knowsAbout: ["E-commerce Product Management", "Product Analytics", "AI/ML", "Data Science"],
     sameAs: [GITHUB_URL, LINKEDIN_URL],
   };
 }

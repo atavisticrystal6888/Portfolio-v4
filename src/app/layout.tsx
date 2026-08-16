@@ -45,7 +45,7 @@ export const metadata: Metadata = {
   keywords: [
     "Dhruv Singhal",
     "Product Manager",
-    "Aviation PM",
+    "E-commerce PM",
     "Data Analytics",
     "AI PM",
     "Portfolio",

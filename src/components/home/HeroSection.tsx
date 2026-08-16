@@ -6,7 +6,7 @@ import styles from "./HeroSection.module.css";
 
 const ROLES = [
   "Product Manager",
-  "Aviation PM",
+  "Growth PM",
   "Data-Driven Builder",
   "Technical PM",
 ];
@@ -21,8 +21,8 @@ export function HeroSection() {
         </h1>
         <p className={styles.role}>{ROLES[0]}</p>
         <p className={styles.statement}>
-          I scope and ship aviation and AI products - turning SME input, user
-          research, and product specs into decisions teams can build.
+          I scope and ship e-commerce and AI products - turning stakeholder
+          input, user research, and product specs into decisions teams can build.
         </p>
         <div className={styles.ctas}>
           <Button href="/projects" data-magnetic>Explore Work</Button>
