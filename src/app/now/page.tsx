@@ -23,7 +23,7 @@ export default function NowPage() {
 
       <h1 className={styles.title}>What I&apos;m Doing Now</h1>
       <p className={styles.updated}>
-        Last updated: <time dateTime="2026-04">April 2026</time>
+        Last updated: <time dateTime="2026-08">August 2026</time>
       </p>
 
       <ScrollReveal>
@@ -70,9 +70,18 @@ export default function NowPage() {
           <h2 className={styles.sectionTitle}>Side Projects</h2>
           <ul className={styles.list}>
             <li>
-              <strong>This site</strong> - ongoing portfolio iteration in
-              Next.js 16 + React 19, with interactive AI PM demos and a 3D
-              Aarchid hero.
+              <strong>KiteEdge</strong> - self-hosted portfolio analytics for
+              Zerodha Kite: 43+ indicators, Monte Carlo VaR, a NIFTY 500
+              screener, and a FIFO trade journal across 13 services.
+            </li>
+            <li>
+              <strong>ExperimentHub</strong> - a self-hosted A/B testing
+              platform with a deterministic Rust assignment core and
+              sequential statistics.
+            </li>
+            <li>
+              <strong>DeskTasks</strong> - a local-first desktop task widget
+              pinned behind every window, shipped for Windows + macOS.
             </li>
             <li>
               <strong>Aarchid</strong> with{" "}
@@ -81,7 +90,11 @@ export default function NowPage() {
               </a>{" "}
               - multimodal plant-diagnosis app, edge stack, 92% accuracy on golden set.
             </li>
-            <li>An eval-driven AI-PM interview prep kit (in progress).</li>
+            <li>
+              <strong>This site</strong> - ongoing portfolio iteration in
+              Next.js 16 + React 19, with interactive AI PM demos and a 3D
+              Aarchid hero.
+            </li>
           </ul>
         </div>
       </ScrollReveal>

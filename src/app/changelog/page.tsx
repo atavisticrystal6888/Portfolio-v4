@@ -22,6 +22,20 @@ interface Release {
 
 const RELEASES: Release[] = [
   {
+    version: "v4.3 - Phase 3",
+    date: "August 2026",
+    title: "Shipped-product roster",
+    badge: "shipped",
+    body: "The portfolio caught up with the building. Three new featured case studies - ExperimentHub, DeskTasks, and Better-Half - shift the roster's weight toward shipped, tested products, KiteEdge's study now reflects its August state, and /projects gained a Featured / More split with card-only entries for smaller builds.",
+    highlights: [
+      "ExperimentHub - self-hosted A/B testing platform (Rust assignment core, sequential statistics)",
+      "DeskTasks - desktop task widget shipped for Windows + macOS, 540+ test assertions",
+      "Better-Half - two-user privacy-first PWA, 575 live RLS policy checks",
+      "KiteEdge refreshed: 50 endpoints, 13 services, NIFTY 500 screener, trade journal",
+      "Tiered /projects grid + three card-only entries; repo root decluttered",
+    ],
+  },
+  {
     version: "v4.2 - Phase 2",
     date: "April 2026",
     title: "Depth pages & AI PM landing",
