@@ -84,7 +84,7 @@
     "slug": "better-half",
     "name": "Better-Half - Cycle-Aware Companion",
     "category": "product",
-    "description": "Two-user, cycle-aware companion PWA for a long-distance couple — phase, mood, and stress drive daily guidance for her, him, and us. Privacy enforced at the database with 575 live RLS checks, offline-first, $0/month infra. Private by design.",
+    "description": "Two-user, cycle-aware companion PWA for long-distance couples — phase, mood, and stress drive daily guidance for her, him, and us. Privacy enforced at the database with 575 live RLS checks, offline-first, $0/month infra. Private by design.",
     "stack": ["React 19", "TypeScript", "Tailwind v4", "Supabase", "Dexie", "PWA"],
     "metricValue": "575",
     "metricLabel": "Live RLS Policy Checks",

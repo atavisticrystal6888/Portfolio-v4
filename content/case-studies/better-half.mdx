@@ -1,11 +1,11 @@
 ---
 slug: "better-half"
 title: "Better-Half - A Cycle-Aware Companion for Two"
-subtitle: "Two-user PWA for a long-distance couple - cycle phase, mood, and stress become shared context driving daily guidance, with privacy enforced by the database, not the UI."
+subtitle: "Two-user PWA for long-distance couples - cycle phase, mood, and stress become shared context driving daily guidance, with privacy enforced by the database, not the UI."
 role: "Solo Builder · Product & Engineering"
 duration: "Aug 2026 – present"
 stack: ["React 19", "TypeScript", "Tailwind v4", "Supabase", "Dexie", "PWA"]
-tldr: "Most cycle apps treat one partner as the user and the other as an outsider - or worse, treat her as the subject. Better-Half is built for two first-class users in a long-distance relationship: her phase, mood, and stress (shared per-category, on her terms) drive daily guidance for her, for him, and for the couple. Privacy is enforced with row-level security proven by 575 live policy checks, the app works offline-first on unreliable connections, and the whole thing runs on $0/month infrastructure."
+tldr: "Most cycle apps treat one partner as the user and the other as an outsider - or worse, treat her as the subject. Better-Half is built for two first-class users in a long-distance relationship: one partner's phase, mood, and stress (shared per-category, on her terms) drive daily guidance for her, for him, and for the couple. Privacy is enforced with row-level security proven by 575 live policy checks, the app works offline-first on unreliable connections, and the whole thing runs on $0/month infrastructure."
 metrics:
   - label: "RLS Policy Checks"
     value: 575
@@ -37,7 +37,7 @@ Better-Half starts from a different contract: **she is a first-class user, not a
 
 - **Consent is enforced by the database, not the interface.** Every sharing decision maps to row-level security policy. A category she hasn't shared is invisible at the SQL layer - there is no client-side filter pretending to be a boundary.
 - **Transparent scoring, no magic ML.** Guidance ranking is a deterministic formula (feedback-weighted, recency-decayed) the code can explain. Predictions widen their confidence window when cycles vary, say "learning" under two cycles of data, and never claim fertility-planning precision.
-- **Offline is the normal case.** Hostel wifi and metro commutes mean hours offline daily. Every write queues locally (Dexie/IndexedDB) with per-field merge, dead-lettered failures, and idempotent replay - "saved" means saved.
+- **Offline is the normal case.** For the target users - patchy hostel wifi, metro commutes - hours offline daily is normal. Every write queues locally (Dexie/IndexedDB) with per-field merge, dead-lettered failures, and idempotent replay - "saved" means saved.
 - **Notifications pull you in, never spam.** Discreet lock-screen text by default ("You have a note ✨" - never cycle details), quiet hours, a daily cap, and per-kind dedupe, all enforced server-side.
 
 ## Solution & Approach
@@ -61,7 +61,7 @@ The RLS matrix is the artifact I'm proudest of: **575 checks run live against th
 - **1,940 unit test assertions** across 121 test files, plus Playwright visual regression at 320px/412px in both themes (WCAG AA contrast checked)
 - **220 guidance items** with tests asserting dietary, situational, and medical-claim constraints hold across the library
 - **$0/month hosting** across Vercel, Supabase, and Brevo free tiers
-- Private deployment, by design - this one ships to exactly two users
+- Private deployment, by design - not a public product, and its data is nobody else's business
 
 ## Learnings
 
