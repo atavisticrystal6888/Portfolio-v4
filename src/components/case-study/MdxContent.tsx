@@ -175,6 +175,7 @@ export function MdxContent({ html }: MdxContentProps) {
               )}
 
               <figure className={styles.lightboxFigure}>
+                {/* eslint-disable-next-line @next/next/no-img-element -- lightbox shows arbitrary-size MDX images */}
                 <img
                   src={activeItem.src}
                   alt={activeItem.alt}

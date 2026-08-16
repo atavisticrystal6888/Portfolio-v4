@@ -17,6 +17,8 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Archived previous portfolio versions — not part of the live app.
+    "archive/**",
   ]),
 ]);
 

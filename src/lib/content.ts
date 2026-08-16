@@ -11,6 +11,7 @@ const contentDir = path.join(process.cwd(), "content");
 
 export function getAllProjects(): Project[] {
   const filePath = path.join(contentDir, "projects.json");
+  if (!fs.existsSync(filePath)) return [];
   const raw = fs.readFileSync(filePath, "utf-8");
   const projects: Project[] = JSON.parse(raw);
   return projects.sort((a, b) => a.order - b.order);
@@ -69,6 +70,7 @@ export function getAllBlogPosts(): BlogArticle[] {
 
 export function getAllTestimonials(): Testimonial[] {
   const filePath = path.join(contentDir, "testimonials.json");
+  if (!fs.existsSync(filePath)) return [];
   const raw = fs.readFileSync(filePath, "utf-8");
   return JSON.parse(raw);
 }
