@@ -8,9 +8,6 @@ const MOBILE_VIEWPORTS = [
 
 const ROUTES = ["/", "/about", "/projects", "/blog", "/contact"];
 
-// Disable animations so axe sees elements at full opacity
-test.use({ reducedMotion: "reduce" } as Parameters<typeof test.use>[0]);
-
 test.describe("Touch target sizing (WCAG 2.5.8)", () => {
   for (const viewport of MOBILE_VIEWPORTS) {
     for (const route of ROUTES) {
@@ -23,10 +20,18 @@ test.describe("Touch target sizing (WCAG 2.5.8)", () => {
           height: viewport.height,
         });
         await page.goto(route, { waitUntil: "networkidle" });
-        await page.waitForFunction(
-          () => !document.querySelector('[style*="opacity: 0"]'),
-          { timeout: 5000 }
+
+        // Scroll through the page so scroll-revealed content becomes visible
+        // (axe skips hidden elements), then return to the top and settle.
+        const pageHeight = await page.evaluate(
+          () => document.body.scrollHeight
         );
+        for (let y = 0; y < pageHeight; y += viewport.height) {
+          await page.evaluate((top) => window.scrollTo(0, top), y);
+          await page.waitForTimeout(150);
+        }
+        await page.evaluate(() => window.scrollTo(0, 0));
+        await page.waitForTimeout(800);
 
         const results = await new AxeBuilder({ page })
           .withRules(["target-size"])

@@ -19,20 +19,22 @@ const ROUTES = [
   "/now",
 ];
 
-// Disable animations so axe sees elements at full opacity
-test.use({ reducedMotion: "reduce" } as Parameters<typeof test.use>[0]);
-
 test.describe("Accessibility (WCAG 2.1 AA)", () => {
   for (const route of ROUTES) {
     test(`${route} has no critical a11y violations`, async ({ page }) => {
       test.setTimeout(120_000);
       await page.goto(route, { waitUntil: "networkidle" });
-      // Wait for React hydration to settle (SSR renders with opacity animations,
-      // then hydration detects prefers-reduced-motion and removes them)
-      await page.waitForFunction(
-        () => !document.querySelector('[style*="opacity: 0"]'),
-        { timeout: 5000 }
-      );
+
+      // Scroll through the page so scroll-revealed content becomes visible
+      // (axe skips hidden elements), then return to the top and settle.
+      const pageHeight = await page.evaluate(() => document.body.scrollHeight);
+      const step = page.viewportSize()?.height ?? 700;
+      for (let y = 0; y < pageHeight; y += step) {
+        await page.evaluate((top) => window.scrollTo(0, top), y);
+        await page.waitForTimeout(150);
+      }
+      await page.evaluate(() => window.scrollTo(0, 0));
+      await page.waitForTimeout(800);
 
       const results = await new AxeBuilder({ page })
         .withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa"])
