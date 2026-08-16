@@ -33,6 +33,18 @@
   overflow: hidden;
 }
 
+/* Secondary-tier cards: trim the visual on small screens so the
+   "More Projects" list scans quickly instead of stretching the page. */
+@media (max-width: 767px) {
+  .compact .visual {
+    height: 84px;
+  }
+
+  .compact .icon {
+    display: none;
+  }
+}
+
 .coverImage {
   object-fit: cover;
   object-position: top center;

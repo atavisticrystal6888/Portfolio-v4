@@ -1,0 +1,29 @@
+/* Page-entrance transition as pure CSS: it plays the moment the page paints
+   (no JS/hydration dependency), replays on client-side navigation because the
+   template remounts, and the SSR HTML is never styled invisible. */
+.pageEnter {
+  animation: pageEnter 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+
+@keyframes pageEnter {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pageEnter {
+    animation: none;
+  }
+}
+
+@media print {
+  .pageEnter {
+    animation: none;
+  }
+}

@@ -11,9 +11,19 @@ const rateLimitMap = new Map<string, { count: number; resetAt: number }>();
 
 function getRateLimit(ip: string): boolean {
   const now = Date.now();
+  // Opportunistic prune so the per-instance map can't grow without bound.
+  if (rateLimitMap.size > 500) {
+    for (const [key, value] of rateLimitMap) {
+      if (now > value.resetAt) rateLimitMap.delete(key);
+    }
+  }
   const entry = rateLimitMap.get(ip);
   if (!entry || now > entry.resetAt) {
-    rateLimitMap.set(ip, { count: 1, resetAt: now + 3600000 }); // 1 hour
+    // 5 requests per 15-minute window per IP. (The previous 1-hour window
+    // locked out whole NAT'd networks after one person's use.) In-memory =
+    // per serverless instance, so this is best-effort abuse damping, not a
+    // global cap - acceptable for a personal-site contact form.
+    rateLimitMap.set(ip, { count: 1, resetAt: now + 900000 });
     return false;
   }
   entry.count++;

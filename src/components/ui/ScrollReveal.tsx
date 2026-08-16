@@ -3,6 +3,7 @@
 import { type ReactNode, type CSSProperties } from 'react';
 import { useIntersection } from '@/hooks/useIntersection';
 import { useReducedMotion } from '@/hooks/useReducedMotion';
+import styles from './ScrollReveal.module.css';
 
 type Direction = 'up' | 'down' | 'left' | 'right' | 'none';
 
@@ -36,7 +37,11 @@ export function ScrollReveal({
   index = 0,
 }: ScrollRevealProps) {
   const reducedMotion = useReducedMotion();
-  const { ref, isIntersecting } = useIntersection<HTMLDivElement>({
+  // Content is visible by default (SSR, no-JS, print, full-page capture).
+  // The entrance animation applies only to elements the observer reported
+  // off-screen, so nothing readable is ever hidden and no synchronous
+  // layout reads are needed.
+  const { ref, isIntersecting, wasOffscreen } = useIntersection<HTMLDivElement>({
     threshold: 0.05,
     rootMargin: '50px 0px -10px 0px',
     triggerOnce: true,
@@ -54,16 +59,24 @@ export function ScrollReveal({
   const dx = distance ? (offset.x > 0 ? distance : offset.x < 0 ? -distance : 0) : offset.x;
   const dy = distance ? (offset.y > 0 ? distance : offset.y < 0 ? -distance : 0) : offset.y;
   const totalDelay = delay + stagger * index;
+  const hidden = wasOffscreen && !isIntersecting;
 
-  const style: CSSProperties = {
-    opacity: isIntersecting ? 1 : 0,
-    transform: isIntersecting ? 'translate(0, 0)' : `translate(${dx}px, ${dy}px)`,
-    transition: `opacity ${duration}s ease ${totalDelay}s, transform ${duration}s ease ${totalDelay}s`,
-    willChange: 'opacity, transform',
-  };
+  const style: CSSProperties | undefined = wasOffscreen
+    ? {
+        opacity: hidden ? 0 : 1,
+        transform: hidden ? `translate(${dx}px, ${dy}px)` : 'translate(0, 0)',
+        transition: `opacity ${duration}s ease ${totalDelay}s, transform ${duration}s ease ${totalDelay}s`,
+        // Hint only while hidden; release the GPU layer once revealed.
+        willChange: hidden ? 'opacity, transform' : 'auto',
+      }
+    : undefined;
 
   return (
-    <div className={className} ref={ref as React.Ref<HTMLDivElement>} style={style}>
+    <div
+      className={className ? `${styles.reveal} ${className}` : styles.reveal}
+      ref={ref as React.Ref<HTMLDivElement>}
+      style={style}
+    >
       {children}
     </div>
   );

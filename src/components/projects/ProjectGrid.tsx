@@ -30,9 +30,9 @@ export function ProjectGrid({ projects }: ProjectGridProps) {
   const more = filtered.filter((p) => !p.featured);
   const showSections = featured.length > 0 && more.length > 0;
 
-  const renderGroup = (list: Project[]) =>
+  const renderGroup = (list: Project[], compact = false) =>
     layout === "masonry" ? (
-      <MasonryGrid projects={list} />
+      <MasonryGrid projects={list} compact={compact} />
     ) : (
       <div className={styles.grid}>
         {list.map((p) => (
@@ -80,7 +80,7 @@ export function ProjectGrid({ projects }: ProjectGridProps) {
           <h2 className={styles.sectionHeading}>Featured</h2>
           {renderGroup(featured)}
           <h2 className={styles.sectionHeading}>More Projects</h2>
-          {renderGroup(more)}
+          {renderGroup(more, true)}
         </>
       ) : (
         renderGroup(filtered)

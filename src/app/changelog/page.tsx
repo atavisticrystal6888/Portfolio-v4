@@ -39,7 +39,7 @@ const RELEASES: Release[] = [
     version: "v4.2 - Phase 2",
     date: "April 2026",
     title: "Depth pages & AI PM landing",
-    badge: "in-progress",
+    badge: "shipped",
     body: "The specialization layer. Shipped /ai-pm as the single place to route AI-PM conversations, plus /lab, /uses, /bookshelf - the pages that make this feel like a person, not a résumé.",
     highlights: [
       "/ai-pm - playbooks, Aarchid case study link, AI-focused writing index",

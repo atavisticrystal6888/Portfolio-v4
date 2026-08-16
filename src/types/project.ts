@@ -1,8 +1,10 @@
 export interface CaseStudyMetric {
   label: string;
-  value: number;
+  /** @deprecated No longer rendered (tiles show displayValue); kept so existing frontmatter parses. */
+  value?: number;
   displayValue: string;
-  chartType: "bar" | "doughnut" | "line";
+  /** @deprecated No longer rendered; kept so existing frontmatter parses. */
+  chartType?: "bar" | "doughnut" | "line";
 }
 
 export interface CoCreator {

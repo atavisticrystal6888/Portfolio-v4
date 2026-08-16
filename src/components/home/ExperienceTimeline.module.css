@@ -57,7 +57,9 @@
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  color: var(--accent);
+  /* Mixed toward the theme's text color: plain --accent lands at 4.16:1 on
+     the tinted background at this size (WCAG AA needs 4.5:1). */
+  color: color-mix(in srgb, var(--accent) 70%, var(--text-strong));
   background: color-mix(in srgb, var(--accent) 12%, transparent);
   padding: 2px 8px;
   border-radius: var(--radius-full);

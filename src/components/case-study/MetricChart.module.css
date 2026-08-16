@@ -26,9 +26,3 @@
   color: var(--text-muted);
   font-weight: 500;
 }
-
-.chartWrap {
-  width: 80px;
-  height: 60px;
-  margin-top: var(--space-2);
-}

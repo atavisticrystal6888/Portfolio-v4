@@ -7,6 +7,18 @@
   justify-content: center;
   background: var(--bg);
   transition: opacity 0.4s ease;
+  /* Never intercept input: taps during the splash reach the page beneath. */
+  pointer-events: none;
+  /* No-JS / slow-hydration fallback: the splash dismisses itself even if
+     the JS timer never runs. The JS path unmounts it sooner. */
+  animation: autoDismiss 0.4s ease 1.4s forwards;
+}
+
+@keyframes autoDismiss {
+  to {
+    opacity: 0;
+    visibility: hidden;
+  }
 }
 
 .screen.fading {

@@ -15,6 +15,10 @@ export function useIntersection<T extends HTMLElement = HTMLDivElement>({
 }: UseIntersectionOptions = {}) {
   const ref = useRef<T>(null);
   const [isIntersecting, setIsIntersecting] = useState(false);
+  // Latches true the first time the observer reports the element off-screen.
+  // Lets consumers apply entrance effects only to content that actually
+  // started outside the viewport (never measured = treated as visible).
+  const [wasOffscreen, setWasOffscreen] = useState(false);
 
   useEffect(() => {
     const el = ref.current;
@@ -24,6 +28,9 @@ export function useIntersection<T extends HTMLElement = HTMLDivElement>({
       ([entry]) => {
         if (entry) {
           setIsIntersecting(entry.isIntersecting);
+          if (!entry.isIntersecting) {
+            setWasOffscreen(true);
+          }
           if (entry.isIntersecting && triggerOnce) {
             observer.unobserve(el);
           }
@@ -36,5 +43,5 @@ export function useIntersection<T extends HTMLElement = HTMLDivElement>({
     return () => observer.disconnect();
   }, [threshold, rootMargin, triggerOnce]);
 
-  return { ref, isIntersecting };
+  return { ref, isIntersecting, wasOffscreen };
 }

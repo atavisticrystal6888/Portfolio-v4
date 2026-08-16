@@ -9,6 +9,8 @@ import styles from './MasonryProjectCard.module.css';
 
 interface MasonryProjectCardProps {
   project: Project;
+  /** Trims the visual area on mobile so the secondary tier scans faster. */
+  compact?: boolean;
 }
 
 function categoryIcon(category: string): string {
@@ -21,10 +23,10 @@ function categoryIcon(category: string): string {
   }
 }
 
-export function MasonryProjectCard({ project }: MasonryProjectCardProps) {
+export function MasonryProjectCard({ project, compact = false }: MasonryProjectCardProps) {
   const hasCaseStudy = project.hasCaseStudy !== false;
   const card = (
-      <article className={styles.card}>
+      <article className={`${styles.card} ${compact ? styles.compact : ''}`}>
         {/* Visual area */}
         <div className={styles.visual} data-category={project.category}>
           {project.imageUrl ? (

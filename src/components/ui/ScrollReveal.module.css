@@ -1,0 +1,9 @@
+/* Print (and any non-interactive rendering) must never hide revealed-on-scroll
+   content - override the inline animation styles. */
+@media print {
+  .reveal {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}
