@@ -28,6 +28,8 @@ export interface Project {
   metricValue: string;
   metricLabel: string;
   featured: boolean;
+  /** False for card-only entries with no case-study page (defaults to true). */
+  hasCaseStudy?: boolean;
   githubUrl: string | null;
   /** Optional live/deployed URL */
   liveUrl?: string | null;

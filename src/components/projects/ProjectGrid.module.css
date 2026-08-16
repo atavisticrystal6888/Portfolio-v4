@@ -65,3 +65,14 @@
   padding: var(--space-10) var(--space-6);
   font-size: 0.95rem;
 }
+
+.sectionHeading {
+  max-width: var(--container-max);
+  margin: var(--space-8) auto 0;
+  padding: 0 var(--space-6);
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}

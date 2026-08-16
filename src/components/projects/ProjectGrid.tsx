@@ -26,6 +26,21 @@ export function ProjectGrid({ projects }: ProjectGridProps) {
     localStorage.setItem("project-layout", mode);
   };
 
+  const featured = filtered.filter((p) => p.featured);
+  const more = filtered.filter((p) => !p.featured);
+  const showSections = featured.length > 0 && more.length > 0;
+
+  const renderGroup = (list: Project[]) =>
+    layout === "masonry" ? (
+      <MasonryGrid projects={list} />
+    ) : (
+      <div className={styles.grid}>
+        {list.map((p) => (
+          <ProjectCard key={p.slug} project={p} />
+        ))}
+      </div>
+    );
+
   return (
     <div>
       <div className={styles.controls}>
@@ -60,19 +75,18 @@ export function ProjectGrid({ projects }: ProjectGridProps) {
         </div>
       </div>
 
-      {layout === "masonry" ? (
-        <MasonryGrid projects={filtered} />
-      ) : (
+      {showSections ? (
         <>
-          <div className={styles.grid}>
-            {filtered.map((p) => (
-              <ProjectCard key={p.slug} project={p} />
-            ))}
-          </div>
-          {filtered.length === 0 && (
-            <p className={styles.empty}>No projects match this filter.</p>
-          )}
+          <h2 className={styles.sectionHeading}>Featured</h2>
+          {renderGroup(featured)}
+          <h2 className={styles.sectionHeading}>More Projects</h2>
+          {renderGroup(more)}
         </>
+      ) : (
+        renderGroup(filtered)
+      )}
+      {filtered.length === 0 && (
+        <p className={styles.empty}>No projects match this filter.</p>
       )}
     </div>
   );

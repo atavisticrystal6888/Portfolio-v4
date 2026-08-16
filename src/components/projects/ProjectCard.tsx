@@ -30,7 +30,11 @@ export function ProjectCard({ project }: ProjectCardProps) {
         <span className={styles.duration}>{project.duration}</span>
       </div>
       <h2 className={styles.title}>
-        <Link href={`/projects/${project.slug}`}>{project.name}</Link>
+        {project.hasCaseStudy !== false ? (
+          <Link href={`/projects/${project.slug}`}>{project.name}</Link>
+        ) : (
+          project.name
+        )}
       </h2>
       <p className={styles.role}>{project.role}</p>
       <p className={styles.desc}>{project.description}</p>

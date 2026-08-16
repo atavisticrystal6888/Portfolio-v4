@@ -39,6 +39,62 @@
     "order": 2
   },
   {
+    "slug": "kite-edge",
+    "name": "KiteEdge - Portfolio Intelligence",
+    "category": "technical",
+    "description": "[In active development] Self-hosted analytics platform for Zerodha Kite — 43+ indicators, Monte Carlo VaR, ensemble forecasting, a NIFTY 500 screener, FIFO trade journal, and Power BI export across 50 API endpoints.",
+    "stack": ["Elixir", "Phoenix", "Python", "FastAPI", "React", "TypeScript", "PostgreSQL", "Kafka"],
+    "metricValue": "43+",
+    "metricLabel": "Technical Indicators",
+    "featured": true,
+    "githubUrl": "https://github.com/atavisticrystal6888/Kite-edge",
+    "duration": "May 2026 – present",
+    "role": "Full-Stack Developer & Architect",
+    "order": 3
+  },
+  {
+    "slug": "experiment-hub",
+    "name": "ExperimentHub - A/B Testing Platform",
+    "category": "product",
+    "description": "Self-hosted, multi-tenant experimentation platform — deterministic variant assignment via a Rust MurmurHash3 core, Kafka event ingestion, a Python stats engine with sequential methods, and a realtime React dashboard.",
+    "stack": ["Elixir", "Phoenix", "Rust", "Python", "FastAPI", "React", "TypeScript", "Kafka"],
+    "metricValue": "50+",
+    "metricLabel": "Tenant-Scoped API Routes",
+    "featured": true,
+    "githubUrl": "https://github.com/atavisticrystal6888/A-B-Testing-Platform",
+    "duration": "2026 – present",
+    "role": "Solo Builder · Product & Architecture",
+    "order": 4
+  },
+  {
+    "slug": "desktasks",
+    "name": "DeskTasks - Desktop Task Widget",
+    "category": "product",
+    "description": "A task widget pinned behind every window at desktop level — natural-language quick-add, recurring tasks, reminders, time tracking, and honest .ics/CSV/Markdown round-trips. Local-first and accountless, shipped for Windows + macOS with an offline-first companion PWA.",
+    "stack": ["Electron", "JavaScript", "IndexedDB", "Supabase", "PWA"],
+    "metricValue": "540+",
+    "metricLabel": "Test Assertions (unit + e2e)",
+    "featured": true,
+    "githubUrl": null,
+    "duration": "2026 – present",
+    "role": "Solo Builder · Product & Engineering",
+    "order": 5
+  },
+  {
+    "slug": "better-half",
+    "name": "Better-Half - Cycle-Aware Companion",
+    "category": "product",
+    "description": "Two-user, cycle-aware companion PWA for a long-distance couple — phase, mood, and stress drive daily guidance for her, him, and us. Privacy enforced at the database with 575 live RLS checks, offline-first, $0/month infra. Private by design.",
+    "stack": ["React 19", "TypeScript", "Tailwind v4", "Supabase", "Dexie", "PWA"],
+    "metricValue": "575",
+    "metricLabel": "Live RLS Policy Checks",
+    "featured": true,
+    "githubUrl": null,
+    "duration": "Aug 2026 – present",
+    "role": "Solo Builder · Product & Engineering",
+    "order": 6
+  },
+  {
     "slug": "churn-analysis",
     "name": "Customer Churn Analysis",
     "category": "data",
@@ -46,11 +102,11 @@
     "stack": ["Python", "Pandas", "Scikit-learn", "SQL", "Power BI"],
     "metricValue": "~15%",
     "metricLabel": "Churn Reduction",
-    "featured": true,
+    "featured": false,
     "githubUrl": "https://github.com/atavisticrystal6888/Customer-churn-analysis",
     "duration": "Jan 2026 – Mar 2026",
     "role": "Data Analyst",
-    "order": 3
+    "order": 7
   },
   {
     "slug": "tcs-nqt-prep-hub",
@@ -67,21 +123,7 @@
     "liveUrl": "https://atavisticrystal6888.github.io/TCS-NQT-Prep-Hub/",
     "duration": "Mar 2026 – May 2026",
     "role": "Creator & Lead Developer",
-    "order": 4
-  },
-  {
-    "slug": "kite-edge",
-    "name": "KiteEdge - Portfolio Intelligence",
-    "category": "technical",
-    "description": "[In active development] Self-hosted analytics platform for Zerodha Kite — 43+ indicators, Monte Carlo VaR, ensemble forecasting, a NIFTY 500 screener, FIFO trade journal, and Power BI export across 50 API endpoints.",
-    "stack": ["Elixir", "Phoenix", "Python", "FastAPI", "React", "TypeScript", "PostgreSQL", "Kafka"],
-    "metricValue": "43+",
-    "metricLabel": "Technical Indicators",
-    "featured": true,
-    "githubUrl": "https://github.com/atavisticrystal6888/Kite-edge",
-    "duration": "May 2026 – present",
-    "role": "Full-Stack Developer & Architect",
-    "order": 5
+    "order": 8
   },
   {
     "slug": "portfolio-site",
@@ -97,6 +139,51 @@
     "githubUrl": "https://github.com/atavisticrystal6888/Portfolio-v4",
     "duration": "Mar 2026 – Apr 2026",
     "role": "Full-Stack Developer & Product Manager",
-    "order": 6
+    "order": 9
+  },
+  {
+    "slug": "weekly-retro",
+    "name": "Weekly Retro - Relationship Retro Decks",
+    "category": "product",
+    "description": "A playful product experiment: log small weekly relationship signals and an extensible scoring engine assembles a shareable 12-slide retro deck. Local-first PWA — IndexedDB, zero backend, 25 pinned reference cases keeping the scoring honest.",
+    "stack": ["React 19", "TypeScript", "Vite", "Tailwind v4", "Recharts", "Dexie"],
+    "metricValue": "12",
+    "metricLabel": "Auto-Assembled Retro Slides",
+    "featured": false,
+    "hasCaseStudy": false,
+    "githubUrl": null,
+    "duration": "Aug 2026",
+    "role": "Solo Builder · Product Experiment",
+    "order": 10
+  },
+  {
+    "slug": "sku-pipeline",
+    "name": "SKU-to-Storefront Pipeline",
+    "category": "data",
+    "description": "Deterministic batch pipeline for a retail client: bare SKU lists → enriched and verified product data → human QA gate → transformed CSVs and images → live WooCommerce products via REST. Zero LLMs in the product path, by design.",
+    "stack": ["Python", "Playwright", "WooCommerce REST", "Excel/CSV"],
+    "metricValue": "0",
+    "metricLabel": "LLMs in the Product Path",
+    "featured": false,
+    "hasCaseStudy": false,
+    "githubUrl": null,
+    "duration": "2026",
+    "role": "Builder · E-commerce Ops Automation",
+    "order": 11
+  },
+  {
+    "slug": "brand-tech-scanner",
+    "name": "D2C Tech-Stack Scanner",
+    "category": "data",
+    "description": "Competitive-intel crawler that walks a brand's storefront journey — home → collection → product → cart → checkout — in a real browser and fingerprints every technology via Wappalyzer signatures plus a curated Indian D2C pack, reported to formatted Excel.",
+    "stack": ["Python", "Playwright", "Wappalyzer", "Chromium"],
+    "metricValue": "5",
+    "metricLabel": "Storefront Stages Fingerprinted",
+    "featured": false,
+    "hasCaseStudy": false,
+    "githubUrl": null,
+    "duration": "2026",
+    "role": "Builder · Competitive Intelligence",
+    "order": 12
   }
 ]

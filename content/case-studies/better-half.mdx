@@ -1,0 +1,74 @@
+---
+slug: "better-half"
+title: "Better-Half - A Cycle-Aware Companion for Two"
+subtitle: "Two-user PWA for a long-distance couple - cycle phase, mood, and stress become shared context driving daily guidance, with privacy enforced by the database, not the UI."
+role: "Solo Builder · Product & Engineering"
+duration: "Aug 2026 – present"
+stack: ["React 19", "TypeScript", "Tailwind v4", "Supabase", "Dexie", "PWA"]
+tldr: "Most cycle apps treat one partner as the user and the other as an outsider - or worse, treat her as the subject. Better-Half is built for two first-class users in a long-distance relationship: her phase, mood, and stress (shared per-category, on her terms) drive daily guidance for her, for him, and for the couple. Privacy is enforced with row-level security proven by 575 live policy checks, the app works offline-first on unreliable connections, and the whole thing runs on $0/month infrastructure."
+metrics:
+  - label: "RLS Policy Checks"
+    value: 575
+    displayValue: "575"
+    chartType: "bar"
+  - label: "Test Assertions"
+    value: 1940
+    displayValue: "1,940"
+    chartType: "bar"
+  - label: "Guidance Items"
+    value: 220
+    displayValue: "220"
+    chartType: "bar"
+  - label: "Monthly Infra Cost"
+    value: 0
+    displayValue: "$0"
+    chartType: "bar"
+prevSlug: "desktasks"
+nextSlug: "churn-analysis"
+---
+
+## Context & Problem
+
+Long-distance couples run on asynchronous context: how she's actually doing, whether now is a good time to talk, what would genuinely help today. Cycle-tracking apps hold half of that context but are built for one user - the partner is either locked out or handed raw clinical data with no guidance. And the deeper design flaw: most "share with your partner" features make her data the product and him the audience.
+
+Better-Half starts from a different contract: **she is a first-class user, not a subject.** Her data is hers; sharing is per-category, under her control, and revocable instantly. His experience is keyed on *his* context (sleep, stress, energy) - the app tells him how to show up, not how to monitor.
+
+## Product Principles
+
+- **Consent is enforced by the database, not the interface.** Every sharing decision maps to row-level security policy. A category she hasn't shared is invisible at the SQL layer - there is no client-side filter pretending to be a boundary.
+- **Transparent scoring, no magic ML.** Guidance ranking is a deterministic formula (feedback-weighted, recency-decayed) the code can explain. Predictions widen their confidence window when cycles vary, say "learning" under two cycles of data, and never claim fertility-planning precision.
+- **Offline is the normal case.** Hostel wifi and metro commutes mean hours offline daily. Every write queues locally (Dexie/IndexedDB) with per-field merge, dead-lettered failures, and idempotent replay - "saved" means saved.
+- **Notifications pull you in, never spam.** Discreet lock-screen text by default ("You have a note ✨" - never cycle details), quiet hours, a daily cap, and per-kind dedupe, all enforced server-side.
+
+## Solution & Approach
+
+Three views share one engine. **Her** side: a sub-60-second daily check-in, journal with per-entry sharing, cycle dashboard, and phase-aware suggestions. **His** side: a sub-30-second check-in and guidance keyed on his own state, plus whatever she has opened via sharing dials. **Us**: side-by-side insights, an expectations exchange ("I can give / I need"), weekly retro with appreciations, and scheduled partner messages.
+
+The guidance engine draws from a 220-item content library (her/him/us × phase × mood band × stress band), filters by today's context, ranks by one-tap feedback (helped/meh/worse), enforces diversity against yesterday, and degrades honestly when a context cell is sparse. The cycle engine is pure, timezone-safe functions: recency-weighted predictions, outlier-gap exclusion, and an explicitly-labelled ovulation *estimate*.
+
+**Open Book mode** - full mutual visibility - exists, but only as a couple-level setting both must enable and either can revoke instantly. Consent attaches to the person: if a partner leaves the couple, their consent and visibility cascade away with the membership.
+
+## Implementation
+
+React 19 + TypeScript + Tailwind v4 PWA on Vercel's free tier; Supabase (Postgres + email-OTP auth + Edge Functions) on its free tier; Brevo for OTP email - **$0/month total**. A pg_cron-scheduled Edge Function dispatches six nudge types through Web Push. No third-party analytics, trackers, CDNs, or fonts anywhere.
+
+The RLS matrix is the artifact I'm proudest of: **575 checks run live against the hosted database** in rolled-back transactions, proving owner/partner-shared/partner-private/other-couple/anonymous isolation for every table, two-sided Open Book consent with instant revocation, no cross-couple leakage, and no back doors through helper functions. A pre-release privacy audit caught two real leaks (meal and training plans indirectly revealing undialed categories) - found *because* the matrix made the contract testable.
+
+## Outcome & Metrics
+
+- **M0–M8 shipped in 11 days** - onboarding, check-ins, journal, cycle engine, guidance, dashboards, notifications, weekly plans, couple layer - tagged v0.1.0 and deployed
+- **575 live RLS policy checks**, grown milestone-by-milestone from 95, all passing against production schema
+- **1,940 unit test assertions** across 121 test files, plus Playwright visual regression at 320px/412px in both themes (WCAG AA contrast checked)
+- **220 guidance items** with tests asserting dietary, situational, and medical-claim constraints hold across the library
+- **$0/month hosting** across Vercel, Supabase, and Brevo free tiers
+- Private deployment, by design - this one ships to exactly two users
+
+## Learnings
+
+### What Worked
+
+Writing the privacy contract *before* the features meant every later decision had a test: "can the database itself refuse this read?" Turning that contract into an ever-growing policy matrix converted privacy from a promise into a regression suite - and it caught real leaks a UI review never would have.
+
+### What I'd Change
+
+Column-level gating had to live in SECURITY DEFINER functions because row-level policies can't gate columns - workable, but it concentrates trust in a handful of functions that deserve their own audit ceremony. And client-side encryption for private journal entries (the P1) should come sooner: the right end-state is that even the database operator can't read what she marked private.

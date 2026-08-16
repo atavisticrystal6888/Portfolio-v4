@@ -84,6 +84,8 @@ const REPO_SLUG_MAP: Record<string, string> = {
   "tcs-nqt-prep-hub": "tcs-nqt-prep-hub",
   "kite-edge": "kite-edge",
   "portfolio-v4": "portfolio-site",
+  "a-b-testing-platform": "experiment-hub",
+  "task-manager": "desktasks",
 };
 
 function calculateStreak(

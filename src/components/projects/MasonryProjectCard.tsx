@@ -22,8 +22,8 @@ function categoryIcon(category: string): string {
 }
 
 export function MasonryProjectCard({ project }: MasonryProjectCardProps) {
-  return (
-    <Link href={`/projects/${project.slug}`} className={styles.link}>
+  const hasCaseStudy = project.hasCaseStudy !== false;
+  const card = (
       <article className={styles.card}>
         {/* Visual area */}
         <div className={styles.visual} data-category={project.category}>
@@ -69,10 +69,21 @@ export function MasonryProjectCard({ project }: MasonryProjectCardProps) {
         </div>
 
         {/* Action */}
-        <div className={styles.action}>
-          Read Case Study →
-        </div>
+        {hasCaseStudy && (
+          <div className={styles.action}>
+            Read Case Study →
+          </div>
+        )}
       </article>
+  );
+
+  if (!hasCaseStudy) {
+    return <div className={styles.link}>{card}</div>;
+  }
+
+  return (
+    <Link href={`/projects/${project.slug}`} className={styles.link}>
+      {card}
     </Link>
   );
 }

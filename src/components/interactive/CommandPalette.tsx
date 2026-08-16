@@ -44,6 +44,9 @@ const ITEMS: PaletteItem[] = [
   { id: 'cs-churn', label: 'Customer Churn Analysis', group: 'Case Studies', action: 'navigate', target: '/projects/churn-analysis', keywords: 'data analytics retention' },
   { id: 'cs-tcs-nqt', label: 'TCS NQT Prep Hub', group: 'Case Studies', action: 'navigate', target: '/projects/tcs-nqt-prep-hub', keywords: 'pwa exam preparation questions offline' },
   { id: 'cs-kite-edge', label: 'KiteEdge \u2014 Portfolio Intelligence', group: 'Case Studies', action: 'navigate', target: '/projects/kite-edge', keywords: 'elixir finance analytics zerodha stocks' },
+  { id: 'cs-experiment-hub', label: 'ExperimentHub - A/B Testing Platform', group: 'Case Studies', action: 'navigate', target: '/projects/experiment-hub', keywords: 'experimentation ab testing rust statistics assignment' },
+  { id: 'cs-desktasks', label: 'DeskTasks - Desktop Task Widget', group: 'Case Studies', action: 'navigate', target: '/projects/desktasks', keywords: 'electron widget tasks local-first productivity' },
+  { id: 'cs-better-half', label: 'Better-Half - Cycle-Aware Companion', group: 'Case Studies', action: 'navigate', target: '/projects/better-half', keywords: 'pwa privacy rls supabase couples offline' },
   { id: 'cs-portfolio', label: 'This Portfolio - Meta Case Study', group: 'Case Studies', action: 'navigate', target: '/projects/portfolio-site', keywords: 'next.js react build' },
 
   // Blog Articles
