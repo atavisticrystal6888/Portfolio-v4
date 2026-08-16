@@ -56,6 +56,8 @@ const ITEMS: PaletteItem[] = [
   { id: 'blog-thinking', label: 'Structured Thinking Framework', group: 'Blog Articles', action: 'navigate', target: '/blog/structured-thinking-framework' },
   { id: 'blog-portfolio', label: 'Building My Portfolio Like a Product', group: 'Blog Articles', action: 'navigate', target: '/blog/building-portfolio-as-product', keywords: 'iteration shipping versions' },
   { id: 'blog-metrics', label: 'The Three Metrics That Actually Matter for PMs', group: 'Blog Articles', action: 'navigate', target: '/blog/metrics-that-matter-for-pms', keywords: 'kpis okrs health focus guardrail' },
+  { id: 'blog-experimentation', label: 'Designing a Self-Hosted Experimentation Platform', group: 'Blog Articles', action: 'navigate', target: '/blog/designing-self-hosted-experimentation-platform', keywords: 'ab testing experimentation statistics assignment rust' },
+  { id: 'blog-privacy', label: 'Turning a Privacy Contract into a Regression Suite', group: 'Blog Articles', action: 'navigate', target: '/blog/privacy-contract-regression-suite', keywords: 'privacy rls security supabase testing better-half' },
 
   // Quick Actions
   { id: 'copy-email', label: 'Copy email address', group: 'Actions', action: 'copy', target: CONTACT_EMAIL, keywords: 'clipboard mail contact' },
