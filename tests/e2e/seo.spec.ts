@@ -56,11 +56,11 @@ test.describe("SEO metadata", () => {
     expect(hasPersonSchema).toBe(true);
   });
 
-  test("sitemap.xml is accessible", async ({ page }) => {
-    const response = await page.goto("/sitemap.xml");
-    expect(response?.status()).toBe(200);
-    const content = await page.content();
-    expect(content).toContain("<urlset");
+  test("sitemap.xml is accessible", async ({ request }) => {
+    const response = await request.get("/sitemap.xml");
+    expect(response.status()).toBe(200);
+    const body = await response.text();
+    expect(body).toContain("<urlset");
   });
 
   test("robots.txt is accessible", async ({ request }) => {

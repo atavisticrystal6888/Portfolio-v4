@@ -33,6 +33,14 @@ test.describe("Contact form", () => {
     expect(validity).toBe(false);
   });
 
+  // API-route tests are browser-independent; running them once (chromium) keeps
+  // the suite's 15 cross-browser POSTs from tripping the route's 5/hour rate limit.
+  test.beforeEach(async ({}, testInfo) => {
+    if (testInfo.title.startsWith("API route")) {
+      test.skip(testInfo.project.name !== "chromium", "API tests run on chromium only");
+    }
+  });
+
   test("API route rejects short messages", async ({ request }) => {
     const response = await request.post("/api/contact", {
       data: {

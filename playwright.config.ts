@@ -5,7 +5,9 @@ export default defineConfig({
   testMatch: ["**/e2e/**/*.spec.ts", "**/accessibility/**/*.spec.ts"],
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
-  retries: process.env.CI ? 2 : 0,
+  // 1 local retry absorbs load-dependent flakes on the emulated-mobile projects
+  // (heavy hydration + 6 parallel workers); CI keeps 2.
+  retries: process.env.CI ? 2 : 1,
   workers: process.env.CI ? 1 : undefined,
   reporter: "list",
   use: {

@@ -9,12 +9,13 @@ test.describe("Theme toggle and palette persistence", () => {
       .getAttribute("data-theme");
 
     const toggle = page.getByRole("button", { name: /toggle theme|theme/i }).first();
-    await toggle.click();
 
-    const newTheme = await page
-      .locator("html")
-      .getAttribute("data-theme");
-    expect(newTheme).not.toBe(initialTheme);
+    // Retry the click: a tap that lands before React hydration finishes is lost
+    // (slowest on emulated mobile WebKit), so click again until the theme flips.
+    await expect(async () => {
+      await toggle.click();
+      expect(await page.locator("html").getAttribute("data-theme")).not.toBe(initialTheme);
+    }).toPass({ timeout: 15_000 });
   });
 
   test("theme persists across page navigation", async ({ page }) => {
