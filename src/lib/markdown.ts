@@ -7,14 +7,25 @@ export function markdownToHtml(md: string): string {
   // Normalize line endings to LF
   let html = md.replace(/\r\n/g, '\n').replace(/\r/g, '\n');
 
-  // Code blocks (``` ... ```)
-  html = html.replace(/```(\w*)\n([\s\S]*?)```/g, (_m, lang, code) => {
-    const escaped = escapeHtml(code.trim());
-    return `<pre tabindex="0"><code class="language-${lang}">${escaped}</code></pre>`;
+  // Code is lifted out first and put back last. Every transform below runs
+  // over the whole document, so leaving code inline meant its own text was
+  // parsed as markdown: a `# comment` line became a heading, `*args` became
+  // emphasis, and pipe-delimited output became a table.
+  const codeBlocks: string[] = [];
+  html = html.replace(/```(\w*)\n([\s\S]*?)```/g, (_m, lang: string, code: string) => {
+    codeBlocks.push(
+      `<pre tabindex="0"><code class="language-${lang}">${escapeHtml(code.trim())}</code></pre>`
+    );
+    // Starts with "<", so the paragraph pass leaves it alone.
+    return `<codeblock data-i="${codeBlocks.length - 1}"></codeblock>`;
   });
 
-  // Inline code
-  html = html.replace(/`([^`]+)`/g, "<code>$1</code>");
+  const inlineCode: string[] = [];
+  html = html.replace(/`([^`]+)`/g, (_m, code: string) => {
+    inlineCode.push(`<code>${escapeHtml(code)}</code>`);
+    // Inline, so this placeholder must NOT look like an HTML element.
+    return `\u0000IC${inlineCode.length - 1}\u0000`;
+  });
 
   // Images
   html = html.replace(/!\[([^\]]*)\]\(([^)]+)\)/g, '<img src="$2" alt="$1" loading="lazy" />');
@@ -97,6 +108,13 @@ export function markdownToHtml(md: string): string {
       return `<p>${trimmed.replace(/\n/g, "<br />")}</p>`;
     })
     .join("\n");
+
+  // Put the code back now that no transform can reach into it.
+  html = html.replace(/\u0000IC(\d+)\u0000/g, (_m, i: string) => inlineCode[Number(i)] ?? "");
+  html = html.replace(
+    /<codeblock data-i="(\d+)"><\/codeblock>/g,
+    (_m, i: string) => codeBlocks[Number(i)] ?? ""
+  );
 
   return html;
 }
