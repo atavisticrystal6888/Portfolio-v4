@@ -21,8 +21,9 @@
 }
 
 @media (min-width: 768px) {
+  /* One row, however many readouts there are. */
   .strip {
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(var(--strip-cols, 4), minmax(0, 1fr));
   }
 
   .item:nth-child(n + 3) {

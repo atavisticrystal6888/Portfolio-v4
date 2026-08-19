@@ -11,9 +11,7 @@ import { MetricChart } from "@/components/case-study/MetricChart";
 import { MdxContent } from "@/components/case-study/MdxContent";
 import { CaseStudyNav } from "@/components/case-study/CaseStudyNav";
 import { RelatedWork } from "@/components/case-study/RelatedWork";
-import { GlassCard } from "@/components/ui/GlassCard";
 import { JsonLd } from "@/components/ui/JsonLd";
-import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import styles from "./case-study.module.css";
 
 interface CaseStudyPageProps {
@@ -72,37 +70,27 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
       <CaseStudyHero caseStudy={caseStudy} />
 
       {/* TL;DR */}
-      <ScrollReveal>
-        <section className={styles.tldr} aria-label="Summary">
-          <GlassCard className={styles.tldrCard}>
-            <h2 className={styles.tldrTitle}>TL;DR</h2>
-            <p className={styles.tldrText}>{caseStudy.tldr}</p>
-          </GlassCard>
-        </section>
-      </ScrollReveal>
+      <section className={styles.tldr} aria-label="Summary">
+        <h2 className={styles.tldrTitle}>TL;DR</h2>
+        <p className={styles.tldrText}>{caseStudy.tldr}</p>
+      </section>
 
       {/* Metrics */}
-      <ScrollReveal delay={0.1}>
-        <section className={styles.metricsSection} aria-label="Key metrics">
-          <MetricChart metrics={caseStudy.metrics} />
-        </section>
-      </ScrollReveal>
+      <section className={styles.metricsSection} aria-label="Key metrics">
+        <MetricChart metrics={caseStudy.metrics} />
+      </section>
 
       {/* Content */}
-      <ScrollReveal delay={0.15}>
-        <article aria-label="Case study content">
-          <MdxContent html={contentHtml} />
-        </article>
-      </ScrollReveal>
+      <article aria-label="Case study content">
+        <MdxContent html={contentHtml} />
+      </article>
 
       {/* Related Work */}
-      <ScrollReveal delay={0.1}>
-        <RelatedWork
-          currentSlug={slug}
-          currentCategory={currentProject?.category ?? "product"}
-          allProjects={allProjects}
-        />
-      </ScrollReveal>
+      <RelatedWork
+        currentSlug={slug}
+        currentCategory={currentProject?.category ?? "product"}
+        allProjects={allProjects}
+      />
 
       {/* Navigation */}
       <CaseStudyNav prevSlug={caseStudy.prevSlug} nextSlug={caseStudy.nextSlug} />
