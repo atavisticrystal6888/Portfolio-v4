@@ -1,8 +1,41 @@
-.grid {
+/* Typographic data strip: one ruled row of readouts, no boxes.
+   Two columns on phones, four from tablet up. */
+.strip {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-  gap: var(--space-6);
-  max-width: var(--container-max);
-  margin: 0 auto;
-  padding: 0 var(--space-6);
+  grid-template-columns: repeat(2, 1fr);
+  border-top: var(--hairline);
+  border-bottom: var(--hairline);
+}
+
+.item {
+  padding: var(--space-6) var(--space-5);
+  min-width: 0;
+}
+
+.item:nth-child(2n) {
+  border-left: var(--hairline);
+}
+
+.item:nth-child(n + 3) {
+  border-top: var(--hairline);
+}
+
+@media (min-width: 768px) {
+  .strip {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .item:nth-child(n + 3) {
+    border-top: none;
+  }
+
+  .item + .item {
+    border-left: var(--hairline);
+  }
+
+  /* First readout hangs on the container edge so the numerals line up
+     with the section rule above them. */
+  .item:first-child {
+    padding-left: 0;
+  }
 }
