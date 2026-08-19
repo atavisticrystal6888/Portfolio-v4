@@ -5,8 +5,8 @@
 }
 
 .item {
-  border: 1px solid var(--border);
-  border-radius: var(--radius-md);
+  border: var(--hairline);
+  border-radius: var(--radius-editorial);
   overflow: hidden;
   transition: border-color var(--transition-fast);
 }

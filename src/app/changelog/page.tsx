@@ -1,7 +1,6 @@
 import { generatePageMetadata, generateBreadcrumbJsonLd } from "@/lib/metadata";
 import { JsonLd } from "@/components/ui/JsonLd";
 import { SectionLabel } from "@/components/ui/SectionLabel";
-import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import styles from "@/styles/content-page.module.css";
 
 export const metadata = generatePageMetadata({
@@ -137,43 +136,39 @@ export default function ChangelogPage() {
         like a real product increment.
       </p>
 
-      <ScrollReveal>
-        <div className={styles.section}>
-          <SectionLabel>Releases</SectionLabel>
-          <h2 className={styles.sectionTitle}>Timeline</h2>
-          <div className={styles.timeline}>
-            {RELEASES.map((r) => (
-              <div key={r.version} className={styles.timelineItem}>
-                <span className={styles.timelineDate}>{r.date}</span>
-                <h3 className={styles.timelineTitle}>
-                  {r.version} - {r.title}
-                  {r.badge && (
-                    <span className={styles.badge}>{badgeLabel(r.badge)}</span>
-                  )}
-                </h3>
-                <p className={styles.timelineBody}>{r.body}</p>
-                <ul className={styles.list} style={{ marginTop: "12px" }}>
-                  {r.highlights.map((h) => (
-                    <li key={h}>{h}</li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
+      <div className={styles.section}>
+        <SectionLabel>Releases</SectionLabel>
+        <h2 className={styles.sectionTitle}>Timeline</h2>
+        <div className={styles.timeline}>
+          {RELEASES.map((r) => (
+            <div key={r.version} className={styles.timelineItem}>
+              <span className={styles.timelineDate}>{r.date}</span>
+              <h3 className={styles.timelineTitle}>
+                {r.version} - {r.title}
+                {r.badge && (
+                  <span className={styles.badge}>{badgeLabel(r.badge)}</span>
+                )}
+              </h3>
+              <p className={styles.timelineBody}>{r.body}</p>
+              <ul className={styles.list} style={{ marginTop: "12px" }}>
+                {r.highlights.map((h) => (
+                  <li key={h}>{h}</li>
+                ))}
+              </ul>
+            </div>
+          ))}
         </div>
-      </ScrollReveal>
+      </div>
 
-      <ScrollReveal delay={0.1}>
-        <div className={styles.section}>
-          <SectionLabel>On the Roadmap</SectionLabel>
-          <h2 className={styles.sectionTitle}>What&apos;s next</h2>
-          <ul className={styles.list}>
-            {UPCOMING.map((u) => (
-              <li key={u}>{u}</li>
-            ))}
-          </ul>
-        </div>
-      </ScrollReveal>
+      <div className={styles.section}>
+        <SectionLabel>On the Roadmap</SectionLabel>
+        <h2 className={styles.sectionTitle}>What&apos;s next</h2>
+        <ul className={styles.list}>
+          {UPCOMING.map((u) => (
+            <li key={u}>{u}</li>
+          ))}
+        </ul>
+      </div>
 
       <p className={styles.note}>
         Source on{" "}

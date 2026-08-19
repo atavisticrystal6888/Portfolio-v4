@@ -12,8 +12,8 @@
 
 .kicker {
   font-family: var(--font-mono);
-  font-size: 0.75rem;
-  letter-spacing: 0.12em;
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-label);
   text-transform: uppercase;
   color: var(--accent);
   margin-bottom: var(--space-3);
@@ -21,40 +21,45 @@
 
 .title {
   font-family: var(--font-display);
-  font-size: clamp(2rem, 4.5vw, 3rem);
+  font-size: clamp(var(--text-2xl), 4.5vw, var(--text-3xl));
   font-weight: 700;
   color: var(--text-strong);
-  margin-bottom: var(--space-3);
-  line-height: 1.1;
-  letter-spacing: -0.02em;
+  margin-bottom: var(--space-4);
+  line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-tight);
 }
 
 .lede {
-  font-size: 1.15rem;
+  font-size: var(--text-lg);
   color: var(--text-body);
-  line-height: 1.7;
-  max-width: 60ch;
-  margin-bottom: var(--space-8);
+  line-height: var(--leading-body);
+  max-width: 56ch;
+  margin-bottom: var(--space-9);
 }
 
 .updated {
   color: var(--text-muted);
-  font-size: 0.85rem;
-  margin-bottom: var(--space-6);
   font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-label);
+  margin-bottom: var(--space-6);
 }
 
 .section {
-  margin-bottom: var(--space-10);
+  margin-bottom: var(--space-11);
+  padding-top: var(--space-8);
+  border-top: var(--hairline);
 }
 
 .sectionTitle {
   font-family: var(--font-display);
-  font-size: 1.35rem;
+  font-size: clamp(var(--text-xl), 3vw, var(--text-2xl));
   font-weight: 700;
   color: var(--text-strong);
-  margin-top: var(--space-2);
-  margin-bottom: var(--space-5);
+  letter-spacing: var(--tracking-tight);
+  line-height: var(--leading-tight);
+  margin-bottom: var(--space-6);
 }
 
 .list {
@@ -88,15 +93,14 @@
 
 .card {
   padding: var(--space-5);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-md);
+  border: var(--hairline);
+  border-radius: var(--radius-editorial);
   background: var(--surface);
-  transition: border-color var(--transition-fast), transform var(--transition-fast);
+  transition: border-color var(--transition-fast);
 }
 
 .card:hover {
-  border-color: var(--accent);
-  transform: translateY(-2px);
+  border-color: var(--border-strong);
 }
 
 .card h3 {
@@ -119,9 +123,9 @@
   gap: var(--space-2);
   margin-top: var(--space-3);
   font-family: var(--font-mono);
-  font-size: 0.72rem;
+  font-size: var(--text-xs);
   text-transform: uppercase;
-  letter-spacing: 0.08em;
+  letter-spacing: var(--tracking-label);
   color: var(--accent);
 }
 
@@ -152,11 +156,11 @@
 .timelineDate {
   display: block;
   font-family: var(--font-mono);
-  font-size: 0.75rem;
-  letter-spacing: 0.08em;
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-label);
   text-transform: uppercase;
   color: var(--text-muted);
-  margin-bottom: var(--space-1);
+  margin-bottom: var(--space-2);
 }
 
 .timelineTitle {
@@ -179,8 +183,8 @@
   color: var(--text-muted);
   margin-top: var(--space-10);
   padding-top: var(--space-6);
-  border-top: 1px solid var(--border);
-  line-height: 1.6;
+  border-top: var(--hairline);
+  line-height: var(--leading-body);
 }
 
 .note a {
@@ -191,13 +195,13 @@
   display: inline-block;
   padding: 2px 10px;
   font-family: var(--font-mono);
-  font-size: 0.7rem;
+  font-size: var(--text-xs);
   text-transform: uppercase;
-  letter-spacing: 0.08em;
+  letter-spacing: var(--tracking-label);
   color: var(--accent-hover);
   background: var(--accent-subtle);
   border: 1px solid var(--accent);
-  border-radius: 999px;
+  border-radius: var(--radius-editorial);
   margin-left: var(--space-2);
   vertical-align: middle;
 }

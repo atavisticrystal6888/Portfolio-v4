@@ -1,7 +1,6 @@
 import { generatePageMetadata, generateBreadcrumbJsonLd } from "@/lib/metadata";
 import { JsonLd } from "@/components/ui/JsonLd";
 import { SectionLabel } from "@/components/ui/SectionLabel";
-import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import styles from "@/styles/content-page.module.css";
 
 export const metadata = generatePageMetadata({
@@ -82,21 +81,19 @@ export default function UsesPage() {
         every day.
       </p>
 
-      {GROUPS.map((group, i) => (
-        <ScrollReveal key={group.label} delay={i * 0.03}>
-          <div className={styles.section}>
-            <SectionLabel>{group.label}</SectionLabel>
-            <h2 className={styles.sectionTitle}>{group.title}</h2>
-            <div className={styles.cardGrid}>
-              {group.items.map((item) => (
-                <div key={item.name} className={styles.card}>
-                  <h3>{item.name}</h3>
-                  <p>{item.detail}</p>
-                </div>
-              ))}
-            </div>
+      {GROUPS.map((group) => (
+        <div key={group.label} className={styles.section}>
+          <SectionLabel>{group.label}</SectionLabel>
+          <h2 className={styles.sectionTitle}>{group.title}</h2>
+          <div className={styles.cardGrid}>
+            {group.items.map((item) => (
+              <div key={item.name} className={styles.card}>
+                <h3>{item.name}</h3>
+                <p>{item.detail}</p>
+              </div>
+            ))}
           </div>
-        </ScrollReveal>
+        </div>
       ))}
 
       <p className={styles.note}>

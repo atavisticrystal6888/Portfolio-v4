@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { generatePageMetadata, generateBreadcrumbJsonLd } from "@/lib/metadata";
 import { SectionLabel } from "@/components/ui/SectionLabel";
-import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import { JsonLd } from "@/components/ui/JsonLd";
 import { EvalHarnessDemo } from "@/components/ai-pm/EvalHarnessDemo";
 import { CostModelDemo } from "@/components/ai-pm/CostModelDemo";
@@ -71,111 +70,99 @@ export default function AIPMPage() {
         .
       </p>
 
-      <ScrollReveal>
+      <div className={styles.section}>
+        <SectionLabel>Playbooks</SectionLabel>
+        <h2 className={styles.sectionTitle}>How I work on AI products</h2>
+        <div className={styles.cardGrid}>
+          {PLAYBOOKS.map((p) => (
+            <div key={p.title} className={styles.card}>
+              <h3>{p.title}</h3>
+              <p>{p.body}</p>
+              <span className={styles.meta}>{p.meta}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div className={styles.section}>
+        <SectionLabel>Live Demo</SectionLabel>
+        <h2 className={styles.sectionTitle}>An eval harness, in your browser</h2>
+        <p className={styles.lede} style={{ marginBottom: "var(--space-5)" }}>
+          Six plant-diagnosis cases. Two model versions. One confidence gate.
+          Toggle the controls and watch the same golden set re-score in real
+          time - this is how I validate an LLM feature before it ships.
+        </p>
+        <EvalHarnessDemo />
+      </div>
+
+      <div className={styles.section}>
+        <SectionLabel>Live Demo</SectionLabel>
+        <h2 className={styles.sectionTitle}>Cost modelling, in real time</h2>
+        <p className={styles.lede} style={{ marginBottom: "var(--space-5)" }}>
+          Same harness mindset, applied to economics. Move the sliders to see
+          how batch size, cache hit rate, and request volume reshape the
+          per-user-per-month bill - and whether you stay inside the $0.25
+          envelope.
+        </p>
+        <CostModelDemo />
+      </div>
+
+      <div className={styles.section}>
+        <SectionLabel>Case Study</SectionLabel>
+        <h2 className={styles.sectionTitle}>Aarchid - shipped proof</h2>
+        <div className={styles.card}>
+          <h3>AI Botanical Intelligence · 92% diagnosis accuracy</h3>
+          <p>
+            Co-created with Dilpreet Grover. Multimodal vision (Gemini 1.5
+            Pro) grounded by research-augmented reasoning (Exa AI API),
+            running on Cloudflare Workers. Sub-10s P95, $0.25 per active user
+            per month at scale.
+          </p>
+          <span className={styles.meta}>
+            <Link href="/projects/aarchid">Read the case study →</Link>
+          </span>
+        </div>
+      </div>
+
+      {aiPmPosts.length > 0 && (
         <div className={styles.section}>
-          <SectionLabel>Playbooks</SectionLabel>
-          <h2 className={styles.sectionTitle}>How I work on AI products</h2>
+          <SectionLabel>Writing</SectionLabel>
+          <h2 className={styles.sectionTitle}>Essays on AI + product</h2>
           <div className={styles.cardGrid}>
-            {PLAYBOOKS.map((p) => (
-              <div key={p.title} className={styles.card}>
-                <h3>{p.title}</h3>
-                <p>{p.body}</p>
-                <span className={styles.meta}>{p.meta}</span>
-              </div>
+            {aiPmPosts.map((post) => (
+              <Link
+                key={post.slug}
+                href={`/blog/${post.slug}`}
+                className={styles.card}
+                style={{ textDecoration: "none", color: "inherit" }}
+              >
+                <h3>{post.title}</h3>
+                <p>{post.excerpt}</p>
+                <span className={styles.meta}>{post.readingTime}</span>
+              </Link>
             ))}
           </div>
         </div>
-      </ScrollReveal>
-
-      <ScrollReveal delay={0.05}>
-        <div className={styles.section}>
-          <SectionLabel>Live Demo</SectionLabel>
-          <h2 className={styles.sectionTitle}>An eval harness, in your browser</h2>
-          <p className={styles.lede} style={{ marginBottom: "var(--space-5)" }}>
-            Six plant-diagnosis cases. Two model versions. One confidence gate.
-            Toggle the controls and watch the same golden set re-score in real
-            time - this is how I validate an LLM feature before it ships.
-          </p>
-          <EvalHarnessDemo />
-        </div>
-      </ScrollReveal>
-
-      <ScrollReveal delay={0.05}>
-        <div className={styles.section}>
-          <SectionLabel>Live Demo</SectionLabel>
-          <h2 className={styles.sectionTitle}>Cost modelling, in real time</h2>
-          <p className={styles.lede} style={{ marginBottom: "var(--space-5)" }}>
-            Same harness mindset, applied to economics. Move the sliders to see
-            how batch size, cache hit rate, and request volume reshape the
-            per-user-per-month bill - and whether you stay inside the $0.25
-            envelope.
-          </p>
-          <CostModelDemo />
-        </div>
-      </ScrollReveal>
-
-      <ScrollReveal delay={0.05}>
-        <div className={styles.section}>
-          <SectionLabel>Case Study</SectionLabel>
-          <h2 className={styles.sectionTitle}>Aarchid - shipped proof</h2>
-          <div className={styles.card}>
-            <h3>AI Botanical Intelligence · 92% diagnosis accuracy</h3>
-            <p>
-              Co-created with Dilpreet Grover. Multimodal vision (Gemini 1.5
-              Pro) grounded by research-augmented reasoning (Exa AI API),
-              running on Cloudflare Workers. Sub-10s P95, $0.25 per active user
-              per month at scale.
-            </p>
-            <span className={styles.meta}>
-              <Link href="/projects/aarchid">Read the case study →</Link>
-            </span>
-          </div>
-        </div>
-      </ScrollReveal>
-
-      {aiPmPosts.length > 0 && (
-        <ScrollReveal delay={0.1}>
-          <div className={styles.section}>
-            <SectionLabel>Writing</SectionLabel>
-            <h2 className={styles.sectionTitle}>Essays on AI + product</h2>
-            <div className={styles.cardGrid}>
-              {aiPmPosts.map((post) => (
-                <Link
-                  key={post.slug}
-                  href={`/blog/${post.slug}`}
-                  className={styles.card}
-                  style={{ textDecoration: "none", color: "inherit" }}
-                >
-                  <h3>{post.title}</h3>
-                  <p>{post.excerpt}</p>
-                  <span className={styles.meta}>{post.readingTime}</span>
-                </Link>
-              ))}
-            </div>
-          </div>
-        </ScrollReveal>
       )}
 
-      <ScrollReveal delay={0.15}>
-        <div className={styles.section}>
-          <SectionLabel>What&apos;s Next</SectionLabel>
-          <h2 className={styles.sectionTitle}>On the bench</h2>
-          <ul className={styles.list}>
-            <li>
-              <strong>AI PM interview prep kit</strong> - deconstructed case
-              questions, eval-harness design, and model economics cheatsheets.
-            </li>
-            <li>
-              <strong>Second Aarchid-scale build</strong> - applying the same
-              Edge Stack pattern to a different problem domain.
-            </li>
-            <li>
-              <strong>Essay series: &ldquo;The PRD is dead, long live the eval
-              set&rdquo;</strong> - in progress.
-            </li>
-          </ul>
-        </div>
-      </ScrollReveal>
+      <div className={styles.section}>
+        <SectionLabel>What&apos;s Next</SectionLabel>
+        <h2 className={styles.sectionTitle}>On the bench</h2>
+        <ul className={styles.list}>
+          <li>
+            <strong>AI PM interview prep kit</strong> - deconstructed case
+            questions, eval-harness design, and model economics cheatsheets.
+          </li>
+          <li>
+            <strong>Second Aarchid-scale build</strong> - applying the same
+            Edge Stack pattern to a different problem domain.
+          </li>
+          <li>
+            <strong>Essay series: &ldquo;The PRD is dead, long live the eval
+            set&rdquo;</strong> - in progress.
+          </li>
+        </ul>
+      </div>
 
       <p className={styles.note}>
         Looking for an AI PM who can spec, eval, and ship?{" "}

@@ -5,7 +5,6 @@ import { ContactForm } from "@/components/contact/ContactForm";
 import { FAQAccordion } from "@/components/contact/FAQAccordion";
 import { DirectLinks } from "@/components/contact/DirectLinks";
 import { JsonLd } from "@/components/ui/JsonLd";
-import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import { CONTACT_EMAIL } from "@/lib/site";
 import styles from "./contact.module.css";
 
@@ -73,32 +72,26 @@ export default function ContactPage() {
       />
 
       {/* Contact Form */}
-      <ScrollReveal delay={0.1}>
-        <section className={styles.section} aria-label="Contact form">
-          <ContactForm />
-        </section>
-      </ScrollReveal>
+      <section className={styles.section} aria-label="Contact form">
+        <ContactForm />
+      </section>
 
       {/* Direct Links */}
-      <ScrollReveal delay={0.15}>
-        <section className={styles.section} aria-label="Direct contact links">
-          <div className={styles.sectionHeader}>
-            <SectionLabel>Or reach out directly</SectionLabel>
-          </div>
-          <DirectLinks />
-        </section>
-      </ScrollReveal>
+      <section className={styles.section} aria-label="Direct contact links">
+        <div className={styles.sectionHeader}>
+          <SectionLabel>Or reach out directly</SectionLabel>
+        </div>
+        <DirectLinks />
+      </section>
 
       {/* FAQ */}
-      <ScrollReveal delay={0.2}>
-        <section className={styles.section} aria-label="Frequently asked questions">
-          <div className={styles.sectionHeader}>
-            <SectionLabel>FAQ</SectionLabel>
-            <h2 className={styles.sectionTitle}>Common Questions</h2>
-          </div>
-          <FAQAccordion />
-        </section>
-      </ScrollReveal>
+      <section className={styles.section} aria-label="Frequently asked questions">
+        <div className={styles.sectionHeader}>
+          <SectionLabel>FAQ</SectionLabel>
+          <h2 className={styles.sectionTitle}>Common Questions</h2>
+        </div>
+        <FAQAccordion />
+      </section>
 
       {/* Location */}
       <p className={styles.location}>Based in India · IST (UTC+5:30)</p>

@@ -1,7 +1,6 @@
 import { generatePageMetadata, generateBreadcrumbJsonLd } from "@/lib/metadata";
 import { JsonLd } from "@/components/ui/JsonLd";
 import { SectionLabel } from "@/components/ui/SectionLabel";
-import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import styles from "@/styles/content-page.module.css";
 
 export const metadata = generatePageMetadata({
@@ -123,29 +122,23 @@ export default function BookshelfPage() {
         building. Not a reading list - a working bibliography.
       </p>
 
-      <ScrollReveal>
-        <div className={styles.section}>
-          <SectionLabel>Currently Reading</SectionLabel>
-          <h2 className={styles.sectionTitle}>On my desk right now</h2>
-          <Shelf books={CURRENT} />
-        </div>
-      </ScrollReveal>
+      <div className={styles.section}>
+        <SectionLabel>Currently Reading</SectionLabel>
+        <h2 className={styles.sectionTitle}>On my desk right now</h2>
+        <Shelf books={CURRENT} />
+      </div>
 
-      <ScrollReveal delay={0.05}>
-        <div className={styles.section}>
-          <SectionLabel>Foundation</SectionLabel>
-          <h2 className={styles.sectionTitle}>Books that shaped me</h2>
-          <Shelf books={SHAPED_ME} />
-        </div>
-      </ScrollReveal>
+      <div className={styles.section}>
+        <SectionLabel>Foundation</SectionLabel>
+        <h2 className={styles.sectionTitle}>Books that shaped me</h2>
+        <Shelf books={SHAPED_ME} />
+      </div>
 
-      <ScrollReveal delay={0.1}>
-        <div className={styles.section}>
-          <SectionLabel>Queue</SectionLabel>
-          <h2 className={styles.sectionTitle}>Next up</h2>
-          <Shelf books={NEXT_UP} />
-        </div>
-      </ScrollReveal>
+      <div className={styles.section}>
+        <SectionLabel>Queue</SectionLabel>
+        <h2 className={styles.sectionTitle}>Next up</h2>
+        <Shelf books={NEXT_UP} />
+      </div>
 
       <p className={styles.note}>
         Think I&apos;m missing one?{" "}

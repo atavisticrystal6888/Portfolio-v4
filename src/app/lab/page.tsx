@@ -1,7 +1,6 @@
 import { generatePageMetadata, generateBreadcrumbJsonLd } from "@/lib/metadata";
 import { JsonLd } from "@/components/ui/JsonLd";
 import { SectionLabel } from "@/components/ui/SectionLabel";
-import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import { getAllLabIdeas } from "@/lib/content";
 import styles from "@/styles/content-page.module.css";
 
@@ -43,46 +42,42 @@ export default function LabPage() {
         them are me thinking in public about what&apos;s worth making.
       </p>
 
-      <ScrollReveal>
-        <div className={styles.section}>
-          <SectionLabel>Categories</SectionLabel>
-          <h2 className={styles.sectionTitle}>By domain</h2>
-          <div className={styles.cardGrid}>
-            {categories.map((cat) => {
-              const count = ideas.filter((i) => i.category === cat).length;
-              return (
-                <div key={cat} className={styles.card}>
-                  <h3>{cat}</h3>
-                  <p>{count} idea{count === 1 ? "" : "s"}</p>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      </ScrollReveal>
-
-      <ScrollReveal delay={0.05}>
-        <div className={styles.section}>
-          <SectionLabel>All Ideas</SectionLabel>
-          <h2 className={styles.sectionTitle}>
-            The matrix - sorted by difficulty
-          </h2>
-          <div className={styles.cardGrid}>
-            {sorted.map((idea) => (
-              <div key={idea.id} className={styles.card}>
-                <h3>
-                  {idea.name}
-                  <span className={styles.badge}>{idea.difficulty}</span>
-                </h3>
-                <p>{idea.problem}</p>
-                <span className={styles.meta}>
-                  {idea.category} · {idea.pmSkill}
-                </span>
+      <div className={styles.section}>
+        <SectionLabel>Categories</SectionLabel>
+        <h2 className={styles.sectionTitle}>By domain</h2>
+        <div className={styles.cardGrid}>
+          {categories.map((cat) => {
+            const count = ideas.filter((i) => i.category === cat).length;
+            return (
+              <div key={cat} className={styles.card}>
+                <h3>{cat}</h3>
+                <p>{count} idea{count === 1 ? "" : "s"}</p>
               </div>
-            ))}
-          </div>
+            );
+          })}
         </div>
-      </ScrollReveal>
+      </div>
+
+      <div className={styles.section}>
+        <SectionLabel>All Ideas</SectionLabel>
+        <h2 className={styles.sectionTitle}>
+          The matrix - sorted by difficulty
+        </h2>
+        <div className={styles.cardGrid}>
+          {sorted.map((idea) => (
+            <div key={idea.id} className={styles.card}>
+              <h3>
+                {idea.name}
+                <span className={styles.badge}>{idea.difficulty}</span>
+              </h3>
+              <p>{idea.problem}</p>
+              <span className={styles.meta}>
+                {idea.category} · {idea.pmSkill}
+              </span>
+            </div>
+          ))}
+        </div>
+      </div>
 
       <p className={styles.note}>
         Source data:{" "}
