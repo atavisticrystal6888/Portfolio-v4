@@ -3,6 +3,7 @@
   margin: var(--space-10) auto 0;
   padding: var(--space-9) var(--space-6) 0;
   border-top: var(--rule-strong);
+  width: 100%;
 }
 
 .heading {

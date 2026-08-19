@@ -5,6 +5,8 @@
   max-width: var(--container-md);
   margin: var(--space-10) auto 0;
   padding: var(--space-6);
+  /* See article.module.css .nav — flex item + auto margins shrink to fit. */
+  width: 100%;
   border-top: var(--rule-strong);
 }
 

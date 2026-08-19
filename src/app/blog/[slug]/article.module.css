@@ -60,14 +60,19 @@
   border-bottom: var(--hairline);
 }
 
+/* width:100% matters: .page is a column flex container, and `margin: 0 auto`
+   on a flex item shrinks it to its content instead of centring a
+   full-measure box. Without it this nav collapsed to the button's width. */
 .nav {
   max-width: var(--container-md);
   margin: 0 auto;
   padding: var(--space-8) var(--space-6) var(--section-gap);
+  width: 100%;
 }
 
 .relatedSection {
   max-width: var(--container-md);
   margin: var(--space-10) auto 0;
   padding: 0 var(--space-6);
+  width: 100%;
 }
