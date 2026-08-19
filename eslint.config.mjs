@@ -19,6 +19,10 @@ const eslintConfig = defineConfig([
     "next-env.d.ts",
     // Archived previous portfolio versions — not part of the live app.
     "archive/**",
+    // Local agent tooling (skills, hooks, settings) — not application code,
+    // and it carries its own conventions. Lint would fail CI the moment this
+    // directory were committed.
+    ".claude/**",
   ]),
 ]);
 
