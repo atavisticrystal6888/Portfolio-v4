@@ -42,7 +42,7 @@
 .tag {
   font-size: 0.75rem;
   padding: 4px 10px;
-  border-radius: var(--radius-pill);
+  border-radius: var(--radius-editorial);
   background: var(--surface-hover);
   color: var(--text-body);
   border: 1px solid var(--border);

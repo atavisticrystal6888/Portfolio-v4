@@ -28,6 +28,10 @@ export default async function AboutPage() {
     { name: "About", url: "/about" },
   ]);
   const github = await getGitHubProfile();
+  // GitHubStats self-hides when the API had nothing to give, which would
+  // otherwise leave this page holding an empty ruled section.
+  const hasGitHub =
+    github.totalContributions > 0 || github.totalPublicRepos > 0;
 
   return (
     <div className={styles.page}>
@@ -137,15 +141,17 @@ export default async function AboutPage() {
       </section>
 
       {/* GitHub Stats */}
-      <section aria-label="GitHub activity" data-section="github" className={styles.section}>
-        <div className={styles.inner}>
-          <header className={styles.sectionHeader}>
-            <SectionLabel index="06">Open source</SectionLabel>
-            <h2 className={styles.sectionTitle}>GitHub activity</h2>
-          </header>
-          <GitHubStats profile={github} />
-        </div>
-      </section>
+      {hasGitHub && (
+        <section aria-label="GitHub activity" data-section="github" className={styles.section}>
+          <div className={styles.inner}>
+            <header className={styles.sectionHeader}>
+              <SectionLabel index="06">Open source</SectionLabel>
+              <h2 className={styles.sectionTitle}>GitHub activity</h2>
+            </header>
+            <GitHubStats profile={github} />
+          </div>
+        </section>
+      )}
 
       {/* How I Work */}
       <section aria-label="How I work" data-section="how-i-work" className={styles.section}>
