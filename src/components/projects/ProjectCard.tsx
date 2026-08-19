@@ -1,8 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import type { Project } from "@/types/project";
-import { Badge } from "@/components/ui/Badge";
-import { GlassCard } from "@/components/ui/GlassCard";
+import { MetricCounter } from "@/components/ui/MetricCounter";
 import { CoCreatorChips } from "@/components/ui/CoCreatorChips";
 import { formatCategoryLabel } from "@/lib/utils";
 import styles from "./ProjectCard.module.css";
@@ -11,9 +10,17 @@ interface ProjectCardProps {
   project: Project;
 }
 
+/**
+ * Large editorial row. Rows with a screenshot alternate the image side; rows
+ * without one run the text full width, which keeps the rhythm from settling
+ * into a grid.
+ */
 export function ProjectCard({ project }: ProjectCardProps) {
+  const hasCaseStudy = project.hasCaseStudy !== false;
+  const href = `/projects/${project.slug}`;
+
   return (
-    <GlassCard as="article" hover className={styles.card}>
+    <article className={project.imageUrl ? styles.row : styles.rowTextOnly}>
       {project.imageUrl && (
         <div className={styles.media}>
           <Image
@@ -21,32 +28,56 @@ export function ProjectCard({ project }: ProjectCardProps) {
             alt={project.imageAlt ?? `${project.name} screenshot`}
             fill
             className={styles.mediaImage}
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            sizes="(max-width: 900px) 100vw, 45vw"
           />
         </div>
       )}
-      <div className={styles.header}>
-        <Badge variant="accent">{formatCategoryLabel(project.category)}</Badge>
-        <span className={styles.duration}>{project.duration}</span>
-      </div>
-      <h2 className={styles.title}>
-        {project.hasCaseStudy !== false ? (
-          <Link href={`/projects/${project.slug}`}>{project.name}</Link>
-        ) : (
-          project.name
+
+      <div className={styles.body}>
+        <p className={styles.rail}>
+          <span>{project.duration}</span>
+          <span className={styles.railSep} aria-hidden="true">
+            &middot;
+          </span>
+          <span>{formatCategoryLabel(project.category)}</span>
+        </p>
+
+        <h3 className={styles.title}>
+          {hasCaseStudy ? <Link href={href}>{project.name}</Link> : project.name}
+        </h3>
+
+        <p className={styles.role}>{project.role}</p>
+        <p className={styles.desc}>{project.description}</p>
+
+        <CoCreatorChips coCreators={project.coCreators} variant="compact" />
+
+        <div className={styles.metric}>
+          <MetricCounter
+            value={project.metricValue}
+            label={project.metricLabel}
+            size="sm"
+          />
+        </div>
+
+        <p className={styles.stack}>
+          {project.stack.map((tech, i) => (
+            <span key={tech}>
+              {i > 0 && (
+                <span className={styles.railSep} aria-hidden="true">
+                  &middot;
+                </span>
+              )}
+              {tech}
+            </span>
+          ))}
+        </p>
+
+        {hasCaseStudy && (
+          <Link href={href} className={styles.cta}>
+            Read the case study &rarr;
+          </Link>
         )}
-      </h2>
-      <p className={styles.role}>{project.role}</p>
-      <p className={styles.desc}>{project.description}</p>
-      <CoCreatorChips coCreators={project.coCreators} variant="compact" />
-      <div className={styles.metric}>
-        <strong>{project.metricValue}</strong> {project.metricLabel}
       </div>
-      <div className={styles.stack}>
-        {project.stack.map((tech) => (
-          <Badge key={tech} variant="outline">{tech}</Badge>
-        ))}
-      </div>
-    </GlassCard>
+    </article>
   );
 }

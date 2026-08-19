@@ -27,3 +27,8 @@
   line-height: 1.45;
   text-wrap: balance;
 }
+
+/* Secondary placement: the readout supports a title rather than leading. */
+.sm .value {
+  font-size: var(--text-xl);
+}

@@ -5,7 +5,6 @@ import { PageHeader } from "@/components/ui/PageHeader";
 import { ProjectGrid } from "@/components/projects/ProjectGrid";
 import { GitHubActivity } from "@/components/projects/GitHubActivity";
 import { JsonLd } from "@/components/ui/JsonLd";
-import { ScrollReveal } from "@/components/ui/ScrollReveal";
 
 export const metadata = generatePageMetadata({
   title: "Projects",
@@ -32,13 +31,9 @@ export default async function ProjectsPage() {
         badge={`${projects.length} Project${projects.length !== 1 ? "s" : ""}`}
       />
 
-      <ScrollReveal>
-        <ProjectGrid projects={projects} />
-      </ScrollReveal>
+      <ProjectGrid projects={projects} />
 
-      <ScrollReveal delay={0.1}>
-        <GitHubActivity profile={github} />
-      </ScrollReveal>
+      <GitHubActivity profile={github} />
     </>
   );
 }

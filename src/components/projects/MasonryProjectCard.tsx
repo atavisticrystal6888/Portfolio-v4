@@ -13,70 +13,42 @@ interface MasonryProjectCardProps {
   compact?: boolean;
 }
 
-function categoryIcon(category: string): string {
-  switch (category) {
-    case 'ai': return '🧠';
-    case 'data': return '📊';
-    case 'product': return '🚀';
-    case 'technical': return '⚙️';
-    default: return '📁';
-  }
-}
-
 export function MasonryProjectCard({ project, compact = false }: MasonryProjectCardProps) {
   const hasCaseStudy = project.hasCaseStudy !== false;
   const card = (
-      <article className={`${styles.card} ${compact ? styles.compact : ''}`}>
-        {/* Visual area */}
-        <div className={styles.visual} data-category={project.category}>
-          {project.imageUrl ? (
-            <Image
-              src={project.imageUrl}
-              alt={project.imageAlt ?? `${project.name} screenshot`}
-              fill
-              className={styles.coverImage}
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-            />
-          ) : (
-            <>
-              <div className={styles.gradient} />
-              <div className={styles.icon}>
-                {categoryIcon(project.category)}
-              </div>
-            </>
-          )}
-          <div className={styles.overlay}>
-            <h3 className={styles.title}>{project.name}</h3>
-          </div>
+    <article className={`${styles.card} ${compact ? styles.compact : ''}`}>
+      {project.imageUrl && (
+        <div className={styles.visual}>
+          <Image
+            src={project.imageUrl}
+            alt={project.imageAlt ?? `${project.name} screenshot`}
+            fill
+            className={styles.coverImage}
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          />
         </div>
+      )}
 
-        {/* Content */}
-        <div className={styles.content}>
-          <div className={styles.meta}>
-            <Badge variant="accent">{formatCategoryLabel(project.category)}</Badge>
-            <span className={styles.role}>{project.role}</span>
-          </div>
-          <p className={styles.desc}>{project.description}</p>
-          <div className={styles.metric}>
-            <strong>{project.metricValue}</strong> {project.metricLabel}
-          </div>
-          <div className={styles.stack}>
-            {project.stack.slice(0, 4).map((tech) => (
-              <Badge key={tech} variant="outline">{tech}</Badge>
-            ))}
-            {project.stack.length > 4 && (
-              <Badge variant="outline">+{project.stack.length - 4}</Badge>
-            )}
-          </div>
+      <div className={styles.content}>
+        <div className={styles.meta}>
+          <Badge variant="accent">{formatCategoryLabel(project.category)}</Badge>
+          <span className={styles.duration}>{project.duration}</span>
         </div>
+        <h3 className={styles.title}>{project.name}</h3>
+        <p className={styles.role}>{project.role}</p>
+        <p className={styles.desc}>{project.description}</p>
+        <p className={styles.metric}>
+          <span className={styles.metricValue}>{project.metricValue}</span>
+          <span className={styles.metricLabel}>{project.metricLabel}</span>
+        </p>
+        <p className={styles.stack}>
+          {project.stack.slice(0, 4).join(' · ')}
+          {project.stack.length > 4 && ` · +${project.stack.length - 4}`}
+        </p>
+      </div>
 
-        {/* Action */}
-        {hasCaseStudy && (
-          <div className={styles.action}>
-            Read Case Study →
-          </div>
-        )}
-      </article>
+      {hasCaseStudy && <div className={styles.action}>Read the case study &rarr;</div>}
+    </article>
   );
 
   if (!hasCaseStudy) {
