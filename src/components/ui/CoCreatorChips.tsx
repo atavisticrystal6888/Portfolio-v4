@@ -5,7 +5,7 @@ interface CoCreatorChipsProps {
   coCreators: CoCreator[] | undefined;
   /** Visual variant. `compact` is used inside cards; `byline` is the case-study hero. */
   variant?: "compact" | "byline";
-  /** Prefix text, e.g. "With" (compact) or "Built with" (byline). */
+  /** Prefix text, e.g. "With" (compact) or "Built with" (byline). Pass "" to drop it. */
   label?: string;
 }
 
@@ -27,7 +27,7 @@ export function CoCreatorChips({
 
   return (
     <div className={styles.wrap} data-variant={variant}>
-      <span className={styles.label}>{effectiveLabel}</span>
+      {effectiveLabel && <span className={styles.label}>{effectiveLabel}</span>}
       <ul className={styles.list}>
         {coCreators.map((c) => (
           <li key={c.url} className={styles.chip}>
