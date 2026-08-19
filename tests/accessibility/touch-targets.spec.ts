@@ -6,7 +6,7 @@ const MOBILE_VIEWPORTS = [
   { width: 375, height: 667, name: "iPhone 6/7/8 (375px)" },
 ];
 
-const ROUTES = ["/", "/about", "/projects", "/blog", "/contact"];
+const ROUTES = ["/", "/about", "/projects", "/blog", "/contact", "/lab"];
 
 test.describe("Touch target sizing (WCAG 2.5.8)", () => {
   for (const viewport of MOBILE_VIEWPORTS) {

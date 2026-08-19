@@ -1,6 +1,6 @@
 import { generatePageMetadata, generateBreadcrumbJsonLd } from "@/lib/metadata";
 import { JsonLd } from "@/components/ui/JsonLd";
-import { SectionLabel } from "@/components/ui/SectionLabel";
+import { LabMatrix } from "@/components/lab/LabMatrix";
 import { getAllLabIdeas } from "@/lib/content";
 import styles from "@/styles/content-page.module.css";
 
@@ -11,18 +11,8 @@ export const metadata = generatePageMetadata({
   path: "/lab",
 });
 
-function difficultyWeight(d: string): number {
-  if (d === "Expert") return 3;
-  if (d === "Hard") return 2;
-  return 1;
-}
-
 export default function LabPage() {
   const ideas = getAllLabIdeas();
-  const categories = Array.from(new Set(ideas.map((i) => i.category))).sort();
-  const sorted = [...ideas].sort(
-    (a, b) => difficultyWeight(b.difficulty) - difficultyWeight(a.difficulty)
-  );
 
   const breadcrumbJsonLd = generateBreadcrumbJsonLd([
     { name: "Home", url: "/" },
@@ -42,42 +32,7 @@ export default function LabPage() {
         them are me thinking in public about what&apos;s worth making.
       </p>
 
-      <div className={styles.section}>
-        <SectionLabel>Categories</SectionLabel>
-        <h2 className={styles.sectionTitle}>By domain</h2>
-        <div className={styles.cardGrid}>
-          {categories.map((cat) => {
-            const count = ideas.filter((i) => i.category === cat).length;
-            return (
-              <div key={cat} className={styles.card}>
-                <h3>{cat}</h3>
-                <p>{count} idea{count === 1 ? "" : "s"}</p>
-              </div>
-            );
-          })}
-        </div>
-      </div>
-
-      <div className={styles.section}>
-        <SectionLabel>All Ideas</SectionLabel>
-        <h2 className={styles.sectionTitle}>
-          The matrix - sorted by difficulty
-        </h2>
-        <div className={styles.cardGrid}>
-          {sorted.map((idea) => (
-            <div key={idea.id} className={styles.card}>
-              <h3>
-                {idea.name}
-                <span className={styles.badge}>{idea.difficulty}</span>
-              </h3>
-              <p>{idea.problem}</p>
-              <span className={styles.meta}>
-                {idea.category} · {idea.pmSkill}
-              </span>
-            </div>
-          ))}
-        </div>
-      </div>
+      <LabMatrix ideas={ideas} />
 
       <p className={styles.note}>
         Source data:{" "}
