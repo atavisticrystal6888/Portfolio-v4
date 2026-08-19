@@ -4,7 +4,7 @@
   color: inherit;
 }
 
-/* Flat editorial surface — no blur, no lift. Matches GlassCard's treatment
+/* Flat editorial surface — no blur, no lift. Matches Surface's treatment
    without inheriting its padding, since this card manages its own regions. */
 .card {
   border-radius: var(--radius-editorial);

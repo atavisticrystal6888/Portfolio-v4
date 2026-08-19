@@ -1,7 +1,7 @@
 import Link from "next/link";
 import type { GitHubProfile } from "@/types/github";
 import { Badge } from "@/components/ui/Badge";
-import { GlassCard } from "@/components/ui/GlassCard";
+import { Surface } from "@/components/ui/Surface";
 import { SectionLabel } from "@/components/ui/SectionLabel";
 import styles from "./GitHubActivity.module.css";
 
@@ -35,7 +35,7 @@ export function GitHubActivity({ profile }: GitHubActivityProps) {
       {profile.pinnedRepos.length > 0 && (
         <div className={styles.repos}>
           {profile.pinnedRepos.map((repo) => (
-            <GlassCard key={repo.name} hover className={styles.repo}>
+            <Surface key={repo.name} hover className={styles.repo}>
               <div className={styles.repoHeader}>
                 <a
                   href={repo.url}
@@ -64,7 +64,7 @@ export function GitHubActivity({ profile }: GitHubActivityProps) {
                   View Case Study →
                 </Link>
               )}
-            </GlassCard>
+            </Surface>
           ))}
         </div>
       )}

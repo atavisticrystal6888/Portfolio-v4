@@ -1,6 +1,6 @@
 import type { GitHubProfile } from "@/types/github";
 import { Badge } from "@/components/ui/Badge";
-import { GlassCard } from "@/components/ui/GlassCard";
+import { Surface } from "@/components/ui/Surface";
 import styles from "./GitHubStats.module.css";
 
 interface GitHubStatsProps {
@@ -15,20 +15,20 @@ export function GitHubStats({ profile }: GitHubStatsProps) {
   return (
     <div className={styles.wrapper}>
       <div className={styles.cards}>
-        <GlassCard className={styles.card}>
+        <Surface className={styles.card}>
           <span className={styles.value}>{profile.totalPublicRepos}</span>
           <span className={styles.label}>Public Repos</span>
-        </GlassCard>
-        <GlassCard className={styles.card}>
+        </Surface>
+        <Surface className={styles.card}>
           <span className={styles.value}>
             {profile.totalContributions.toLocaleString()}
           </span>
           <span className={styles.label}>Contributions</span>
-        </GlassCard>
-        <GlassCard className={styles.card}>
+        </Surface>
+        <Surface className={styles.card}>
           <span className={styles.value}>{profile.currentStreak}</span>
           <span className={styles.label}>Day Streak</span>
-        </GlassCard>
+        </Surface>
       </div>
 
       {profile.topLanguages.length > 0 && (

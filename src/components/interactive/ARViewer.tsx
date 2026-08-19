@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/Button";
-import { GlassCard } from "@/components/ui/GlassCard";
+import { Surface } from "@/components/ui/Surface";
 import styles from "./ARViewer.module.css";
 
 interface ARViewerProps {
@@ -63,14 +63,14 @@ export function ARViewer({ caseStudySlug, fallbackDiagram }: ARViewerProps) {
     if (!fallbackDiagram) return null;
     return (
       <section aria-label="Architecture diagram" className={styles.wrapper}>
-        <GlassCard className={styles.fallback}>{fallbackDiagram}</GlassCard>
+        <Surface className={styles.fallback}>{fallbackDiagram}</Surface>
       </section>
     );
   }
 
   return (
     <section aria-label="Explore in AR" className={styles.wrapper}>
-      <GlassCard className={styles.cta}>
+      <Surface className={styles.cta}>
         <h3 className={styles.heading}>Explore in 3D</h3>
         <p className={styles.desc}>
           Your device supports WebXR. Launch an immersive view of this
@@ -83,7 +83,7 @@ export function ARViewer({ caseStudySlug, fallbackDiagram }: ARViewerProps) {
         >
           {launching ? "Launching…" : "Launch AR Session"}
         </Button>
-      </GlassCard>
+      </Surface>
     </section>
   );
 }
