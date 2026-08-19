@@ -1,7 +1,5 @@
-import Link from "next/link";
 import type { Project } from "@/types/project";
-import { Badge } from "@/components/ui/Badge";
-import { GlassCard } from "@/components/ui/GlassCard";
+import { ListRow, ListRows } from "@/components/ui/ListRow";
 import { formatCategoryLabel } from "@/lib/utils";
 import styles from "./RelatedWork.module.css";
 
@@ -30,27 +28,24 @@ export function RelatedWork({
 
   return (
     <section className={styles.wrapper} aria-label="Related work">
-      <h3 className={styles.heading}>Related Work</h3>
-      <div className={styles.grid}>
+      <h2 className={styles.heading}>Related work</h2>
+      <ListRows>
         {related.map(({ project }) => (
-          <GlassCard
+          <ListRow
             key={project.slug}
-            as="article"
-            hover
-            className={styles.card}
-          >
-            <Badge variant="accent">{formatCategoryLabel(project.category)}</Badge>
-            <h4 className={styles.title}>
-              <Link href={`/projects/${project.slug}`}>{project.name}</Link>
-            </h4>
-            <p className={styles.desc}>{project.description}</p>
-            <div className={styles.metric}>
-              <span className={styles.metricValue}>{project.metricValue}</span>
-              <span className={styles.metricLabel}>{project.metricLabel}</span>
-            </div>
-          </GlassCard>
+            href={`/projects/${project.slug}`}
+            title={project.name}
+            dek={project.description}
+            rail={formatCategoryLabel(project.category)}
+            trailing={
+              <p className={styles.metric}>
+                <span className={styles.metricValue}>{project.metricValue}</span>
+                <span className={styles.metricLabel}>{project.metricLabel}</span>
+              </p>
+            }
+          />
         ))}
-      </div>
+      </ListRows>
     </section>
   );
 }

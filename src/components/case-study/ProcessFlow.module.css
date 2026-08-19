@@ -6,7 +6,8 @@
 
 .heading {
   font-family: var(--font-display);
-  font-size: 1.4rem;
+  font-size: clamp(var(--text-xl), 3vw, var(--text-2xl));
+  letter-spacing: var(--tracking-tight);
   margin-bottom: var(--space-6);
   color: var(--text-strong);
 }
@@ -29,13 +30,14 @@
 }
 
 .number {
-  font-family: var(--font-mono, var(--font-display));
-  font-size: 1.1rem;
-  font-weight: 700;
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  font-weight: 600;
   color: var(--accent);
   background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 50%;
+  border: var(--hairline);
+  border-radius: var(--radius-editorial);
+  font-variant-numeric: tabular-nums;
   width: 44px;
   height: 44px;
   display: flex;

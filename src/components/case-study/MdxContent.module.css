@@ -94,10 +94,9 @@
 .prose :global(.case-gallery__figure) {
   margin: 0;
   overflow: hidden;
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
+  border: var(--hairline);
+  border-radius: var(--radius-editorial);
   background: var(--surface-hover);
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.08);
 }
 
 .prose :global(.case-gallery__link) {
@@ -217,7 +216,7 @@
   display: block;
   width: 100%;
   max-height: 72vh;
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-editorial);
   object-fit: contain;
   background: rgba(255, 255, 255, 0.03);
 }

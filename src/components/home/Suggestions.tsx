@@ -1,10 +1,10 @@
 "use client";
 
 import { useMemo } from "react";
-import Link from "next/link";
 import { useBehavior } from "@/hooks/useBehavior";
 import { scoreSuggestions } from "@/lib/suggestions";
 import { formatCategoryLabel } from "@/lib/utils";
+import { ListRow, ListRows } from "@/components/ui/ListRow";
 import { SectionLabel } from "@/components/ui/SectionLabel";
 import type { Project } from "@/types/project";
 import type { BlogArticle } from "@/types/blog";
@@ -36,19 +36,17 @@ export function Suggestions({ projects, posts }: SuggestionsProps) {
           <SectionLabel index="05">Recommended for you</SectionLabel>
           <h2 className={styles.heading}>Where to go next</h2>
         </header>
-        <ul className={styles.list}>
+        <ListRows>
           {suggestions.map((item) => (
-            <li key={item.slug} className={styles.item}>
-              <Link href={item.href} className={styles.row}>
-                <div className={styles.rail}>{formatCategoryLabel(item.category)}</div>
-                <div className={styles.body}>
-                  <h3 className={styles.title}>{item.title}</h3>
-                  <p className={styles.desc}>{item.description}</p>
-                </div>
-              </Link>
-            </li>
+            <ListRow
+              key={item.slug}
+              href={item.href}
+              title={item.title}
+              dek={item.description}
+              rail={formatCategoryLabel(item.category)}
+            />
           ))}
-        </ul>
+        </ListRows>
       </div>
     </section>
   );

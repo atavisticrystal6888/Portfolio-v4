@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState, useSyncExternalStore } from "react";
 import type { Project } from "@/types/project";
 import { FilterBar } from "@/components/projects/FilterBar";
 import { ProjectCard } from "@/components/projects/ProjectCard";
@@ -11,26 +11,42 @@ type LayoutMode = "rows" | "dense";
 
 const LAYOUT_KEY = "project-layout";
 
+// localStorage read through useSyncExternalStore rather than a state
+// initialiser: the initialiser runs during hydration, so a stored non-default
+// made the first client render disagree with the server's.
+const listeners = new Set<() => void>();
+
+function readLayout(): LayoutMode {
+  const saved = localStorage.getItem(LAYOUT_KEY);
+  // "masonry" is the pre-revamp value for the dense view.
+  return saved === "dense" || saved === "masonry" ? "dense" : "rows";
+}
+
+function serverLayout(): LayoutMode {
+  return "rows";
+}
+
+function subscribe(onChange: () => void) {
+  listeners.add(onChange);
+  window.addEventListener("storage", onChange);
+  return () => {
+    listeners.delete(onChange);
+    window.removeEventListener("storage", onChange);
+  };
+}
+
+function writeLayout(mode: LayoutMode) {
+  localStorage.setItem(LAYOUT_KEY, mode);
+  listeners.forEach((l) => l());
+}
+
 interface ProjectGridProps {
   projects: Project[];
 }
 
 export function ProjectGrid({ projects }: ProjectGridProps) {
   const [filtered, setFiltered] = useState(projects);
-  // Read after mount: reading localStorage in the initialiser makes the first
-  // client render disagree with the server one.
-  const [layout, setLayout] = useState<LayoutMode>("rows");
-
-  useEffect(() => {
-    const saved = localStorage.getItem(LAYOUT_KEY);
-    // "masonry" is the pre-revamp value for the dense view.
-    if (saved === "dense" || saved === "masonry") setLayout("dense");
-  }, []);
-
-  const handleLayout = (mode: LayoutMode) => {
-    setLayout(mode);
-    localStorage.setItem(LAYOUT_KEY, mode);
-  };
+  const layout = useSyncExternalStore(subscribe, readLayout, serverLayout);
 
   const featured = filtered.filter((p) => p.featured);
   const more = filtered.filter((p) => !p.featured);
@@ -54,7 +70,7 @@ export function ProjectGrid({ projects }: ProjectGridProps) {
         <div className={styles.layoutToggle} role="group" aria-label="Layout view">
           <button
             className={`${styles.layoutBtn} ${layout === "rows" ? styles.layoutActive : ""}`}
-            onClick={() => handleLayout("rows")}
+            onClick={() => writeLayout("rows")}
             aria-pressed={layout === "rows"}
             title="Row view"
           >
@@ -66,7 +82,7 @@ export function ProjectGrid({ projects }: ProjectGridProps) {
           </button>
           <button
             className={`${styles.layoutBtn} ${layout === "dense" ? styles.layoutActive : ""}`}
-            onClick={() => handleLayout("dense")}
+            onClick={() => writeLayout("dense")}
             aria-pressed={layout === "dense"}
             title="Dense view"
           >

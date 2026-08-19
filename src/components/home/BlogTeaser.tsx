@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { BlogArticle } from "@/types/blog";
+import { ListRow, ListRows } from "@/components/ui/ListRow";
 import { formatDate } from "@/lib/utils";
 import styles from "./BlogTeaser.module.css";
 
@@ -10,24 +11,24 @@ interface BlogTeaserProps {
 export function BlogTeaser({ posts }: BlogTeaserProps) {
   return (
     <>
-      <ul className={styles.list}>
+      <ListRows>
         {posts.slice(0, 3).map((post) => (
-          <li key={post.slug} className={styles.item}>
-            <Link href={`/blog/${post.slug}`} className={styles.row}>
-              <div className={styles.rail}>
+          <ListRow
+            key={post.slug}
+            href={`/blog/${post.slug}`}
+            title={post.title}
+            dek={post.excerpt}
+            rail={
+              <>
                 <time dateTime={post.date}>{formatDate(post.date)}</time>
                 <span>
                   {post.category} &middot; {post.readingTime}
                 </span>
-              </div>
-              <div className={styles.body}>
-                <h3 className={styles.title}>{post.title}</h3>
-                <p className={styles.dek}>{post.excerpt}</p>
-              </div>
-            </Link>
-          </li>
+              </>
+            }
+          />
         ))}
-      </ul>
+      </ListRows>
       {posts.length > 3 && (
         <div className={styles.viewAll}>
           <Link href="/blog" className={styles.viewAllLink}>
