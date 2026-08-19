@@ -67,6 +67,25 @@ The Python/FastAPI engine implements z-tests for proportions and Welch's t-test 
 
 Experiments move through explicit state machines with optimistic locking. Eight background workers handle scheduled starts/ends, analysis triggers, guardrail monitoring, notifications, data retention, and partition management. Every state change lands in an audit log; GDPR export/erase endpoints exist because a data platform without them isn't self-hostable in good conscience.
 
+## Product Gallery
+
+Two screens carry the argument: the operator view that says what needs attention next, and the results view where the statistical engine either clears a variant to ship or refuses to. Both are running against the seeded demo tenant.
+
+<div class="case-gallery">
+  <figure class="case-gallery__figure">
+    <a class="case-gallery__link" href="/images/projects/experiment-hub/dashboard.png" target="_blank" rel="noopener noreferrer">
+      <img src="/images/projects/experiment-hub/dashboard.png" alt="ExperimentHub dashboard showing running experiments, draft queue, assignments today, enabled flags, a recent-experiments list, and a lifecycle portfolio snapshot." loading="lazy" />
+    </a>
+    <figcaption>Command centre: portfolio counters plus the next action each experiment needs, so lifecycle drift is visible rather than discovered.</figcaption>
+  </figure>
+  <figure class="case-gallery__figure">
+    <a class="case-gallery__link" href="/images/projects/experiment-hub/results.png" target="_blank" rel="noopener noreferrer">
+      <img src="/images/projects/experiment-hub/results.png" alt="ExperimentHub results view for a concluded experiment showing p-value, power, effect size, a variant performance table with lift, and confidence-interval and conversion-over-time charts." loading="lazy" />
+    </a>
+    <figcaption>Results: p-value, power, and effect size sit above the variant table, so the read is a decision and not a vibe.</figcaption>
+  </figure>
+</div>
+
 ## Implementation
 
 Four Elixir umbrella apps (domain core, Phoenix web layer, event collector, assignment engine wrapper) plus the Rust core, the Python statistical engine, and a React 19 + TypeScript dashboard - 8 runtime components, roughly 8,000 lines of first-party code. The dashboard covers experiment CRUD, lifecycle actions, metric definitions, feature flags, API-key and user administration, and an audit log, with Phoenix Channels pushing live updates to open experiment pages. JWT sessions and API keys are tenant-scoped; tenancy is enforced at row level.
