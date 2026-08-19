@@ -9,9 +9,7 @@ import { ExperienceTimeline } from "@/components/home/ExperienceTimeline";
 import { TestimonialCarousel } from "@/components/home/TestimonialCarousel";
 import { BlogTeaser } from "@/components/home/BlogTeaser";
 import { Suggestions } from "@/components/home/Suggestions";
-import { DiagonalDivider } from "@/components/ui/DiagonalDivider";
 import { JsonLd } from "@/components/ui/JsonLd";
-import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import { CONTACT_EMAIL_HREF } from "@/lib/site";
 import styles from "./home.module.css";
 
@@ -39,79 +37,63 @@ export default function Home() {
         <HeroSection />
       </div>
 
-      {/* Metrics */}
-      <section aria-label="Key metrics" data-section="metrics" className={styles.section} style={{ position: 'relative' }}>
-        <DiagonalDivider side="left" />
-        <ScrollReveal>
-          <div className={styles.sectionHeader}>
-            <SectionLabel>Impact</SectionLabel>
-            <h2 className={styles.sectionTitle}>By the Numbers</h2>
-          </div>
-        </ScrollReveal>
-        <ScrollReveal delay={0.15}>
+      {/* Metrics — the one orchestrated reveal on the page, inside MetricsGrid */}
+      <section aria-label="Key metrics" data-section="metrics" className={styles.section}>
+        <div className={styles.inner}>
+          <header className={styles.sectionHeader}>
+            <SectionLabel index="01">Impact</SectionLabel>
+            <h2 className={styles.sectionTitle}>Measured outcomes</h2>
+          </header>
           <MetricsGrid />
-        </ScrollReveal>
-        <DiagonalDivider side="right" />
+        </div>
       </section>
 
       {/* Experience */}
-      <section aria-label="Experience" data-section="experience" className={styles.section} style={{ position: 'relative' }}>
-        <DiagonalDivider side="left" />
-        <ScrollReveal>
-          <div className={styles.sectionHeader}>
-            <SectionLabel>Career</SectionLabel>
-            <h2 className={styles.sectionTitle}>Experience</h2>
-          </div>
-        </ScrollReveal>
-        <ScrollReveal delay={0.15}>
+      <section aria-label="Experience" data-section="experience" className={styles.section}>
+        <div className={styles.inner}>
+          <header className={styles.sectionHeader}>
+            <SectionLabel index="02">Career</SectionLabel>
+            <h2 className={styles.sectionTitle}>Where I&apos;ve built</h2>
+          </header>
           <ExperienceTimeline />
-        </ScrollReveal>
-        <DiagonalDivider side="right" />
+        </div>
       </section>
 
       {/* Testimonials */}
       {testimonials.length > 0 && (
         <section aria-label="Testimonials" data-section="testimonials" className={styles.section}>
-          <ScrollReveal>
-            <div className={styles.sectionHeader}>
-              <SectionLabel>Testimonials</SectionLabel>
-              <h2 className={styles.sectionTitle}>What People Say</h2>
-            </div>
-          </ScrollReveal>
-          <ScrollReveal delay={0.15}>
+          <div className={styles.inner}>
+            <header className={styles.sectionHeader}>
+              <SectionLabel index="03">Testimonials</SectionLabel>
+              <h2 className={styles.sectionTitle}>References</h2>
+            </header>
             <TestimonialCarousel testimonials={testimonials} />
-          </ScrollReveal>
+          </div>
         </section>
       )}
 
       {/* Blog Teaser */}
       {posts.length > 0 && (
         <section aria-label="Blog" data-section="blog-teaser" className={styles.section}>
-          <ScrollReveal>
-            <div className={styles.sectionHeader}>
-              <SectionLabel>From the Blog</SectionLabel>
-              <h2 className={styles.sectionTitle}>Latest Thoughts</h2>
-            </div>
-          </ScrollReveal>
-          <ScrollReveal delay={0.15}>
+          <div className={styles.inner}>
+            <header className={styles.sectionHeader}>
+              <SectionLabel index="04">From the blog</SectionLabel>
+              <h2 className={styles.sectionTitle}>Recent writing</h2>
+            </header>
             <BlogTeaser posts={posts} />
-          </ScrollReveal>
+          </div>
         </section>
       )}
 
-      {/* Suggestions */}
-      <section aria-label="Recommendations" data-section="suggestions" className={styles.section}>
-        <ScrollReveal>
-          <Suggestions projects={allProjects} posts={posts} />
-        </ScrollReveal>
-      </section>
+      {/* Suggestions — owns its section chrome so it can render nothing */}
+      <Suggestions projects={allProjects} posts={posts} />
 
       {/* Contact CTA */}
       <section aria-label="Contact" data-section="contact-cta" className={styles.ctaSection}>
-        <ScrollReveal>
-          <h2 className={styles.ctaTitle}>Let&apos;s Talk Product</h2>
+        <div className={styles.inner}>
+          <h2 className={styles.ctaTitle}>Let&apos;s talk product</h2>
           <div className={styles.ctaButtons}>
-            <Button href={CONTACT_EMAIL_HREF} external>Email Me</Button>
+            <Button href={CONTACT_EMAIL_HREF} external>Email me</Button>
             <Button
               href="https://linkedin.com/in/dhruvsinghal6888"
               variant="secondary"
@@ -120,7 +102,7 @@ export default function Home() {
               LinkedIn
             </Button>
           </div>
-        </ScrollReveal>
+        </div>
       </section>
     </div>
   );

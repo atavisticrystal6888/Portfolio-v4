@@ -3,50 +3,55 @@
   flex-direction: column;
 }
 
+/* Full-bleed hairline heads each section; the rule belongs to the section
+   below it, so the breathing room sits under the preceding content. */
 .section {
-  max-width: var(--container-max);
-  margin: 0 auto;
-  padding: var(--space-10) var(--space-6);
   width: 100%;
+  border-top: var(--hairline);
+  padding-top: var(--space-8);
+  padding-bottom: var(--section-gap);
 }
 
-.sectionNarrow {
-  max-width: var(--container-md);
+.inner {
+  max-width: var(--container-max);
   margin: 0 auto;
-  padding: var(--space-10) var(--space-6);
+  padding: 0 var(--space-6);
   width: 100%;
 }
 
 .sectionHeader {
-  margin-bottom: var(--space-6);
+  margin-bottom: var(--space-9);
 }
 
 .sectionTitle {
   font-family: var(--font-display);
-  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-size: clamp(var(--text-xl), 3vw, var(--text-2xl));
   font-weight: 700;
+  letter-spacing: var(--tracking-tight);
+  line-height: var(--leading-tight);
   color: var(--text-strong);
-  margin-top: var(--space-2);
 }
 
 .ctaSection {
-  text-align: center;
-  max-width: var(--container-md);
-  margin: 0 auto;
-  padding: var(--space-14) var(--space-6);
+  width: 100%;
+  border-top: var(--hairline);
+  padding-top: var(--space-8);
+  padding-bottom: var(--section-gap);
 }
 
 .ctaTitle {
   font-family: var(--font-display);
-  font-size: clamp(1.8rem, 4vw, 2.5rem);
+  font-size: clamp(var(--text-2xl), 4vw, var(--text-3xl));
   font-weight: 700;
+  letter-spacing: var(--tracking-tight);
+  line-height: var(--leading-tight);
   color: var(--text-strong);
-  margin-bottom: var(--space-6);
+  margin-bottom: var(--space-7);
+  max-width: 20ch;
 }
 
 .ctaButtons {
   display: flex;
   gap: var(--space-4);
-  justify-content: center;
   flex-wrap: wrap;
 }

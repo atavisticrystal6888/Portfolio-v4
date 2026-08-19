@@ -19,24 +19,29 @@
 
 .name {
   font-family: var(--font-display);
-  font-size: clamp(3rem, 7vw, 5rem);
+  font-size: var(--text-display);
   font-weight: 700;
-  letter-spacing: -0.03em;
-  line-height: 1.05;
+  letter-spacing: var(--tracking-tight);
+  line-height: var(--leading-tight);
   color: var(--text-strong);
 }
 
+/* Mono role line, set as a spec field rather than a subtitle. */
 .role {
-  font-size: clamp(1.1rem, 2vw, 1.4rem);
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-label);
   color: var(--accent);
-  font-weight: 600;
 }
 
 .statement {
-  font-size: clamp(1rem, 1.5vw, 1.15rem);
+  font-size: var(--text-lg);
   color: var(--text-muted);
-  max-width: 520px;
-  line-height: 1.7;
+  max-width: 46ch;
+  line-height: var(--leading-body);
+  text-wrap: pretty;
 }
 
 .ctas {
