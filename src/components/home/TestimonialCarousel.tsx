@@ -3,7 +3,6 @@
 import { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
 import type { Testimonial } from "@/types/testimonial";
-import { GlassCard } from "@/components/ui/GlassCard";
 import { MetricCounter } from "@/components/ui/MetricCounter";
 import { cn } from "@/lib/utils";
 import styles from "./TestimonialCarousel.module.css";
@@ -59,30 +58,34 @@ export function TestimonialCarousel({ testimonials }: TestimonialCarouselProps) 
       onFocus={() => setPaused(true)}
       onBlur={() => setPaused(false)}
     >
-      <GlassCard className={styles.card}>
-        <div className={styles.avatar}>
-          {t.avatar ? (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img src={t.avatar} alt="" aria-hidden="true" />
-          ) : (
-            t.name.split(" ").map((n) => n[0]).join("")
-          )}
-        </div>
+      <figure className={styles.card}>
         <blockquote className={styles.quote}>&ldquo;{t.quote}&rdquo;</blockquote>
-        <div className={styles.metric}>
-          <MetricCounter value={t.outcomeMetric.value} label={t.outcomeMetric.label} />
-        </div>
-        <div className={styles.author}>
-          <strong>{t.name}</strong>
-          <span>{t.title}, {t.company}</span>
-          <span className={styles.relationship}>{t.relationship}</span>
-        </div>
+        <figcaption className={styles.footer}>
+          <div className={styles.attribution}>
+            <div className={styles.avatar}>
+              {t.avatar ? (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img src={t.avatar} alt="" aria-hidden="true" />
+              ) : (
+                t.name.split(" ").map((n) => n[0]).join("")
+              )}
+            </div>
+            <div className={styles.author}>
+              <strong>{t.name}</strong>
+              <span>{t.title}, {t.company}</span>
+              <span className={styles.relationship}>{t.relationship}</span>
+            </div>
+          </div>
+          <div className={styles.metric}>
+            <MetricCounter value={t.outcomeMetric.value} label={t.outcomeMetric.label} />
+          </div>
+        </figcaption>
         {t.projectSlug && (
           <Link href={`/projects/${t.projectSlug}`} className={styles.link}>
-            View Case Study →
+            View case study &rarr;
           </Link>
         )}
-      </GlassCard>
+      </figure>
 
       <div className={styles.controls}>
         <button className={styles.arrow} onClick={prev} aria-label="Previous testimonial">←</button>
