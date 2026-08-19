@@ -8,9 +8,11 @@
   font-family: var(--font-body);
   font-size: 0.9rem;
   font-weight: 600;
-  border-radius: var(--radius-full);
+  border-radius: var(--radius-editorial);
   cursor: pointer;
-  transition: all var(--transition-base);
+  transition: background-color var(--transition-base),
+              border-color var(--transition-base),
+              color var(--transition-base);
   text-decoration: none;
   border: none;
   line-height: 1.4;
@@ -28,7 +30,6 @@
 
 .primary:hover:not(:disabled) {
   background: var(--accent-hover);
-  box-shadow: var(--shadow-glow);
 }
 
 .secondary {
