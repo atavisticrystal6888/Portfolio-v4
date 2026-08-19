@@ -3,14 +3,12 @@ import { generatePageMetadata, generateBreadcrumbJsonLd, generateArticleJsonLd }
 import { getAllBlogSlugs, getBlogPostBySlug, getAllBlogPosts } from "@/lib/content";
 import { markdownToHtml } from "@/lib/markdown";
 import { formatDate } from "@/lib/utils";
-import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { ReadingProgress } from "@/components/blog/ReadingProgress";
 import { ShareButtons } from "@/components/blog/ShareButtons";
 import { RelatedArticles } from "@/components/blog/RelatedArticles";
 import { MdxContent } from "@/components/case-study/MdxContent";
 import { JsonLd } from "@/components/ui/JsonLd";
-import { ScrollReveal } from "@/components/ui/ScrollReveal";
 import styles from "./article.module.css";
 
 interface BlogArticlePageProps {
@@ -72,37 +70,29 @@ export default async function BlogArticlePage({
       <ReadingProgress />
 
       {/* Article Header */}
-      <ScrollReveal>
-        <header className={styles.header}>
-          <Badge variant="accent">{post.category}</Badge>
-          <h1 className={styles.title}>{post.title}</h1>
-          <div className={styles.meta}>
-            <time dateTime={post.date}>{formatDate(post.date)}</time>
-            <span>·</span>
-            <span>{post.readingTime}</span>
-          </div>
-          <div className={styles.tags}>
-            {post.tags.map((tag) => (
-              <Badge key={tag} variant="outline">{tag}</Badge>
-            ))}
-          </div>
-          <ShareButtons title={post.title} url={`/blog/${slug}`} />
-        </header>
-      </ScrollReveal>
+      <header className={styles.header}>
+        <p className={styles.eyebrow}>{post.category}</p>
+        <h1 className={styles.title}>{post.title}</h1>
+        <div className={styles.meta}>
+          <time dateTime={post.date}>{formatDate(post.date)}</time>
+          <span className={styles.sep} aria-hidden="true">&middot;</span>
+          <span>{post.readingTime}</span>
+        </div>
+        {post.tags.length > 0 && (
+          <p className={styles.tags}>{post.tags.join(" · ")}</p>
+        )}
+        <ShareButtons title={post.title} url={`/blog/${slug}`} />
+      </header>
 
       {/* Article Content */}
-      <ScrollReveal delay={0.1}>
-        <article>
-          <MdxContent html={contentHtml} />
-        </article>
-      </ScrollReveal>
+      <article>
+        <MdxContent html={contentHtml} />
+      </article>
 
       {/* Related Articles */}
-      <ScrollReveal delay={0.1}>
-        <div className={styles.relatedSection}>
-          <RelatedArticles current={post} allPosts={allPosts} />
-        </div>
-      </ScrollReveal>
+      <div className={styles.relatedSection}>
+        <RelatedArticles current={post} allPosts={allPosts} />
+      </div>
 
       {/* Back to Blog */}
       <nav className={styles.nav} aria-label="Blog navigation">

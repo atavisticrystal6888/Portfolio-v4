@@ -1,7 +1,6 @@
-import Link from "next/link";
 import type { BlogArticle } from "@/types/blog";
-import { Badge } from "@/components/ui/Badge";
-import { GlassCard } from "@/components/ui/GlassCard";
+import { ListRow, ListRows } from "@/components/ui/ListRow";
+import { formatDate } from "@/lib/utils";
 import styles from "./RelatedArticles.module.css";
 
 interface RelatedArticlesProps {
@@ -24,18 +23,25 @@ export function RelatedArticles({ current, allPosts }: RelatedArticlesProps) {
 
   return (
     <section className={styles.wrapper} aria-label="Related articles">
-      <h3 className={styles.heading}>Related Articles</h3>
-      <div className={styles.grid}>
+      <h2 className={styles.heading}>Related reading</h2>
+      <ListRows>
         {related.map(({ post }) => (
-          <GlassCard key={post.slug} as="article" hover className={styles.card}>
-            <Badge variant="accent">{post.category}</Badge>
-            <h4 className={styles.title}>
-              <Link href={`/blog/${post.slug}`}>{post.title}</Link>
-            </h4>
-            <p className={styles.excerpt}>{post.excerpt}</p>
-          </GlassCard>
+          <ListRow
+            key={post.slug}
+            href={`/blog/${post.slug}`}
+            title={post.title}
+            dek={post.excerpt}
+            rail={
+              <>
+                <time dateTime={post.date}>{formatDate(post.date)}</time>
+                <span>
+                  {post.category} &middot; {post.readingTime}
+                </span>
+              </>
+            }
+          />
         ))}
-      </div>
+      </ListRows>
     </section>
   );
 }

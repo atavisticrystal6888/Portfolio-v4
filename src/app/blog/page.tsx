@@ -3,7 +3,6 @@ import { getAllBlogPosts } from "@/lib/content";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { BlogSearch } from "@/components/blog/BlogSearch";
 import { JsonLd } from "@/components/ui/JsonLd";
-import { ScrollReveal } from "@/components/ui/ScrollReveal";
 
 export const metadata = generatePageMetadata({
   title: "Blog",
@@ -28,9 +27,7 @@ export default function BlogPage() {
         subtitle="Lessons from product thinking and technical execution."
       />
 
-      <ScrollReveal>
-        <BlogSearch posts={posts} />
-      </ScrollReveal>
+      <BlogSearch posts={posts} />
     </>
   );
 }

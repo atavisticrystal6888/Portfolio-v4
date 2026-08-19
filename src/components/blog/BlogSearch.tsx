@@ -3,6 +3,7 @@
 import { useState, useMemo } from "react";
 import { debounce } from "@/lib/utils";
 import type { BlogArticle } from "@/types/blog";
+import { ListRows } from "@/components/ui/ListRow";
 import { BlogCard } from "./BlogCard";
 import styles from "./BlogSearch.module.css";
 
@@ -67,11 +68,11 @@ export function BlogSearch({ posts }: BlogSearchProps) {
       </div>
 
       {filtered.length > 0 ? (
-        <div className={styles.grid}>
+        <ListRows>
           {filtered.map((post) => (
             <BlogCard key={post.slug} post={post} />
           ))}
-        </div>
+        </ListRows>
       ) : (
         <div className={styles.empty}>
           <p>No articles found matching your criteria.</p>
