@@ -8,3 +8,7 @@ node_modules/
 next-env.d.ts
 test-results/
 tsconfig.tsbuildinfo
+
+# Local agent tooling (skills, hooks, settings) - machine-local, not part of
+# the app. Also ignored by eslint.config.mjs.
+.claude/
