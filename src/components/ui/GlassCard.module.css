@@ -1,25 +1,22 @@
+/* Editorial surface: flat, hairline-ruled, no blur.
+   Blur still belongs on Navbar / Modal / Toast / CommandPalette, which
+   genuinely float over scrolling content — those keep --glass-bg. */
 .card {
-  background: var(--glass-bg);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid var(--glass-border);
-  border-radius: var(--radius-lg);
+  background: var(--surface);
+  border: var(--hairline);
+  border-radius: var(--radius-editorial);
   padding: var(--space-6);
-  transition: all var(--transition-base);
+  transition: border-color var(--transition-base),
+              background-color var(--transition-base);
 }
 
 .hoverable:hover {
-  border-color: var(--border-accent);
-  box-shadow: var(--shadow-glow);
-  transform: translateY(-2px);
+  border-color: var(--border-strong);
+  background: var(--surface-hover);
 }
 
 .hoverable:focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 3px;
   border-color: var(--border-accent);
-}
-
-.hoverable:active {
-  transform: translateY(0) scale(0.99);
 }
