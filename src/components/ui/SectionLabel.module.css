@@ -1,21 +1,31 @@
+/* Mono eyebrow. With an index it reads as a dossier section marker
+   ("01 — Impact"); without one it falls back to the accent tick. */
 .label {
-  font-family: var(--font-body);
-  font-size: 0.75rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.14em;
-  color: var(--accent);
-  margin-bottom: 0.5rem;
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: var(--space-3);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-label);
+  color: var(--accent);
+  margin-bottom: var(--space-2);
 }
 
-.label::before {
-  content: '';
-  display: inline-block;
+.index {
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.rule {
+  display: block;
+  flex-shrink: 0;
   width: 24px;
-  height: 2px;
+  height: 1px;
+  background: var(--border-strong);
+}
+
+.ruleAccent {
   background: var(--accent);
-  border-radius: 1px;
 }
