@@ -61,6 +61,37 @@
 
   /* Extra radius */
   --radius-pill: 100px;
+
+  /* ===== EDITORIAL SYSTEM =====
+     Type scale, rhythm and surface primitives for the editorial/dossier
+     layouts. Additive: nothing above changes. Every colour still comes from
+     the theme blocks below, so light mode and the palette swaps keep working. */
+
+  /* Type scale */
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.375rem;
+  --text-2xl: 1.875rem;
+  --text-3xl: 2.75rem;
+  --text-display: clamp(2.75rem, 6vw, 4.5rem);
+
+  /* Line height + tracking */
+  --leading-tight: 1.1;
+  --leading-snug: 1.3;
+  --leading-body: 1.65;
+  --tracking-tight: -0.02em;
+  --tracking-label: 0.14em;
+
+  /* Editorial surfaces: flat, hairline-ruled. --hairline resolves --border at
+     use time, so it follows the active theme. */
+  --hairline: 1px solid var(--border);
+  --rule-strong: 1px solid var(--border-strong);
+  --radius-editorial: 4px;
+
+  /* Vertical rhythm between page sections */
+  --section-gap: clamp(96px, 12vh, 160px);
 }
 
 [data-theme="dark"] {
