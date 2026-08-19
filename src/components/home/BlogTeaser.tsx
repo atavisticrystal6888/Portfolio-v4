@@ -1,7 +1,5 @@
 import Link from "next/link";
 import type { BlogArticle } from "@/types/blog";
-import { Badge } from "@/components/ui/Badge";
-import { GlassCard } from "@/components/ui/GlassCard";
 import { formatDate } from "@/lib/utils";
 import styles from "./BlogTeaser.module.css";
 
@@ -12,26 +10,28 @@ interface BlogTeaserProps {
 export function BlogTeaser({ posts }: BlogTeaserProps) {
   return (
     <>
-      <div className={styles.grid}>
+      <ul className={styles.list}>
         {posts.slice(0, 3).map((post) => (
-          <GlassCard key={post.slug} as="article" hover className={styles.card}>
-            <Badge variant="accent">{post.category}</Badge>
-            <div className={styles.meta}>
-              <time dateTime={post.date}>{formatDate(post.date)}</time>
-              <span>·</span>
-              <span>{post.readingTime}</span>
-            </div>
-            <h3 className={styles.title}>
-              <Link href={`/blog/${post.slug}`}>{post.title}</Link>
-            </h3>
-            <p className={styles.excerpt}>{post.excerpt}</p>
-          </GlassCard>
+          <li key={post.slug} className={styles.item}>
+            <Link href={`/blog/${post.slug}`} className={styles.row}>
+              <div className={styles.rail}>
+                <time dateTime={post.date}>{formatDate(post.date)}</time>
+                <span>
+                  {post.category} &middot; {post.readingTime}
+                </span>
+              </div>
+              <div className={styles.body}>
+                <h3 className={styles.title}>{post.title}</h3>
+                <p className={styles.dek}>{post.excerpt}</p>
+              </div>
+            </Link>
+          </li>
         ))}
-      </div>
+      </ul>
       {posts.length > 3 && (
         <div className={styles.viewAll}>
           <Link href="/blog" className={styles.viewAllLink}>
-            View all {posts.length} articles →
+            All {posts.length} articles &rarr;
           </Link>
         </div>
       )}
