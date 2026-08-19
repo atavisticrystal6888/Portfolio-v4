@@ -1,4 +1,3 @@
-import { GlassCard } from "@/components/ui/GlassCard";
 import styles from "./ExperienceTimeline.module.css";
 
 interface ExperienceEntry {
@@ -43,18 +42,20 @@ const EXPERIENCE: ExperienceEntry[] = [
 
 export function ExperienceTimeline() {
   return (
-    <div className={styles.grid}>
+    <ol className={styles.ledger}>
       {EXPERIENCE.map((entry) => (
-        <GlassCard key={entry.company} as="article" hover className={styles.card}>
-          <div className={styles.header}>
-            <h3 className={styles.company}>{entry.company}</h3>
+        <li key={entry.company} className={styles.row}>
+          <div className={styles.rail}>
             <span className={styles.period}>{entry.period}</span>
+            {entry.current && <span className={styles.badge}>Current</span>}
           </div>
-          <p className={styles.role}>{entry.role}</p>
-          <p className={styles.desc}>{entry.description}</p>
-          {entry.current && <span className={styles.badge}>Current</span>}
-        </GlassCard>
+          <div className={styles.body}>
+            <h3 className={styles.company}>{entry.company}</h3>
+            <p className={styles.role}>{entry.role}</p>
+            <p className={styles.desc}>{entry.description}</p>
+          </div>
+        </li>
       ))}
-    </div>
+    </ol>
   );
 }
