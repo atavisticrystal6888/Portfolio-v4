@@ -1,4 +1,4 @@
-import { generatePageMetadata, generatePersonJsonLd, generateBreadcrumbJsonLd } from "@/lib/metadata";
+import { generatePageMetadata, generateBreadcrumbJsonLd } from "@/lib/metadata";
 import { getGitHubProfile } from "@/lib/github";
 import { SectionLabel } from "@/components/ui/SectionLabel";
 import { PageHeader } from "@/components/ui/PageHeader";
@@ -22,7 +22,6 @@ export const metadata = generatePageMetadata({
 });
 
 export default async function AboutPage() {
-  const personJsonLd = generatePersonJsonLd();
   const breadcrumbJsonLd = generateBreadcrumbJsonLd([
     { name: "Home", url: "/" },
     { name: "About", url: "/about" },
@@ -35,7 +34,6 @@ export default async function AboutPage() {
 
   return (
     <div className={styles.page}>
-      <JsonLd id="about-person-jsonld" data={personJsonLd} />
       <JsonLd id="about-breadcrumb-jsonld" data={breadcrumbJsonLd} />
 
       {/* Header */}

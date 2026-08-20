@@ -33,13 +33,6 @@ function getRateLimit(ip: string): boolean {
 export async function POST(request: NextRequest) {
   const ip = request.headers.get("x-forwarded-for") || "127.0.0.1";
 
-  if (getRateLimit(ip)) {
-    return NextResponse.json(
-      { error: "Too many requests. Please try again later." },
-      { status: 429 }
-    );
-  }
-
   try {
     const body = await request.json();
     const { name, email, subject, message } = body;
@@ -56,6 +49,18 @@ export async function POST(request: NextRequest) {
     }
     if (!message || typeof message !== "string" || message.trim().length < 20) {
       return NextResponse.json({ error: "Message must be at least 20 characters" }, { status: 400 });
+    }
+
+    // Rate limiting runs after validation on purpose: a request that never
+    // had a chance of sending an email should not spend the sender's budget.
+    // Someone who mistypes their address twice and fixes the message once has
+    // already used three of five attempts otherwise, and the next real try is
+    // refused.
+    if (getRateLimit(ip)) {
+      return NextResponse.json(
+        { error: "Too many requests. Please try again later." },
+        { status: 429 }
+      );
     }
 
     // Sanitize inputs

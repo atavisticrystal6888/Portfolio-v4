@@ -9,7 +9,9 @@ export default defineConfig({
   // (heavy hydration + 6 parallel workers); CI keeps 2.
   retries: process.env.CI ? 2 : 1,
   workers: process.env.CI ? 1 : undefined,
-  reporter: "list",
+  // CI also writes the HTML report the workflow uploads on failure; a bare
+  // "list" reporter left that upload step with no playwright-report/ to find.
+  reporter: process.env.CI ? [["list"], ["html", { open: "never" }]] : "list",
   use: {
     baseURL: process.env.PLAYWRIGHT_BASE_URL || "http://localhost:3000",
     trace: "on-first-retry",

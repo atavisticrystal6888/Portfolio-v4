@@ -30,8 +30,13 @@ export function markdownToHtml(md: string): string {
   // Images
   html = html.replace(/!\[([^\]]*)\]\(([^)]+)\)/g, '<img src="$2" alt="$1" loading="lazy" />');
 
-  // Links
-  html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>');
+  // Links. Only off-site hrefs get a new tab: an in-body link to /projects/...
+  // or #section used to open a second tab and reload the whole site.
+  html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/g, (_m, text: string, href: string) => {
+    const external = /^[a-z][a-z0-9+.-]*:/i.test(href) && !href.startsWith("mailto:");
+    const attrs = external ? ' target="_blank" rel="noopener noreferrer"' : "";
+    return `<a href="${href}"${attrs}>${text}</a>`;
+  });
 
   // Headings
   html = html.replace(/^#### (.+)$/gm, "<h4>$1</h4>");

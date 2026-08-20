@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, type FormEvent } from "react";
+import { useRef, useState, type FormEvent } from "react";
 import { Button } from "@/components/ui/Button";
 import { CONTACT_EMAIL_HREF } from "@/lib/site";
 import styles from "./ContactForm.module.css";
@@ -19,10 +19,17 @@ interface FormErrors {
   message?: string;
 }
 
+/** Field order, so a failed submit lands on the first problem. */
+const FIELD_ORDER: (keyof FormErrors)[] = ["name", "email", "subject", "message"];
+
 export function ContactForm() {
   const [data, setData] = useState<FormData>({ name: "", email: "", subject: "", message: "" });
   const [errors, setErrors] = useState<FormErrors>({});
   const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
+  // What the API said went wrong, when it said something specific - a rate
+  // limit reads very differently from "something went wrong".
+  const [serverError, setServerError] = useState<string | null>(null);
+  const formRef = useRef<HTMLFormElement>(null);
 
   const validate = (): FormErrors => {
     const errs: FormErrors = {};
@@ -37,7 +44,17 @@ export function ContactForm() {
     e.preventDefault();
     const errs = validate();
     setErrors(errs);
-    if (Object.keys(errs).length > 0) return;
+    if (Object.keys(errs).length > 0) {
+      // Move focus to the first invalid field: without this the errors appear
+      // silently below a submit button that still holds focus.
+      const firstBad = FIELD_ORDER.find((f) => errs[f]);
+      if (firstBad) {
+        formRef.current
+          ?.querySelector<HTMLElement>(`#${firstBad}`)
+          ?.focus();
+      }
+      return;
+    }
 
     setStatus("sending");
     try {
@@ -47,18 +64,22 @@ export function ContactForm() {
         body: JSON.stringify(data),
       });
       if (res.ok) {
+        setServerError(null);
         setStatus("success");
         setData({ name: "", email: "", subject: "", message: "" });
       } else {
+        const body = await res.json().catch(() => null);
+        setServerError(typeof body?.error === "string" ? body.error : null);
         setStatus("error");
       }
     } catch {
+      setServerError(null);
       setStatus("error");
     }
   };
 
   return (
-    <form className={styles.form} onSubmit={handleSubmit} noValidate>
+    <form ref={formRef} className={styles.form} onSubmit={handleSubmit} noValidate>
       <div className={styles.field}>
         <label htmlFor="name" className={styles.label}>Name <span className={styles.required}>*</span></label>
         <input
@@ -66,7 +87,7 @@ export function ContactForm() {
           value={data.name} onChange={(e) => setData({ ...data, name: e.target.value })}
           aria-invalid={!!errors.name} aria-describedby={errors.name ? "name-error" : undefined}
         />
-        {errors.name && <span id="name-error" className={styles.error}>{errors.name}</span>}
+        {errors.name && <span id="name-error" role="alert" className={styles.error}>{errors.name}</span>}
       </div>
 
       <div className={styles.field}>
@@ -76,7 +97,7 @@ export function ContactForm() {
           value={data.email} onChange={(e) => setData({ ...data, email: e.target.value })}
           aria-invalid={!!errors.email} aria-describedby={errors.email ? "email-error" : undefined}
         />
-        {errors.email && <span id="email-error" className={styles.error}>{errors.email}</span>}
+        {errors.email && <span id="email-error" role="alert" className={styles.error}>{errors.email}</span>}
       </div>
 
       <div className={styles.field}>
@@ -85,6 +106,7 @@ export function ContactForm() {
           id="subject" className={styles.select}
           value={data.subject} onChange={(e) => setData({ ...data, subject: e.target.value })}
           aria-invalid={!!errors.subject}
+          aria-describedby={errors.subject ? "subject-error" : undefined}
         >
           <option value="">Select a subject</option>
           <option value="job">Job Opportunity</option>
@@ -92,7 +114,7 @@ export function ContactForm() {
           <option value="collaboration">Collaboration</option>
           <option value="other">Other</option>
         </select>
-        {errors.subject && <span className={styles.error}>{errors.subject}</span>}
+        {errors.subject && <span id="subject-error" role="alert" className={styles.error}>{errors.subject}</span>}
       </div>
 
       <div className={styles.field}>
@@ -102,17 +124,18 @@ export function ContactForm() {
           value={data.message} onChange={(e) => setData({ ...data, message: e.target.value })}
           aria-invalid={!!errors.message} aria-describedby={errors.message ? "msg-error" : undefined}
         />
-        {errors.message && <span id="msg-error" className={styles.error}>{errors.message}</span>}
+        {errors.message && <span id="msg-error" role="alert" className={styles.error}>{errors.message}</span>}
       </div>
 
       <Button type="submit" disabled={status === "sending"}>
         {status === "sending" ? "Sending..." : "Send Message"}
       </Button>
 
-      {status === "success" && <p className={styles.success}>Message sent successfully! I&apos;ll get back to you soon.</p>}
+      {status === "success" && <p role="status" className={styles.success}>Message sent successfully! I&apos;ll get back to you soon.</p>}
       {status === "error" && (
-        <p className={styles.errorMsg}>
-          Something went wrong. Please try <a href={CONTACT_EMAIL_HREF}>emailing directly</a>.
+        <p role="alert" className={styles.errorMsg}>
+          {serverError ?? "Something went wrong."} Please try{" "}
+          <a href={CONTACT_EMAIL_HREF}>emailing directly</a>.
         </p>
       )}
     </form>

@@ -81,6 +81,8 @@ export function CommandPalette() {
   const [activeIndex, setActiveIndex] = useState(-1);
   const inputRef = useRef<HTMLInputElement>(null);
   const listRef = useRef<HTMLDivElement>(null);
+  // Whatever had focus before the palette opened, so Escape can hand it back.
+  const restoreRef = useRef<HTMLElement | null>(null);
   const router = useRouter();
   const { toggleMode, setPalette } = useTheme();
 
@@ -106,6 +108,7 @@ export function CommandPalette() {
   }, [filtered]);
 
   const open = useCallback(() => {
+    restoreRef.current = document.activeElement as HTMLElement | null;
     setIsOpen(true);
     setQuery('');
     setActiveIndex(-1);
@@ -115,6 +118,13 @@ export function CommandPalette() {
     setIsOpen(false);
     setQuery('');
     setActiveIndex(-1);
+    // Without this focus falls to <body> and the next Tab restarts at the top
+    // of the page.
+    const restore = restoreRef.current;
+    restoreRef.current = null;
+    if (restore && document.contains(restore)) {
+      requestAnimationFrame(() => restore.focus());
+    }
   }, []);
 
   const execute = useCallback((item: PaletteItem) => {
@@ -212,6 +222,7 @@ export function CommandPalette() {
           <motion.div
             className={styles.palette}
             role="dialog"
+            aria-modal="true"
             aria-label="Command palette"
             initial={{ opacity: 0, y: -20, scale: 0.98 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}

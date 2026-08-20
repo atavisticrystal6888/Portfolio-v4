@@ -34,7 +34,9 @@ test.describe("Contact form", () => {
   });
 
   // API-route tests are browser-independent; running them once (chromium) keeps
-  // the suite's 15 cross-browser POSTs from tripping the route's 5/hour rate limit.
+  // the suite's 15 cross-browser POSTs from tripping the route's rate limit.
+  // Each test also claims its own x-forwarded-for so it cannot spend another
+  // test's budget - or inherit one already spent by an earlier local run.
   test.beforeEach(async ({}, testInfo) => {
     if (testInfo.title.startsWith("API route")) {
       test.skip(testInfo.project.name !== "chromium", "API tests run on chromium only");
@@ -43,6 +45,7 @@ test.describe("Contact form", () => {
 
   test("API route rejects short messages", async ({ request }) => {
     const response = await request.post("/api/contact", {
+      headers: { "x-forwarded-for": "203.0.113.11" },
       data: {
         name: "Test",
         email: "test@example.com",
@@ -55,6 +58,7 @@ test.describe("Contact form", () => {
 
   test("API route accepts valid submission", async ({ request }) => {
     const response = await request.post("/api/contact", {
+      headers: { "x-forwarded-for": "203.0.113.12" },
       data: {
         name: "Test User",
         email: "test@example.com",
@@ -63,14 +67,39 @@ test.describe("Contact form", () => {
           "This is a sufficiently long test message to pass validation checks.",
       },
     });
-    // 200 (success with console.log fallback) or 429 if rate-limited from prior runs
-    expect([200, 429]).toContain(response.status());
+    // Its own client IP, so this is a clean first send every run.
+    expect(response.status()).toBe(200);
   });
 
   test("API route rejects missing fields", async ({ request }) => {
     const response = await request.post("/api/contact", {
+      headers: { "x-forwarded-for": "203.0.113.13" },
       data: { name: "Test" },
     });
     expect(response.status()).toBe(400);
+  });
+
+  test("API route: a rejected submission does not spend the sender's budget", async ({
+    request,
+  }) => {
+    const ip = { "x-forwarded-for": "203.0.113.14" };
+    // Six failed attempts - one more than the window allows - then a good one.
+    for (let i = 0; i < 6; i++) {
+      const bad = await request.post("/api/contact", {
+        headers: ip,
+        data: { name: "Test", email: "test@example.com", subject: "Hi", message: "short" },
+      });
+      expect(bad.status()).toBe(400);
+    }
+    const good = await request.post("/api/contact", {
+      headers: ip,
+      data: {
+        name: "Test User",
+        email: "test@example.com",
+        subject: "Valid inquiry",
+        message: "A long enough message that should still be accepted after typos.",
+      },
+    });
+    expect(good.status()).toBe(200);
   });
 });

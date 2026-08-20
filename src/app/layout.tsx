@@ -7,6 +7,8 @@ import { AnimatedGradient } from "@/components/interactive/AnimatedGradient";
 import { ToastProvider } from "@/components/ui/Toast";
 import { SkipLink } from "@/components/ui/SkipLink";
 import { ScrollProgress } from "@/components/ui/ScrollProgress";
+import { JsonLd } from "@/components/ui/JsonLd";
+import { MotionPrefs } from "@/components/ui/MotionPrefs";
 import { generatePersonJsonLd } from "@/lib/metadata";
 import { absoluteUrl, SITE_DESCRIPTION, SITE_NAME, SITE_TITLE, SITE_URL } from "@/lib/site";
 import { Analytics } from "@vercel/analytics/react";
@@ -120,23 +122,33 @@ export default function RootLayout({
         />
         <meta name="theme-color" content="#0a0a0b" media="(prefers-color-scheme: dark)" />
         <meta name="theme-color" content="#f7f7f8" media="(prefers-color-scheme: light)" />
+        {/* Applies the stored theme before first paint. Without this the HTML
+            ships as dark/teal and a returning visitor on light (or any other
+            palette) sees the default flash by until React hydrates. Keep the
+            storage key and shape in sync with src/hooks/useTheme.ts. */}
         <script
-          type="application/ld+json"
           dangerouslySetInnerHTML={{
-            __html: JSON.stringify(personJsonLd),
+            __html: `(function(){try{var s=localStorage.getItem('ds-portfolio-theme');var c=s?JSON.parse(s):null;var m=c&&c.mode?c.mode:(window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');var p=c&&c.palette?c.palette:'teal';var e=document.documentElement;e.setAttribute('data-theme',m);e.setAttribute('data-palette',p);}catch(e){}})();`,
           }}
         />
+        <JsonLd id="site-person-jsonld" data={personJsonLd} />
       </head>
       <body>
-        <ToastProvider>
-          <SkipLink />
-          <ScrollProgress />
-          <AnimatedGradient />
-          <Navbar />
-          <main id="main-content">{children}</main>
-          <Footer />
-          <CommandPalette />
-        </ToastProvider>
+        <MotionPrefs>
+          <ToastProvider>
+            <SkipLink />
+            <ScrollProgress />
+            <AnimatedGradient />
+            <Navbar />
+            {/* tabIndex -1 so the skip link actually moves focus here, not just
+                the scroll position. */}
+            <main id="main-content" tabIndex={-1}>
+              {children}
+            </main>
+            <Footer />
+            <CommandPalette />
+          </ToastProvider>
+        </MotionPrefs>
         {process.env.VERCEL && <Analytics />}
         {process.env.VERCEL && <SpeedInsights />}
       </body>

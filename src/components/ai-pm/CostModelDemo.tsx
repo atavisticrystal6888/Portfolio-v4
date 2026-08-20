@@ -146,7 +146,7 @@ export function CostModelDemo() {
       </div>
 
       <div className={styles.breakdown}>
-        <h4 className={styles.breakdownTitle}>Per-request breakdown</h4>
+        <h3 className={styles.breakdownTitle}>Per-request breakdown</h3>
         <ul className={styles.breakdownList}>
           <li>
             <span className={styles.bdLabel}>Vision (Gemini 1.5 Pro)</span>

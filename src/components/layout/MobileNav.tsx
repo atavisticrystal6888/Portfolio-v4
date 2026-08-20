@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { AnimatePresence, motion } from 'framer-motion';
@@ -24,16 +24,52 @@ interface MobileNavProps {
 
 export function MobileNav({ open, onClose }: MobileNavProps) {
   const pathname = usePathname();
+  const drawerRef = useRef<HTMLDivElement>(null);
+  const restoreRef = useRef<HTMLElement | null>(null);
 
-  // Close on Escape
+  // Close on Escape, and keep Tab inside the drawer while it is open: the page
+  // behind it is still in the tab order otherwise.
   useEffect(() => {
     if (!open) return;
     const handleKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') onClose();
+      if (e.key === 'Escape') {
+        onClose();
+        return;
+      }
+      if (e.key !== 'Tab' || !drawerRef.current) return;
+      const focusable = drawerRef.current.querySelectorAll<HTMLElement>(
+        'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])'
+      );
+      if (focusable.length === 0) return;
+      const first = focusable[0]!;
+      const last = focusable[focusable.length - 1]!;
+      const active = document.activeElement;
+      if (e.shiftKey && (active === first || !drawerRef.current.contains(active))) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && active === last) {
+        e.preventDefault();
+        first.focus();
+      }
     };
     document.addEventListener('keydown', handleKey);
     return () => document.removeEventListener('keydown', handleKey);
   }, [open, onClose]);
+
+  // Move focus into the drawer on open and hand it back to the trigger on
+  // close, so a keyboard user is not left behind the overlay.
+  useEffect(() => {
+    if (open) {
+      restoreRef.current = document.activeElement as HTMLElement | null;
+      const id = requestAnimationFrame(() => {
+        drawerRef.current?.querySelector<HTMLElement>('a[href]')?.focus();
+      });
+      return () => cancelAnimationFrame(id);
+    }
+    const restore = restoreRef.current;
+    restoreRef.current = null;
+    if (restore && document.contains(restore)) restore.focus();
+  }, [open]);
 
   // Lock body scroll when open
   useEffect(() => {
@@ -61,7 +97,9 @@ export function MobileNav({ open, onClose }: MobileNavProps) {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.2 }}
+          ref={drawerRef}
           role="dialog"
+          aria-modal="true"
           aria-label="Mobile navigation"
         >
           <motion.nav
@@ -81,6 +119,7 @@ export function MobileNav({ open, onClose }: MobileNavProps) {
                 <Link
                   href={href}
                   className={cn(styles.link, isActive(href) && styles.active)}
+                  aria-current={isActive(href) ? "page" : undefined}
                   onClick={onClose}
                 >
                   {label}

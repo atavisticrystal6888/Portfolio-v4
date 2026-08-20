@@ -80,7 +80,7 @@ export function SkillsRadar() {
       <div className={styles.categories}>
         {CATEGORIES.map((cat) => (
           <div key={cat.name} className={styles.category}>
-            <h4 className={styles.catTitle}>{cat.name}</h4>
+            <h3 className={styles.catTitle}>{cat.name}</h3>
             <div className={styles.tags}>
               {cat.skills.map((s) => (
                 <span key={s} className={styles.tag}>{s}</span>

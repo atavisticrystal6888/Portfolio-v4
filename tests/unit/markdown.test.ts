@@ -34,6 +34,24 @@ describe("markdownToHtml emphasis", () => {
     const html = markdownToHtml("[docs](https://example.com/a/_hero_.png)");
     expect(html).toContain('href="https://example.com/a/_hero_.png"');
   });
+  it("keeps in-body links to this site in the same tab", () => {
+    const html = markdownToHtml("see the [case study](/projects/aarchid)");
+    expect(html).toContain('<a href="/projects/aarchid">case study</a>');
+    expect(html).not.toContain("target=");
+  });
+
+  it("opens off-site links in a new tab, with rel protection", () => {
+    const html = markdownToHtml("[Dilpreet](https://github.com/dfordp) built the API");
+    expect(html).toContain('target="_blank"');
+    expect(html).toContain('rel="noopener noreferrer"');
+  });
+
+  it("leaves mailto links in place without a new tab", () => {
+    const html = markdownToHtml("[email me](mailto:someone@example.com)");
+    expect(html).toContain('href="mailto:someone@example.com"');
+    expect(html).not.toContain("target=");
+  });
+
   it("keeps emphasis working after a bare < in prose", () => {
     const html = markdownToHtml(
       ["Latency: P95 <10s end-to-end.", "", "- **Unit economics:** ~$0.25 per user"].join("\n")

@@ -1,6 +1,6 @@
 import Image from "next/image";
 import dhruvImage from "@/assets/Dhruv_Image.jpg";
-import { generatePageMetadata, generatePersonJsonLd, generateWebSiteJsonLd } from "@/lib/metadata";
+import { generatePageMetadata, generateWebSiteJsonLd } from "@/lib/metadata";
 import { getAllProjects, getAllBlogPosts, getAllTestimonials } from "@/lib/content";
 import { SectionLabel } from "@/components/ui/SectionLabel";
 import { Button } from "@/components/ui/Button";
@@ -25,12 +25,11 @@ export default function Home() {
   const allProjects = getAllProjects();
   const posts = getAllBlogPosts();
   const testimonials = getAllTestimonials();
-  const personJsonLd = generatePersonJsonLd();
   const webSiteJsonLd = generateWebSiteJsonLd();
 
   return (
     <div className={styles.page}>
-      <JsonLd id="home-person-jsonld" data={personJsonLd} />
+      {/* Person is emitted once site-wide from the root layout. */}
       <JsonLd id="home-website-jsonld" data={webSiteJsonLd} />
 
       {/* Hero */}

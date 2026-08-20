@@ -22,8 +22,13 @@ files, read the reasoning first and delete them deliberately.
   nothing and is never in the visitor's way.
 - **`MusicToggle` / `BackgroundMusic`** (`src/components/layout/Navbar.tsx`) —
   opt-in and off by default, so it is a feature rather than an imposition.
-- **`CommandPalette`** (Ctrl+K), **`ScrollProgress`**, **`ThemeToggle`**,
-  **`ThemeCustomizer`** — real navigation and preference features, not flourish.
+- **`CommandPalette`** (Ctrl+K), **`ScrollProgress`**, **`ThemeToggle`** — real
+  navigation and preference features, not flourish. Palette switching lives in
+  the command palette ("Accent: …"), not in a visible control.
+- **`ThemeCustomizer`** (`src/components/interactive/ThemeCustomizer.tsx`) — an
+  earlier draft of that control. It has **no call site**; this list claimed it
+  was live until a round-4 sweep found nothing importing it. Wire it up or
+  delete it deliberately.
 - **`SignatureScene`** — the site's one piece of 3D, at three scales. See
   `src/components/interactive/signature-spec.ts`.
 

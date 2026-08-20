@@ -17,6 +17,8 @@ export function BlogCard({ post }: BlogCardProps) {
     <ListRow
       href={`/blog/${post.slug}`}
       title={post.title}
+      // Index rows sit directly under the page h1, so they are h2 here.
+      headingLevel={2}
       dek={post.excerpt}
       rail={
         <>

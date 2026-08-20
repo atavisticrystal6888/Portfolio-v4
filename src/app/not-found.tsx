@@ -1,16 +1,22 @@
-"use client";
-
-import { useState } from "react";
+import type { Metadata } from "next";
 import Link from "next/link";
 import { Button } from "@/components/ui/Button";
+import { NotFoundQuote } from "@/components/ui/NotFoundQuote";
+import { SITE_NAME } from "@/lib/site";
 
-const PM_QUOTES = [
-  "Looks like this feature was deprioritized in the last sprint.",
-  "This page shipped to production without a spec.",
-  "The backlog ate this page. We'll groom it next quarter.",
-  "404: This route didn't make it past the PRD review.",
-  "No user stories matched this path. Try one of the links below.",
-];
+export const metadata: Metadata = {
+  title: "Page not found",
+  description: "That route doesn't exist on this site.",
+  // The root layout sets a site-wide canonical; without this override a 404
+  // told crawlers it was canonically the home page.
+  alternates: { canonical: undefined },
+  // No robots override here: Next already emits noindex for not-found, and a
+  // second robots meta tag only muddies it.
+  openGraph: {
+    title: `Page not found | ${SITE_NAME}`,
+    description: "That route doesn't exist on this site.",
+  },
+};
 
 const SUGGESTED = [
   { href: "/projects", label: "Projects", desc: "Case studies with real outcomes." },
@@ -20,9 +26,6 @@ const SUGGESTED = [
 ];
 
 export default function NotFound() {
-  // Randomize on initial render; suppressHydrationWarning handles server/client mismatch
-  const [quote] = useState(() => PM_QUOTES[Math.floor(Math.random() * PM_QUOTES.length)]!);
-
   return (
     <section
       aria-label="Page not found"
@@ -57,17 +60,7 @@ export default function NotFound() {
       >
         404
       </h1>
-      <p
-        suppressHydrationWarning
-        style={{
-          marginTop: "1.25rem",
-          fontSize: "1.15rem",
-          fontStyle: "italic",
-          color: "var(--text)",
-        }}
-      >
-        {quote}
-      </p>
+      <NotFoundQuote />
       <div style={{ marginTop: "2rem" }}>
         <Button href="/">Back to Home</Button>
       </div>

@@ -69,6 +69,7 @@ export function Navbar() {
                 <Link
                   href={href}
                   className={cn(styles.link, isActive(href) && styles.active)}
+                  aria-current={isActive(href) ? "page" : undefined}
                 >
                   {label}
                 </Link>
@@ -83,7 +84,10 @@ export function Navbar() {
             <button
               className={styles.cmdTrigger}
               aria-label="Open command palette"
-              onClick={() => {
+              onClick={(e) => {
+                // WebKit does not focus a button on click, so the palette had
+                // nothing to hand focus back to on Escape. Focus it explicitly.
+                e.currentTarget.focus();
                 document.dispatchEvent(new CustomEvent('open-command-palette'));
               }}
             >
@@ -113,7 +117,12 @@ export function Navbar() {
 
             <button
               className={cn(styles.hamburger, mobileOpen && styles.open)}
-              onClick={() => setMobileOpen(!mobileOpen)}
+              onClick={(e) => {
+                // Same WebKit quirk as the palette trigger: without this the
+                // drawer cannot return focus here when it closes.
+                e.currentTarget.focus();
+                setMobileOpen(!mobileOpen);
+              }}
               aria-label="Toggle navigation"
               aria-expanded={mobileOpen}
             >

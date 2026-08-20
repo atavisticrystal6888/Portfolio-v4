@@ -61,7 +61,7 @@ export function Footer() {
             className={styles.links}
             aria-label={`Footer navigation: ${heading}`}
           >
-            <h3 className={styles.heading}>{heading}</h3>
+            <h2 className={styles.heading}>{heading}</h2>
             <ul className={styles.linkList}>
               {links.map(({ href, label }) => (
                 <li key={href}>
@@ -75,7 +75,7 @@ export function Footer() {
         ))}
 
         <div className={styles.social}>
-          <h3 className={styles.heading}>Connect</h3>
+          <h2 className={styles.heading}>Connect</h2>
           <ul className={styles.linkList}>
             <li>
               <Link href="/contact" className={styles.link}>

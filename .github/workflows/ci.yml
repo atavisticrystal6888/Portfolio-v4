@@ -63,7 +63,10 @@ jobs:
           name: next-build
           path: .next
       - run: npx playwright install --with-deps chromium
-      - run: npm run test:e2e
+      # Only the chromium-backed projects: the step above installs chromium
+      # alone, so a bare `npm run test:e2e` also asks for firefox and webkit
+      # and fails on a missing executable, not on a real defect.
+      - run: npm run test:e2e -- --project=chromium --project=mobile-chrome
         env:
           CI: "1"
       - if: failure()

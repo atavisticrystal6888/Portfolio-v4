@@ -318,3 +318,76 @@
   --metric-bg: rgba(228, 228, 231, 0.08);
   --metric-border: rgba(228, 228, 231, 0.15);
 }
+
+/* ===== PALETTE x THEME CORRECTIONS =====
+   The palette blocks above are written for the dark surface and apply in both
+   modes, so on the light theme every non-teal palette painted mid-tone accents
+   on a near-white page: 4 of 5 palettes failed WCAG AA contrast on ~55 nodes
+   per page (accent text, primary buttons, badges, metric readouts). Teal is
+   clean because the light theme block darkens the base tokens; these blocks do
+   the same per palette, hue kept. Two dark-mode hovers are fixed here too: they
+   darkened on an already-dark surface, which the case-study badge reads as
+   text. Verified with axe-core across every mode x palette.
+
+   Selector specificity (0,2,0) beats both [data-theme] and [data-palette]. */
+
+[data-theme="light"][data-palette="ocean"] {
+  --accent: #1d4ed8;
+  --accent-hover: #1e40af;
+  --accent-glow: rgba(29, 78, 216, 0.12);
+  --accent-subtle: rgba(29, 78, 216, 0.06);
+  --border-accent: rgba(29, 78, 216, 0.28);
+  --badge-current-bg: rgba(29, 78, 216, 0.1);
+  --badge-current-text: #1e40af;
+  --metric: #8a6a14;
+  --metric-bg: rgba(138, 106, 20, 0.08);
+  --metric-border: rgba(138, 106, 20, 0.18);
+}
+
+[data-theme="light"][data-palette="emerald"] {
+  --accent: #047857;
+  --accent-hover: #065f46;
+  --accent-glow: rgba(4, 120, 87, 0.12);
+  --accent-subtle: rgba(4, 120, 87, 0.06);
+  --border-accent: rgba(4, 120, 87, 0.28);
+  --badge-current-bg: rgba(4, 120, 87, 0.1);
+  --badge-current-text: #065f46;
+  --metric: #9a4a10;
+  --metric-bg: rgba(154, 74, 16, 0.08);
+  --metric-border: rgba(154, 74, 16, 0.18);
+}
+
+[data-theme="light"][data-palette="amber"] {
+  --accent: #a35a08;
+  --accent-hover: #8a4a06;
+  --accent-glow: rgba(163, 90, 8, 0.12);
+  --accent-subtle: rgba(163, 90, 8, 0.06);
+  --border-accent: rgba(163, 90, 8, 0.28);
+  --badge-current-bg: rgba(163, 90, 8, 0.1);
+  --badge-current-text: #8a4a06;
+  --metric: #4f46e5;
+  --metric-bg: rgba(79, 70, 229, 0.08);
+  --metric-border: rgba(79, 70, 229, 0.18);
+}
+
+[data-theme="light"][data-palette="mono"] {
+  --accent: #52525b;
+  --accent-hover: #3f3f46;
+  --accent-glow: rgba(82, 82, 91, 0.12);
+  --accent-subtle: rgba(82, 82, 91, 0.06);
+  --border-accent: rgba(82, 82, 91, 0.28);
+  --badge-current-bg: rgba(82, 82, 91, 0.1);
+  --badge-current-text: #3f3f46;
+  --metric: #3f3f46;
+  --metric-bg: rgba(63, 63, 70, 0.08);
+  --metric-border: rgba(63, 63, 70, 0.18);
+}
+
+/* Hover has to lighten on a dark surface, not darken. */
+[data-theme="dark"][data-palette="ocean"] {
+  --accent-hover: #60a5fa;
+}
+
+[data-theme="dark"][data-palette="mono"] {
+  --accent-hover: #d4d4d8;
+}

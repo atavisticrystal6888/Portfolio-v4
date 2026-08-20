@@ -129,6 +129,13 @@ a:hover {
   top: var(--space-4);
 }
 
+/* The skip link's target takes focus programmatically (main has tabindex="-1"),
+   so it must not draw a focus ring around the whole page. */
+#main-content:focus,
+#main-content:focus-visible {
+  outline: none;
+}
+
 img, svg {
   display: block;
   max-width: 100%;
