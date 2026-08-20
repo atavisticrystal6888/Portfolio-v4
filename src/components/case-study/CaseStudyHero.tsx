@@ -27,7 +27,11 @@ export function CaseStudyHero({ caseStudy, imageUrl, imageAlt }: CaseStudyHeroPr
 
   return (
     <section className={styles.hero} aria-label="Case study header">
-      <SignatureScene variant="dossier" />
+      {/* The scene and the screenshot both want the right half of the header.
+          Where there is a screenshot it wins - the page already has its visual
+          anchor, and the lattice behind it only read as a stray arc clipped by
+          the top of the page. Dossiers without a shot still get the motif. */}
+      {!imageUrl && <SignatureScene variant="dossier" />}
       <div className={cn(styles.inner, imageUrl && styles.innerSplit)}>
         <h1 className={styles.title}>{caseStudy.title}</h1>
         <p className={styles.subtitle}>{caseStudy.subtitle}</p>

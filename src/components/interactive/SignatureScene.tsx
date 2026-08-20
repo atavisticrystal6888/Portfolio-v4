@@ -15,10 +15,15 @@ const SignatureLattice = dynamic(
 );
 
 /**
- * The site's one piece of 3D, used at three scales: the home hero, every
- * case-study dossier header, and the Lab header. Before this there were two
- * bespoke scenes (a particle hero, an Aarchid-only plant) plus a third that
- * nothing rendered, so the effect read as an accident rather than an identity.
+ * The site's one piece of 3D, used at three scales: the home hero, the Lab
+ * header, and case-study dossier headers that have no screenshot of their own.
+ * Before this there were two bespoke scenes (a particle hero, an Aarchid-only
+ * plant) plus a third that nothing rendered, so the effect read as an accident
+ * rather than an identity.
+ *
+ * Each variant is placed so it owns empty layout rather than sitting on text:
+ * the hero's right column, the Lab header's reserved column, and the gutter
+ * beside a dossier's centred spec table. See SignatureScene.module.css.
  *
  * Colour comes from the live value of `--accent`, re-read whenever the theme
  * mode or palette changes, so the scene follows all four palette swaps and

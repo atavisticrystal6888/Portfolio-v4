@@ -34,27 +34,45 @@
   width: min(78%, 520px);
 }
 
-/* Dossier header: a narrow band to the right of the spec table. */
+/* Dossier header: the spec table is centred at container-md and takes the
+   full measure, so the only place the scene can go without landing on the
+   title is the gutter outside it. At 46% of a full-bleed header it did land
+   on the title, and its ring ran off the right edge of the window. It now
+   appears only where that gutter is wide enough to hold the whole figure. */
 .dossier {
-  left: auto;
-  right: 0;
-  width: min(46%, 560px);
-  opacity: 0.85;
+  display: none;
 }
 
-/* Content-page header: smallest of the three, top-right. */
+@media (min-width: 1100px) {
+  .dossier {
+    display: block;
+    left: auto;
+    right: var(--space-6);
+    top: calc(var(--nav-height) + var(--space-10));
+    bottom: auto;
+    width: min(280px, calc((100% - var(--container-md)) / 2 - var(--space-8)));
+    height: auto;
+    aspect-ratio: 1;
+    opacity: 0.85;
+  }
+}
+
+/* Content-page header: smallest of the three, top-right. Square by
+   construction - the box used to be sized from a percentage of the header
+   and a slice of the viewport, so on a fixed-width content page it came out
+   taller than it was wide and the camera cropped the lattice sideways. */
 .ambient {
   left: auto;
   right: 0;
   bottom: auto;
   width: min(34%, 320px);
-  height: min(34vw, 320px);
+  height: auto;
+  aspect-ratio: 1;
   opacity: 0.75;
 }
 
 @media (max-width: 900px) {
   .hero,
-  .dossier,
   .ambient {
     width: min(72%, 420px);
     opacity: 0.5;

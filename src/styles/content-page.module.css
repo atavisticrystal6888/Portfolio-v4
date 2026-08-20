@@ -21,6 +21,18 @@
   z-index: 1;
 }
 
+/* The scene is absolutely positioned top-right inside this stage. Reserve
+   that column so the lede stops running underneath it, and hold the stage
+   open to the scene's full height - a figure cut off by the end of the
+   header reads as a rendering bug rather than a motif. Below 900px the
+   scene drops to its quiet mobile treatment and the text takes the width. */
+@media (min-width: 900px) {
+  .headerStage {
+    padding-right: calc(min(34%, 320px) + var(--space-8));
+    min-height: 248px;
+  }
+}
+
 .kicker {
   font-family: var(--font-mono);
   font-size: var(--text-xs);
