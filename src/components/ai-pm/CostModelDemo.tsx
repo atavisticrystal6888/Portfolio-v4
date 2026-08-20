@@ -180,7 +180,7 @@ export function CostModelDemo() {
 
       <p className={styles.note}>
         The Aarchid envelope is <strong>$0.25 / active user / month</strong>.
-        Vision is the dominant cost - batching it across multiple images
+        Vision is the dominant cost — batching it across multiple images
         (gallery upload, time-lapse) and caching repeat diagnoses by perceptual
         hash are the two levers that keep us under budget at scale.
       </p>

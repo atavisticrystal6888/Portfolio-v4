@@ -11,7 +11,7 @@ import styles from "./contact.module.css";
 export const metadata = generatePageMetadata({
   title: "Contact",
   description:
-    "Get in touch with Dhruv Singhal - open to Product Manager, APM, and AI product roles.",
+    "Get in touch with Dhruv Singhal — open to Product Manager, APM, and AI product roles.",
   path: "/contact",
 });
 

@@ -1,11 +1,11 @@
 ---
 slug: "tcs-nqt-prep-hub"
 title: "TCS NQT Prep Hub"
-subtitle: "Open-source exam preparation platform - 424+ questions, 10 previous papers, and a full-featured PWA with quizzes, flashcards, analytics, and offline support."
+subtitle: "Open-source exam preparation platform — 424+ questions, 10 previous papers, and a full-featured PWA with quizzes, flashcards, analytics, and offline support."
 role: "Creator & Lead Developer"
 duration: "Mar 2026 – May 2026"
 stack: ["JavaScript", "HTML/CSS", "PWA", "Service Workers"]
-tldr: "TCS NQT aspirants lacked a free, comprehensive, and offline-capable prep tool. I built an open-source PWA from scratch - 424+ practice questions, 10 previous papers, interactive quizzes, spaced-repetition flashcards, Pomodoro timer, and progress analytics - all with zero dependencies and full offline support."
+tldr: "TCS NQT aspirants lacked a free, comprehensive, and offline-capable prep tool. I built an open-source PWA from scratch — 424+ practice questions, 10 previous papers, interactive quizzes, spaced-repetition flashcards, Pomodoro timer, and progress analytics — all with zero dependencies and full offline support."
 metrics:
   - label: "Practice Questions"
     value: 424
@@ -29,22 +29,22 @@ nextSlug: "portfolio-site"
 
 ## Context & Problem
 
-Every year, lakhs of engineering graduates sit for the TCS National Qualifier Test (NQT) - the gateway to Ninja (₹3.36 LPA), Digital (₹7–9 LPA), and Prime (₹9–11+ LPA) roles. The preparation landscape is fragmented: paid coaching platforms with paywalls, scattered PDFs on Telegram, and ad-heavy websites with dubious question quality.
+Every year, lakhs of engineering graduates sit for the TCS National Qualifier Test (NQT) — the gateway to Ninja (₹3.36 LPA), Digital (₹7–9 LPA), and Prime (₹9–11+ LPA) roles. The preparation landscape is fragmented: paid coaching platforms with paywalls, scattered PDFs on Telegram, and ad-heavy websites with dubious question quality.
 
-The gap: there was no single, free, offline-capable platform that combined verified previous-year questions, structured study material, and interactive practice tools - without sign-ups, ads, or paywalls.
+The gap: there was no single, free, offline-capable platform that combined verified previous-year questions, structured study material, and interactive practice tools — without sign-ups, ads, or paywalls.
 
 ## Research & Discovery
 
-- Surveyed 15+ TCS NQT aspirants about their pain points - top complaints were scattered resources, unverified questions, and no way to track progress
+- Surveyed 15+ TCS NQT aspirants about their pain points — top complaints were scattered resources, unverified questions, and no way to track progress
 - Audited existing platforms (PrepInsta, GeeksforGeeks, IndiaBix) on content quality, UX, and offline access
 - Mapped the TCS NQT exam pattern: 92 questions across 6 sections (Numerical, Verbal, Reasoning, Programming Logic, Coding) in 150 minutes
-- Key insight: most aspirants study on mobile, often with unreliable internet - offline-first was non-negotiable
+- Key insight: most aspirants study on mobile, often with unreliable internet — offline-first was non-negotiable
 
 ## Solution & Approach
 
 ### 1. Content-First Architecture
 
-Built the knowledge base in plain Markdown - 74 verified PYQs from actual 2024 exam shifts, 300 aptitude & reasoning questions, 50 coding problems, 10 full previous papers, and HR interview prep. Readable on GitHub, in VS Code, or any text editor.
+Built the knowledge base in plain Markdown — 74 verified PYQs from actual 2024 exam shifts, 300 aptitude & reasoning questions, 50 coding problems, 10 full previous papers, and HR interview prep. Readable on GitHub, in VS Code, or any text editor.
 
 ### 2. Interactive PWA
 
@@ -52,11 +52,11 @@ A zero-dependency Progressive Web App with 12 features: custom quiz builder (pic
 
 ### 3. Offline-First Design
 
-Service Worker caches the entire app shell and question bank on first load. Once installed, the app works fully offline - critical for students studying on trains, in hostels, or areas with patchy connectivity.
+Service Worker caches the entire app shell and question bank on first load. Once installed, the app works fully offline — critical for students studying on trains, in hostels, or areas with patchy connectivity.
 
 ### 4. Open-Source & Community-Driven
 
-Published as a public GitHub repo with clear contribution guidelines. 4 contributors within the first week - adding new PYQs, improving solutions, and enhancing the app.
+Published as a public GitHub repo with clear contribution guidelines. 4 contributors within the first week — adding new PYQs, improving solutions, and enhancing the app.
 
 ## Product Gallery
 
@@ -93,9 +93,9 @@ The shipped product had to feel useful on day one, even for first-time users on 
 
 Three design decisions defined the project:
 
-**1. Zero dependencies - Vanilla JS only.** No React, no build tools, no bundlers. The entire app is `index.html` + `app.js` + `styles.css` + data files. This means instant load, trivial hosting (GitHub Pages), and a contribution barrier low enough for freshers to submit PRs.
+**1. Zero dependencies — Vanilla JS only.** No React, no build tools, no bundlers. The entire app is `index.html` + `app.js` + `styles.css` + data files. This means instant load, trivial hosting (GitHub Pages), and a contribution barrier low enough for freshers to submit PRs.
 
-**2. Data-driven quiz engine.** All questions live in a structured JS data file. The quiz builder dynamically filters by topic, difficulty, and count. Adding new questions is a data-only change - no UI code needs to touch.
+**2. Data-driven quiz engine.** All questions live in a structured JS data file. The quiz builder dynamically filters by topic, difficulty, and count. Adding new questions is a data-only change — no UI code needs to touch.
 
 ```javascript
 // Quiz builder - supports custom configurations
@@ -116,14 +116,14 @@ const PRESETS = {
 };
 ```
 
-**3. localStorage for persistence - no backend needed.** Quiz scores, flashcard progress, study time, bookmarks, and notes all persist in localStorage. Users can export/import their progress as JSON for backup or device migration.
+**3. localStorage for persistence — no backend needed.** Quiz scores, flashcard progress, study time, bookmarks, and notes all persist in localStorage. Users can export/import their progress as JSON for backup or device migration.
 
 ## Outcome & Metrics
 
 - **424+ practice questions** across Numerical, Verbal, Reasoning, and Programming sections
 - **10 full previous papers** for mock test practice
 - **74 verified PYQs** from actual 2024 TCS NQT exam shifts with detailed explanations
-- **12 PWA features** - quiz builder, flashcards, notes, Pomodoro timer, bookmarks, analytics, dark mode, and more
+- **12 PWA features** — quiz builder, flashcards, notes, Pomodoro timer, bookmarks, analytics, dark mode, and more
 - **4 open-source contributors** within the first week
 - **Live:** [atavisticrystal6888.github.io/TCS-NQT-Prep-Hub](https://atavisticrystal6888.github.io/TCS-NQT-Prep-Hub/)
 
@@ -135,4 +135,4 @@ Going zero-dependency was the right call. The app loads in under 1 second on 3G,
 
 ### What I'd Change
 
-Would add a spaced-repetition algorithm (SM-2) for flashcards instead of simple random shuffling. The current implementation shows cards randomly - a proper SRS would significantly improve retention efficiency for users preparing over multiple weeks.
+Would add a spaced-repetition algorithm (SM-2) for flashcards instead of simple random shuffling. The current implementation shows cards randomly — a proper SRS would significantly improve retention efficiency for users preparing over multiple weeks.

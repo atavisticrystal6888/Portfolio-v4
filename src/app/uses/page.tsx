@@ -15,8 +15,8 @@ const GROUPS = [
     label: "Hardware",
     title: "What I build on",
     items: [
-      { name: "Dell Latitude 5550", detail: "Daily work driver - Intel Core Ultra 7 · 32 GB · 1 TB NVMe" },
-      { name: "Lenovo ThinkPad (personal)", detail: "Side-project machine - Linux for experiments" },
+      { name: "Dell Latitude 5550", detail: "Daily work driver — Intel Core Ultra 7 · 32 GB · 1 TB NVMe" },
+      { name: "Lenovo ThinkPad (personal)", detail: "Side-project machine — Linux for experiments" },
       { name: "Samsung 27\" 1440p", detail: "Primary external monitor; VS Code + browser split" },
       { name: "Logitech MX Master 3S", detail: "Scroll wheel worth every rupee" },
     ],
@@ -27,7 +27,7 @@ const GROUPS = [
     items: [
       { name: "VS Code + GitHub Copilot", detail: "Agent mode for scaffolding; inline for refactors" },
       { name: "Claude + ChatGPT", detail: "Longer reasoning loops and architectural sparring" },
-      { name: "JetBrains Mono", detail: "Editor font - ligatures on" },
+      { name: "JetBrains Mono", detail: "Editor font — ligatures on" },
       { name: "Night Owl + Satoshi Vercel", detail: "Dark theme rotation" },
     ],
   },
@@ -77,7 +77,7 @@ export default function UsesPage() {
       <h1 className={styles.title}>Uses</h1>
       <p className={styles.lede}>
         An honest inventory of the tools behind the work on this site. No
-        affiliate links, no aspirational gear - this is what I actually open
+        affiliate links, no aspirational gear — this is what I actually open
         every day.
       </p>
 

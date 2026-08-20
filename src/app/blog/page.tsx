@@ -7,7 +7,7 @@ import { JsonLd } from "@/components/ui/JsonLd";
 export const metadata = generatePageMetadata({
   title: "Blog",
   description:
-    "Thoughts on product management, data analytics, and building - by Dhruv Singhal.",
+    "Thoughts on product management, data analytics, and building — by Dhruv Singhal.",
   path: "/blog",
 });
 

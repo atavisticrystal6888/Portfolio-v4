@@ -84,7 +84,7 @@ export function LabMatrix({ ideas }: LabMatrixProps) {
           {active === ALL ? "All ideas" : `${active} ideas`}
         </SectionLabel>
         <h2 className={cn(page.sectionTitle, styles.tightHeading)}>
-          The matrix - sorted by difficulty
+          The matrix — sorted by difficulty
         </h2>
         <p
           className={styles.count}

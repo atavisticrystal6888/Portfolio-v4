@@ -1,11 +1,11 @@
 ---
 slug: "desktasks"
-title: "DeskTasks - The Task Widget That Stays Out of Your Way"
-subtitle: "A local-first desktop widget pinned behind every window - natural-language capture, recurring tasks, reminders, and time tracking, shipped for Windows and macOS with an offline-first companion PWA."
+title: "DeskTasks — The Task Widget That Stays Out of Your Way"
+subtitle: "A local-first desktop widget pinned behind every window — natural-language capture, recurring tasks, reminders, and time tracking, shipped for Windows and macOS with an offline-first companion PWA."
 role: "Solo Builder · Product & Engineering"
 duration: "2026 – present"
 stack: ["Electron", "JavaScript", "IndexedDB", "Supabase", "PWA"]
-tldr: "Todo apps compete for your attention; DeskTasks refuses it. The widget sits at the bottom of the window stack - visible exactly when you glance at your desktop, invisible while you work. Local-first and accountless with atomic JSON storage, a natural-language quick-add parser, honest calendar import/export, and an offline-first companion PWA. Shipped: 4 tagged releases, Windows + macOS builds, 540+ test assertions."
+tldr: "Todo apps compete for your attention; DeskTasks refuses it. The widget sits at the bottom of the window stack — visible exactly when you glance at your desktop, invisible while you work. Local-first and accountless with atomic JSON storage, a natural-language quick-add parser, honest calendar import/export, and an offline-first companion PWA. Shipped: 4 tagged releases, Windows + macOS builds, 540+ test assertions."
 metrics:
   - label: "Test Assertions"
     value: 540
@@ -29,32 +29,32 @@ nextSlug: "better-half"
 
 ## Context & Problem
 
-Every task manager makes the same bet: to be used, it must be seen, so it floats, badges, and notifies. The result is that checking your tasks becomes another context switch - and the app you bought to reduce friction adds some.
+Every task manager makes the same bet: to be used, it must be seen, so it floats, badges, and notifies. The result is that checking your tasks becomes another context switch — and the app you bought to reduce friction adds some.
 
 The insight behind DeskTasks is the opposite bet: the desktop wallpaper is the one surface you glance at dozens of times a day without meaning to. A widget pinned *behind* every window (`HWND_BOTTOM` on Windows) is invisible while you work and present the moment you look up. No window management, no dock icon to chase, no account to create.
 
 ## Product Decisions
 
-- **Local-first, accountless.** Data lives in one portable JSON file with atomic writes (temp file → fsync → `.bak` → rename), 7 daily snapshots, and automatic corruption recovery with a visible banner. Sync via Supabase exists but is strictly opt-in convenience - the product is complete without a network.
+- **Local-first, accountless.** Data lives in one portable JSON file with atomic writes (temp file → fsync → `.bak` → rename), 7 daily snapshots, and automatic corruption recovery with a visible banner. Sync via Supabase exists but is strictly opt-in convenience — the product is complete without a network.
 - **Capture must be one line.** The quick-add parser turns `pay rent tomorrow 4pm !high #home every month` into a titled, tagged, scheduled, prioritised, recurring task. It handles relative times, ranges, day words, and recurrence including `last friday of month` and `every N days after done`.
-- **Never approximate.** Calendar rules that can't round-trip honestly (a "2nd Tuesday" .ics rule the engine can't represent, or "after done" recurrence with no calendar equivalent) import as clearly-labelled single tasks or export with an explaining note - instead of silently drifting.
+- **Never approximate.** Calendar rules that can't round-trip honestly (a "2nd Tuesday" .ics rule the engine can't represent, or "after done" recurrence with no calendar equivalent) import as clearly-labelled single tasks or export with an explaining note — instead of silently drifting.
 - **One timer, not many.** Time tracking allows a single active timer, caps a forgotten one at 8 hours, and banks time when the task is ticked off. Completion is the clearest "I'm done" signal, so it's the one that commits the number.
 
 ## Implementation
 
-The Electron main process owns all state: every mutation goes through IPC to one store, and the renderer re-renders from a single broadcast - UI and disk can never disagree, which is what makes crash recovery boring. Reminders ride Windows toast notifications with repeat nudges, a morning summary, and an end-of-day recap. Notes allow only `http`/`https`/`mailto` links - `file:`, `shell:`, and `javascript:` are refused outright.
+The Electron main process owns all state: every mutation goes through IPC to one store, and the renderer re-renders from a single broadcast — UI and disk can never disagree, which is what makes crash recovery boring. Reminders ride Windows toast notifications with repeat nudges, a morning summary, and an end-of-day recap. Notes allow only `http`/`https`/`mailto` links — `file:`, `shell:`, and `javascript:` are refused outright.
 
-The companion PWA (Vite + IndexedDB + service worker) reuses the same shared modules - parser, recurrence, dates, CSV - so widget and phone can never disagree about what "biweekly" means. It reads and writes the exact same JSON format, works fully offline, and syncs through a single Supabase `records` table when the user opts in.
+The companion PWA (Vite + IndexedDB + service worker) reuses the same shared modules — parser, recurrence, dates, CSV — so widget and phone can never disagree about what "biweekly" means. It reads and writes the exact same JSON format, works fully offline, and syncs through a single Supabase `records` table when the user opts in.
 
 macOS got a deliberate compromise: Electron offers no window level below normal there, so DeskTasks floats like Stickies does, and focus detection leans on a best-effort, documented-as-fragile OS file. Shipping an honest 80% beat holding the release for a native rewrite.
 
 ## Outcome & Metrics
 
 - **4 tagged releases** (v1.1.0 → v1.2.2), packaged for Windows (installer + portable) and macOS (arm64 + x64)
-- **540+ test assertions** - 409+ unit (parser, recurrence, platform, sync round-trips) plus 131 e2e assertions that restart the real app to prove persistence and crash recovery
-- **3 import/export formats** - `.ics` with RRULE, CSV with BOM, Markdown - with UID-based dedupe on re-import
+- **540+ test assertions** — 409+ unit (parser, recurrence, platform, sync round-trips) plus 131 e2e assertions that restart the real app to prove persistence and crash recovery
+- **3 import/export formats** — `.ics` with RRULE, CSV with BOM, Markdown — with UID-based dedupe on re-import
 - **Offline-first companion PWA** sharing the widget's exact data format and parsing rules
-- **Zero telemetry, zero accounts** - sync is opt-in; the data file is portable by hand
+- **Zero telemetry, zero accounts** — sync is opt-in; the data file is portable by hand
 
 ## Learnings
 
@@ -64,4 +64,4 @@ Making the main process the single writer bought disproportionate reliability: e
 
 ### What I'd Change
 
-The z-order dance on Windows (a once-per-second check to survive Win+D) works but is a workaround; the wallpaper-layer reparenting mode is more robust and should become the default once its focus-loss trade-off has a cleaner answer. And unsigned builds are the real adoption tax - a code-signing certificate matters more to first-run experience than the next feature.
+The z-order dance on Windows (a once-per-second check to survive Win+D) works but is a workaround; the wallpaper-layer reparenting mode is more robust and should become the default once its focus-loss trade-off has a cleaner answer. And unsigned builds are the real adoption tax — a code-signing certificate matters more to first-run experience than the next feature.

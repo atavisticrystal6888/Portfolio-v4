@@ -34,7 +34,7 @@ export async function GET() {
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Dhruv Singhal - Blog</title>
+    <title>Dhruv Singhal — Blog</title>
     <link>${SITE_URL}/blog</link>
     <description>Thoughts on product, data, and building AI-native software.</description>
     <language>en-us</language>

@@ -17,7 +17,7 @@ export const metadata = generatePageMetadata({
 const PLAYBOOKS = [
   {
     title: "Scoping an LLM feature",
-    body: "How to write a PRD when the model is the product. Success criteria, eval harness, guardrails, and cost envelope - before a single prompt is written.",
+    body: "How to write a PRD when the model is the product. Success criteria, eval harness, guardrails, and cost envelope — before a single prompt is written.",
     meta: "Framework",
   },
   {
@@ -53,12 +53,12 @@ export default function AIPMPage() {
       <JsonLd id="ai-pm-breadcrumb-jsonld" data={breadcrumbJsonLd} />
 
       <p className={styles.kicker}>Specialization</p>
-      <h1 className={styles.title}>AI PM - where product thinking meets the model</h1>
+      <h1 className={styles.title}>AI PM — where product thinking meets the model</h1>
       <p className={styles.lede}>
         I build LLM products the way a PM ships any other product: with a crisp
         problem, an eval rubric, a cost envelope, and a way to roll back. This
         page collects the playbooks, artefacts, and shipped work behind that
-        stance - most of it learned building{" "}
+        stance — most of it learned building{" "}
         <Link href="/projects/aarchid">Aarchid</Link> with{" "}
         <a
           href="https://github.com/dfordp"
@@ -90,7 +90,7 @@ export default function AIPMPage() {
         <p className={styles.lede} style={{ marginBottom: "var(--space-5)" }}>
           Six plant-diagnosis cases. Two model versions. One confidence gate.
           Toggle the controls and watch the same golden set re-score in real
-          time - this is how I validate an LLM feature before it ships.
+          time — this is how I validate an LLM feature before it ships.
         </p>
         <EvalHarnessDemo />
       </div>
@@ -101,7 +101,7 @@ export default function AIPMPage() {
         <p className={styles.lede} style={{ marginBottom: "var(--space-5)" }}>
           Same harness mindset, applied to economics. Move the sliders to see
           how batch size, cache hit rate, and request volume reshape the
-          per-user-per-month bill - and whether you stay inside the $0.25
+          per-user-per-month bill — and whether you stay inside the $0.25
           envelope.
         </p>
         <CostModelDemo />
@@ -109,7 +109,7 @@ export default function AIPMPage() {
 
       <div className={styles.section}>
         <SectionLabel>Case Study</SectionLabel>
-        <h2 className={styles.sectionTitle}>Aarchid - shipped proof</h2>
+        <h2 className={styles.sectionTitle}>Aarchid — shipped proof</h2>
         <div className={styles.card}>
           <h3>AI Botanical Intelligence · 92% diagnosis accuracy</h3>
           <p>
@@ -150,16 +150,16 @@ export default function AIPMPage() {
         <h2 className={styles.sectionTitle}>On the bench</h2>
         <ul className={styles.list}>
           <li>
-            <strong>AI PM interview prep kit</strong> - deconstructed case
+            <strong>AI PM interview prep kit</strong> — deconstructed case
             questions, eval-harness design, and model economics cheatsheets.
           </li>
           <li>
-            <strong>Second Aarchid-scale build</strong> - applying the same
+            <strong>Second Aarchid-scale build</strong> — applying the same
             Edge Stack pattern to a different problem domain.
           </li>
           <li>
             <strong>Essay series: &ldquo;The PRD is dead, long live the eval
-            set&rdquo;</strong> - in progress.
+            set&rdquo;</strong> — in progress.
           </li>
         </ul>
       </div>

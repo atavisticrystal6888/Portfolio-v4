@@ -6,7 +6,7 @@ updatedDate: null
 category: "Product"
 tags: ["experimentation", "ab-testing", "product-management", "architecture", "statistics"]
 readingTime: "7 min read"
-excerpt: "Experimentation is the PM's scientific instrument - and the tooling most teams outsource. What I learned building ExperimentHub: assignment as a pure function, ingestion that can't slow the product, and statistics that respect peeking."
+excerpt: "Experimentation is the PM's scientific instrument — and the tooling most teams outsource. What I learned building ExperimentHub: assignment as a pure function, ingestion that can't slow the product, and statistics that respect peeking."
 socialImage: null
 ---
 
@@ -14,7 +14,7 @@ socialImage: null
 
 Optimizely and LaunchDarkly are excellent products. But they carry two structural costs that some teams simply cannot pay: your users' behavioural data leaves your infrastructure, and every assignment decision depends on an external network call.
 
-For a privacy-sensitive team - or anyone whose compliance posture forbids shipping user behaviour to a third party - that's not a pricing discussion, it's a disqualifier. That gap is why I built [ExperimentHub](/projects/experiment-hub): a self-hosted, multi-tenant experimentation platform. Building it taught me more about experimentation than running a hundred tests ever did, because every convenience a vendor hides became a decision I had to make explicitly.
+For a privacy-sensitive team — or anyone whose compliance posture forbids shipping user behaviour to a third party — that's not a pricing discussion, it's a disqualifier. That gap is why I built [ExperimentHub](/projects/experiment-hub): a self-hosted, multi-tenant experimentation platform. Building it taught me more about experimentation than running a hundred tests ever did, because every convenience a vendor hides became a decision I had to make explicitly.
 
 Three of those decisions are worth writing down.
 
@@ -22,25 +22,25 @@ Three of those decisions are worth writing down.
 
 The core promise of an A/B test is that the same user always sees the same variant. Most platforms deliver that promise with a database: look up the user, store the assignment, return it forever after.
 
-ExperimentHub instead makes assignment a *pure function*: MurmurHash3 over `"{experiment_key}:{user_id}"`, mapped into a 10,000-slot basis-points bucket space, with variants owning cumulative ranges. Same inputs, same variant, forever - no lookup, no network call, no stored state.
+ExperimentHub instead makes assignment a *pure function*: MurmurHash3 over `"{experiment_key}:{user_id}"`, mapped into a 10,000-slot basis-points bucket space, with variants owning cumulative ranges. Same inputs, same variant, forever — no lookup, no network call, no stored state.
 
-The interesting part isn't the speed (though a 182-line Rust core makes it effectively free). It's that determinism becomes a **contract**. Any SDK, in any language, can re-implement the bucket math and verify it against golden vectors. The platform can't disagree with the client, because there's nothing to disagree about - they're computing the same function.
+The interesting part isn't the speed (though a 182-line Rust core makes it effectively free). It's that determinism becomes a **contract**. Any SDK, in any language, can re-implement the bucket math and verify it against golden vectors. The platform can't disagree with the client, because there's nothing to disagree about — they're computing the same function.
 
 The PM lesson underneath: when a guarantee matters, prefer designs where the guarantee is *structural* over designs where it's *operational*. A stored assignment can be lost, corrupted, or slow. A hash can't.
 
 ## 2. Measurement must never slow the product
 
-The second silent vendor convenience: someone else absorbs your event volume. Self-hosting means a launch-day traffic spike lands on *your* ingestion path - and if analytics backpressure ever slows the product being measured, the experiment has changed the thing it was measuring.
+The second silent vendor convenience: someone else absorbs your event volume. Self-hosting means a launch-day traffic spike lands on *your* ingestion path — and if analytics backpressure ever slows the product being measured, the experiment has changed the thing it was measuring.
 
-So ExperimentHub decouples ruthlessly. Events land in a collector that publishes to Kafka through Broadway and buffers through outages. Analysis is *pulled* by scheduled workers - it reads aggregates when it's ready, instead of chasing a stream. The measured product stays fast no matter what the statistics engine is doing, and the statistics engine stays simple because it never handles a live firehose.
+So ExperimentHub decouples ruthlessly. Events land in a collector that publishes to Kafka through Broadway and buffers through outages. Analysis is *pulled* by scheduled workers — it reads aggregates when it's ready, instead of chasing a stream. The measured product stays fast no matter what the statistics engine is doing, and the statistics engine stays simple because it never handles a live firehose.
 
-This is the same decoupling argument PMs make about org design - the team measuring outcomes shouldn't be able to block the team shipping them - expressed in infrastructure.
+This is the same decoupling argument PMs make about org design — the team measuring outcomes shouldn't be able to block the team shipping them — expressed in infrastructure.
 
 ## 3. Statistics must respect the way PMs actually behave
 
 Every PM peeks. The experiment is running, the dashboard is right there, and the p-value looks so close to significant. Classical fixed-horizon tests silently punish this: peek repeatedly at a 5% threshold and your real false-positive rate can triple.
 
-A platform that only offers a t-test endpoint is therefore a trap dressed as a tool. ExperimentHub's statistical engine ships O'Brien-Fleming and Pocock alpha-spending boundaries alongside the classical z-test and Welch's t-test, plus a power calculator so experiments are sized *before* they start. Sequential methods exist precisely so that looking early is legitimate - the boundaries pay for the peeking.
+A platform that only offers a t-test endpoint is therefore a trap dressed as a tool. ExperimentHub's statistical engine ships O'Brien-Fleming and Pocock alpha-spending boundaries alongside the classical z-test and Welch's t-test, plus a power calculator so experiments are sized *before* they start. Sequential methods exist precisely so that looking early is legitimate — the boundaries pay for the peeking.
 
 The design principle: don't build tools that assume ideal users. Build tools where the tempting behaviour is the safe behaviour.
 
@@ -48,6 +48,6 @@ The design principle: don't build tools that assume ideal users. Build tools whe
 
 Scope honesty matters more on platforms than on features, because platform gaps masquerade as capabilities until someone relies on them. ExperimentHub's Bayesian engine exists but isn't exposed; CUPED isn't implemented; the feature-flag creation UI is deferred. Each of those is written down as *not there yet* rather than implied by a menu item that half-works.
 
-If you're evaluating experimentation tooling - buying or building - the questions that mattered most in the building were: Where does assignment happen, and can it drift? Can measurement load ever touch product latency? And what does the tool do when a human peeks?
+If you're evaluating experimentation tooling — buying or building — the questions that mattered most in the building were: Where does assignment happen, and can it drift? Can measurement load ever touch product latency? And what does the tool do when a human peeks?
 
 Those three answers tell you more than any feature matrix.

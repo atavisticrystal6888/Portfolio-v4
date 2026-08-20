@@ -12,7 +12,7 @@ const EXPERIENCE: ExperienceEntry[] = [
   {
     company: "The Sleep Company",
     role: "Product Manager Intern, Growth",
-    period: "Jul 2026 - Present",
+    period: "Jul 2026 – Present",
     description:
       "Driving growth product initiatives: vendor evaluation (BSP/CRM/payments/OMS/WMS), AI-powered operational agents, Shopify Master Catalogue standardization, and PDP user-flow mapping.",
     current: true,
@@ -20,14 +20,14 @@ const EXPERIENCE: ExperienceEntry[] = [
   {
     company: "Wipro",
     role: "AI Product Intern, Wipro TOPS",
-    period: "Feb - Jul 2026",
+    period: "Feb – Jul 2026",
     description:
       "Scoped Auriga ReX (AI enterprise workflow platform) plus crew mobile and records workflows across 12+ aviation scenarios, translating SME input into build-ready specs.",
   },
   {
     company: "Read Riches",
     role: "Founder's Office",
-    period: "2024 - 2025",
+    period: "2024 – 2025",
     description:
       "Ran content-led growth experiments, managed a 4-person research and content team, and helped drive a 4x retention improvement through sharper operating cadence.",
   },

@@ -1,11 +1,11 @@
 ---
 slug: "portfolio-site"
-title: "This Portfolio - A Product in Itself"
-subtitle: "Applied PM thinking to build a production-grade portfolio through 5 shipped iterations - from a single HTML file to a Next.js app with 95+ Lighthouse scores."
+title: "This Portfolio — A Product in Itself"
+subtitle: "Applied PM thinking to build a production-grade portfolio through 5 shipped iterations — from a single HTML file to a Next.js app with 95+ Lighthouse scores."
 role: "Full-Stack Developer & Product Manager"
 duration: "2025 – 2026"
 stack: ["Next.js", "React", "TypeScript", "Three.js", "MDX", "Framer Motion"]
-tldr: "Needed to stand out as a PM candidate with a non-traditional path into product. I treated the portfolio itself as a product - conducting user research, writing specs, and shipping 5 iterations in 3 months. v1 was a single HTML file; the current build is a Next.js app with MDX case studies, dynamic OG images, ISR, and 95+ Lighthouse scores."
+tldr: "Needed to stand out as a PM candidate with a non-traditional path into product. I treated the portfolio itself as a product — conducting user research, writing specs, and shipping 5 iterations in 3 months. v1 was a single HTML file; the current build is a Next.js app with MDX case studies, dynamic OG images, ISR, and 95+ Lighthouse scores."
 metrics:
   - label: "Lighthouse Score"
     value: 95
@@ -29,22 +29,22 @@ nextSlug: "aarchid"
 
 ## Context & Problem
 
-Breaking into product management with a non-traditional background requires demonstrating PM skills, not just claiming them. A standard resume-style portfolio wouldn't cut it - I needed something that was itself proof of product thinking.
+Breaking into product management with a non-traditional background requires demonstrating PM skills, not just claiming them. A standard resume-style portfolio wouldn't cut it — I needed something that was itself proof of product thinking.
 
-The meta-challenge: the portfolio needed to demonstrate the same skills it was showcasing - user research, spec writing, iterative development, and data-driven decisions.
+The meta-challenge: the portfolio needed to demonstrate the same skills it was showcasing — user research, spec writing, iterative development, and data-driven decisions.
 
 ## Research & Discovery
 
 - Analyzed 20+ PM portfolios to identify what worked and what didn't
 - Researched what hiring managers and recruiters actually look at (spoiler: case studies and proof of structured thinking)
 - Identified reference sites (similar PM portfolios) for interaction patterns and content strategy
-- Key insight: depth beats breadth - one well-documented case study outweighs five bullet points
+- Key insight: depth beats breadth — one well-documented case study outweighs five bullet points
 
 ## Solution & Approach
 
 ### v1: Single HTML File
 
-Everything in one file - validated the content strategy, tested with initial reviewers, identified what was missing. Proved the concept with zero infrastructure.
+Everything in one file — validated the content strategy, tested with initial reviewers, identified what was missing. Proved the concept with zero infrastructure.
 
 ### v2: Multi-Page Static Architecture
 
@@ -52,7 +52,7 @@ Refactored into 14 HTML pages with modular CSS/JS. Added Three.js hero particles
 
 ### v3: Next.js Migration (First Attempt)
 
-Ported the static site to Next.js with App Router. Gained SSR, image optimisation, and route-based code splitting. But the architecture still carried over v2's patterns - it was a migration, not a rethink.
+Ported the static site to Next.js with App Router. Gained SSR, image optimisation, and route-based code splitting. But the architecture still carried over v2's patterns — it was a migration, not a rethink.
 
 ### v4: Production Rebuild
 
@@ -60,7 +60,7 @@ Ground-up rebuild with a mature component architecture. MDX for case studies (wr
 
 ### v5: Hiring-Focused Refinement
 
-Refined the production build around sharper positioning, stronger case-study writing, canonical resume sync, and more intentional recruiter flows. The product did not need a visual redesign - it needed clearer proof, tighter messaging, and better consistency across the site.
+Refined the production build around sharper positioning, stronger case-study writing, canonical resume sync, and more intentional recruiter flows. The product did not need a visual redesign — it needed clearer proof, tighter messaging, and better consistency across the site.
 
 ## Visual Tour
 
@@ -91,7 +91,7 @@ The current build is intentionally multi-surface: the home page establishes posi
 
 Five decisions shaped the current architecture:
 
-**1. MDX for case studies - content as code.** Each case study is a `.mdx` file with YAML frontmatter (metrics, navigation, stack) and Markdown body. The build system compiles them into React pages with automatic prev/next navigation, breadcrumbs, and SEO metadata. Adding a case study is a single-file operation.
+**1. MDX for case studies — content as code.** Each case study is a `.mdx` file with YAML frontmatter (metrics, navigation, stack) and Markdown body. The build system compiles them into React pages with automatic prev/next navigation, breadcrumbs, and SEO metadata. Adding a case study is a single-file operation.
 
 ```mdx
 ---
@@ -109,11 +109,11 @@ nextSlug: "churn-analysis"
 Content renders with full React component support...
 ```
 
-**2. Dynamic OG images at the edge.** Every page generates a unique OpenGraph image via a `/og/[...slug]` route using `@vercel/og`. Social shares show a branded card with the page title, description, and domain - not a generic fallback.
+**2. Dynamic OG images at the edge.** Every page generates a unique OpenGraph image via a `/og/[...slug]` route using `@vercel/og`. Social shares show a branded card with the page title, description, and domain — not a generic fallback.
 
-**3. GitHub API integration with ISR.** The Projects and About pages fetch pinned repos, contribution graph, and language stats via GitHub's GraphQL API. Data revalidates hourly via ISR - always fresh, never blocking the build.
+**3. GitHub API integration with ISR.** The Projects and About pages fetch pinned repos, contribution graph, and language stats via GitHub's GraphQL API. Data revalidates hourly via ISR — always fresh, never blocking the build.
 
-**4. Component-driven design system.** `GlassCard`, `SectionLabel`, `MetricCounter`, `AnimatedSection` - reusable primitives that enforce visual consistency. The command palette reaches every page from anywhere with fuzzy search.
+**4. Component-driven design system.** `GlassCard`, `SectionLabel`, `MetricCounter`, `AnimatedSection` — reusable primitives that enforce visual consistency. The command palette reaches every page from anywhere with fuzzy search.
 
 **5. Quality gates before every deploy.** ESLint, TypeScript strict mode, Vitest unit tests, Playwright E2E and accessibility tests, and Lighthouse CI thresholds. No commit ships without passing all gates.
 
@@ -146,7 +146,7 @@ npm run build         # Next.js production build
 
 ### What Worked
 
-Writing full specs before coding prevented scope creep and made each version's scope crisp. The SpecKit workflow (constitution → spec → plan → tasks) is a PM artifact in itself. MDX was the right content format - case studies are written in Markdown but render with full React component support.
+Writing full specs before coding prevented scope creep and made each version's scope crisp. The SpecKit workflow (constitution → spec → plan → tasks) is a PM artifact in itself. MDX was the right content format — case studies are written in Markdown but render with full React component support.
 
 ### What I'd Change
 

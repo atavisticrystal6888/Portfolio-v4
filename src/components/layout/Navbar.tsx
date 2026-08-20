@@ -51,7 +51,7 @@ export function Navbar() {
         aria-label="Main navigation"
       >
         <div className={styles.inner}>
-          <Link href="/" className={styles.logo} aria-label="Dhruv Singhal - Home">
+          <Link href="/" className={styles.logo} aria-label="Dhruv Singhal — Home">
             <span className={styles.mark} aria-hidden="true">
               <Image
                 src={dhruvImage}

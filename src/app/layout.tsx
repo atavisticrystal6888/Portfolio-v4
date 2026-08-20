@@ -115,7 +115,7 @@ export default function RootLayout({
         <link
           rel="alternate"
           type="application/rss+xml"
-          title="Dhruv Singhal - Blog RSS"
+          title="Dhruv Singhal — Blog RSS"
           href="/rss.xml"
         />
         <meta name="theme-color" content="#0a0a0b" media="(prefers-color-scheme: dark)" />

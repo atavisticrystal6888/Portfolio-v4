@@ -17,7 +17,7 @@ import styles from "./about.module.css";
 export const metadata = generatePageMetadata({
   title: "About",
   description:
-    "Learn about Dhruv Singhal - a Product Manager & Builder with experience across D2C e-commerce, enterprise AI workflows, analytics, and technical execution.",
+    "Learn about Dhruv Singhal — a Product Manager & Builder with experience across D2C e-commerce, enterprise AI workflows, analytics, and technical execution.",
   path: "/about",
 });
 
@@ -41,7 +41,7 @@ export default async function AboutPage() {
       {/* Header */}
       <PageHeader
         title="Dhruv Singhal"
-        subtitle="Product Manager & Builder - turning ambiguous domain problems into product decisions, specs, and shipped systems."
+        subtitle="Product Manager & Builder — turning ambiguous domain problems into product decisions, specs, and shipped systems."
       />
 
       {/* Philosophy */}

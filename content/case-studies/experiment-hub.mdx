@@ -1,11 +1,11 @@
 ---
 slug: "experiment-hub"
-title: "ExperimentHub - Self-Hosted A/B Testing Platform"
-subtitle: "Multi-tenant experimentation platform - deterministic Rust assignment core, Kafka event ingestion, a Python statistical engine, and a realtime React dashboard."
+title: "ExperimentHub — Self-Hosted A/B Testing Platform"
+subtitle: "Multi-tenant experimentation platform — deterministic Rust assignment core, Kafka event ingestion, a Python statistical engine, and a realtime React dashboard."
 role: "Solo Builder · Product & Architecture"
 duration: "2026 – present"
 stack: ["Elixir", "Phoenix", "Rust", "Python", "FastAPI", "React", "TypeScript", "Kafka"]
-tldr: "Teams with strict data-residency needs can't ship their users' behaviour to SaaS experimentation vendors. I built ExperimentHub - a self-hosted, multi-tenant A/B testing platform where a 182-line Rust core makes variant assignment deterministic and stateless, Broadway/Kafka ingests events at batch scale, and a Python engine runs frequentist and sequential analyses - all behind 50+ tenant-scoped API routes and a realtime dashboard."
+tldr: "Teams with strict data-residency needs can't ship their users' behaviour to SaaS experimentation vendors. I built ExperimentHub — a self-hosted, multi-tenant A/B testing platform where a 182-line Rust core makes variant assignment deterministic and stateless, Broadway/Kafka ingests events at batch scale, and a Python engine runs frequentist and sequential analyses — all behind 50+ tenant-scoped API routes and a realtime dashboard."
 metrics:
   - label: "API Routes"
     value: 50
@@ -29,9 +29,9 @@ nextSlug: "desktasks"
 
 ## Context & Problem
 
-Experimentation is the closest thing product management has to a scientific instrument - and it's exactly the tooling most teams outsource. SaaS vendors like Optimizely and LaunchDarkly are excellent, but they come with two structural costs: your users' behavioural data leaves your infrastructure, and assignment decisions depend on an external network call.
+Experimentation is the closest thing product management has to a scientific instrument — and it's exactly the tooling most teams outsource. SaaS vendors like Optimizely and LaunchDarkly are excellent, but they come with two structural costs: your users' behavioural data leaves your infrastructure, and assignment decisions depend on an external network call.
 
-For privacy-sensitive teams - or anyone building an internal experimentation platform - that trade is unacceptable. The gap: a self-hosted platform covering the full experiment lifecycle (draft → running → paused → concluded) with assignment that is fast, deterministic, and entirely local.
+For privacy-sensitive teams — or anyone building an internal experimentation platform — that trade is unacceptable. The gap: a self-hosted platform covering the full experiment lifecycle (draft → running → paused → concluded) with assignment that is fast, deterministic, and entirely local.
 
 ## Design Principles
 
@@ -57,7 +57,7 @@ pub fn assign(experiment_key: &str, user_id: &str, ranges: &[Range]) -> usize {
 
 ### 2. Event ingestion built to absorb bursts
 
-An `event_collector` app receives single and batch events, publishes to Kafka through Broadway, and buffers through Kafka outages. Analysis is pulled by Oban-scheduled workers, never pushed synchronously - the measured product stays fast no matter what analytics is doing.
+An `event_collector` app receives single and batch events, publishes to Kafka through Broadway, and buffers through Kafka outages. Analysis is pulled by Oban-scheduled workers, never pushed synchronously — the measured product stays fast no matter what analytics is doing.
 
 ### 3. A statistical engine that respects peeking
 
@@ -88,15 +88,15 @@ Two screens carry the argument: the operator view that says what needs attention
 
 ## Implementation
 
-Four Elixir umbrella apps (domain core, Phoenix web layer, event collector, assignment engine wrapper) plus the Rust core, the Python statistical engine, and a React 19 + TypeScript dashboard - 8 runtime components, roughly 8,000 lines of first-party code. The dashboard covers experiment CRUD, lifecycle actions, metric definitions, feature flags, API-key and user administration, and an audit log, with Phoenix Channels pushing live updates to open experiment pages. JWT sessions and API keys are tenant-scoped; tenancy is enforced at row level.
+Four Elixir umbrella apps (domain core, Phoenix web layer, event collector, assignment engine wrapper) plus the Rust core, the Python statistical engine, and a React 19 + TypeScript dashboard — 8 runtime components, roughly 8,000 lines of first-party code. The dashboard covers experiment CRUD, lifecycle actions, metric definitions, feature flags, API-key and user administration, and an audit log, with Phoenix Channels pushing live updates to open experiment pages. JWT sessions and API keys are tenant-scoped; tenancy is enforced at row level.
 
 ## Outcome & Metrics
 
-- **50+ API routes** across experiments, metrics, flags, analytics, audit, GDPR, and admin - all tenant-scoped
-- **Deterministic assignment** - MurmurHash3 into 10,000 basis-point buckets, served from a 182-line Rust NIF with Elixir fallback
-- **4 statistical methods** - z-test, Welch's t-test, O'Brien-Fleming and Pocock sequential boundaries - plus power analysis
+- **50+ API routes** across experiments, metrics, flags, analytics, audit, GDPR, and admin — all tenant-scoped
+- **Deterministic assignment** — MurmurHash3 into 10,000 basis-point buckets, served from a 182-line Rust NIF with Elixir fallback
+- **4 statistical methods** — z-test, Welch's t-test, O'Brien-Fleming and Pocock sequential boundaries — plus power analysis
 - **8 background workers** for lifecycle automation, guardrails, retention, and partitioning
-- **Full lifecycle + audit** - draft → running → paused → concluded with optimistic locking and audit trail
+- **Full lifecycle + audit** — draft → running → paused → concluded with optimistic locking and audit trail
 - **Honest scope:** feature-flag creation UI, Bayesian analysis exposure, and CUPED are deliberately deferred; the results cache is still in-memory
 - **Source:** [github.com/atavisticrystal6888/A-B-Testing-Platform](https://github.com/atavisticrystal6888/A-B-Testing-Platform)
 
@@ -104,8 +104,8 @@ Four Elixir umbrella apps (domain core, Phoenix web layer, event collector, assi
 
 ### What Worked
 
-Putting the hash in Rust was less about raw speed and more about making determinism a *contract*: the bucket math is small enough to re-implement in any SDK language and verify against golden vectors. Decoupling ingestion from analysis via Kafka meant the statistical engine could stay simple - it reads aggregates on a schedule instead of chasing a stream.
+Putting the hash in Rust was less about raw speed and more about making determinism a *contract*: the bucket math is small enough to re-implement in any SDK language and verify against golden vectors. Decoupling ingestion from analysis via Kafka meant the statistical engine could stay simple — it reads aggregates on a schedule instead of chasing a stream.
 
 ### What I'd Change
 
-Multi-tenancy at row level keeps deployment simple but pushes discipline into every query - schema-level isolation would trade migration convenience for a harder security boundary. And I'd wire sequential-analysis recommendations into the dashboard sooner: the methods exist, but a PM's real question is "can I stop this experiment today?", and the UI should answer exactly that.
+Multi-tenancy at row level keeps deployment simple but pushes discipline into every query — schema-level isolation would trade migration convenience for a harder security boundary. And I'd wire sequential-analysis recommendations into the dashboard sooner: the methods exist, but a PM's real question is "can I stop this experiment today?", and the UI should answer exactly that.

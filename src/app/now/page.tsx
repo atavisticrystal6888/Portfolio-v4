@@ -6,7 +6,7 @@ import styles from "./now.module.css";
 export const metadata = generatePageMetadata({
   title: "Now",
   description:
-    "What Dhruv Singhal is doing now - current work, learning, reading, and building.",
+    "What Dhruv Singhal is doing now — current work, learning, reading, and building.",
   path: "/now",
 });
 
@@ -30,7 +30,7 @@ export default function NowPage() {
         <h2 className={styles.sectionTitle}>Current Roles</h2>
         <ul className={styles.list}>
           <li>
-            <strong>The Sleep Company</strong> - Product Manager Intern,
+            <strong>The Sleep Company</strong> — Product Manager Intern,
             Growth: vendor evaluation, AI-powered operational agents, and
             Shopify catalog operations for a D2C sleep brand.
           </li>
@@ -43,7 +43,7 @@ export default function NowPage() {
         <ul className={styles.list}>
           <li>LLM evaluation harnesses (golden sets, shadow traffic, A/B)</li>
           <li>Edge-runtime cost modelling for multimodal pipelines</li>
-          <li>Going deeper on system design - reading DDIA cover-to-cover</li>
+          <li>Going deeper on system design — reading DDIA cover-to-cover</li>
         </ul>
       </div>
 
@@ -51,9 +51,9 @@ export default function NowPage() {
         <SectionLabel>Reading</SectionLabel>
         <h2 className={styles.sectionTitle}>On My Shelf</h2>
         <ul className={styles.list}>
-          <li><em>Inspired</em> - Marty Cagan</li>
-          <li><em>Designing Data-Intensive Applications</em> - Martin Kleppmann</li>
-          <li><em>Thinking in Systems</em> - Donella Meadows</li>
+          <li><em>Inspired</em> — Marty Cagan</li>
+          <li><em>Designing Data-Intensive Applications</em> — Martin Kleppmann</li>
+          <li><em>Thinking in Systems</em> — Donella Meadows</li>
           <li>Lenny&apos;s Newsletter, Latent Space, Stratechery</li>
         </ul>
       </div>
@@ -63,17 +63,17 @@ export default function NowPage() {
         <h2 className={styles.sectionTitle}>Side Projects</h2>
         <ul className={styles.list}>
           <li>
-            <strong>KiteEdge</strong> - self-hosted portfolio analytics for
+            <strong>KiteEdge</strong> — self-hosted portfolio analytics for
             Zerodha Kite: 43+ indicators, Monte Carlo VaR, a NIFTY 500
             screener, and a FIFO trade journal across 13 services.
           </li>
           <li>
-            <strong>ExperimentHub</strong> - a self-hosted A/B testing
+            <strong>ExperimentHub</strong> — a self-hosted A/B testing
             platform with a deterministic Rust assignment core and
             sequential statistics.
           </li>
           <li>
-            <strong>DeskTasks</strong> - a local-first desktop task widget
+            <strong>DeskTasks</strong> — a local-first desktop task widget
             pinned behind every window, shipped for Windows + macOS.
           </li>
           <li>
@@ -81,10 +81,10 @@ export default function NowPage() {
             <a href="https://github.com/dfordp" target="_blank" rel="noopener noreferrer">
               Dilpreet Grover
             </a>{" "}
-            - multimodal plant-diagnosis app, edge stack, 92% accuracy on golden set.
+            — multimodal plant-diagnosis app, edge stack, 92% accuracy on golden set.
           </li>
           <li>
-            <strong>This site</strong> - ongoing portfolio iteration in
+            <strong>This site</strong> — ongoing portfolio iteration in
             Next.js 16 + React 19, with interactive AI PM demos and a 3D
             Aarchid hero.
           </li>

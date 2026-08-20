@@ -6,7 +6,7 @@ updatedDate: null
 category: "Product"
 tags: ["privacy", "security", "supabase", "rls", "product-management", "testing"]
 readingTime: "6 min read"
-excerpt: "Privacy policies are promises. Promises don't have test coverage. Building Better-Half, I turned every sharing rule into a database-enforced policy with 575 live checks - and the suite caught leaks a UI review never would have."
+excerpt: "Privacy policies are promises. Promises don't have test coverage. Building Better-Half, I turned every sharing rule into a database-enforced policy with 575 live checks — and the suite caught leaks a UI review never would have."
 socialImage: null
 ---
 
@@ -14,37 +14,37 @@ socialImage: null
 
 Every product with shared data makes privacy promises: *only your team can see this*, *your manager can't read your drafts*, *deleting your account removes your content*. Almost none of those promises are testable artefacts. They live in a policy doc, get implemented as `if` statements scattered across a codebase, and drift silently with every feature.
 
-Building [Better-Half](/projects/better-half) - a two-user companion app where one partner's cycle, mood, and stress data is shared per-category, on her terms - I couldn't afford drift. The entire product is a privacy promise. So the privacy contract was written *before* the features, and every clause had to answer one question:
+Building [Better-Half](/projects/better-half) — a two-user companion app where one partner's cycle, mood, and stress data is shared per-category, on her terms — I couldn't afford drift. The entire product is a privacy promise. So the privacy contract was written *before* the features, and every clause had to answer one question:
 
 **Can the database itself refuse this read?**
 
 ## Enforcement belongs below the UI
 
-The standard implementation of "she hasn't shared this with you" is a client-side filter: the API returns the row, the UI hides the field. That isn't a boundary - it's a costume. One forgotten filter, one new endpoint, one verbose error message, and the promise is broken with no test failing.
+The standard implementation of "she hasn't shared this with you" is a client-side filter: the API returns the row, the UI hides the field. That isn't a boundary — it's a costume. One forgotten filter, one new endpoint, one verbose error message, and the promise is broken with no test failing.
 
-Better-Half pushes every sharing decision into Postgres row-level security. A category that isn't shared is invisible *at the SQL layer* - the query returns nothing, no matter what the client asks for. Consent changes are policy changes, effective immediately, with no cache to invalidate. Mutual full-visibility ("Open Book") is a couple-level setting both partners must enable and either can revoke, and revocation cascades with membership: if a partner leaves, their access doesn't linger.
+Better-Half pushes every sharing decision into Postgres row-level security. A category that isn't shared is invisible *at the SQL layer* — the query returns nothing, no matter what the client asks for. Consent changes are policy changes, effective immediately, with no cache to invalidate. Mutual full-visibility ("Open Book") is a couple-level setting both partners must enable and either can revoke, and revocation cascades with membership: if a partner leaves, their access doesn't linger.
 
 The design rule generalises: **a privacy promise is only as strong as the lowest layer that enforces it.** Everything above that layer is UX, not security.
 
 ## The contract becomes a matrix
 
-Here's the part that turned out to matter most. Because every promise mapped to a policy, every promise became *checkable*. The RLS matrix started at 95 checks in milestone zero and grew with every feature - 148, 178, 224, 244, 452 - landing at 575 checks that run live against the hosted database in rolled-back transactions.
+Here's the part that turned out to matter most. Because every promise mapped to a policy, every promise became *checkable*. The RLS matrix started at 95 checks in milestone zero and grew with every feature — 148, 178, 224, 244, 452 — landing at 575 checks that run live against the hosted database in rolled-back transactions.
 
-Each check is a concrete question with a binary answer. Can the owner read her own row? Can the partner read it when the category is shared? When it's private? Can a member of a *different* couple read it? Can an anonymous session? Can a helper function be used as a back door? The matrix runs the full grid for every table, every milestone, and refuses vacuous passes - a check that can't fail is a check that isn't testing anything.
+Each check is a concrete question with a binary answer. Can the owner read her own row? Can the partner read it when the category is shared? When it's private? Can a member of a *different* couple read it? Can an anonymous session? Can a helper function be used as a back door? The matrix runs the full grid for every table, every milestone, and refuses vacuous passes — a check that can't fail is a check that isn't testing anything.
 
 ## The suite caught what review couldn't
 
 Two leaks made it into code and never made it to production, and both were found by the matrix rather than by reading the diff.
 
-The weekly meal planner keyed her suggestions on cycle phase - which meant a partner who could read the meal plan could *infer* her phase even with that sharing dial closed. The training planner had the same shape: plans derived from check-in details leaked the details through the derivation. No screen showed the private data. No endpoint returned it. The *feature output* was the leak.
+The weekly meal planner keyed her suggestions on cycle phase — which meant a partner who could read the meal plan could *infer* her phase even with that sharing dial closed. The training planner had the same shape: plans derived from check-in details leaked the details through the derivation. No screen showed the private data. No endpoint returned it. The *feature output* was the leak.
 
-That's precisely the class of bug a UI review can't catch, because every individual surface looks correct. Only a suite that asks "what can this role conclude from what it can read?" - mechanically, table by table, role by role - trips over inference paths.
+That's precisely the class of bug a UI review can't catch, because every individual surface looks correct. Only a suite that asks "what can this role conclude from what it can read?" — mechanically, table by table, role by role — trips over inference paths.
 
 ## What I'd tell a PM shipping shared-data features
 
 1. **Write the sharing contract first**, as a grid: data category × role × expected visibility. If you can't fill in a cell, you don't understand the feature yet.
-2. **Demand enforcement at the lowest layer** you have - database policies, not endpoint filters. Ask your engineers where a forgotten `if` would leak.
+2. **Demand enforcement at the lowest layer** you have — database policies, not endpoint filters. Ask your engineers where a forgotten `if` would leak.
 3. **Turn the grid into tests that run against the real schema.** A privacy audit is a snapshot; a regression suite is a guarantee that survives the next sprint.
 4. **Test derived data, not just raw data.** Recommendations, plans, and aggregates inherit the sensitivity of their inputs.
 
-Privacy debt is the quietest debt a product carries - nothing crashes, no metric dips, until the day it's the whole story. The only version of "we take privacy seriously" I trust anymore is the one with a failing test attached.
+Privacy debt is the quietest debt a product carries — nothing crashes, no metric dips, until the day it's the whole story. The only version of "we take privacy seriously" I trust anymore is the one with a failing test attached.

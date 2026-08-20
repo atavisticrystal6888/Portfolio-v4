@@ -1,7 +1,7 @@
 [
   {
     "slug": "aarchid",
-    "name": "Aarchid - AI Botanical Intelligence",
+    "name": "Aarchid — AI Botanical Intelligence",
     "category": "ai",
     "description": "Photograph a sick plant and get a diagnosis you can act on. Multimodal vision grounded by real-time research-augmented LLM reasoning instead of a confident guess. Built as co-creator: PM and engineer.",
     "imageUrl": "/images/projects/aarchid/hero.png",
@@ -26,7 +26,7 @@
   },
   {
     "slug": "hackmate",
-    "name": "Hackmate - Co-Founder Matchmaking Platform",
+    "name": "Hackmate — Co-Founder Matchmaking Platform",
     "category": "product",
     "description": "Helps solo founders find the co-founder they'd actually build with. Swipe-based matching shaped around real founder-discovery pain points, and iterated with the community it grew in.",
     "stack": ["Next.js", "TypeScript", "PostgreSQL", "Redis", "Vercel"],
@@ -40,7 +40,7 @@
   },
   {
     "slug": "kite-edge",
-    "name": "KiteEdge - Portfolio Intelligence",
+    "name": "KiteEdge — Portfolio Intelligence",
     "category": "technical",
     "description": "Gives a retail Zerodha trader the analytics desk a fund gets: 43+ indicators, Monte Carlo VaR, ensemble forecasting, a NIFTY 500 screener, and a FIFO trade journal, all self-hosted. 50 API endpoints, plus Power BI export for anyone who'd rather live in a dashboard.",
     "stack": ["Elixir", "Phoenix", "Python", "FastAPI", "React", "TypeScript", "PostgreSQL", "Kafka"],
@@ -54,7 +54,7 @@
   },
   {
     "slug": "experiment-hub",
-    "name": "ExperimentHub - A/B Testing Platform",
+    "name": "ExperimentHub — A/B Testing Platform",
     "category": "product",
     "description": "Lets a team run experiments it can trust on its own infrastructure, with deterministic variant assignment from a Rust MurmurHash3 core, so a user lands in the same bucket every time. Kafka event ingestion, a Python stats engine with sequential methods, and a realtime React dashboard, all tenant-scoped.",
     "imageUrl": "/images/projects/experiment-hub/results.png",
@@ -70,7 +70,7 @@
   },
   {
     "slug": "desktasks",
-    "name": "DeskTasks - Desktop Task Widget",
+    "name": "DeskTasks — Desktop Task Widget",
     "category": "product",
     "description": "Puts the task list on the desktop itself, pinned behind every window instead of buried in another tab. Natural-language quick-add, recurring tasks, reminders, time tracking, and honest .ics/CSV/Markdown round-trips. Local-first and accountless, shipped for Windows and macOS with an offline-first companion PWA.",
     "imageUrl": "/images/projects/desktasks/hero.png",
@@ -87,7 +87,7 @@
   },
   {
     "slug": "better-half",
-    "name": "Better-Half - Cycle-Aware Companion",
+    "name": "Better-Half — Cycle-Aware Companion",
     "category": "product",
     "description": "Helps long-distance couples stay in sync when they can't read the room in person. Cycle phase, mood, and stress drive daily guidance for her, him, and us. Privacy is enforced at the database rather than the UI: 575 live RLS checks, offline-first, $0/month infra.",
     "imageUrl": "/images/projects/better-half/hero.png",
@@ -135,7 +135,7 @@
   },
   {
     "slug": "portfolio-site",
-    "name": "This Portfolio - Meta Case Study",
+    "name": "This Portfolio — Meta Case Study",
     "category": "technical",
     "description": "Treated my own portfolio as a product: spec and success metrics before any code, then iterations driven by real feedback. Ships at 95+ Lighthouse, with the whole decision trail written up as its own case study.",
     "imageUrl": "/images/projects/portfolio-site/home.png",
@@ -151,7 +151,7 @@
   },
   {
     "slug": "weekly-retro",
-    "name": "Weekly Retro - Relationship Performance Review",
+    "name": "Weekly Retro — Relationship Performance Review",
     "category": "product",
     "description": "Corporate performance-review theatre, applied to a relationship, entirely on purpose: log a week of small signals and a scoring engine assembles a shareable 12-slide review deck, trajectory and areas of assessment included. The joke is the premise, not the build. Local-first PWA on IndexedDB, zero backend, and 25 pinned reference cases keeping the scoring honest.",
     "imageUrl": "/images/projects/weekly-retro/deck.png",

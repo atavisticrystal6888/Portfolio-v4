@@ -7,7 +7,7 @@ const CARDS = [
   },
   {
     title: "Data Informs, Intuition Decides",
-    desc: "Aarchid's eval harness told us accuracy was 92% - but user interviews revealed trust was the real bottleneck. Both signals matter.",
+    desc: "Aarchid's eval harness told us accuracy was 92% — but user interviews revealed trust was the real bottleneck. Both signals matter.",
   },
   {
     title: "Ship, Measure, Iterate",
