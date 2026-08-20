@@ -74,7 +74,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
 
         {hasCaseStudy && (
           <Link href={href} className={styles.cta}>
-            Read the case study &rarr;
+            Case study &rarr;
           </Link>
         )}
       </div>

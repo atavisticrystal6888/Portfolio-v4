@@ -65,10 +65,13 @@ export default function ContactPage() {
       <JsonLd id="contact-breadcrumb-jsonld" data={breadcrumbJsonLd} />
       <JsonLd id="contact-faq-jsonld" data={faqJsonLd} />
 
+      {/* The badge says what he is actually looking for rather than the
+          generic "Open to Opportunities" chip; the FAQ below says the same
+          thing at length. */}
       <PageHeader
-        title="Let's Talk Product"
-        subtitle="Hiring for Product, APM, or AI product roles? I would love to talk."
-        badge="Open to Opportunities"
+        title="Where to find me"
+        subtitle="Hiring for a Product, APM, or AI product role is the fastest reason to write. A question about one of these builds, or a correction, works too."
+        badge="Looking for full-time PM / APM roles"
       />
 
       {/* Contact Form */}

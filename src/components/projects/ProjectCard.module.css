@@ -94,15 +94,14 @@
   line-height: 1.9;
 }
 
+/* The row already links from its title, so this is a second affordance, not
+   the only one. It used to shout READ THE CASE STUDY in caps mono on every
+   row; sentence case says the same thing without the drumbeat. */
 .cta {
   display: inline-flex;
   align-items: center;
   min-height: 44px;
-  font-family: var(--font-mono);
-  font-size: var(--text-xs);
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: var(--tracking-label);
+  font-size: var(--text-sm);
   color: var(--accent);
   text-decoration: none;
   transition: color var(--transition-fast);
