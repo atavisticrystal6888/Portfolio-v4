@@ -1,10 +1,14 @@
+/* Sized by its content, not by the viewport. At 90vh the hero left a black
+   band above and below the six lines it actually holds, and pushed the
+   metrics strip out of the first scroll on every laptop. The cap keeps the
+   3D scene room to breathe on very tall screens without reopening the void. */
 .hero {
-  min-height: 90vh;
+  min-height: min(78vh, 620px);
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
-  padding: var(--space-10) var(--space-6);
+  padding: calc(var(--nav-height) + var(--space-9)) var(--space-6) var(--space-10);
 }
 
 .content {
@@ -51,31 +55,9 @@
   margin-top: var(--space-3);
 }
 
-.scroll {
-  position: absolute;
-  bottom: var(--space-8);
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-.scrollMouse {
-  width: 24px;
-  height: 40px;
-  border: 2px solid var(--border-strong);
-  border-radius: 12px;
-  display: flex;
-  justify-content: center;
-  padding-top: 8px;
-}
-
-.scrollDot {
-  width: 4px;
-  height: 8px;
-  background: var(--accent);
-  border-radius: 2px;
-  animation: scrollDot 1.5s ease-in-out infinite;
-}
-
 @media (max-width: 767px) {
-  .hero { min-height: 80vh; padding-top: calc(var(--nav-height) + var(--space-8)); }
+  .hero {
+    min-height: 0;
+    padding: calc(var(--nav-height) + var(--space-8)) var(--space-6) var(--space-9);
+  }
 }

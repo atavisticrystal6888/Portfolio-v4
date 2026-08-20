@@ -91,7 +91,11 @@ export default function Home() {
       {/* Contact CTA */}
       <section aria-label="Contact" data-section="contact-cta" className={styles.ctaSection}>
         <div className={styles.inner}>
-          <h2 className={styles.ctaTitle}>Let&apos;s talk product</h2>
+          <h2 className={styles.ctaTitle}>Still reading?</h2>
+          <p className={styles.ctaLede}>
+            Then we should probably talk. Email is the fastest way to reach me;
+            LinkedIn works too.
+          </p>
           <div className={styles.ctaButtons}>
             <Button href={CONTACT_EMAIL_HREF} external>Email me</Button>
             <Button

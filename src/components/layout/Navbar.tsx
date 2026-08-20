@@ -108,9 +108,8 @@ export function Navbar() {
               <span>Resume</span>
             </a>
 
-            <Link href="/contact" className={styles.cta} data-magnetic>
-              Let&apos;s Connect
-            </Link>
+            {/* No CTA button here: Contact is already in the link list above,
+                and a fifth right-side control crowded the bar. */}
 
             <button
               className={cn(styles.hamburger, mobileOpen && styles.open)}

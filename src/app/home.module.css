@@ -46,8 +46,17 @@
   letter-spacing: var(--tracking-tight);
   line-height: var(--leading-tight);
   color: var(--text-strong);
-  margin-bottom: var(--space-7);
+  margin-bottom: var(--space-4);
   max-width: 20ch;
+}
+
+.ctaLede {
+  font-size: var(--text-lg);
+  color: var(--text-muted);
+  line-height: var(--leading-body);
+  max-width: 48ch;
+  margin-bottom: var(--space-7);
+  text-wrap: pretty;
 }
 
 .ctaButtons {

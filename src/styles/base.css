@@ -134,14 +134,6 @@ img, svg {
   max-width: 100%;
 }
 
-/* Text Gradient Utility */
-.text-gradient {
-  background: var(--gradient-text);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
 /* Layout */
 .container {
   width: 100%;

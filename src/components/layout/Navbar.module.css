@@ -147,33 +147,6 @@
   border-radius: 4px;
 }
 
-/* CTA */
-.cta {
-  display: none;
-  align-items: center;
-  gap: 8px;
-  padding: 12px 24px;
-  font-family: var(--font-body);
-  font-size: 0.875rem;
-  font-weight: 600;
-  color: #fff;
-  background: var(--accent);
-  border: none;
-  border-radius: var(--radius-md);
-  cursor: pointer;
-  text-decoration: none;
-  min-height: 44px;
-  transition: background var(--transition-fast), transform 0.1s ease, box-shadow var(--transition-fast);
-  white-space: nowrap;
-}
-
-.cta:hover {
-  background: var(--accent-hover);
-  color: #fff;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 16px var(--accent-glow);
-}
-
 /* Resume download link */
 .resumeLink {
   display: none;
@@ -242,7 +215,6 @@
 /* Focus-visible for keyboard nav */
 .link:focus-visible,
 .cmdTrigger:focus-visible,
-.cta:focus-visible,
 .resumeLink:focus-visible,
 .hamburger:focus-visible,
 .logo:focus-visible {
@@ -259,10 +231,6 @@
 
   .hamburger {
     display: none;
-  }
-
-  .cta {
-    display: inline-flex;
   }
 
   .cmdTrigger {
