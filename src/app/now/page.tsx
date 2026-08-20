@@ -85,8 +85,9 @@ export default function NowPage() {
           </li>
           <li>
             <strong>This site</strong> — ongoing portfolio iteration in
-            Next.js 16 + React 19, with interactive AI PM demos and a 3D
-            Aarchid hero.
+            Next.js 16 + React 19, with interactive AI PM demos and one
+            wireframe-globe scene shared across the hero, the Lab, and the
+            case-study headers.
           </li>
         </ul>
       </div>
@@ -95,8 +96,10 @@ export default function NowPage() {
         <SectionLabel>Looking For</SectionLabel>
         <h2 className={styles.sectionTitle}>Next Step</h2>
         <p style={{ color: "var(--text-body)", lineHeight: 1.7 }}>
-          Full-time <strong>Product Manager / APM</strong> roles starting
-          mid-2026. Bias toward AI-native products, D2C e-commerce, and
+          {/* Explicit space: JSX drops a leading one when the text node
+              wraps onto the next line. */}
+          Full-time <strong>Product Manager / APM</strong>{" "}
+          roles starting mid-2026. Bias toward AI-native products, D2C e-commerce, and
           teams where product, data, and engineering aren&apos;t separate jobs.{" "}
           <a href="/contact">Get in touch</a>.
         </p>
