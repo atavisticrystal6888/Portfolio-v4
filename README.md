@@ -24,4 +24,6 @@ npm install
 npm run dev
 ```
 
-See [`DEPLOYMENT.md`](./DEPLOYMENT.md) for Vercel deployment details.
+See [`DEPLOYMENT.md`](./DEPLOYMENT.md) for Vercel deployment details, and
+[`DISABLED-INTERACTIVES.md`](./DISABLED-INTERACTIVES.md) for the four interactive
+extras that are still in the tree but deliberately not mounted.

@@ -11,14 +11,6 @@ const SignatureScene = dynamic(
   { ssr: false }
 );
 
-const ParticlesBg = dynamic(
-  () =>
-    import("@/components/interactive/ParticlesBg").then((m) => ({
-      default: m.ParticlesBg,
-    })),
-  { ssr: false }
-);
-
 export function HeroVisuals() {
   // Mount the heavy visual chunks after the browser is idle so they never
   // compete with hydration - early taps stay responsive on slower devices.
@@ -39,10 +31,5 @@ export function HeroVisuals() {
 
   if (!ready) return null;
 
-  return (
-    <>
-      <SignatureScene variant="hero" interactive />
-      <ParticlesBg />
-    </>
-  );
+  return <SignatureScene variant="hero" interactive />;
 }

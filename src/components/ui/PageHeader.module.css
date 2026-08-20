@@ -1,5 +1,7 @@
 .header {
-  padding: var(--space-12) 0 var(--space-10);
+  /* The nav is fixed, so the header owns its own clearance rather than
+     relying on a top padding that happened to be taller than the bar. */
+  padding: calc(var(--nav-height) + var(--space-7)) 0 var(--space-8);
   background: var(--gradient-hero);
   border-bottom: var(--hairline);
   position: relative;

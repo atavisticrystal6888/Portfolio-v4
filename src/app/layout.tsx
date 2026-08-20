@@ -2,15 +2,11 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
-import { CustomCursor } from "@/components/interactive/CustomCursor";
 import { CommandPalette } from "@/components/interactive/CommandPalette";
 import { AnimatedGradient } from "@/components/interactive/AnimatedGradient";
-import { OnekoCat } from "@/components/interactive/OnekoCat";
 import { ToastProvider } from "@/components/ui/Toast";
 import { SkipLink } from "@/components/ui/SkipLink";
 import { ScrollProgress } from "@/components/ui/ScrollProgress";
-import { LoadingScreen } from "@/components/ui/LoadingScreen";
-import { ErrorBoundary } from "@/components/ui/ErrorBoundary";
 import { generatePersonJsonLd } from "@/lib/metadata";
 import { absoluteUrl, SITE_DESCRIPTION, SITE_NAME, SITE_TITLE, SITE_URL } from "@/lib/site";
 import { Analytics } from "@vercel/analytics/react";
@@ -133,13 +129,8 @@ export default function RootLayout({
       </head>
       <body>
         <ToastProvider>
-          <LoadingScreen />
           <SkipLink />
           <ScrollProgress />
-          <CustomCursor />
-          <ErrorBoundary>
-            <OnekoCat />
-          </ErrorBoundary>
           <AnimatedGradient />
           <Navbar />
           <main id="main-content">{children}</main>

@@ -2,9 +2,6 @@
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-3);
-  padding: 0 var(--space-6);
-  max-width: var(--container-max);
-  margin: 0 auto;
 }
 
 /* Squared filter control, mono like the rest of the field labels. */
