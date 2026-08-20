@@ -42,10 +42,18 @@ export function markdownToHtml(md: string): string {
   // Horizontal rules
   html = html.replace(/^---$/gm, "<hr />");
 
-  // Bold + italic
-  html = html.replace(/\*\*\*(.+?)\*\*\*/g, "<strong><em>$1</em></strong>");
-  html = html.replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>");
-  html = html.replace(/\*(.+?)\*/g, "<em>$1</em>");
+  // Bold + italic. Asterisk and underscore forms both, run only over text
+  // outside HTML tags so an href like /a/_hero_.png is left alone.
+  html = replaceOutsideTags(html, (text) =>
+    text
+      .replace(/\*\*\*(.+?)\*\*\*/g, "<strong><em>$1</em></strong>")
+      .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
+      .replace(/\*(.+?)\*/g, "<em>$1</em>")
+      // Underscore emphasis is intraword-safe: snake_case_names must survive,
+      // so both delimiters have to sit on a word boundary.
+      .replace(/(^|[^\w])__(?=\S)([^_]*?\S)__(?!\w)/g, "$1<strong>$2</strong>")
+      .replace(/(^|[^\w])_(?=\S)([^_]*?\S)_(?!\w)/g, "$1<em>$2</em>")
+  );
 
   // Blockquotes
   html = html.replace(/^> (.+)$/gm, "<blockquote><p>$1</p></blockquote>");
@@ -117,6 +125,17 @@ export function markdownToHtml(md: string): string {
   );
 
   return html;
+}
+
+/**
+ * Runs `transform` over the text between HTML tags only, leaving tags (and the
+ * attribute values inside them) untouched.
+ */
+function replaceOutsideTags(html: string, transform: (text: string) => string): string {
+  return html
+    .split(/(<[^>]*>)/)
+    .map((segment) => (segment.startsWith("<") ? segment : transform(segment)))
+    .join("");
 }
 
 function escapeHtml(text: string): string {
