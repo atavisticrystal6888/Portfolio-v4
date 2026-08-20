@@ -2,7 +2,7 @@
   {
     "id": 1,
     "name": "Eval Harness as a Service",
-    "category": "AI Infra",
+    "category": "AI Infra & Tooling",
     "difficulty": "Hard",
     "problem": "Small AI-PM teams keep rebuilding the same golden-set → re-score → diff pipeline. Offer it as a hosted tool with a drop-in SDK, shadow-traffic mode, and per-prompt-version accuracy deltas.",
     "pmSkill": "Developer-tool PM, eval design",
@@ -13,7 +13,7 @@
   {
     "id": 2,
     "name": "Cost-Per-Answer Calculator",
-    "category": "AI Infra",
+    "category": "AI Infra & Tooling",
     "difficulty": "Medium",
     "problem": "Every AI team underestimates unit economics until an invoice lands. A live calculator that takes model, tokens-in, tokens-out, cache hit rate, and batch size → returns $/request + $/user/month + envelope check.",
     "pmSkill": "Unit-economics thinking, pricing",
@@ -24,7 +24,7 @@
   {
     "id": 3,
     "name": "PRD → Eval Set Converter",
-    "category": "AI Tooling",
+    "category": "AI Infra & Tooling",
     "difficulty": "Hard",
     "problem": "PMs write PRDs; engineers ship without measurable acceptance. Parse a PRD's success criteria into a structured eval set (golden cases, scoring rubric, pass/fail gate) before a single line of code.",
     "pmSkill": "Structured thinking, acceptance criteria",
@@ -35,7 +35,7 @@
   {
     "id": 4,
     "name": "Churn-Risk Explainer",
-    "category": "Data Product",
+    "category": "Data & Analytics",
     "difficulty": "Medium",
     "problem": "Churn models output a score; CS teams need a reason. Produce a one-sentence, feature-level explanation per at-risk user, ranked by recoverability.",
     "pmSkill": "Data-driven retention, narrative from numbers",
@@ -46,7 +46,7 @@
   {
     "id": 5,
     "name": "Plant-Health Citizen Dataset",
-    "category": "AI Product",
+    "category": "Vertical AI",
     "difficulty": "Medium",
     "problem": "Aarkid's golden set is 50 photos. Crowdsource a labelled dataset (10k+ photos across failure modes) with contributor attribution and licence clarity.",
     "pmSkill": "Marketplace liquidity, contributor incentives",
@@ -57,7 +57,7 @@
   {
     "id": 6,
     "name": "Meeting → Decision Log",
-    "category": "Productivity",
+    "category": "Personal Ops",
     "difficulty": "Medium",
     "problem": "Transcripts are noise. Extract decisions made, blockers raised, and owners assigned into a searchable log that survives the meeting.",
     "pmSkill": "Information architecture, decision hygiene",
@@ -68,7 +68,7 @@
   {
     "id": 7,
     "name": "Interview-Loop Feedback Aggregator",
-    "category": "HR Tech",
+    "category": "Vertical AI",
     "difficulty": "Easy",
     "problem": "Hiring loops collect 4 independent writeups, then drown in a debrief Slack thread. Aggregate them into a structured rubric summary + dissenting-opinion highlight before the debrief.",
     "pmSkill": "Hiring process design, signal vs noise",
@@ -90,7 +90,7 @@
   {
     "id": 9,
     "name": "Reading-Log → Idea Graph",
-    "category": "Personal Tooling",
+    "category": "Personal Ops",
     "difficulty": "Medium",
     "problem": "Highlights sit in Readwise; ideas sit in notes; neither talk. Build a graph view where highlights cluster by concept and surface adjacency between books.",
     "pmSkill": "Information design, spaced repetition",
@@ -101,7 +101,7 @@
   {
     "id": 10,
     "name": "Open-Source Contribution Scout",
-    "category": "Developer Tooling",
+    "category": "AI Infra & Tooling",
     "difficulty": "Hard",
     "problem": "First-time contributors can't find tractable issues. Given a GitHub profile + stack, surface good-first-issues across repos filtered by real complexity (not just the label).",
     "pmSkill": "Funnel design, trust metrics",
@@ -112,7 +112,7 @@
   {
     "id": 11,
     "name": "Micro-SaaS Unit-Economics Sim",
-    "category": "Finance Tooling",
+    "category": "Data & Analytics",
     "difficulty": "Easy",
     "problem": "Solo founders need a back-of-envelope that accepts MRR curve, CAC, churn, infra cost/user, and returns month-by-month cash + break-even date without a spreadsheet.",
     "pmSkill": "Business modelling, scenario planning",
@@ -123,7 +123,7 @@
   {
     "id": 12,
     "name": "AI-PM Interview Prep Kit",
-    "category": "Career",
+    "category": "Personal Ops",
     "difficulty": "Medium",
     "problem": "AI-PM interview loops are new enough that nobody has a clean rubric. Ship a structured practice kit: problem framings, eval-design exercises, cost-envelope drills, mock transcripts with feedback.",
     "pmSkill": "Pedagogy, interview-loop design",

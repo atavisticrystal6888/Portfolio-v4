@@ -1,17 +1,35 @@
-/* Domain tiles double as the matrix filter, so they need button resets on top
-   of the shared .card look from content-page.module.css. */
+/* The domain filter is a chip row above the matrix, not a grid of count
+   tiles. Each chip is a real button, so it carries its own reset and has to
+   clear the 44px touch target the accessibility suite checks for. */
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin: 0 0 var(--space-5);
+}
+
 .filter {
-  display: block;
-  width: 100%;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
   min-height: 44px;
-  text-align: left;
-  font: inherit;
+  padding: var(--space-2) var(--space-4);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--text-muted);
+  background: var(--surface);
+  border: var(--hairline);
+  border-radius: var(--radius-editorial);
   cursor: pointer;
   appearance: none;
+  transition: border-color var(--transition-fast), color var(--transition-fast);
 }
 
 .filter:hover {
   border-color: var(--accent);
+  color: var(--text-strong);
 }
 
 .filter:focus-visible {
@@ -19,22 +37,30 @@
   outline-offset: 2px;
 }
 
-.filterActive {
+.filterActive,
+.filterActive:hover {
   border-color: var(--accent);
   background: var(--accent-subtle);
-}
-
-.filterActive h3 {
   color: var(--accent-hover);
 }
 
-.hint {
-  font-family: var(--font-mono);
-  font-size: var(--text-xs);
-  text-transform: uppercase;
-  letter-spacing: var(--tracking-label);
+.filterCount {
   color: var(--text-muted);
-  margin: 0 0 var(--space-5);
+  font-variant-numeric: tabular-nums;
+}
+
+.filterActive .filterCount {
+  color: var(--accent-hover);
+}
+
+/* The PM angle on each idea, in sentence case rather than the all-caps mono
+   rail that made a comma list look like five separate tags. */
+.skill {
+  display: block;
+  margin-top: var(--space-3);
+  font-size: var(--text-xs);
+  line-height: var(--leading-body);
+  color: var(--text-muted);
 }
 
 .count {
@@ -45,8 +71,8 @@
   margin: 0 0 var(--space-5);
 }
 
-/* The hint/count line sits between the heading and the grid, so the heading
-   gives up most of its own bottom margin. */
+/* The chip row and count line sit between the heading and the grid, so the
+   heading gives up most of its own bottom margin. */
 .tightHeading {
-  margin-bottom: var(--space-3);
+  margin-bottom: var(--space-4);
 }

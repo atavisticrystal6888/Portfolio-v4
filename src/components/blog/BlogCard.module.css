@@ -1,9 +1,0 @@
-.tags {
-  font-family: var(--font-mono);
-  font-size: var(--text-xs);
-  text-transform: uppercase;
-  letter-spacing: var(--tracking-label);
-  color: var(--text-muted);
-  line-height: 1.7;
-  margin-top: var(--space-2);
-}

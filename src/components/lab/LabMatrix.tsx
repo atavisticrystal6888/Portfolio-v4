@@ -49,13 +49,17 @@ export function LabMatrix({ ideas }: LabMatrixProps) {
   return (
     <>
       <div className={page.section}>
-        <SectionLabel>Categories</SectionLabel>
-        <h2 className={cn(page.sectionTitle, styles.tightHeading)}>By domain</h2>
-        <p className={styles.hint}>
-          Pick a domain to filter the matrix below.
-        </p>
+        <SectionLabel>
+          {active === ALL ? "All ideas" : `${active} ideas`}
+        </SectionLabel>
+        <h2 className={cn(page.sectionTitle, styles.tightHeading)}>
+          The matrix — sorted by difficulty
+        </h2>
+
+        {/* A chip row, not a grid of count tiles. With twelve categories for
+            twelve ideas the grid was eleven cards reading "1 idea". */}
         <div
-          className={page.cardGrid}
+          className={styles.filters}
           role="group"
           aria-label="Filter ideas by domain"
         >
@@ -67,25 +71,15 @@ export function LabMatrix({ ideas }: LabMatrixProps) {
                 type="button"
                 aria-pressed={isActive}
                 onClick={() => setActive(f.label)}
-                className={cn(page.card, styles.filter, isActive && styles.filterActive)}
+                className={cn(styles.filter, isActive && styles.filterActive)}
               >
-                <h3>{f.label}</h3>
-                <p>
-                  {f.count} idea{f.count === 1 ? "" : "s"}
-                </p>
+                {f.label}
+                <span className={styles.filterCount}>{f.count}</span>
               </button>
             );
           })}
         </div>
-      </div>
 
-      <div className={page.section}>
-        <SectionLabel>
-          {active === ALL ? "All ideas" : `${active} ideas`}
-        </SectionLabel>
-        <h2 className={cn(page.sectionTitle, styles.tightHeading)}>
-          The matrix — sorted by difficulty
-        </h2>
         <p
           className={styles.count}
           role="status"
@@ -103,9 +97,10 @@ export function LabMatrix({ ideas }: LabMatrixProps) {
                 <span className={page.badge}>{idea.difficulty}</span>
               </h3>
               <p>{idea.problem}</p>
-              <span className={page.meta}>
-                {idea.category} · {idea.pmSkill}
-              </span>
+              {/* One quiet line, in sentence case. The all-caps mono rail used
+                  to carry the category plus a comma list of PM skills, which
+                  read as five tags per card. */}
+              <span className={styles.skill}>{idea.pmSkill}</span>
             </div>
           ))}
         </div>
