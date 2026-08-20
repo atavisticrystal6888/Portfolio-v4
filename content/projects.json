@@ -43,6 +43,8 @@
     "name": "KiteEdge — Portfolio Intelligence",
     "category": "technical",
     "description": "Gives a retail Zerodha trader the analytics desk a fund gets: 43+ indicators, Monte Carlo VaR, ensemble forecasting, a NIFTY 500 screener, and a FIFO trade journal, all self-hosted. 50 API endpoints, plus Power BI export for anyone who'd rather live in a dashboard.",
+    "imageUrl": "/images/projects/kite-edge/analytics-api.png",
+    "imageAlt": "The KiteEdge analytics engine running locally, serving its own OpenAPI docs: technical analysis, fundamentals, portfolio risk (VaR, Monte Carlo, stress test, correlation) and forecasting endpoints. No account data.",
     "stack": ["Elixir", "Phoenix", "Python", "FastAPI", "React", "TypeScript", "PostgreSQL", "Kafka"],
     "metricValue": "43+",
     "metricLabel": "Technical Indicators",

@@ -1,3 +1,5 @@
+import Image from "next/image";
+import dhruvImage from "@/assets/Dhruv_Image.jpg";
 import { generatePageMetadata, generatePersonJsonLd, generateWebSiteJsonLd } from "@/lib/metadata";
 import { getAllProjects, getAllBlogPosts, getAllTestimonials } from "@/lib/content";
 import { SectionLabel } from "@/components/ui/SectionLabel";
@@ -88,23 +90,34 @@ export default function Home() {
       {/* Suggestions — owns its section chrome so it can render nothing */}
       <Suggestions projects={allProjects} posts={posts} />
 
-      {/* Contact CTA */}
+      {/* Contact CTA. The portrait lives here rather than in the hero: a face
+          is the strongest signal that a person made this, and it does the most
+          work at the point where someone decides whether to write. */}
       <section aria-label="Contact" data-section="contact-cta" className={styles.ctaSection}>
-        <div className={styles.inner}>
-          <h2 className={styles.ctaTitle}>Still reading?</h2>
-          <p className={styles.ctaLede}>
-            Then we should probably talk. Email is the fastest way to reach me;
-            LinkedIn works too.
-          </p>
-          <div className={styles.ctaButtons}>
-            <Button href={CONTACT_EMAIL_HREF} external>Email me</Button>
-            <Button
-              href="https://linkedin.com/in/dhruvsinghal6888"
-              variant="secondary"
-              external
-            >
-              LinkedIn
-            </Button>
+        <div className={`${styles.inner} ${styles.ctaInner}`}>
+          <Image
+            src={dhruvImage}
+            alt="Dhruv Singhal"
+            className={styles.ctaPortrait}
+            sizes="(max-width: 767px) 160px, 220px"
+            placeholder="blur"
+          />
+          <div className={styles.ctaCopy}>
+            <h2 className={styles.ctaTitle}>Still reading?</h2>
+            <p className={styles.ctaLede}>
+              Then we should probably talk. Email is the fastest way to reach
+              me; LinkedIn works too.
+            </p>
+            <div className={styles.ctaButtons}>
+              <Button href={CONTACT_EMAIL_HREF} external>Email me</Button>
+              <Button
+                href="https://linkedin.com/in/dhruvsinghal6888"
+                variant="secondary"
+                external
+              >
+                LinkedIn
+              </Button>
+            </div>
           </div>
         </div>
       </section>

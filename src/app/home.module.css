@@ -50,6 +50,36 @@
   max-width: 20ch;
 }
 
+/* Portrait beside the closing copy. Stacks under 768px so the face still
+   arrives first on a phone. */
+.ctaInner {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-7);
+}
+
+.ctaPortrait {
+  width: clamp(160px, 20vw, 220px);
+  height: auto;
+  flex-shrink: 0;
+  border-radius: var(--radius-editorial);
+  border: var(--hairline);
+  background: var(--surface-raised);
+}
+
+.ctaCopy {
+  min-width: 0;
+}
+
+@media (min-width: 768px) {
+  .ctaInner {
+    flex-direction: row;
+    align-items: center;
+    gap: var(--space-9);
+  }
+}
+
 .ctaLede {
   font-size: var(--text-lg);
   color: var(--text-muted);
