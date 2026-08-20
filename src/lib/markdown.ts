@@ -130,11 +130,16 @@ export function markdownToHtml(md: string): string {
 /**
  * Runs `transform` over the text between HTML tags only, leaving tags (and the
  * attribute values inside them) untouched.
+ *
+ * A tag must open with `</?` + a letter. Prose in these case studies is full of
+ * bare comparisons - "P95 <10s", "<50ms overhead" - and a looser `<[^>]*>`
+ * swallows everything up to the next unrelated `>` as if it were one tag,
+ * which silently drops the emphasis pass over that whole span.
  */
 function replaceOutsideTags(html: string, transform: (text: string) => string): string {
   return html
-    .split(/(<[^>]*>)/)
-    .map((segment) => (segment.startsWith("<") ? segment : transform(segment)))
+    .split(/(<\/?[a-zA-Z][^>]*>)/)
+    .map((segment, i) => (i % 2 === 1 ? segment : transform(segment)))
     .join("");
 }
 

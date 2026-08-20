@@ -34,4 +34,11 @@ describe("markdownToHtml emphasis", () => {
     const html = markdownToHtml("[docs](https://example.com/a/_hero_.png)");
     expect(html).toContain('href="https://example.com/a/_hero_.png"');
   });
+  it("keeps emphasis working after a bare < in prose", () => {
+    const html = markdownToHtml(
+      ["Latency: P95 <10s end-to-end.", "", "- **Unit economics:** ~$0.25 per user"].join("\n")
+    );
+    expect(html).toContain("<strong>Unit economics:</strong>");
+    expect(html).not.toContain("**Unit economics:**");
+  });
 });
