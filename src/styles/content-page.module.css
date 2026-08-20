@@ -32,7 +32,7 @@
 
 .title {
   font-family: var(--font-display);
-  font-size: clamp(var(--text-2xl), 4.5vw, var(--text-3xl));
+  font-size: clamp(var(--text-2xl), 4.5vw, var(--text-4xl));
   font-weight: 700;
   color: var(--text-strong);
   margin-bottom: var(--space-4);

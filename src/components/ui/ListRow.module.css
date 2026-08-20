@@ -52,6 +52,7 @@
   text-transform: uppercase;
   letter-spacing: var(--tracking-label);
   color: var(--text-muted);
+  transition: color var(--transition-fast);
 }
 
 .body {
@@ -70,8 +71,14 @@
   transition: color var(--transition-fast);
 }
 
-.row:hover .title {
+.row:hover .title,
+.row:focus-visible .title {
   color: var(--accent);
+}
+
+.row:hover .rail,
+.row:focus-visible .rail {
+  color: var(--text-body);
 }
 
 .dek {
