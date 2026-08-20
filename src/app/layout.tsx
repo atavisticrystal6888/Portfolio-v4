@@ -94,7 +94,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      data-theme="dark"
+      data-theme="light"
       data-palette="teal"
       data-scroll-behavior="smooth"
       suppressHydrationWarning
@@ -120,15 +120,16 @@ export default function RootLayout({
           title="Dhruv Singhal — Blog RSS"
           href="/rss.xml"
         />
-        <meta name="theme-color" content="#0a0a0b" media="(prefers-color-scheme: dark)" />
-        <meta name="theme-color" content="#f7f7f8" media="(prefers-color-scheme: light)" />
-        {/* Applies the stored theme before first paint. Without this the HTML
-            ships as dark/teal and a returning visitor on light (or any other
-            palette) sees the default flash by until React hydrates. Keep the
-            storage key and shape in sync with src/hooks/useTheme.ts. */}
+        <meta name="theme-color" content="#0d1322" media="(prefers-color-scheme: dark)" />
+        <meta name="theme-color" content="#f6f5f1" media="(prefers-color-scheme: light)" />
+        {/* Applies a STORED theme before first paint, so a returning visitor
+            who chose dark (or another palette) never sees the default flash
+            by until React hydrates. No stored choice means the working-paper
+            light identity, deliberately ignoring the OS preference - keep
+            that and the storage key in sync with src/hooks/useTheme.ts. */}
         <script
           dangerouslySetInnerHTML={{
-            __html: `(function(){try{var s=localStorage.getItem('ds-portfolio-theme');var c=s?JSON.parse(s):null;var m=c&&c.mode?c.mode:(window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');var p=c&&c.palette?c.palette:'teal';var e=document.documentElement;e.setAttribute('data-theme',m);e.setAttribute('data-palette',p);}catch(e){}})();`,
+            __html: `(function(){try{var s=localStorage.getItem('ds-portfolio-theme');var c=s?JSON.parse(s):null;var m=c&&c.mode?c.mode:'light';var p=c&&c.palette?c.palette:'teal';var e=document.documentElement;e.setAttribute('data-theme',m);e.setAttribute('data-palette',p);}catch(e){}})();`,
           }}
         />
         <JsonLd id="site-person-jsonld" data={personJsonLd} />

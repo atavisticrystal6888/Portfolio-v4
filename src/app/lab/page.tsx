@@ -3,7 +3,7 @@ import { JsonLd } from "@/components/ui/JsonLd";
 import { LabMatrix } from "@/components/lab/LabMatrix";
 import { SignatureScene } from "@/components/interactive/SignatureScene";
 import { getAllLabIdeas } from "@/lib/content";
-import styles from "@/styles/content-page.module.css";
+import styles from "./lab.module.css";
 
 export const metadata = generatePageMetadata({
   title: "Lab",
@@ -24,34 +24,44 @@ export default function LabPage() {
     <div className={styles.page}>
       <JsonLd id="lab-breadcrumb-jsonld" data={breadcrumbJsonLd} />
 
-      <div className={styles.headerStage}>
-        <SignatureScene variant="ambient" />
-        <p className={styles.kicker}>Ideas in motion</p>
-        <h1 className={styles.title}>Lab</h1>
-        <p className={styles.lede}>
-          {/* Explicit space: JSX trims the one that would otherwise sit
-              between the count and the next line of copy. */}
-          A working matrix of {ideas.length}{" "}
-          product ideas I&apos;ve scoped — each one a hypothetical build that
-          maps a real PM skill to a real technical challenge. Most will stay
-          ideas. A few will become projects. All of them are me thinking in
-          public about what&apos;s worth making.
-        </p>
-      </div>
+      <header className={styles.header}>
+        <div className={styles.headerInner}>
+          <SignatureScene variant="ambient" />
+          <p className={styles.kicker}>Ideas in motion</p>
+          <h1 className={styles.title}>Lab</h1>
+          <p className={styles.lede}>
+            {/* Explicit space: JSX trims the one that would otherwise sit
+                between the count and the next line of copy. */}
+            A working matrix of {ideas.length}{" "}
+            product ideas I&apos;ve scoped — each one a hypothetical build that
+            maps a real PM skill to a real technical challenge. Most will stay
+            ideas. A few will become projects. All of them are me thinking in
+            public about what&apos;s worth making.
+          </p>
+        </div>
+      </header>
 
-      <LabMatrix ideas={ideas} />
+      <section className={styles.section} aria-label="Idea matrix">
+        <div className={styles.inner}>
+          <LabMatrix ideas={ideas} />
+        </div>
+      </section>
 
-      <p className={styles.note}>
-        Source data:{" "}
-        <a
-          href="https://github.com/atavisticrystal6888/Portfolio-v4/blob/main/content/lab/ideas.json"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          ideas.json
-        </a>
-        . Want to build one of these together? Let&apos;s talk.
-      </p>
+      <section className={styles.section} aria-label="Source note">
+        <div className={styles.inner}>
+          <p className={styles.note}>
+            Source data:{" "}
+            <a
+              href="https://github.com/atavisticrystal6888/Portfolio-v4/blob/main/content/lab/ideas.json"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              ideas.json
+            </a>
+            . Want to build one of these together? Let&apos;s talk.
+          </p>
+        </div>
+      </section>
     </div>
   );
 }

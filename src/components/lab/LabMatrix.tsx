@@ -4,7 +4,7 @@ import { useMemo, useState } from "react";
 import type { LabIdea } from "@/types/lab";
 import { SectionLabel } from "@/components/ui/SectionLabel";
 import { cn } from "@/lib/utils";
-import page from "@/styles/content-page.module.css";
+import page from "@/app/lab/lab.module.css";
 import styles from "./LabMatrix.module.css";
 
 const ALL = "All";
@@ -48,8 +48,10 @@ export function LabMatrix({ ideas }: LabMatrixProps) {
 
   return (
     <>
-      <div className={page.section}>
-        <SectionLabel>
+      {/* The ruled section wrapper lives in page.tsx; this renders the
+          section's header, chip filters, and the matrix itself. */}
+      <div>
+        <SectionLabel index="01">
           {active === ALL ? "All ideas" : `${active} ideas`}
         </SectionLabel>
         <h2 className={cn(page.sectionTitle, styles.tightHeading)}>
