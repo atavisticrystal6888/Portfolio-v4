@@ -1,0 +1,68 @@
+/* One stage, three placements. The scene is always decorative: it never
+   receives pointer events and never sits above content. */
+.stage {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.stage canvas {
+  display: block;
+}
+
+.fallback {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: min(60%, 460px);
+  height: auto;
+  aspect-ratio: 1;
+}
+
+/* Home hero: offset into the empty right column rather than sitting behind
+   the headline, which is where the old particle field lost all its contrast. */
+.hero {
+  left: auto;
+  right: 0;
+  width: min(58%, 760px);
+}
+
+.hero .fallback {
+  width: min(78%, 520px);
+}
+
+/* Dossier header: a narrow band to the right of the spec table. */
+.dossier {
+  left: auto;
+  right: 0;
+  width: min(46%, 560px);
+  opacity: 0.85;
+}
+
+/* Content-page header: smallest of the three, top-right. */
+.ambient {
+  left: auto;
+  right: 0;
+  bottom: auto;
+  width: min(34%, 320px);
+  height: min(34vw, 320px);
+  opacity: 0.75;
+}
+
+@media (max-width: 900px) {
+  .hero,
+  .dossier,
+  .ambient {
+    width: min(72%, 420px);
+    opacity: 0.5;
+  }
+}
+
+@media print {
+  .stage {
+    display: none;
+  }
+}

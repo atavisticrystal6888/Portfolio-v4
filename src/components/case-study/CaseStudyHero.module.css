@@ -1,29 +1,14 @@
+/* Every dossier header now carries the signature scene, so the positioning
+   the Aarchid-only variant used to own moves onto .hero itself. */
 .hero {
-  padding: calc(var(--nav-height) + var(--space-10)) var(--space-6) var(--space-10);
-}
-
-/* Aarchid: split layout with 3D scene on the right (≥900px) */
-.heroAarchid {
   position: relative;
   padding: calc(var(--nav-height) + var(--space-10)) var(--space-6) var(--space-10);
-  min-height: 520px;
   overflow: hidden;
 }
 
-.heroAarchid .inner {
+.hero .inner {
   position: relative;
   z-index: 1;
-}
-
-@media (min-width: 900px) {
-  .heroAarchid {
-    min-height: 600px;
-  }
-  .heroAarchid .inner {
-    max-width: var(--container-max);
-    margin: 0 auto;
-    padding-right: 400px;
-  }
 }
 
 .inner {
@@ -33,6 +18,42 @@
   flex-direction: column;
   align-items: flex-start;
   gap: var(--space-4);
+}
+
+/* With a screenshot the header goes two-column on desktop: the title and
+   subtitle span the full measure, then the spec table and the shot sit side
+   by side. Below 900px it stays the single stacked column. */
+.innerSplit {
+  max-width: var(--container-max);
+}
+
+@media (min-width: 900px) {
+  .innerSplit {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 0.85fr);
+    column-gap: var(--space-8);
+    align-items: start;
+  }
+
+  .innerSplit > .title,
+  .innerSplit > .subtitle {
+    grid-column: 1 / -1;
+  }
+}
+
+.shot {
+  margin: 0;
+  width: 100%;
+  border: var(--hairline);
+  border-radius: var(--radius-editorial);
+  overflow: hidden;
+  background: var(--surface);
+}
+
+.shotImage {
+  display: block;
+  width: 100%;
+  height: auto;
 }
 
 .title {

@@ -67,7 +67,11 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
       <JsonLd id="case-study-creative-work-jsonld" data={creativeWorkJsonLd} />
 
       {/* Header */}
-      <CaseStudyHero caseStudy={caseStudy} />
+      <CaseStudyHero
+        caseStudy={caseStudy}
+        imageUrl={currentProject?.imageUrl}
+        imageAlt={currentProject?.imageAlt}
+      />
 
       {/* TL;DR */}
       <section className={styles.tldr} aria-label="Summary">

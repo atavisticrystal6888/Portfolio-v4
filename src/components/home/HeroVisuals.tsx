@@ -3,10 +3,10 @@
 import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
 
-const ThreeHero = dynamic(
+const SignatureScene = dynamic(
   () =>
-    import("@/components/interactive/ThreeHero").then((m) => ({
-      default: m.ThreeHero,
+    import("@/components/interactive/SignatureScene").then((m) => ({
+      default: m.SignatureScene,
     })),
   { ssr: false }
 );
@@ -41,7 +41,7 @@ export function HeroVisuals() {
 
   return (
     <>
-      <ThreeHero />
+      <SignatureScene variant="hero" interactive />
       <ParticlesBg />
     </>
   );

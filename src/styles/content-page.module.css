@@ -10,6 +10,17 @@
   width: 100%;
 }
 
+/* Positioning context for a decorative header scene; the text inside stays
+   above it. Content pages without a scene are unaffected. */
+.headerStage {
+  position: relative;
+}
+
+.headerStage > * {
+  position: relative;
+  z-index: 1;
+}
+
 .kicker {
   font-family: var(--font-mono);
   font-size: var(--text-xs);
