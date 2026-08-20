@@ -92,7 +92,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      data-theme="dark"
+      data-theme="light"
       data-palette="teal"
       data-scroll-behavior="smooth"
       suppressHydrationWarning
@@ -118,8 +118,8 @@ export default function RootLayout({
           title="Dhruv Singhal — Blog RSS"
           href="/rss.xml"
         />
-        <meta name="theme-color" content="#0a0a0b" media="(prefers-color-scheme: dark)" />
-        <meta name="theme-color" content="#f7f7f8" media="(prefers-color-scheme: light)" />
+        <meta name="theme-color" content="#0d1322" media="(prefers-color-scheme: dark)" />
+        <meta name="theme-color" content="#f6f5f1" media="(prefers-color-scheme: light)" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{

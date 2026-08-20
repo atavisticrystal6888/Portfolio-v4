@@ -5,8 +5,11 @@ import type { PaletteName, ThemeConfig } from "@/types/theme";
 
 const STORAGE_KEY = "ds-portfolio-theme";
 
+/* The working-paper light theme IS the site's identity, so first-time
+   visitors get it regardless of OS preference; the toggle persists any
+   explicit choice. */
 const DEFAULT_CONFIG: ThemeConfig = {
-  mode: "dark",
+  mode: "light",
   palette: "teal",
 };
 
@@ -18,9 +21,7 @@ function getInitialConfig(): ThemeConfig {
   } catch {
     // localStorage unavailable or corrupt
   }
-  // Fall back to system preference
-  const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-  return { ...DEFAULT_CONFIG, mode: prefersDark ? "dark" : "light" };
+  return DEFAULT_CONFIG;
 }
 
 function applyTheme(config: ThemeConfig) {
