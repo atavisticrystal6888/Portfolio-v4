@@ -72,25 +72,51 @@ export default async function AboutPage() {
             />
             <div>
               <p className={styles.bio}>
-                Final-year B.Tech student with operating experience across
-                product management, D2C e-commerce, and enterprise AI workflows.
-                I currently drive growth product initiatives at The Sleep
-                Company as a Product Manager Intern, scoped AI-powered
-                enterprise workflows at Wipro TOPS, owned growth from the
-                founder&apos;s office at Read Riches, and helped define
-                prospecting systems at Omniful.ai. On the side, I co-built{" "}
-                <Link href="/projects/aarchid">Aarchid</Link> with{" "}
-                <a href="https://github.com/dfordp" target="_blank" rel="noopener noreferrer">
-                  Dilpreet Grover
-                </a>: a multimodal plant-diagnosis app that reaches 92% accuracy on
-                our golden set and runs at the edge for under a quarter per active
-                user per month.
+                I pick up a domain by building something in it. That has been
+                the pattern since my first internship. I get close enough to the
+                problem to write the PRD, close enough to the data to build the
+                eval set, and close enough to the code to ship the first version
+                myself. Then whatever breaks tells me what I got wrong in the
+                spec.
               </p>
               <p className={styles.bio}>
-                I&apos;m most useful where product thinking, domain expertise, and
-                engineering overlap - the kind of work that needs someone who can
-                write a PRD, instrument the eval set, and ship the first version
-                themselves.
+                At Omniful.ai, &ldquo;find better prospects&rdquo; turned into a
+                scoring model built on firmographic and behavioural signals.
+                Qualified prospects went from about 10 a day to over 200, and
+                the work supported 10 client acquisitions. At Read Riches I ran
+                the founder&apos;s office side of content-led growth. I managed a
+                4-person research and content team and ran publishing
+                experiments that contributed to a 4x retention improvement.
+                Different industries, same job: find the loop, instrument it,
+                then turn the handle.
+              </p>
+              <p className={styles.bio}>
+                At Wipro TOPS I scoped Auriga ReX, an AI-powered enterprise
+                workflow platform, along with the Crew Mobile and Non-Crew
+                Records workflows across 12+ aviation scenarios. Most of that
+                job was finding edge cases early enough that they became sprint
+                tickets instead of incidents. It is also where I killed 37
+                low-signal dashboard charts and kept the 3 that actually drove a
+                decision. At The Sleep Company I am on growth now, evaluating
+                vendors across BSPs, CRMs, payment aggregators, OMS and WMS,
+                standardising the Shopify Master Catalogue, mapping PDP user
+                flows, and building AI operational agents on a knowledge
+                repository that did not exist before.
+              </p>
+              <p className={styles.bio}>
+                Outside of work there is{" "}
+                <Link href="/projects/aarchid">Aarchid</Link>, which I co-built
+                with{" "}
+                <a href="https://github.com/dfordp" target="_blank" rel="noopener noreferrer">
+                  Dilpreet Grover
+                </a>
+                . It diagnoses plant health from a photo, hits 92% accuracy on
+                our 200-sample golden set, and runs at the edge for under a
+                quarter per active user per month. I wrote the PRD, built the
+                eval harness, and shipped v1. The harness said we were at 92%.
+                The user interviews said trust was the real bottleneck. Learning
+                to hold both of those at once is the part of the job I actually
+                like.
               </p>
             </div>
           </div>
@@ -112,7 +138,9 @@ export default async function AboutPage() {
         <div className={styles.inner}>
           <header className={styles.sectionHeader}>
             <SectionLabel index="03">Skills</SectionLabel>
-            <h2 className={styles.sectionTitle}>What I bring</h2>
+            <h2 className={styles.sectionTitle}>
+              Product, data, and enough engineering
+            </h2>
           </header>
           <SkillsRadar />
         </div>
@@ -123,7 +151,7 @@ export default async function AboutPage() {
         <div className={styles.innerNarrow}>
           <header className={styles.sectionHeader}>
             <SectionLabel index="04">Experience</SectionLabel>
-            <h2 className={styles.sectionTitle}>Where I&apos;ve been</h2>
+            <h2 className={styles.sectionTitle}>Four teams, four problems</h2>
           </header>
           <Timeline />
         </div>
@@ -162,7 +190,9 @@ export default async function AboutPage() {
           </header>
           <dl className={styles.values}>
             {[
-              { label: "High-Ownership", detail: "Killed 37 low-signal dashboard charts at Wipro — kept the 3 that drove decisions" },
+              // The 37-charts story moved up into "My story", so this row
+              // carries different evidence rather than repeating it.
+              { label: "High-Ownership", detail: "Owned vendor evaluation across BSPs, CRMs, payment aggregators, OMS and WMS at The Sleep Company" },
               { label: "Low-Dependency", detail: "Wrote the PRD, built the eval harness, and shipped v1 of Aarchid myself" },
               { label: "Data-First", detail: "Every feature proposal comes with a success metric and a kill criteria" },
               { label: "Fast Execution", detail: "Portfolio shipped through 5 iterations in 3 months, using feedback to sharpen positioning, content, and navigation." },
