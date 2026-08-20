@@ -1,30 +1,77 @@
+/* Contact — homepage section grammar. The form and the direct channels
+   share one section as two columns from 960px up, so the page reads as a
+   composed spread instead of a lone centred form. */
+
 .page {
   display: flex;
   flex-direction: column;
 }
 
 .section {
-  max-width: var(--container-md);
+  width: 100%;
+  border-top: var(--rule-strong);
+  padding-top: var(--space-8);
+  padding-bottom: var(--section-gap);
+}
+
+.inner {
+  max-width: var(--container-max);
   margin: 0 auto;
-  padding: var(--space-8) var(--space-6);
+  padding: 0 var(--space-6);
   width: 100%;
 }
 
 .sectionHeader {
-  margin-bottom: var(--space-6);
+  margin-bottom: var(--space-7);
 }
 
 .sectionTitle {
   font-family: var(--font-display);
-  font-size: clamp(1.25rem, 2vw, 1.5rem);
+  font-size: clamp(var(--text-xl), 3vw, var(--text-2xl));
   font-weight: 700;
+  letter-spacing: var(--tracking-tight);
+  line-height: var(--leading-tight);
   color: var(--text-strong);
   margin-top: var(--space-2);
 }
 
+.reachGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-10);
+  align-items: start;
+}
+
+@media (min-width: 960px) {
+  .reachGrid {
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    gap: var(--space-11);
+  }
+}
+
+.formColumn {
+  min-width: 0;
+}
+
+.aside {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.asideHeader {
+  margin-bottom: var(--space-2);
+}
+
 .location {
-  text-align: center;
-  padding: var(--space-6);
   color: var(--text-muted);
-  font-size: 0.9rem;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-label);
+}
+
+.faq {
+  max-width: 56rem;
 }

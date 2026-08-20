@@ -74,30 +74,39 @@ export default function ContactPage() {
         badge="Looking for full-time PM / APM roles"
       />
 
-      {/* Contact Form */}
-      <section className={styles.section} aria-label="Contact form">
-        <ContactForm />
-      </section>
-
-      {/* Direct Links */}
-      <section className={styles.section} aria-label="Direct contact links">
-        <div className={styles.sectionHeader}>
-          <SectionLabel>Or reach out directly</SectionLabel>
+      {/* Form + direct channels, one spread */}
+      <section className={styles.section} aria-label="Ways to reach me">
+        <div className={styles.inner}>
+          <div className={styles.reachGrid}>
+            <div className={styles.formColumn}>
+              <div className={styles.sectionHeader}>
+                <SectionLabel index="01">Write to me</SectionLabel>
+              </div>
+              <ContactForm />
+            </div>
+            <aside className={styles.aside} aria-label="Direct contact links">
+              <div className={styles.asideHeader}>
+                <SectionLabel index="02">Or reach out directly</SectionLabel>
+              </div>
+              <DirectLinks />
+              <p className={styles.location}>Based in India · IST (UTC+5:30)</p>
+            </aside>
+          </div>
         </div>
-        <DirectLinks />
       </section>
 
       {/* FAQ */}
       <section className={styles.section} aria-label="Frequently asked questions">
-        <div className={styles.sectionHeader}>
-          <SectionLabel>FAQ</SectionLabel>
-          <h2 className={styles.sectionTitle}>Common Questions</h2>
+        <div className={styles.inner}>
+          <div className={styles.sectionHeader}>
+            <SectionLabel index="03">FAQ</SectionLabel>
+            <h2 className={styles.sectionTitle}>Common Questions</h2>
+          </div>
+          <div className={styles.faq}>
+            <FAQAccordion />
+          </div>
         </div>
-        <FAQAccordion />
       </section>
-
-      {/* Location */}
-      <p className={styles.location}>Based in India · IST (UTC+5:30)</p>
     </div>
   );
 }

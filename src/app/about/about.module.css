@@ -19,11 +19,18 @@
   width: 100%;
 }
 
+/* Same container as .inner so every section header shares one left edge —
+   a centred narrower box made sections 02/04/07 jump ~180px rightward
+   relative to their neighbours. Prose keeps its measure via the child cap. */
 .innerNarrow {
-  max-width: var(--container-md);
+  max-width: var(--container-max);
   margin: 0 auto;
   padding: 0 var(--space-6);
   width: 100%;
+}
+
+.innerNarrow > :not(.sectionHeader) {
+  max-width: 56rem;
 }
 
 .sectionHeader {

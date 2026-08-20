@@ -1,11 +1,10 @@
+/* Column count follows the available width, not the viewport — this grid
+   now also lives in a ~400px sidebar where a viewport query would wrongly
+   force two cramped columns. */
 .grid {
   display: grid;
   gap: var(--space-3);
-  grid-template-columns: 1fr;
-}
-
-@media (min-width: 768px) {
-  .grid { grid-template-columns: repeat(2, 1fr); }
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
 }
 
 .link {

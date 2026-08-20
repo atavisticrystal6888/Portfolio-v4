@@ -3,7 +3,7 @@ import { Badge } from "@/components/ui/Badge";
 
 interface PageHeaderProps {
   title: string;
-  subtitle?: string;
+  subtitle?: React.ReactNode;
   badge?: string;
 }
 
