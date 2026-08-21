@@ -1,0 +1,384 @@
+<title>The State of PM Portfolios</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&family=Public+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+  :root {
+    --ground: #F7F7F4;
+    --surface: #FFFFFF;
+    --ink: #1C2430;
+    --muted: #5B6472;
+    --accent: #0E6B5C;
+    --accent-ink: #0A5245;
+    --accent-soft: #E3EFEB;
+    --flag: #9A6A1B;
+    --flag-soft: #F4EBD9;
+    --line: #DDE0DA;
+    --line-strong: #C6CAC2;
+    --chip-neutral: #EDEEE9;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ground: #10161E;
+      --surface: #171F29;
+      --ink: #E7EAE6;
+      --muted: #98A2AE;
+      --accent: #4FBFA6;
+      --accent-ink: #6FD3BC;
+      --accent-soft: #16352E;
+      --flag: #D9A84E;
+      --flag-soft: #33290F;
+      --line: #2A3441;
+      --line-strong: #3B4757;
+      --chip-neutral: #222B37;
+    }
+  }
+  :root[data-theme="dark"] {
+    --ground: #10161E;
+    --surface: #171F29;
+    --ink: #E7EAE6;
+    --muted: #98A2AE;
+    --accent: #4FBFA6;
+    --accent-ink: #6FD3BC;
+    --accent-soft: #16352E;
+    --flag: #D9A84E;
+    --flag-soft: #33290F;
+    --line: #2A3441;
+    --line-strong: #3B4757;
+    --chip-neutral: #222B37;
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    background: var(--ground);
+    color: var(--ink);
+    font-family: "Public Sans", "Segoe UI", system-ui, sans-serif;
+    font-size: 16px;
+    line-height: 1.65;
+    margin: 0;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 76ch; margin: 0 auto; padding: 3.5rem 1.5rem 5rem; }
+
+  h1, h2, h3 {
+    font-family: "Newsreader", Georgia, serif;
+    font-weight: 500;
+    line-height: 1.15;
+    text-wrap: balance;
+    margin: 0;
+  }
+  h1 { font-size: clamp(2.4rem, 6vw, 3.4rem); letter-spacing: -0.01em; }
+  h2 { font-size: 1.7rem; margin: 0 0 1rem; }
+  h3 { font-size: 1.25rem; font-weight: 600; margin: 1.8rem 0 0.5rem; }
+  p { margin: 0 0 1rem; }
+  a { color: var(--accent-ink); text-decoration-color: color-mix(in srgb, var(--accent) 40%, transparent); text-underline-offset: 3px; }
+  a:hover { text-decoration-color: var(--accent); }
+  a:focus-visible, summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px; }
+  strong { font-weight: 600; }
+
+  .eyebrow {
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin: 0 0 0.75rem;
+  }
+  header.report-head { padding-bottom: 2.2rem; border-bottom: 1px solid var(--line-strong); margin-bottom: 2.5rem; }
+  .head-meta {
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 0.78rem;
+    color: var(--muted);
+    margin-top: 1.2rem;
+    display: flex; flex-wrap: wrap; gap: 0.4rem 1.6rem;
+  }
+  .lede { font-size: 1.13rem; color: var(--muted); margin-top: 1.1rem; max-width: 62ch; }
+
+  section { margin: 0 0 3.2rem; }
+  section > .eyebrow { margin-bottom: 0.4rem; }
+
+  .keyfacts {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+    gap: 1px; background: var(--line); border: 1px solid var(--line);
+    margin: 1.4rem 0 0.4rem;
+  }
+  .keyfacts > div { background: var(--surface); padding: 1rem 1.1rem; }
+  .keyfacts .num {
+    font-family: "Newsreader", Georgia, serif; font-size: 2rem; font-weight: 500;
+    color: var(--accent-ink); line-height: 1.1; font-variant-numeric: tabular-nums;
+  }
+  .keyfacts .lbl { font-size: 0.83rem; color: var(--muted); margin-top: 0.25rem; line-height: 1.4; }
+
+  .chip {
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 0.66rem; font-weight: 600; letter-spacing: 0.06em;
+    padding: 0.15rem 0.5rem; border-radius: 999px; white-space: nowrap;
+    text-transform: uppercase;
+  }
+  .chip.live { background: var(--accent-soft); color: var(--accent-ink); }
+  .chip.cited { background: var(--chip-neutral); color: var(--muted); }
+  .chip.dir { background: var(--flag-soft); color: var(--flag); }
+
+  .legend { display: flex; flex-wrap: wrap; gap: 0.5rem 1.2rem; align-items: center; font-size: 0.85rem; color: var(--muted); margin: 0.6rem 0 1.2rem; }
+
+  .tablewrap { overflow-x: auto; border: 1px solid var(--line); background: var(--surface); margin: 1.2rem 0; }
+  table { border-collapse: collapse; width: 100%; font-size: 0.9rem; min-width: 640px; }
+  th {
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 0.68rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--muted); text-align: left; padding: 0.7rem 0.9rem;
+    border-bottom: 1px solid var(--line-strong);
+  }
+  td { padding: 0.65rem 0.9rem; border-bottom: 1px solid var(--line); vertical-align: top; line-height: 1.5; }
+  tr:last-child td { border-bottom: none; }
+  td.mono, .mono { font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 0.8rem; }
+
+  .profile { border: 1px solid var(--line); background: var(--surface); padding: 1.3rem 1.4rem; margin: 0 0 1rem; }
+  .profile h3 { margin: 0 0 0.15rem; }
+  .profile .role { font-size: 0.88rem; color: var(--muted); margin-bottom: 0.6rem; }
+  .profile .role a { color: var(--muted); }
+  .profile p { margin: 0 0 0.6rem; font-size: 0.95rem; }
+  .profile p:last-child { margin-bottom: 0; }
+  .takeaway { border-left: 3px solid var(--accent); padding-left: 0.85rem; color: var(--muted); font-size: 0.92rem; }
+
+  ul, ol { padding-left: 1.3rem; margin: 0 0 1rem; }
+  li { margin-bottom: 0.45rem; }
+  li::marker { color: var(--accent); }
+
+  .caveat {
+    border: 1px solid var(--line); border-left: 3px solid var(--flag);
+    background: var(--surface); padding: 0.9rem 1.1rem; font-size: 0.9rem;
+    color: var(--muted); margin: 1.2rem 0;
+  }
+  .caveat strong { color: var(--ink); }
+
+  .structure {
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 0.82rem;
+    background: var(--surface); border: 1px solid var(--line);
+    padding: 0.9rem 1.1rem; margin: 0.8rem 0 1.2rem;
+    overflow-x: auto; white-space: nowrap; line-height: 2;
+  }
+  .structure span { color: var(--accent-ink); }
+
+  .srcs { font-size: 0.88rem; }
+  .srcs li { margin-bottom: 0.35rem; }
+  footer { border-top: 1px solid var(--line-strong); padding-top: 1.4rem; font-size: 0.82rem; color: var(--muted); }
+</style>
+
+<div class="wrap">
+<header class="report-head">
+  <p class="eyebrow">Research report · Compiled 22 Aug 2026</p>
+  <h1>The State of PM Portfolios</h1>
+  <p class="lede">What trending product-manager portfolios look like right now: 25+ real examples with links, seven live-site deep-dives, what hiring managers say separates strong from mediocre, and the format shifts of 2024–2026.</p>
+  <div class="head-meta">
+    <span>4 parallel research streams</span>
+    <span>13 primary sources fetched</span>
+    <span>7 portfolios verified live</span>
+  </div>
+</header>
+
+<section>
+  <p class="eyebrow">01 · TL;DR</p>
+  <h2>What the research says in five points</h2>
+  <ul>
+    <li><strong>Portfolios are still rare, which makes them a differentiator.</strong> Surveys by Aakash Gupta (325 PMs, 15 hiring managers) put global adoption at ~16–18% — roughly 10% in the Americas, ~20% in Europe, and <strong>~40% in Asia/Middle East, where Indian job postings sometimes request them outright</strong>.</li>
+    <li><strong>Depth beats volume, and reasoning beats polish.</strong> Every hiring-side source converges on the same message: 2–3 deep case studies showing decisions, trade-offs, and quantified outcomes beat five shallow ones or a beautiful site with no decision trail. A mediocre portfolio actively hurts more than having none.</li>
+    <li><strong>The 2025–26 format shift is from static Notion docs to "vibe-coded" personal sites with live demos</strong> — PMs (especially AI PM candidates) building their own custom sites and shipping working AI prototypes as proof they build, not just describe.</li>
+    <li><strong>The strongest differentiators observed on live sites are voice and a singular artifact</strong> — a distinct persona (Sri Ponnada), or one vivid technical project (Justin Hinh's autonomous coin-sorting robot) — not generic corporate polish.</li>
+    <li><strong>There is no canonical "famous PM portfolio."</strong> Unlike design, no single PM portfolio is universally cited; roundups mostly point to templates and platforms. The field is open for anyone who does it well.</li>
+  </ul>
+  <div class="keyfacts">
+    <div><div class="num">~16%</div><div class="lbl">of PMs globally have a portfolio at all (Aakash Gupta survey)</div></div>
+    <div><div class="num">~40%</div><div class="lbl">adoption in Asia/Middle East — the highest of any region</div></div>
+    <div><div class="num">2–3</div><div class="lbl">deep case studies recommended; more shallow ones dilute the signal</div></div>
+    <div><div class="num">67%</div><div class="lbl">of Lenny's Newsletter content is now AI-related — the backdrop pushing AI-demo portfolios</div></div>
+  </div>
+</section>
+
+<section>
+  <p class="eyebrow">02 · The directory</p>
+  <h2>Most-cited PM portfolios across roundups</h2>
+  <p>Cross-referenced from five independent roundups (CareerFoundry, SiteBuilderReport, Product School, Aakash Gupta, Underdog.io). Each entry carries a confidence chip:</p>
+  <div class="legend">
+    <span class="chip live">Live-verified</span><span>fetched and confirmed during this research</span>
+    <span class="chip cited">Roundup-cited</span><span>reported by sources, not independently checked</span>
+    <span class="chip dir">Stale / partial</span><span>root domain live but cited page 404s or is a stub</span>
+  </div>
+
+  <h3>Tier 1 — cited by two or more independent sources</h3>
+  <div class="tablewrap"><table>
+    <tr><th>Who</th><th>Link</th><th>Platform</th><th>What makes it distinct</th><th>Status</th></tr>
+    <tr><td><strong>Sri Ponnada</strong><br>PM (big tech) + stand-up comic</td><td class="mono"><a href="https://www.sriponnada.com">sriponnada.com</a></td><td>Squarespace</td><td>Personality-led: nav reads "My (Actual) Work / My (Other) Work"; conversational voice does the differentiating, not case-study density. Cited in 2 roundups.</td><td><span class="chip live">Live-verified</span></td></tr>
+    <tr><td><strong>Sam Dickie</strong><br>Lead PM &amp; indie maker</td><td class="mono"><a href="https://www.samdickie.me">samdickie.me</a></td><td>Webflow</td><td>Builder/consultant hybrid: About/Now/Writing/Projects/Downloads/Newsletter, 108 consulting clients as social proof, sells a Notion template pack, documents live AI experiments. Cited in 2 roundups.</td><td><span class="chip live">Live-verified</span></td></tr>
+    <tr><td><strong>Rian van der Merwe</strong><br>Veteran product leader (20+ yrs)</td><td class="mono"><a href="https://elezea.com">elezea.com</a></td><td>WordPress</td><td>Text-first long-form storytelling; blog + portfolio hybrid with launch GIFs, IA diagrams, story-mapping photos. The single most-cited individual (3 roundups) — but the /portfolio deep-link now 404s.</td><td><span class="chip dir">Stale / partial</span></td></tr>
+    <tr><td><strong>Thaisa Fernandes</strong><br>Senior Staff TPM, SF</td><td class="mono"><a href="https://www.thaisafernandes.com">thaisafernandes.com</a></td><td>Squarespace</td><td>Every project introduced in ~50 characters; case studies open with a narrative hook ("It all started when…"). Cited in 2 roundups; site was a stub when checked.</td><td><span class="chip dir">Stale / partial</span></td></tr>
+    <tr><td><strong>Mark Progano</strong><br>Product Manager</td><td class="mono"><a href="https://www.mprogano.com">mprogano.com</a></td><td>Squarespace</td><td>Minimalist serif styling; project list paired with detailed case studies on his product-improvement approach. Cited in 2 roundups.</td><td><span class="chip cited">Roundup-cited</span></td></tr>
+  </table></div>
+
+  <h3>Tier 2 — single-source but concrete examples</h3>
+  <div class="tablewrap"><table>
+    <tr><th>Who</th><th>Link</th><th>Noted for</th><th>Status</th></tr>
+    <tr><td><strong>Nicolas Backal</strong> — Director of Product Design, Okta</td><td class="mono"><a href="https://www.nicolasbackal.com">nicolasbackal.com</a></td><td>Typography-first minimalism; compact scannable case studies ("redesign impacting 30M+ users"); a co-authored "Product Cookbook" content series</td><td><span class="chip live">Live-verified</span></td></tr>
+    <tr><td><strong>Justin Hinh</strong> — AI Digital PM (ex-Fannie Mae)</td><td class="mono"><a href="https://justinhinh.webflow.io">justinhinh.webflow.io</a></td><td>Flagship piece is an autonomous AI coin-sorting robot he built — one vivid maker project outweighing generic corporate case studies</td><td><span class="chip live">Live-verified</span></td></tr>
+    <tr><td><strong>Dr. Yuliya Rubtsova</strong> — PM, AI/Data Science (PhD, NLP)</td><td class="mono"><a href="https://mokoron.com">mokoron.com</a></td><td>Rare PM + ML-researcher hybrid positioning; project cards for AI products (reading tutor, price forecasting)</td><td><span class="chip live">Live-verified</span></td></tr>
+    <tr><td><strong>Kane Sherwell</strong> — Senior/freelance PM</td><td class="mono"><a href="https://www.kanesherwell.com">kanesherwell.com</a></td><td>Agency-style Webflow polish, Calendly "Book now" CTA, concrete proof points (500+ products shipped, 400% viewership growth)</td><td><span class="chip live">Live-verified</span></td></tr>
+    <tr><td><strong>Luis Jurado</strong> — AI/ML PM &amp; agile coach</td><td class="mono"><a href="https://luisjurado.me">luisjurado.me</a></td><td>Personal-magazine structure with podcast and "emotional intelligence in PM" angle; more thought-leader than case-study site</td><td><span class="chip live">Live-verified</span></td></tr>
+    <tr><td><strong>Taylor McCaslin</strong> — PM</td><td class="mono"><a href="https://www.taylormccaslin.com/portfolio">taylormccaslin.com</a></td><td>Interview-style case study showing sketches → wireframes evolution</td><td><span class="chip cited">Roundup-cited</span></td></tr>
+    <tr><td><strong>Anita Valentinova</strong> — PM</td><td class="mono"><a href="https://www.alfianita.me/product-management-portfolio">alfianita.me</a></td><td>Table-of-contents navigation + result screenshots</td><td><span class="chip cited">Roundup-cited</span></td></tr>
+    <tr><td><strong>Johnathan Zhou</strong> — PM</td><td class="mono"><a href="https://www.johnathanzhou.com">johnathanzhou.com</a></td><td>Minimalist with clickable skill cards</td><td><span class="chip cited">Roundup-cited</span></td></tr>
+    <tr><td><strong>Juan J. Ramirez</strong> — PM</td><td class="mono"><a href="https://www.whoisjuan.me">whoisjuan.me</a></td><td>Notable site animation</td><td><span class="chip cited">Roundup-cited</span></td></tr>
+    <tr><td><strong>Scott Hanford</strong> — PM at Adobe</td><td class="mono"><a href="https://www.scotthanford.com">scotthanford.com</a></td><td>One-page Webflow site</td><td><span class="chip cited">Roundup-cited</span></td></tr>
+    <tr><td><strong>Sam Frons</strong> — Product leader</td><td class="mono"><a href="https://www.samfrons.com">samfrons.com</a></td><td>Strong imagery, Squarespace</td><td><span class="chip cited">Roundup-cited</span></td></tr>
+    <tr><td><strong>Jenny Atkins</strong> — Senior PM</td><td class="mono"><a href="https://www.jennyatkins.me">jennyatkins.me</a></td><td>Bright, minimal Squarespace</td><td><span class="chip cited">Roundup-cited</span></td></tr>
+    <tr><td><strong>W. Jesse Wright</strong> — PM / design ops</td><td class="mono"><a href="https://www.wjessewright.com">wjessewright.com</a></td><td>Clean, functional Squarespace</td><td><span class="chip cited">Roundup-cited</span></td></tr>
+    <tr><td><strong>Laura Zermin</strong> — Freelance PM</td><td class="mono"><a href="https://zpm.zermin.de">zpm.zermin.de</a></td><td>Sustainable-dev / emerging-markets niche, bold contrast colors</td><td><span class="chip cited">Roundup-cited</span></td></tr>
+    <tr><td><strong>Dan Shetty</strong> — Junior PM</td><td class="mono"><a href="https://danshettysite.webflow.io">danshettysite.webflow.io</a></td><td>Leans on psychology background as USP</td><td><span class="chip cited">Roundup-cited</span></td></tr>
+    <tr><td><strong>Omolola Odunowo</strong> — Junior PM</td><td class="mono"><a href="https://omololaodunowo.netlify.app">omololaodunowo.netlify.app</a></td><td>Clear "Hire me" CTA, skip-to-user-flows navigation</td><td><span class="chip cited">Roundup-cited</span></td></tr>
+    <tr><td><strong>Sherlain L.</strong> — PM</td><td class="mono"><a href="https://www.sherlaine.com">sherlaine.com</a></td><td>Process notes + design quality</td><td><span class="chip cited">Roundup-cited</span></td></tr>
+    <tr><td><strong>Marta Puerto</strong> — Product Marketing Manager</td><td class="mono"><a href="https://www.marta-puerto.com">marta-puerto.com</a></td><td>Leads with marketing metrics</td><td><span class="chip cited">Roundup-cited</span></td></tr>
+    <tr><td><strong>Danielle Landry</strong> — Career-changer (film/TV → PM)</td><td class="mono"><a href="https://careerfoundry.com/en/portfolios/danielle-landry">careerfoundry.com/…/danielle-landry</a></td><td>Comprehensive personas, digestible layout — model career-switcher portfolio</td><td><span class="chip cited">Roundup-cited</span></td></tr>
+  </table></div>
+  <div class="caveat"><strong>Roundups go stale fast.</strong> Several portfolios praised in 2024–25 articles were dead or stubbed when fetched live today (elezea.com/portfolio → 404, rezarezaeipour.com → 403, thaisafernandes.com stub). Spot-check any link before treating it as a current reference.</div>
+</section>
+
+<section>
+  <p class="eyebrow">03 · Deep dives</p>
+  <h2>Seven live portfolios, dissected</h2>
+  <p>These were fetched and analyzed directly, not taken from roundup descriptions.</p>
+
+  <div class="profile">
+    <h3>Nicolas Backal</h3>
+    <p class="role">Director of Product Design, Okta · <a href="https://www.nicolasbackal.com">nicolasbackal.com</a></p>
+    <p><strong>Structure:</strong> Home → Selected Writing → Selected Work → Product Cookbook → Talks → Contact. Case studies are deliberately compact: hero image, headline, role/timeline, a 2–3 sentence narrative, "learn more" link — scannability over exhaustive teardown ("Okta Personal: zero to one", "end-user redesign impacting 30M+ users").</p>
+    <p class="takeaway">Seniority is proven through curation and cross-functional artifacts (the co-authored Product Cookbook series, ADPList mentorship), not case-study volume.</p>
+  </div>
+
+  <div class="profile">
+    <h3>Sri Ponnada</h3>
+    <p class="role">PM at a big tech co + stand-up comedian · <a href="https://www.sriponnada.com">sriponnada.com</a></p>
+    <p><strong>Structure:</strong> About Me → My (Actual) Work → My (Other) Work → Let's Chat. The parenthetical labels are the whole personality hook, deliberately blurring career and creative life. Conversational copy ("Hey! I'm Sri 👋🏽"), minimal visual flourish.</p>
+    <p class="takeaway">Distinctiveness can come entirely from voice and copy rather than structure — a model for candidates leaning on personal brand over deep case studies.</p>
+  </div>
+
+  <div class="profile">
+    <h3>Justin Hinh</h3>
+    <p class="role">AI Digital PM (Fannie Mae, Cognizant) · <a href="https://justinhinh.webflow.io">justinhinh.webflow.io</a></p>
+    <p><strong>Structure:</strong> Portfolio / LinkedIn / Blog / Resume / Contact with project cards, category tags, and thumbnails. Flagship piece: "Numi v4: Autonomous AI Coin Sorting, Rebuilt From Scratch" — a hardware/AI robot he actually built.</p>
+    <p class="takeaway">One vivid, technical passion project can outweigh a stack of generic corporate case studies for signaling "builds with AI, not just describes it." This is the archetype of the 2025–26 AI-PM portfolio.</p>
+  </div>
+
+  <div class="profile">
+    <h3>Sam Dickie</h3>
+    <p class="role">PM &amp; maker for early-stage founders · <a href="https://www.samdickie.me">samdickie.me</a></p>
+    <p><strong>Structure:</strong> About / Now / Writing / Projects / Downloads / Newsletter plus service tags (No-Code, MVPs, Customer Development). Case studies are replaced by articles and an "Office Hours" consulting track — 108 past clients as social proof, a Notion template pack for sale, live AI experiments documented.</p>
+    <p class="takeaway">The portfolio doubles as a lead-gen funnel — the right model for builder/consultant hybrids, less so for pure job-seekers.</p>
+  </div>
+
+  <div class="profile">
+    <h3>Dr. Yuliya Rubtsova</h3>
+    <p class="role">PM / Data Scientist, PhD in NLP · <a href="https://mokoron.com">mokoron.com</a></p>
+    <p><strong>Structure:</strong> About → Work (Selected Projects, Academic Research, Public Speaking, Side Projects) → Mentoring → Resume → Contact. Lightweight project cards ("AI-powered reading tutor for children") linking out for detail; muted palette, icon-driven skills.</p>
+    <p class="takeaway">A genuinely rare PM + ML-researcher credential carries the site — but surface pages are light on quantified outcomes, showing that even strong portfolios often under-deliver on on-page storytelling.</p>
+  </div>
+
+  <div class="profile">
+    <h3>Kane Sherwell</h3>
+    <p class="role">Senior / freelance PM · <a href="https://www.kanesherwell.com">kanesherwell.com</a></p>
+    <p><strong>Structure:</strong> About / Works / "Book Now" (Calendly) in header and footer. Work is a scrolling grid of client cards linking to live sites; animated gradient-heavy agency polish; tech-stack carousels; hard numbers (500+ products shipped, 100% Upwork success, 400% viewership growth).</p>
+    <p class="takeaway">Optimized to convert freelance leads, not persuade hiring managers — case-study depth sacrificed for breadth and CTAs. Know which audience your portfolio serves.</p>
+  </div>
+
+  <div class="profile">
+    <h3>Luis Jurado</h3>
+    <p class="role">AI/ML PM &amp; agile thought leader · <a href="https://luisjurado.me">luisjurado.me</a></p>
+    <p><strong>Structure:</strong> A content hub (Product Management / Machine Learning / Data / Blog / Portfolio) that works like a personal magazine, with a daily tech-news podcast and an "emotional intelligence in PM" positioning.</p>
+    <p class="takeaway">Cautionary lesson: with portfolio work secondary to thought-leadership content and no testimonials, it risks reading as blogger rather than practitioner with shipped work.</p>
+  </div>
+</section>
+
+<section>
+  <p class="eyebrow">04 · What makes them distinct</p>
+  <h2>Cross-cutting patterns from the live sites</h2>
+  <ul>
+    <li><strong>Voice and a singular artifact beat polish.</strong> The most memorable sites won on persona (Ponnada, Dickie) or one unusual concrete thing (Hinh's robot, Jurado's podcast, Backal's Product Cookbook) — not on template quality.</li>
+    <li><strong>The common weakness, even among standouts: cards without narrative.</strong> Most sites show project cards with minimal on-page story and push depth to external links. Full problem → approach → metrics storytelling on the page itself is rare — which means doing it well is an open differentiator.</li>
+    <li><strong>Platform tracks positioning.</strong> Squarespace minimalism dominates among senior/corporate PMs; Webflow animation and CTA-heavy design dominates among freelance/maker-positioned PMs; Notion dominates among speed-focused and junior PMs.</li>
+    <li><strong>Curation signals seniority.</strong> The senior sites (Backal) show fewer, tighter pieces; junior sites tend to show everything. "Selected Work" as a label is itself a signal.</li>
+  </ul>
+</section>
+
+<section>
+  <p class="eyebrow">05 · The hiring-manager view</p>
+  <h2>What actually gets evaluated</h2>
+  <ul>
+    <li><strong>Quantified, causal impact — not activity.</strong> "Shipped X → activation up Y%" with specific numbers ("15% increase in WAU", "22% reduction in drop-off"), never "improved engagement." (Aakash Gupta)</li>
+    <li><strong>Decision-making over output.</strong> Hiring managers want the <em>why</em>: trade-offs, constraints, prioritization frameworks. "Most portfolios focus on 'what we built' instead of 'why we built it that way' and 'what happened next.'" (Product Manager Job Board)</li>
+    <li><strong>A resume tells what you did; a portfolio shows how you think</strong> — the core value proposition, echoed by hiring-side commenters on Blind.</li>
+    <li><strong>Tailoring to the target role</strong> separates strong from generic — work samples should map to problems the hiring team actually has.</li>
+    <li><strong>Originality is a hard gate.</strong> Tutorial-derived or templated case-study work reads worse than having nothing.</li>
+  </ul>
+
+  <h3>Anti-patterns repeatedly called out</h3>
+  <ul>
+    <li>Feature lists with vague ownership ("contributed to…") — reads as padding.</li>
+    <li>Generic teardowns with no original insight ("10 ways to fix Spotify's onboarding").</li>
+    <li>Slick visuals with no decision trail — designer-format, PM-empty.</li>
+    <li>NDA overreach — sharing work you can't openly explain; skip it rather than fudge it.</li>
+    <li>Too many case studies — quality over quantity, consistently.</li>
+    <li>Misaligned seniority framing — juniors overreaching into "vision-setting" language; seniors underselling strategic scope.</li>
+  </ul>
+  <div class="caveat"><strong>The asymmetry to remember:</strong> a good portfolio only helps, but a mediocre one actively hurts — multiple sources agree the real decision is depth of effort, not whether to have one.</div>
+
+  <h3>Expert-recommended case-study skeletons</h3>
+  <p>Three frameworks from independent sources converge on the same arc:</p>
+  <p class="structure"><span>Context</span> → <span>Problem</span> → <span>Constraints</span> → <span>Process &amp; trade-offs</span> → <span>Solution (your part)</span> → <span>Results + lessons</span></p>
+  <ul>
+    <li><strong>Product Manager Job Board's six-part structure</strong> (above): context and timeline, the challenge with data, real-world constraints, decision-making and trade-off analysis, what shipped and your specific contribution, metrics moved plus lessons learned.</li>
+    <li><strong>STAR / PR-FAQ framing</strong> (Aakash Gupta): Situation → Task → Action → Result, with Amazon's PR/FAQ format for strategy-heavy pieces; show work-in-progress thinking and named frameworks, not only the polished end state.</li>
+    <li><strong>Shawli's build process:</strong> pick which skills to showcase calibrated to your level → sketch structure before building → collect and sanitize real artifacts (spreadsheets, screenshots, models) → explicitly narrate constraints and choices → digitize.</li>
+  </ul>
+
+  <h3>Who needs one most</h3>
+  <p>Consensus: portfolios are most load-bearing at transition points — career switchers, APM/entry-level candidates without a PM track record, and people re-entering after a layoff or gap. Experienced PMs with strong track records are frequently hired without one. India stands out: portfolio requests appear directly in job postings.</p>
+</section>
+
+<section>
+  <p class="eyebrow">06 · Trends 2024–2026</p>
+  <h2>Where the format is heading</h2>
+  <ol>
+    <li><strong>From static docs to "vibe-coded" live sites.</strong> The clearest 2026 trend: PMs using AI tools (Lovable, Claude Code, Base44) to build custom sites in hours — explicitly positioned as proof of shipping. Aakash Gupta frames tiered build plans (30-minute / 8-hour / 40-hour versions).</li>
+    <li><strong>Distribution matters as much as the site:</strong> the recommended trio is open web (SEO on your name), resume link, and LinkedIn Featured section — the last claimed to drive the majority of mentee offers.</li>
+    <li><strong>Notion remains the fast default but is seen as aesthetically limited</strong> — praised for text-first, database-driven case studies that mirror how PMs already document (embed Figma, Loom, project databases), criticized for rarely looking as polished as a coded site.</li>
+    <li><strong>Platform tiering by career stage:</strong> Notion/templates for speed and junior PMs; Squarespace for mid-career polish; Webflow for senior candidates wanting custom branding; PM-specific tools (UXfolio, portfolio.dev-style builders with viewer analytics) emerging.</li>
+    <li><strong>Content structure has converged</strong> on the problem → process → quantified-outcome narrative, with "the why behind every decision" as the explicit centerpiece.</li>
+    <li><strong>Embedded artifacts are increasingly expected:</strong> Figma prototypes, Loom walkthroughs, Miro boards — and for the AI era, live embedded demos of things the candidate actually built.</li>
+    <li><strong>AI-PM content is its own sub-genre:</strong> weekend-buildable side projects (working AI apps, agent demos, dashboards) as portfolio centerpieces, proving technical fluency a resume can't.</li>
+    <li><strong>Product-sense interviews are moving earlier and AI prototypes are becoming table stakes</strong> in 2025–26 hiring cycles (Duolingo, Stripe, LTK cited) — the portfolio is drifting from artifact to pre-interview screen.</li>
+  </ol>
+</section>
+
+<section>
+  <p class="eyebrow">07 · Sources</p>
+  <h2>Primary sources consulted</h2>
+  <ul class="srcs">
+    <li><a href="https://www.aakashg.com/product-manager-portfolio-examples/">Aakash Gupta — PM Portfolio Examples That Win FAANG+ Offers</a></li>
+    <li><a href="https://www.news.aakashg.com/p/vibe-code-pm-portfolio">Aakash Gupta — Vibe-Code Your PM Portfolio (newsletter)</a></li>
+    <li><a href="https://substack.com/@aakashgupta/note/c-57985088">Aakash Gupta — survey of 325 PMs + 15 hiring managers (Substack note)</a></li>
+    <li><a href="https://careerfoundry.com/en/blog/product-management/product-manager-portfolio/">CareerFoundry — 9 Great PM Portfolio Examples (2025 guide)</a></li>
+    <li><a href="https://www.sitebuilderreport.com/inspiration/product-manager-portfolios">SiteBuilderReport — 20+ Inspiring PM Portfolios</a></li>
+    <li><a href="https://productschool.com/blog/career-development/product-management-portfolio-examples">Product School — PM Portfolio Examples</a></li>
+    <li><a href="https://underdog.io/blog/product-manager-portfolio-examples">Underdog.io — 7 Standout PM Portfolio Examples 2026</a></li>
+    <li><a href="https://www.productmanagerjobboard.com/blog/pm-portfolio-what-to-include">Product Manager Job Board — Your PM Portfolio: What to Include (and Skip)</a></li>
+    <li><a href="https://shawli.substack.com/p/5-steps-to-creating-a-product-portfolio">Shawli — 5 Steps to Creating a Product Portfolio</a></li>
+    <li><a href="https://www.teamblind.com/post/do-you-look-at-candidates-portfolio-zlbuydfd">Blind — "Do you look at candidates' portfolios?" (hiring-manager thread)</a></li>
+    <li><a href="https://suprainsider.substack.com/p/64-how-top-companies-evaluate-pm">Supra Insider — How Top Companies Evaluate PMs</a></li>
+    <li><a href="https://www.institutepm.com/knowledge-hub/ai-pm-side-projects">Institute PM — AI PM Side Projects</a></li>
+    <li><a href="https://aiandproduct.com/ai-product-manager-portfolio-a-4-week-action-plan-to-get-hired-in-2026/">AI &amp; Product — AI PM Portfolio: 4-Week Action Plan (2026)</a></li>
+  </ul>
+</section>
+
+<footer>
+  <p><strong>Methodology &amp; caveats.</strong> Compiled 22 Aug 2026 from four parallel research streams: roundup cross-referencing, live-site deep-dives, hiring-manager sourcing, and trend analysis. Confidence chips mark verification level. Known limits: the "Only 17%" Medium article was fetch-blocked (403) and inferred from summaries; Aakash Gupta's mentee outcomes are self-reported marketing claims; platform-popularity rankings rest on overlapping career-blog sources rather than practitioner polling — treat as directional; no substantive Reddit r/ProductManagement thread was reachable, so Blind served as the practitioner-forum proxy; single-source (Tier 2) portfolio URLs were not all individually re-verified.</p>
+</footer>
+</div>
