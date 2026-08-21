@@ -10,6 +10,8 @@
   border-top: var(--rule-strong);
   padding-top: var(--space-8);
   padding-bottom: var(--section-gap);
+  /* The contents index deep-links here; land below the fixed nav. */
+  scroll-margin-top: var(--nav-height);
 }
 
 .inner {
@@ -37,6 +39,7 @@
   border-top: var(--rule-strong);
   padding-top: var(--space-8);
   padding-bottom: var(--section-gap);
+  scroll-margin-top: var(--nav-height);
 }
 
 .ctaTitle {

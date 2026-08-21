@@ -30,6 +30,8 @@ export interface Project {
   metricValue: string;
   metricLabel: string;
   featured: boolean;
+  /** "flagship" marks the 2–3 deep dossiers surfaced on the home page. */
+  tier?: "flagship";
   /** False for card-only entries with no case-study page (defaults to true). */
   hasCaseStudy?: boolean;
   githubUrl: string | null;
@@ -50,6 +52,8 @@ export interface CaseStudyFrontmatter {
   duration: string;
   stack: string[];
   tldr: string;
+  /** One line of exact ownership — what was mine on this project. */
+  myPart?: string;
   metrics: CaseStudyMetric[];
   /** Collaborators rendered in the case-study hero */
   coCreators?: CoCreator[];

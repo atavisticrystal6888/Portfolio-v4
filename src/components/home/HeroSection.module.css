@@ -1,37 +1,43 @@
-/* Sized by its content, not by the viewport. At 90vh the hero left a black
-   band above and below the six lines it actually holds, and pushed the
-   metrics strip out of the first scroll on every laptop. The cap keeps the
-   3D scene room to breathe on very tall screens without reopening the void. */
+/* Title block, not a stage: sized by its content, flat working-paper ground.
+   The old 3D scene is unmounted (see docs/v5-design-notes.md). */
 .hero {
-  min-height: min(78vh, 620px);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  padding: calc(var(--nav-height) + var(--space-9)) var(--space-6) var(--space-10);
+  padding: calc(var(--nav-height) + var(--space-10)) var(--space-6) var(--space-10);
 }
 
-.content {
-  position: relative;
-  z-index: 1;
+.inner {
   max-width: var(--container-max);
+  margin: 0 auto;
   width: 100%;
+}
+
+.titleBlock {
   display: flex;
   flex-direction: column;
   gap: var(--space-5);
 }
 
-.name {
-  font-family: var(--font-display);
-  font-size: var(--text-display);
-  font-weight: 700;
-  letter-spacing: var(--tracking-tight);
-  line-height: var(--leading-tight);
-  color: var(--text-strong);
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-label);
+  color: var(--text-muted);
 }
 
-/* Mono role line, set as a spec field rather than a subtitle. */
-.role {
+.thesis {
+  font-family: var(--font-display);
+  font-size: var(--text-hero);
+  font-weight: 600;
+  letter-spacing: var(--tracking-tight);
+  line-height: 1.05;
+  color: var(--text-strong);
+  max-width: 16ch;
+  text-wrap: balance;
+}
+
+/* Where he actually is — the status line of the author byline. */
+.status {
   font-family: var(--font-mono);
   font-size: var(--text-sm);
   font-weight: 500;
@@ -55,9 +61,83 @@
   margin-top: var(--space-3);
 }
 
+/* Contents index: navigation set like a paper's table of contents. Hidden on
+   narrow screens, where the navbar already covers this job. */
+.contents {
+  display: none;
+}
+
+.contentsHeading {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-label);
+  color: var(--text-muted);
+  margin-bottom: var(--space-2);
+}
+
+.contentsList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* The whole row is the link; padding keeps the hit area ≥44px. */
+.contentsLink {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-3);
+  padding-block: var(--space-3);
+  min-height: 44px;
+  box-sizing: border-box;
+  text-decoration: none;
+  border-bottom: var(--hairline);
+}
+
+.contentsLink:hover .contentsLabel,
+.contentsLink:focus-visible .contentsLabel {
+  color: var(--accent);
+}
+
+.contentsIndex {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
+}
+
+.contentsLabel {
+  font-size: var(--text-sm);
+  color: var(--text);
+  transition: color var(--transition-fast);
+}
+
+.leader {
+  flex: 1;
+  border-bottom: 1px dotted var(--border-strong);
+  transform: translateY(-4px);
+}
+
+@media (min-width: 1000px) {
+  .inner {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 280px;
+    column-gap: var(--space-11);
+    align-items: start;
+  }
+
+  .contents {
+    display: block;
+    border-top: var(--rule-strong);
+    padding-top: var(--space-4);
+    /* Optically aligns the index's first rule with the thesis baseline. */
+    margin-top: var(--space-7);
+  }
+}
+
 @media (max-width: 767px) {
   .hero {
-    min-height: 0;
     padding: calc(var(--nav-height) + var(--space-8)) var(--space-6) var(--space-9);
   }
 }

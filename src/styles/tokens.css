@@ -78,6 +78,8 @@
   /* Display ceiling for page and dossier titles. */
   --text-4xl: 3.5rem;
   --text-display: clamp(2.75rem, 6vw, 4.5rem);
+  /* One step above --text-display, used only by the home title block. */
+  --text-hero: clamp(2.9rem, 7vw, 5.25rem);
 
   /* Line height + tracking */
   --leading-tight: 1.1;

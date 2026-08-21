@@ -10,6 +10,7 @@
     "metricValue": "92%",
     "metricLabel": "Diagnosis Accuracy (200-sample golden set)",
     "featured": true,
+    "tier": "flagship",
     "githubUrl": "https://github.com/atavisticrystal6888/aarchid-api",
     "liveUrl": "https://www.aarchid.space/",
     "coCreators": [
@@ -49,6 +50,7 @@
     "metricValue": "43+",
     "metricLabel": "Technical Indicators",
     "featured": true,
+    "tier": "flagship",
     "githubUrl": null,
     "duration": "May 2026 – present",
     "role": "Full-Stack Developer & Architect",
@@ -65,6 +67,7 @@
     "metricValue": "50+",
     "metricLabel": "Tenant-Scoped API Routes",
     "featured": true,
+    "tier": "flagship",
     "githubUrl": "https://github.com/atavisticrystal6888/A-B-Testing-Platform",
     "duration": "2026 – present",
     "role": "Solo Builder · Product & Architecture",
