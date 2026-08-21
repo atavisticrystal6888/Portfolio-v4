@@ -220,3 +220,19 @@ Standing rules (carried forward, do not re-litigate):
 **Still needed from the user (non-blocking, land whenever):**
 - WS-C source material: aarchid eval sheet, experiment-hub notebook, kite-edge
   QuantStats tear sheet + photos (explicitly deferred to last).
+
+## WS-E — distribution checklist (user actions, off-repo)
+
+The site side is done (JSON-LD Person, sitemap, RSS, dynamic OG images, live
+links surfaced). What only the user can do:
+
+1. **LinkedIn Featured**: add the three flagship case-study URLs
+   (/projects/aarchid, /projects/experiment-hub, /projects/kite-edge) and the
+   eval-harness blog post. This channel is the highest-claimed-ROI move in the
+   research.
+2. **Resume deep links**: the next resume PDF revision should link each listed
+   project to its case-study URL, not just the homepage.
+3. **Share-card check**: paste one flagship URL into LinkedIn's post composer
+   and confirm the OG image reads well; if not, the /og route is the fix.
+4. **Name SEO**: search "Dhruv Singhal" logged out once the deploy is live and
+   confirm the portfolio ranks; the WebSite + Person JSON-LD already ship.
