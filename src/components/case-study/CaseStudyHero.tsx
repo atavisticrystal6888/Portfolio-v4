@@ -10,6 +10,8 @@ interface CaseStudyHeroProps {
   /** Project screenshot, when the project has one. */
   imageUrl?: string | null;
   imageAlt?: string;
+  /** Deployed URL from projects.json — rendered as a spec row, not a footnote. */
+  liveUrl?: string | null;
 }
 
 /**
@@ -21,9 +23,12 @@ interface CaseStudyHeroProps {
  * header shows the thing as well as describing it; where it does not, the
  * table keeps the full measure and only the signature scene sits behind.
  */
-export function CaseStudyHero({ caseStudy, imageUrl, imageAlt }: CaseStudyHeroProps) {
+export function CaseStudyHero({ caseStudy, imageUrl, imageAlt, liveUrl }: CaseStudyHeroProps) {
   const headline = caseStudy.metrics?.[0];
   const hasTeam = (caseStudy.coCreators?.length ?? 0) > 0;
+  const liveHost = liveUrl
+    ? new URL(liveUrl).host.replace(/^www\./, "")
+    : null;
 
   return (
     <section className={styles.hero} aria-label="Case study header">
@@ -41,6 +46,13 @@ export function CaseStudyHero({ caseStudy, imageUrl, imageAlt }: CaseStudyHeroPr
             <dt className={styles.specKey}>Role</dt>
             <dd className={styles.specValue}>{caseStudy.role}</dd>
           </div>
+
+          {caseStudy.myPart && (
+            <div className={styles.specRow}>
+              <dt className={styles.specKey}>My part</dt>
+              <dd className={styles.specValue}>{caseStudy.myPart}</dd>
+            </div>
+          )}
 
           <div className={styles.specRow}>
             <dt className={styles.specKey}>Timeline</dt>
@@ -64,6 +76,22 @@ export function CaseStudyHero({ caseStudy, imageUrl, imageAlt }: CaseStudyHeroPr
               <dd className={styles.specValue}>
                 <span className={styles.outcomeValue}>{headline.displayValue}</span>
                 <span className={styles.outcomeLabel}>{headline.label}</span>
+              </dd>
+            </div>
+          )}
+
+          {liveUrl && liveHost && (
+            <div className={styles.specRow}>
+              <dt className={styles.specKey}>Live</dt>
+              <dd className={styles.specValue}>
+                <a
+                  href={liveUrl}
+                  className={styles.liveLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {liveHost} &#8599;
+                </a>
               </dd>
             </div>
           )}

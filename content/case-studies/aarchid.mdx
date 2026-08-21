@@ -6,6 +6,7 @@ role: "Co-creator · Product + Engineering"
 duration: "Aug 2025 – present"
 stack: ["Gemini 1.5 Pro", "Exa AI API", "Next.js", "Cloudflare Workers", "Hono", "Supabase", "TypeScript"]
 tldr: "Plant owners had no personalized, real-time care guidance. Built with Dilpreet Grover (@dfordp), Aarchid diagnoses plant health from a single photo by combining Gemini 1.5 Pro vision with Exa AI API research-augmented reasoning — returning a health score, severity tier, and cited action plan in under 10s on the edge."
+myPart: "Product scope and spec, the 50-photo golden eval set and prompt iteration, and the citation-grounding requirement; platform engineering shared with Dilpreet Grover."
 coCreators:
   - name: "Dilpreet Grover"
     role: "Engineering"
@@ -45,6 +46,14 @@ The gap: a forensic, auditable diagnosis — look at _your_ plant, factor in _yo
 - Interviewed 10+ plant enthusiasts about failure modes and trust gaps in existing apps
 - Benchmarked top 4 apps on diagnostic specificity, citation quality, and edge-case handling
 - Unmet need crystallised: image-based diagnosis + hyper-local environmental context + cited recommendations
+
+## Constraints
+
+Three constraints were fixed before the first line of code and shaped everything downstream:
+
+- **Latency:** a diagnosis that arrives after the user closes the app is worthless — P95 had to stay under 10s end-to-end, photo upload included.
+- **Cost ceiling:** a two-person side project can't carry idle server bills — fixed infrastructure had to stay in single-digit dollars per month, with per-user cost measured in cents.
+- **Auditability:** an AI that prescribes treatment for a living thing has to show its sources — every recommendation needed a citation a user could follow, not a confident guess.
 
 ## Solution & Approach
 
@@ -89,9 +98,9 @@ These three screens capture the product arc: sharp positioning on the landing pa
   </figure>
 </div>
 
-## Implementation
+## Decisions & Trade-offs
 
-The edge stack prioritised latency, auditability, and cost ceiling. Three decisions shaped the build:
+The constraints above forced choices; three decisions shaped the build:
 
 **1. Cloudflare Workers (Hono) as orchestrator, not a monolith backend.** Image upload lands on R2 (zero egress). A single Worker fans out three parallel calls — Gemini vision, Exa research, OpenWeather — then composes the response. No cold starts, <50ms overhead, global by default.
 
@@ -111,7 +120,9 @@ const report = composeReport({ diagnosis, research, weather });
 return c.json(report); // <10s P95 on the edge
 ```
 
-> **Key decision:** Keeping the orchestrator stateless pushed all persistence to Supabase (history, growth tracking) and R2 (images). The Worker is cheap to re-run, trivial to version, and the eval harness can replay any historical photo against a new model without touching user data.
+<div class="case-decision">
+  <p>Keeping the orchestrator stateless pushed all persistence to Supabase (history, growth tracking) and R2 (images). The Worker is cheap to re-run, trivial to version, and the eval harness can replay any historical photo against a new model without touching user data.</p>
+</div>
 
 ## Outcome & Metrics
 

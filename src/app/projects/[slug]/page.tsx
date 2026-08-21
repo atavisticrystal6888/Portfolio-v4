@@ -71,6 +71,7 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
         caseStudy={caseStudy}
         imageUrl={currentProject?.imageUrl}
         imageAlt={currentProject?.imageAlt}
+        liveUrl={currentProject?.liveUrl}
       />
 
       {/* TL;DR */}

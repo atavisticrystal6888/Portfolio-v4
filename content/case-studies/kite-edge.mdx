@@ -5,6 +5,7 @@ subtitle: "Full-stack, analytics-only platform for Zerodha Kite — 43+ technica
 role: "Full-Stack Developer & Architect"
 duration: "May 2026 – present"
 stack: ["Elixir", "Phoenix", "Python", "FastAPI", "React", "TypeScript", "PostgreSQL", "Kafka"]
+myPart: "Solo — the architecture, every service, and the product boundary decisions, including analytics-only."
 tldr: "Retail investors on Zerodha lacked institutional-grade analytics. I designed and built KiteEdge — a self-hosted polyglot platform combining an Elixir/Phoenix backend for real-time data streaming, a Python analytics engine for quantitative finance, and a React dashboard — delivering 43+ technical indicators, Monte Carlo VaR, ensemble forecasting, a NIFTY 500 screener, FIFO trade analytics, and Power BI export across 50 API endpoints, without ever executing trades."
 metrics:
   - label: "Technical Indicators"
@@ -38,7 +39,12 @@ The gap: a self-hosted, privacy-first platform that connects to your Kite accoun
 - Studied quantitative finance workflows at institutional level — what metrics do professional portfolio managers track daily?
 - Benchmarked retail analytics tools (Smallcase, Tickertape, Screener.in) on depth of technical analysis, risk quantification, and forecasting capabilities
 - Identified core unmet needs: multi-timeframe technical analysis (not just daily), portfolio-level risk decomposition, scenario-based stress testing, and statistically rigorous forecasting with confidence intervals
-- Key constraint: **analytics only** — the platform must never execute trades, ensuring zero regulatory risk and user trust
+
+## Constraints
+
+- **Analytics only.** The platform must never execute a trade — zero regulatory exposure, and the user never has to trust it with an order. This boundary was set before the first endpoint and shaped every integration.
+- **Self-hosted privacy.** Kite OAuth tokens live only in Redis with an 18-hour TTL, never on disk; no data leaves the user's machine. Trust is the differentiator, so it's enforced by architecture, not policy.
+- **Free data sources.** No Bloomberg budget — fundamentals coverage is best-effort and nullable by design, and every derived number has to carry its methodology instead of implying terminal-grade completeness.
 
 ## Solution & Approach
 
@@ -62,7 +68,7 @@ ARIMA/SARIMA (auto-fitted via AIC/BIC selection) + Facebook Prophet (NSE trading
 
 Shipped May–Aug 2026, this layer turned the analytics engine into a daily driver: multi-year **XIRR** per holding and portfolio-level, nightly dividend tracking, and sector/asset-class/market-cap breakdowns; a **FIFO-matched trade journal** with realized P&L, win rate, profit factor, and expectancy; an append-only **suggestion journal** that records what the models recommended and how those calls aged — a scorecard the user can't edit; a **NIFTY 500 screener** with 400-bar backfill plus fundamentals per symbol, tier-ranked composite scoring, and a resumable nightly refresh; a deploy advisor that proposes allocations in whole shares; QuantStats HTML tear sheets; and **OData v4 entity sets** so Power BI and Excel can live-refresh against the platform.
 
-## Implementation
+## Decisions & Trade-offs
 
 Four architectural decisions shaped the platform:
 
@@ -108,6 +114,11 @@ def monte_carlo_var(returns, portfolio_value, days=10, sims=10_000, ci=0.95):
     
     return {"VaR": var_absolute, "CVaR": cvar, "simulations": sims}
 ```
+
+<!-- v5 WS-C reserved slot: QuantStats tear sheet from demo input + product
+     photos land here as a <figure class="case-artifact"> when supplied.
+     Constraints in handover-portfolio-round2.md §KiteEdge apply: demo data
+     only, never the credentialed services. -->
 
 ## Outcome & Metrics
 
