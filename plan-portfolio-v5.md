@@ -1,5 +1,13 @@
 # Plan: Portfolio v5 — research-driven IA & depth release
 
+> **Status (2026-08-22): EXECUTED** on branch `v5`, commits `1880b54..b8d4a61`
+> (WS-0 → WS-E one-shot). Verified: vitest 44/44, Playwright chromium 134/134,
+> production build clean, visual QA both themes at 1440/375 (one navbar
+> transparency defect found and fixed). Outstanding: WS-C artifact source
+> material (user-supplied; KiteEdge photos deliberately last), the WS-E user
+> checklist below, the three.js-dependency decision, and non-chromium
+> Playwright projects before merge to main.
+
 Compiled 2026-08-22. Inputs: `research-pm-portfolios-2026-08.html` (web research on
 trending PM portfolios, committed to this repo), `handover-portfolio-round2.md`
 (rounds 1–3 history), and a full codebase map of v4.
