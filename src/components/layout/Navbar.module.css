@@ -6,13 +6,16 @@
   z-index: var(--z-sticky);
   background: transparent;
   border-bottom: 1px solid transparent;
-  transition: background var(--transition-base), border-color var(--transition-base);
-}
-
-.nav.scrolled {
+  /* Painted in the base state, not only after 20px of scroll: content ghosted
+     through the bar whenever the scroll listener hadn't fired yet. Over the
+     page ground the tint is invisible anyway. */
   background: var(--nav-bg, var(--glass-bg));
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
+  transition: border-color var(--transition-base);
+}
+
+.nav.scrolled {
   border-bottom-color: var(--border);
 }
 
