@@ -72,11 +72,23 @@ export function ProjectCard({ project }: ProjectCardProps) {
           ))}
         </p>
 
-        {hasCaseStudy && (
-          <Link href={href} className={styles.cta}>
-            Case study &rarr;
-          </Link>
-        )}
+        <div className={styles.ctas}>
+          {hasCaseStudy && (
+            <Link href={href} className={styles.cta}>
+              Case study &rarr;
+            </Link>
+          )}
+          {project.liveUrl && (
+            <a
+              href={project.liveUrl}
+              className={styles.cta}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Live app &#8599;
+            </a>
+          )}
+        </div>
       </div>
     </article>
   );

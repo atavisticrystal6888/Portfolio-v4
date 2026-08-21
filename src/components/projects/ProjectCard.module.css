@@ -111,6 +111,13 @@
   color: var(--accent-hover);
 }
 
+.ctas {
+  display: flex;
+  gap: var(--space-6);
+  align-items: baseline;
+  flex-wrap: wrap;
+}
+
 @media (min-width: 900px) {
   .row {
     grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
