@@ -1,11 +1,17 @@
 # Disabled interactives
 
-Four interactive extras are **still in the codebase but no longer mounted**. They
-were switched off in the round-2 UI pass (2026-08-20), not deleted, so any of
-them can come back with a one-line change.
+> **v5 update (2026-08-22):** the four components below, plus the unused
+> `ThemeCustomizer`, `AvailabilityBadge`, `HeroVisuals`, and the home
+> `ExperienceTimeline` (redundant with /about's Timeline), were **deleted
+> deliberately** in the WS-F subtraction pass — this file's own reasoning was
+> the rationale, and the research behind v5 ("a mediocre extra hurts more than
+> none") settled it. They live in git history if ever wanted back. The home
+> hero's `SignatureScene` mount was also removed (the scene component itself
+> stays for dossier/lab variants; three.js deps untouched pending the user's
+> call). The tables below are kept as the historical record.
 
-Nothing here is dead code by accident — if you are tempted to delete these
-files, read the reasoning first and delete them deliberately.
+Four interactive extras were **switched off in the round-2 UI pass
+(2026-08-20)** and deleted in v5.
 
 ## What is off, and why
 
