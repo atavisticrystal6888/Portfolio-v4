@@ -60,3 +60,41 @@ describe("markdownToHtml emphasis", () => {
     expect(html).not.toContain("**Unit economics:**");
   });
 });
+
+describe("markdownToHtml v5 artifact grammars", () => {
+  it("passes a case-decision div through without paragraph-wrapping its closer", () => {
+    const md = [
+      "prose before",
+      "",
+      '<div class="case-decision">',
+      "  <p>Stateless orchestrator, all persistence in Supabase.</p>",
+      "</div>",
+      "",
+      "prose after",
+    ].join("\n");
+    const html = markdownToHtml(md);
+    expect(html).toContain('<div class="case-decision">');
+    expect(html).not.toContain("<p></div></p>");
+    expect(html).not.toContain("<p><div");
+  });
+
+  it("restores a fenced code block inside a case-artifact figure", () => {
+    const md = [
+      '<figure class="case-artifact">',
+      "```text",
+      "boundary |z| > 2.316",
+      "",
+      "verdict CONTINUE",
+      "```",
+      "  <figcaption>The engine's actual output at α=0.05.</figcaption>",
+      "</figure>",
+    ].join("\n");
+    const html = markdownToHtml(md);
+    expect(html).toContain('<figure class="case-artifact">');
+    expect(html).toContain("<pre");
+    expect(html).toContain("boundary |z| &gt; 2.316");
+    expect(html).toContain("<figcaption>");
+    expect(html).not.toContain("<p></figure></p>");
+    expect(html).not.toContain("<table");
+  });
+});

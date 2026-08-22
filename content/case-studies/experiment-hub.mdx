@@ -64,6 +64,37 @@ An `event_collector` app receives single and batch events, publishes to Kafka th
 
 The Python/FastAPI engine implements z-tests for proportions and Welch's t-test for the classic cases, plus O'Brien-Fleming and Pocock alpha-spending boundaries for sequential monitoring, and a power/sample-size calculator so experiments are sized before they start. Services authenticate to it with an internal key and propagate W3C trace context.
 
+<figure class="case-artifact">
+```text
+$ analyze --experiment checkout-copy-demo --metric checkout_conversion
+ExperimentHub statistical engine · frequentist + sequential readout
+──────────────────────────────────────────────────────────────────
+variant                  n  conversions     rate
+control              2,700          270   10.00%
+reassurance-copy     2,800          330   11.79%
+
+two-proportion z-test (z_test_proportions)
+  lift          +1.79 pp absolute   +17.9% relative
+  p-value       0.0337            significant at α=0.05: yes
+  95% CI (diff) [+0.14 pp, +3.43 pp]
+  cohen's h     0.0574            power achieved: 0.57
+
+sample size (MDE 2 pp, power 0.80)
+  required 3,839/variant · collected 5,500 of 7,678 · sufficient: no
+
+sequential monitoring · obrien_fleming α-spending
+  information fraction   0.716
+  nominal α spent        0.0206
+  boundary |z| >         2.316
+  observed z             2.127
+  verdict                CONTINUE — boundary not crossed
+
+recommendation  insufficient_data: Only 5500 of 7678 required samples collected. Continue running.
+overall_status  insufficient_data · computed in 6 ms
+```
+  <figcaption>The engine's actual output, run in-process against the seeded demo experiment at an interim look. This run is the whole thesis in one screen: the naive p-value (0.0337) clears α=0.05 and looks shippable, but the O'Brien-Fleming boundary at 71.6% information demands |z| &gt; 2.316 and the observed z is 2.127 — so the honest verdict is keep running. A t-test endpoint would have called it a winner today.</figcaption>
+</figure>
+
 ### 4. Lifecycle, guardrails, and audit as first-class objects
 
 Experiments move through explicit state machines with optimistic locking. Eight background workers handle scheduled starts/ends, analysis triggers, guardrail monitoring, notifications, data retention, and partition management. Every state change lands in an audit log; GDPR export/erase endpoints exist because a data platform without them isn't self-hostable in good conscience.
