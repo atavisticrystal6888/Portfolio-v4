@@ -152,13 +152,19 @@ export function CommandPalette() {
     }
   }, [close, router, toggleMode, setPalette]);
 
-  // Keyboard shortcut to open
+  // Keyboard shortcut to open. Escape lives here too, not only on the
+  // palette's own onKeyDown: the input takes focus a frame after open, so an
+  // Escape pressed in that gap lands on the trigger button and the dialog
+  // never heard it (an intermittent close failure on WebKit).
   useEffect(() => {
     const handleKey = (e: KeyboardEvent) => {
       if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
         e.preventDefault();
         if (isOpen) close();
         else open();
+      } else if (e.key === 'Escape' && isOpen) {
+        e.preventDefault();
+        close();
       }
     };
     document.addEventListener('keydown', handleKey);
