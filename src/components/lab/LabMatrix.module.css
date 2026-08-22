@@ -76,3 +76,19 @@
 .tightHeading {
   margin-bottom: var(--space-4);
 }
+
+/* Title left, difficulty chip right, never interleaved. */
+.cardHead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+.cardName {
+  min-width: 0;
+}
+
+.cardHead > :last-child {
+  flex-shrink: 0;
+}

@@ -32,6 +32,11 @@ export default async function AboutPage() {
   const hasGitHub =
     github.totalContributions > 0 || github.totalPublicRepos > 0;
 
+  // Section numbers count what actually renders: with GitHub stats hidden a
+  // hardcoded 07 after 05 read as a numbering error on a working paper.
+  let section = 0;
+  const num = () => String(++section).padStart(2, "0");
+
   return (
     <div className={styles.page}>
       <JsonLd id="about-breadcrumb-jsonld" data={breadcrumbJsonLd} />
@@ -46,7 +51,7 @@ export default async function AboutPage() {
       <section aria-label="Philosophy" data-section="philosophy" className={styles.section}>
         <div className={styles.inner}>
           <header className={styles.sectionHeader}>
-            <SectionLabel index="01">Philosophy</SectionLabel>
+            <SectionLabel index={num()}>Philosophy</SectionLabel>
             <h2 className={styles.sectionTitle}>How I think</h2>
           </header>
           <Philosophy />
@@ -57,7 +62,7 @@ export default async function AboutPage() {
       <section aria-label="Biography" data-section="bio" className={styles.section}>
         <div className={styles.innerNarrow}>
           <header className={styles.sectionHeader}>
-            <SectionLabel index="02">Background</SectionLabel>
+            <SectionLabel index={num()}>Background</SectionLabel>
             <h2 className={styles.sectionTitle}>My story</h2>
           </header>
           <div className={styles.bioRow}>
@@ -111,7 +116,7 @@ export default async function AboutPage() {
                 . It diagnoses plant health from a photo, hits 92% accuracy on
                 our 200-sample golden set, and runs at the edge for under a
                 quarter per active user per month. I wrote the PRD, built the
-                eval harness, and shipped v1. The harness said we were at 92%.
+                eval harness, and shipped V1. The harness said we were at 92%.
                 The user interviews said trust was the real bottleneck. Learning
                 to hold both of those at once is the part of the job I actually
                 like.
@@ -135,7 +140,7 @@ export default async function AboutPage() {
       <section aria-label="Skills" data-section="skills" className={styles.section}>
         <div className={styles.inner}>
           <header className={styles.sectionHeader}>
-            <SectionLabel index="03">Skills</SectionLabel>
+            <SectionLabel index={num()}>Skills</SectionLabel>
             <h2 className={styles.sectionTitle}>
               Product, data, and enough engineering
             </h2>
@@ -148,7 +153,7 @@ export default async function AboutPage() {
       <section aria-label="Experience" data-section="experience" className={styles.section}>
         <div className={styles.innerNarrow}>
           <header className={styles.sectionHeader}>
-            <SectionLabel index="04">Experience</SectionLabel>
+            <SectionLabel index={num()}>Experience</SectionLabel>
             <h2 className={styles.sectionTitle}>Four teams, four problems</h2>
           </header>
           <Timeline />
@@ -159,7 +164,7 @@ export default async function AboutPage() {
       <section aria-label="Achievements" data-section="achievements" className={styles.section}>
         <div className={styles.inner}>
           <header className={styles.sectionHeader}>
-            <SectionLabel index="05">Achievements</SectionLabel>
+            <SectionLabel index={num()}>Achievements</SectionLabel>
             <h2 className={styles.sectionTitle}>Highlights</h2>
           </header>
           <Achievements />
@@ -171,7 +176,7 @@ export default async function AboutPage() {
         <section aria-label="GitHub activity" data-section="github" className={styles.section}>
           <div className={styles.inner}>
             <header className={styles.sectionHeader}>
-              <SectionLabel index="06">Open source</SectionLabel>
+              <SectionLabel index={num()}>Open source</SectionLabel>
               <h2 className={styles.sectionTitle}>GitHub activity</h2>
             </header>
             <GitHubStats profile={github} />
@@ -183,7 +188,7 @@ export default async function AboutPage() {
       <section aria-label="How I work" data-section="how-i-work" className={styles.section}>
         <div className={styles.innerNarrow}>
           <header className={styles.sectionHeader}>
-            <SectionLabel index="07">How I work</SectionLabel>
+            <SectionLabel index={num()}>How I work</SectionLabel>
             <h2 className={styles.sectionTitle}>Operating principles</h2>
           </header>
           <dl className={styles.values}>

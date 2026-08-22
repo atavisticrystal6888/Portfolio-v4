@@ -50,6 +50,9 @@ export function SkillsRadar() {
       options: {
         responsive: true,
         maintainAspectRatio: true,
+        // Point labels render at the chart edge and were clipped mid-word
+        // ("SQL & Pytho…") without this breathing room.
+        layout: { padding: 24 },
         scales: {
           r: {
             beginAtZero: true,

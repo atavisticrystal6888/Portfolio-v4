@@ -358,3 +358,15 @@
   line-height: 1.6;
   color: var(--text-muted);
 }
+
+/* On narrow screens the artifact frame's padding ate a third of the measure
+   and the readout needed nearly 3x horizontal scroll. */
+@media (max-width: 480px) {
+  .prose :global(.case-artifact) {
+    padding: var(--space-3);
+  }
+
+  .prose :global(.case-artifact pre) {
+    font-size: 12px;
+  }
+}

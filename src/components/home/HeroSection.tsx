@@ -27,7 +27,7 @@ export function HeroSection() {
             Dhruv Singhal &middot; Product Manager &amp; Builder
           </p>
           <h1 className={styles.thesis}>
-            I scope, spec, and ship the v1 myself.
+            I scope, spec, and ship the V1 myself.
           </h1>
           <p className={styles.status}>
             Currently: Product Manager Intern, Growth &middot; The Sleep Company
@@ -49,10 +49,12 @@ export function HeroSection() {
           <ol className={styles.contentsList}>
             {CONTENTS.map(({ index, label, href }) => (
               <li key={href}>
+                {/* ToC grammar: label, dotted leader, folio number — the
+                    leader ends in the number instead of trailing into nothing. */}
                 <Link href={href} className={styles.contentsLink}>
-                  <span className={styles.contentsIndex}>{index}</span>
                   <span className={styles.contentsLabel}>{label}</span>
                   <span className={styles.leader} aria-hidden="true" />
+                  <span className={styles.contentsIndex}>{index}</span>
                 </Link>
               </li>
             ))}

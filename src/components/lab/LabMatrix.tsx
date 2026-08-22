@@ -94,8 +94,10 @@ export function LabMatrix({ ideas }: LabMatrixProps) {
         <div className={page.cardGrid}>
           {visible.map((idea) => (
             <div key={idea.id} className={page.card}>
-              <h3>
-                {idea.name}
+              {/* Title and difficulty each get a fixed home: the chip used to
+                  sit inline after the title and wrapped mid-name on long ones. */}
+              <h3 className={styles.cardHead}>
+                <span className={styles.cardName}>{idea.name}</span>
                 <span className={page.badge}>{idea.difficulty}</span>
               </h3>
               <p>{idea.problem}</p>

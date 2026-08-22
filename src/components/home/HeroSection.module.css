@@ -83,7 +83,9 @@
   padding: 0;
 }
 
-/* The whole row is the link; padding keeps the hit area ≥44px. */
+/* The whole row is the link; padding keeps the hit area ≥44px. The dotted
+   leader is the row's only horizontal line — a solid rule beneath it doubled
+   the ruling. */
 .contentsLink {
   display: flex;
   align-items: baseline;
@@ -92,7 +94,6 @@
   min-height: 44px;
   box-sizing: border-box;
   text-decoration: none;
-  border-bottom: var(--hairline);
 }
 
 .contentsLink:hover .contentsLabel,
@@ -131,8 +132,9 @@
     display: block;
     border-top: var(--rule-strong);
     padding-top: var(--space-4);
-    /* Optically aligns the index's first rule with the thesis baseline. */
-    margin-top: var(--space-7);
+    /* Aligns the index's top rule with the top of the thesis text box
+       (the eyebrow row above accounts for the extra 8px). */
+    margin-top: calc(var(--space-7) + var(--space-2));
   }
 }
 
