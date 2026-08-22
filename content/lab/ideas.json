@@ -48,7 +48,7 @@
     "name": "Plant-Health Citizen Dataset",
     "category": "Vertical AI",
     "difficulty": "Medium",
-    "problem": "Aarchid's golden set is 50 photos. Crowdsource a labelled dataset (10k+ photos across failure modes) with contributor attribution and licence clarity.",
+    "problem": "Aarchid's golden set is 200 samples. Crowdsource a labelled dataset (10k+ photos across failure modes) with contributor attribution and licence clarity.",
     "pmSkill": "Marketplace liquidity, contributor incentives",
     "hardestTech": "Quality control without a paid review team",
     "stack": ["Supabase", "R2", "Label Studio", "Next.js"],

@@ -8,7 +8,7 @@
     "imageAlt": "Aarchid landing page showing the AI plant diagnosis interface and digital twin positioning.",
     "stack": ["Gemini 1.5 Pro", "Exa AI API", "Next.js", "Cloudflare Workers", "Hono", "Supabase", "TypeScript"],
     "metricValue": "92%",
-    "metricLabel": "Diagnosis Accuracy (golden-set eval)",
+    "metricLabel": "Diagnosis Accuracy (200-sample eval)",
     "featured": true,
     "tier": "flagship",
     "githubUrl": "https://github.com/atavisticrystal6888/aarchid-api",

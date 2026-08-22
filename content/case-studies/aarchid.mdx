@@ -6,7 +6,7 @@ role: "Co-creator · Product + Engineering"
 duration: "Aug 2025 – present"
 stack: ["Gemini 1.5 Pro", "Exa AI API", "Next.js", "Cloudflare Workers", "Hono", "Supabase", "TypeScript"]
 tldr: "Plant owners had no personalized, real-time care guidance. Built with Dilpreet Grover (@dfordp), Aarchid diagnoses plant health from a single photo by combining Gemini 1.5 Pro vision with Exa AI API research-augmented reasoning — returning a health score, severity tier, and cited action plan in under 10s on the edge."
-myPart: "Product scope and spec, the 50-photo golden eval set and prompt iteration, and the citation-grounding requirement; platform engineering shared with Dilpreet Grover."
+myPart: "Product scope and spec, the 200-sample golden eval set and prompt iteration, and the citation-grounding requirement; platform engineering shared with Dilpreet Grover."
 coCreators:
   - name: "Dilpreet Grover"
     role: "Engineering"
@@ -39,7 +39,7 @@ Plant enthusiasts and collectors struggle to diagnose plant-health issues early.
 
 The gap: a forensic, auditable diagnosis — look at _your_ plant, factor in _your_ local conditions, and recommend an action grounded in botanical research, not generic templates.
 
-> Source: aarchid-rework (no longer public) · [aarchid-api](https://github.com/dfordp/aarchid-api) · live at [aarchid.space](https://www.aarchid.space/).
+> Source: aarchid-rework (no longer public — it holds the Workers orchestrator and the eval harness described below) · [aarchid-api](https://github.com/dfordp/aarchid-api) (the public data-layer API only; it does not contain the diagnosis pipeline) · live at [aarchid.space](https://www.aarchid.space/).
 
 ## Research & Discovery
 
@@ -106,7 +106,7 @@ The constraints above forced choices; three decisions shaped the build:
 
 **2. Every claim cites a source.** Exa AI API returns peer-reviewed citations inline. The frontend renders them as a footnote trail so users can audit *why* the app recommended neem oil for that particular spider-mite presentation.
 
-**3. A golden eval set, not a vibe check.** 50 labelled photos across 12 common plant-health failure modes. Every model/prompt change re-runs the set and reports accuracy deltas. Current model + prompt: **92% on the golden set, 90% citation grounding, P95 <10s end-to-end**.
+**3. A golden eval set, not a vibe check.** 200 labelled samples across 12 common plant-health failure modes. Every model/prompt change re-runs the set and reports accuracy deltas. Current model + prompt: **92% on the golden set, 90% citation grounding, P95 <10s end-to-end**.
 
 ```ts
 // Simplified orchestrator flow inside the Worker
@@ -126,7 +126,7 @@ return c.json(report); // <10s P95 on the edge
 
 ## Outcome & Metrics
 
-- **Diagnosis accuracy:** 92% on a 50-sample golden set covering 12 failure modes
+- **Diagnosis accuracy:** 92% on a 200-sample golden set covering 12 failure modes
 - **Citation grounding:** 90% of recommendations carry a peer-reviewed source link
 - **Latency:** P95 <10s end-to-end on Cloudflare's edge
 - **Unit economics:** ~$0.25 per active user per month at scale; sub-$5/mo fixed infra at low usage
