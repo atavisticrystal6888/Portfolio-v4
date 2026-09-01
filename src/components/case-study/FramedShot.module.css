@@ -16,6 +16,13 @@
   background: color-mix(in srgb, var(--shot-accent) 14%, var(--bg));
 }
 
+/* The night ground swallows a 14% tint; the panel needs more accent to read
+   as a panel at all. The matte on the image below stays. */
+[data-theme="dark"] .ground {
+  background: var(--accent-subtle);
+  background: color-mix(in srgb, var(--shot-accent) 24%, var(--bg));
+}
+
 .hero {
   padding: var(--space-6);
 }

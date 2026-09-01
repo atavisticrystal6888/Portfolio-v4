@@ -140,6 +140,16 @@
   .gallery { grid-template-columns: minmax(0, 1fr); }
 }
 
+/* An odd shot at the end closes the gallery across both columns, held to 72%
+   of the measure so it reads as a wide closing frame rather than a balloon. */
+@media (min-width: 640px) {
+  .gallery > .shot:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+    justify-self: center;
+    width: 72%;
+  }
+}
+
 .shot {
   margin: 0;
   min-width: 0;
@@ -286,8 +296,14 @@
 .options .optionName {
   font-weight: 600;
   color: var(--text-strong);
-  white-space: nowrap;
 }
+
+/* Column weights, roughly 1.1fr / auto / 1.5fr: WHY is the widest column and
+   the option name wraps rather than starving it. The status column shrinks to
+   its pill. */
+.options .optionsHead:nth-child(1) { width: 34%; }
+.options .optionsHead:nth-child(2) { width: 1%; white-space: nowrap; }
+.options .optionsHead:nth-child(3) { width: 52%; }
 
 .status {
   display: inline-block;

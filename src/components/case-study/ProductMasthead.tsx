@@ -31,6 +31,22 @@ export function StatusPill({ status, className }: StatusPillProps) {
 
 interface ProductMastheadProps {
   project: Project;
+  /**
+   * Case-study frontmatter title, e.g. "Aarchid — AI Botanical Intelligence".
+   * The part after the dash becomes the second half of the eyebrow so nothing
+   * from the title is lost when the hero gives up its h1.
+   */
+  title?: string;
+}
+
+/**
+ * Splits "Name — Descriptor" (em/en dash or spaced hyphen) into its halves.
+ * A title with no dash has no descriptor.
+ */
+export function splitCaseStudyTitle(title: string): { name: string; descriptor: string | null } {
+  const [name = "", ...rest] = title.split(/\s+[\u2014\u2013-]\s+/);
+  const descriptor = rest.join(" ").trim();
+  return { name: name.trim(), descriptor: descriptor.length > 0 ? descriptor : null };
 }
 
 /**
@@ -39,10 +55,16 @@ interface ProductMastheadProps {
  * and where to try it. A visitor who reads nothing else still leaves with
  * the product in hand.
  *
- * The case-study title below stays the page's h1; the name here is a `p`.
+ * The product name here is the page's h1. The hero below renders no title
+ * of its own when a masthead is present; the descriptor half of the
+ * frontmatter title ("AI Botanical Intelligence") joins the eyebrow instead.
  */
-export function ProductMasthead({ project }: ProductMastheadProps) {
+export function ProductMasthead({ project, title }: ProductMastheadProps) {
   const name = project.productName ?? project.name;
+  const descriptor = title ? splitCaseStudyTitle(title).descriptor : null;
+  const eyebrow = [project.audience ? `For ${project.audience}` : null, descriptor]
+    .filter(Boolean)
+    .join(" \u00b7 ");
   const style = project.accent
     ? ({ "--product-accent": project.accent } as CSSProperties)
     : undefined;
@@ -53,23 +75,23 @@ export function ProductMasthead({ project }: ProductMastheadProps) {
     <section className={styles.masthead} aria-label="Product" style={style}>
       <div className={styles.inner}>
         <div className={styles.identity}>
-          {project.audience && (
-            <p className={styles.eyebrow}>For {project.audience}</p>
-          )}
+          {eyebrow && <p className={styles.eyebrow}>{eyebrow}</p>}
 
           <div className={styles.nameRow}>
             <span className={styles.mark} aria-hidden="true" />
             {project.wordmark ? (
-              <Image
-                src={project.wordmark}
-                alt={name}
-                width={320}
-                height={64}
-                className={styles.wordmark}
-                priority
-              />
+              <h1 className={styles.wordmarkTitle}>
+                <Image
+                  src={project.wordmark}
+                  alt={name}
+                  width={320}
+                  height={64}
+                  className={styles.wordmark}
+                  priority
+                />
+              </h1>
             ) : (
-              <p className={styles.name}>{name}</p>
+              <h1 className={styles.name}>{name}</h1>
             )}
           </div>
 

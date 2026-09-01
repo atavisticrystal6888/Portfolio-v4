@@ -71,6 +71,12 @@
   letter-spacing: var(--tracking-tight);
 }
 
+/* The wordmark h1 is a bare box around the image; the alt text is the heading. */
+.wordmarkTitle {
+  margin: 0;
+  line-height: 0;
+}
+
 .wordmark {
   display: block;
   height: 2.4rem;

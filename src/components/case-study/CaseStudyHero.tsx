@@ -16,7 +16,11 @@ interface CaseStudyHeroProps {
   accent?: string | null;
   /** Muted demo loop; replaces the screenshot inside the frame when present. */
   demoVideo?: string | null;
-  /** True when a ProductMasthead sits above, so the header drops its nav clearance. */
+  /**
+   * True when a ProductMasthead sits above: the header drops its nav clearance
+   * and its h1, since the masthead's product name is the page heading and the
+   * title's descriptor half lives in the masthead eyebrow.
+   */
   belowMasthead?: boolean;
 }
 
@@ -56,7 +60,7 @@ export function CaseStudyHero({
           the top of the page. Dossiers without a shot still get the motif. */}
       {!imageUrl && <SignatureScene variant="dossier" />}
       <div className={cn(styles.inner, imageUrl && styles.innerSplit)}>
-        <h1 className={styles.title}>{caseStudy.title}</h1>
+        {!belowMasthead && <h1 className={styles.title}>{caseStudy.title}</h1>}
         <p className={styles.subtitle}>{caseStudy.subtitle}</p>
 
         <dl className={styles.spec}>

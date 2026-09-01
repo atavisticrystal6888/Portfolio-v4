@@ -46,10 +46,10 @@
   }
 
   /* The spec column usually runs taller than the screenshot. The framed shot
-     stretches to match, and its tinted ground absorbs the difference - the
-     screenshot itself keeps its full height and is never cropped. */
+     keeps its own height and its ground hugs the frame at a fixed padding;
+     stretching it left a band of empty tint above and below the frame. */
   .innerSplit > .shot {
-    align-self: stretch;
+    align-self: start;
   }
 }
 

@@ -66,9 +66,11 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
       <JsonLd id="case-study-creative-work-jsonld" data={creativeWorkJsonLd} />
 
       {/* Product identity: name, tagline, audience, status, try/source. */}
-      {currentProject && <ProductMasthead project={currentProject} />}
+      {currentProject && (
+        <ProductMasthead project={currentProject} title={caseStudy.title} />
+      )}
 
-      {/* Header: h1, spec table, framed shot */}
+      {/* Header: subtitle, spec table, framed shot (the h1 when there is no masthead) */}
       <CaseStudyHero
         caseStudy={caseStudy}
         imageUrl={currentProject?.imageUrl}
