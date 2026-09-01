@@ -1,0 +1,104 @@
+/* Tinted ground: the product's accent at low alpha over the page ground.
+   --shot-accent is set inline per product; the site accent is the fallback
+   so a project without a brand colour still reads as part of the system.
+   The plain --accent-subtle line is the fallback for engines without
+   color-mix(). */
+.ground {
+  --shot-accent: var(--accent);
+  margin: 0;
+  width: 100%;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-md);
+  background: var(--accent-subtle);
+  background: color-mix(in srgb, var(--shot-accent) 14%, var(--bg));
+}
+
+.hero {
+  padding: var(--space-6);
+}
+
+.small {
+  padding: var(--space-3);
+  border-radius: var(--radius-sm);
+}
+
+/* Browser chrome: hairline, paper surface, three dots. The border picks up a
+   little of the accent so the frame belongs to its ground. */
+.frame {
+  width: 100%;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--border);
+  border-color: color-mix(in srgb, var(--shot-accent) 28%, var(--border));
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  background: var(--surface);
+  box-shadow: var(--shadow-md);
+}
+
+.chrome {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  height: 26px;
+  padding: 0 10px;
+  border-bottom: var(--hairline);
+  background: var(--surface);
+}
+
+.small .chrome {
+  height: 18px;
+  gap: 4px;
+  padding: 0 8px;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: var(--radius-full);
+  background: var(--border-strong);
+}
+
+.small .dot {
+  width: 5px;
+  height: 5px;
+}
+
+/* Stage: where the screenshot sits. In the hero the stage takes the image's
+   own height so nothing is cropped; in the small variant it is a fixed 16:10
+   window and the image is contained (letterboxed on the paper surface). */
+.stage {
+  position: relative;
+  width: 100%;
+  min-width: 0;
+  background: var(--surface);
+}
+
+.media {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  object-position: center;
+}
+
+.small .stage {
+  aspect-ratio: 16 / 10;
+}
+
+.small .media {
+  position: absolute;
+  inset: 0;
+  height: 100%;
+}
+
+/* Dark-mode matte: pale product UI glares on the Prussian ground, so the
+   shot is dimmed a touch and its contrast eased. Only the image, never the
+   frame, so the chrome stays crisp. */
+[data-theme="dark"] .media {
+  filter: brightness(0.86) contrast(0.96) saturate(0.95);
+}

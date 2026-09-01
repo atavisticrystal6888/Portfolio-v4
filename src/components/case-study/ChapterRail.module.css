@@ -1,0 +1,83 @@
+/* Hidden until there is room beside a 760px article; sticks under the nav. */
+.rail {
+  display: none;
+}
+
+@media (min-width: 1200px) {
+  .rail {
+    display: block;
+    position: sticky;
+    top: calc(var(--nav-height) + var(--space-8));
+    align-self: start;
+    width: min(100%, var(--toc-width));
+    max-height: calc(100vh - var(--nav-height) - var(--space-10));
+    overflow-y: auto;
+    border-top: var(--rule-strong);
+    padding-top: var(--space-4);
+  }
+}
+
+/* Same grammar as the home Contents index: mono heading, label, dotted
+   leader, folio number. */
+.heading {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-label);
+  color: var(--text-muted);
+  margin-bottom: var(--space-2);
+}
+
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.link {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-3);
+  padding-block: var(--space-3);
+  min-height: 44px;
+  box-sizing: border-box;
+  text-decoration: none;
+}
+
+.link:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: var(--radius-editorial);
+}
+
+.label {
+  font-size: var(--text-sm);
+  color: var(--text);
+  line-height: var(--leading-snug);
+  transition: color var(--transition-fast);
+}
+
+.link:hover .label,
+.link:focus-visible .label,
+.active .label {
+  color: var(--accent);
+}
+
+.active .label {
+  font-weight: 600;
+}
+
+.leader {
+  flex: 1;
+  min-width: var(--space-4);
+  border-bottom: 1px dotted var(--border-strong);
+  transform: translateY(-4px);
+}
+
+.index {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
+}

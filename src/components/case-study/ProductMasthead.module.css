@@ -1,0 +1,152 @@
+/* The masthead takes the nav clearance the hero used to own; the hero below
+   it drops to a normal section gap. */
+.masthead {
+  --product-accent: var(--accent);
+  padding: calc(var(--nav-height) + var(--space-9)) var(--space-6) var(--space-7);
+}
+
+.inner {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  padding-bottom: var(--space-7);
+  border-bottom: var(--rule-strong);
+}
+
+@media (min-width: 900px) {
+  .inner {
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: var(--space-8);
+  }
+}
+
+.identity {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-3);
+  min-width: 0;
+}
+
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-label);
+  color: var(--text-muted);
+}
+
+.nameRow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+/* The product's own colour appears as a printed mark beside the name rather
+   than as the name's ink: a deep product green is illegible as text on the
+   night ground, but reads fine as a swatch. */
+.mark {
+  flex: none;
+  width: 10px;
+  height: 2.4rem;
+  border-radius: 2px;
+  background: var(--product-accent);
+}
+
+[data-theme="dark"] .mark {
+  filter: brightness(1.5) saturate(1.1);
+}
+
+.name {
+  font-family: var(--font-display);
+  font-size: clamp(var(--text-2xl), 4vw, var(--text-3xl));
+  font-weight: 700;
+  color: var(--text-strong);
+  line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-tight);
+}
+
+.wordmark {
+  display: block;
+  height: 2.4rem;
+  width: auto;
+}
+
+.tagline {
+  font-size: var(--text-lg);
+  color: var(--text);
+  line-height: var(--leading-snug);
+  max-width: 44ch;
+  text-wrap: pretty;
+}
+
+.side {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-4);
+  flex: none;
+}
+
+@media (min-width: 900px) {
+  .side {
+    align-items: flex-end;
+  }
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
+/* Status pill: same field-tag voice as Badge, plus one state colour. */
+.status {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  width: fit-content;
+  padding: 3px 8px;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-label);
+  line-height: 1.5;
+  white-space: nowrap;
+  border-radius: var(--radius-editorial);
+  background: var(--chip-bg);
+  border: 1px solid var(--chip-border);
+  color: var(--text-muted);
+}
+
+.status_live {
+  /* Text stays ink for AA contrast at 12px; the dot carries the green. */
+  color: var(--text-strong);
+  border-color: color-mix(in srgb, var(--success) 40%, transparent);
+}
+
+.status_private-beta,
+.status_open-source {
+  color: var(--badge-current-text);
+  background: var(--badge-current-bg);
+  border-color: transparent;
+}
+
+.statusDot {
+  width: 6px;
+  height: 6px;
+  border-radius: var(--radius-full);
+  background: var(--success);
+}
