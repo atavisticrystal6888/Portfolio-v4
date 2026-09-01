@@ -6,97 +6,116 @@ role: "Creator & Lead Developer"
 myPart: "Created and built it — the content system, the PWA, and the progress analytics."
 duration: "Mar 2026 – May 2026"
 stack: ["JavaScript", "HTML/CSS", "PWA", "Service Workers"]
-tldr: "TCS NQT aspirants lacked a free, comprehensive, and offline-capable prep tool. I built an open-source PWA from scratch — 424+ practice questions, 10 previous papers, interactive quizzes, spaced-repetition flashcards, Pomodoro timer, and progress analytics — all with zero dependencies and full offline support."
+tldr: "TCS NQT aspirants lacked a free, comprehensive, and offline-capable prep tool. I built an open-source PWA from scratch — 424+ practice questions, 10 previous papers, interactive quizzes, flashcards, Pomodoro timer, and progress analytics — all with zero dependencies and full offline support."
 metrics:
   - label: "Practice Questions"
     value: 424
     displayValue: "424+"
     chartType: "bar"
+    kind: product
   - label: "Previous Papers"
     value: 10
     displayValue: "10"
     chartType: "bar"
+    kind: product
   - label: "PWA Features"
     value: 12
     displayValue: "12"
     chartType: "bar"
+    kind: product
   - label: "Contributors"
     value: 4
     displayValue: "4"
     chartType: "bar"
+    kind: build
 prevSlug: "churn-analysis"
 nextSlug: "portfolio-site"
 ---
 
-## Context & Problem
+## Who it's for, and why
 
-Every year, lakhs of engineering graduates sit for the TCS National Qualifier Test (NQT) — the gateway to Ninja (₹3.36 LPA), Digital (₹7–9 LPA), and Prime (₹9–11+ LPA) roles. The preparation landscape is fragmented: paid coaching platforms with paywalls, scattered PDFs on Telegram, and ad-heavy websites with dubious question quality.
+TCS NQT Prep Hub is an open-source side project. I created and built it: the content system, the PWA and the progress analytics. Four contributors joined within the first week.
 
-The gap: there was no single, free, offline-capable platform that combined verified previous-year questions, structured study material, and interactive practice tools — without sign-ups, ads, or paywalls.
+Every year, lakhs of engineering graduates sit the TCS National Qualifier Test, the gateway to Ninja (₹3.36 LPA), Digital (₹7–9 LPA) and Prime (₹9–11+ LPA) roles. Their job is to pass an exam with a known pattern, on a student budget, often on a phone.
 
-## Research & Discovery
+The options fail them: paid coaching behind paywalls, scattered PDFs on Telegram, ad-heavy sites with dubious question quality.
 
-- Surveyed 15+ TCS NQT aspirants about their pain points — top complaints were scattered resources, unverified questions, and no way to track progress
-- Audited existing platforms (PrepInsta, GeeksforGeeks, IndiaBix) on content quality, UX, and offline access
-- Mapped the TCS NQT exam pattern: 92 questions across 6 sections (Numerical, Verbal, Reasoning, Programming Logic, Coding) in 150 minutes
-- Key insight: most aspirants study on mobile, often with unreliable internet — offline-first was non-negotiable
+The gap: no single free, offline-capable platform combined verified previous-year questions, structured study material and interactive practice, without sign-ups, ads or paywalls.
 
-## Solution & Approach
+## What I learned before building
 
-### 1. Content-First Architecture
+I surveyed 15+ TCS NQT aspirants about their pain points, audited PrepInsta, GeeksforGeeks and IndiaBix on content quality, UX and offline access, and mapped the exam: 92 questions across 6 sections (Numerical, Verbal, Reasoning, Programming Logic, Coding) in 150 minutes.
 
-Built the knowledge base in plain Markdown — 74 verified PYQs from actual 2024 exam shifts, 300 aptitude & reasoning questions, 50 coding problems, 10 full previous papers, and HR interview prep. Readable on GitHub, in VS Code, or any text editor.
+Two findings changed the plan. The top complaints were scattered resources, unverified questions and no way to track progress, so verification and progress had to be visible features. Most aspirants study on mobile, often on unreliable internet, so offline-first was non-negotiable.
 
-### 2. Interactive PWA
+## The bets, and what we cut
 
-A zero-dependency Progressive Web App with 12 features: custom quiz builder (pick topics, question count, difficulty, time limits), spaced-repetition flashcards, categorised notes, Pomodoro study timer, bookmarks, progress analytics with topic mastery levels, and a full "Know TCS" resource section.
+**Free, with no sign-up.** No paywall, no ads, no account; progress lives on the device.
 
-### 3. Offline-First Design
+**Offline-first.** For trains, hostels and patchy connectivity.
 
-Service Worker caches the entire app shell and question bank on first load. Once installed, the app works fully offline — critical for students studying on trains, in hostels, or areas with patchy connectivity.
+**Contributable by freshers.** Study content is plain Markdown, and the app has no framework to learn. Adding a question is a data-only change.
 
-### 4. Open-Source & Community-Driven
+<Options>
+  <Option name="Zero dependencies, vanilla JS" status="chosen" why="Instant load, hosting on GitHub Pages, and a barrier low enough for freshers to submit PRs." />
+  <Option name="React with build tools and a bundler" status="rejected" why="A framework to learn before a first PR, and a build step to host." />
+  <Option name="localStorage, no backend" status="chosen" why="Progress persists on the device; JSON export covers backup and migration." />
+  <Option name="Random shuffle for flashcards" status="chosen" why="What shipped; cards appear in random order." />
+  <Option name="SM-2 spaced repetition for flashcards" status="deferred" why="Would improve retention over multi-week prep. Next change." />
+</Options>
 
-Published as a public GitHub repo with clear contribution guidelines. 4 contributors within the first week — adding new PYQs, improving solutions, and enhancing the app.
+## What we built
 
-## Product Gallery
+A first-time user on a phone lands on the dashboard: progress cards, recent activity and topic-wise mastery. The quiz builder lets them pick topics, count, difficulty and time limit, or take a preset that reproduces the full exam: 92 questions in 150 minutes.
 
-The shipped product had to feel useful on day one, even for first-time users on mobile. The gallery below shows the four core surfaces that made the app feel like a complete prep system rather than a question dump.
+The question bank behind it: 74 verified PYQs from 2024 exam shifts with detailed explanations, 300 aptitude and reasoning questions, 50 coding problems, 10 full previous papers, HR interview prep and a "Know TCS" section.
 
-<div class="case-gallery">
-  <figure class="case-gallery__figure">
-    <a class="case-gallery__link" href="/images/projects/tcs-nqt-prep-hub/dashboard.png" target="_blank" rel="noopener noreferrer">
-      <img src="/images/projects/tcs-nqt-prep-hub/dashboard.png" alt="TCS NQT Prep Hub dashboard with progress cards, recent activity, and topic-wise mastery." loading="lazy" />
-    </a>
-    <figcaption>Dashboard: a fast first screen that turns prep into visible progress with metrics, mastery bars, and recent activity.</figcaption>
-  </figure>
-  <figure class="case-gallery__figure">
-    <a class="case-gallery__link" href="/images/projects/tcs-nqt-prep-hub/test-builder.png" target="_blank" rel="noopener noreferrer">
-      <img src="/images/projects/tcs-nqt-prep-hub/test-builder.png" alt="TCS NQT Prep Hub test builder with topic selection and timing controls." loading="lazy" />
-    </a>
-    <figcaption>Quiz builder: configuration controls let users match the actual exam pattern instead of taking generic practice sets.</figcaption>
-  </figure>
-  <figure class="case-gallery__figure">
-    <a class="case-gallery__link" href="/images/projects/tcs-nqt-prep-hub/progress.png" target="_blank" rel="noopener noreferrer">
-      <img src="/images/projects/tcs-nqt-prep-hub/progress.png" alt="TCS NQT Prep Hub progress page with statistics, performance chart, and topic mastery." loading="lazy" />
-    </a>
-    <figcaption>Progress tracking: users can see which sections are moving, which are stalled, and where more practice is needed.</figcaption>
-  </figure>
-  <figure class="case-gallery__figure">
-    <a class="case-gallery__link" href="/images/projects/tcs-nqt-prep-hub/analytics.png" target="_blank" rel="noopener noreferrer">
-      <img src="/images/projects/tcs-nqt-prep-hub/analytics.png" alt="TCS NQT Prep Hub analytics page with radar chart, heatmap, and achievement cards." loading="lazy" />
-    </a>
-    <figcaption>Analytics: radar, heatmap, and achievement surfaces make the product feel coach-like rather than static.</figcaption>
-  </figure>
-</div>
+The rest of the 12 features: flashcards, categorised notes, a Pomodoro timer, bookmarks, dark mode and analytics with topic mastery levels.
 
-## Implementation
+<Gallery>
+  <Shot src="/images/projects/tcs-nqt-prep-hub/dashboard.png" alt="TCS NQT Prep Hub dashboard with progress cards, recent activity, and topic-wise mastery." caption="The dashboard makes progress visible on the first screen: metrics, mastery bars, recent activity." />
+  <Shot src="/images/projects/tcs-nqt-prep-hub/test-builder.png" alt="TCS NQT Prep Hub test builder with topic selection and timing controls." caption="The quiz builder exposes topic, count, difficulty and time limit, so a mock matches the 92-question, 150-minute exam." />
+  <Shot src="/images/projects/tcs-nqt-prep-hub/progress.png" alt="TCS NQT Prep Hub progress page with statistics, performance chart, and topic mastery." caption="Progress shows which sections are moving and which are stalled, answering the 'no way to track progress' complaint." />
+  <Shot src="/images/projects/tcs-nqt-prep-hub/analytics.png" alt="TCS NQT Prep Hub analytics page with radar chart, heatmap, and achievement cards." caption="Analytics: radar chart, heatmap and achievements make weak topics visible rather than inferred." />
+</Gallery>
 
-Three design decisions defined the project:
+<Decision>
+Offline-first, before anything else. Most aspirants study on mobile with unreliable internet, so the app shell and question bank are cached on first load, and every other choice had to keep working with the network off.
+</Decision>
 
-**1. Zero dependencies — Vanilla JS only.** No React, no build tools, no bundlers. The entire app is `index.html` + `app.js` + `styles.css` + data files. This means instant load, trivial hosting (GitHub Pages), and a contribution barrier low enough for freshers to submit PRs.
+## How we knew it worked
 
-**2. Data-driven quiz engine.** All questions live in a structured JS data file. The quiz builder dynamically filters by topic, difficulty, and count. Adding new questions is a data-only change — no UI code needs to touch.
+The evidence is what a free, no-account product can produce. The app loads in under 1 second on 3G, installs as a PWA and works fully offline. Four contributors arrived within the first week and added PYQs, improved solutions and enhanced the app, the clearest sign that Markdown content lowered the barrier as intended.
+
+The honest limits: no sign-ups and no backend means no count of users or quizzes taken; whether scores moved is not measured.
+
+## Outcome
+
+Product:
+
+- **424+ practice questions** across Numerical, Verbal, Reasoning and Programming
+- **10 full previous papers**
+- **74 verified PYQs** from 2024 exam shifts, with explanations
+- **12 PWA features**, from quiz builder to analytics and dark mode
+- **Live:** [atavisticrystal6888.github.io/TCS-NQT-Prep-Hub](https://atavisticrystal6888.github.io/TCS-NQT-Prep-Hub/)
+- **Users:** not measured yet
+
+Build:
+
+- **4 open-source contributors** within the first week
+- **Zero dependencies**, vanilla JS
+
+## What I'd do next
+
+- **Next bet:** SM-2 spaced repetition for flashcards, replacing random shuffle for multi-week prep.
+- **Open question:** how to learn whether scores move without adding the sign-up the product was built to avoid.
+- **Do differently:** ship the flashcard schedule with the first release. The stack decisions I would repeat.
+
+<UnderTheHood title="Architecture and implementation">
+
+**1. Zero dependencies, vanilla JS only.** No React, no build tools, no bundlers. The entire app is `index.html` + `app.js` + `styles.css` + data files.
+
+**2. Data-driven quiz engine.** All questions live in a structured JS data file. The quiz builder filters by topic, difficulty and count at runtime, so adding questions is a data-only change.
 
 ```javascript
 // Quiz builder - supports custom configurations
@@ -117,23 +136,12 @@ const PRESETS = {
 };
 ```
 
-**3. localStorage for persistence — no backend needed.** Quiz scores, flashcard progress, study time, bookmarks, and notes all persist in localStorage. Users can export/import their progress as JSON for backup or device migration.
+**3. localStorage for persistence, no backend.** Quiz scores, flashcard progress, study time, bookmarks and notes persist in localStorage. Users can export and import their progress as JSON for backup or device migration.
 
-## Outcome & Metrics
+**Offline.** The service worker caches the entire app shell and question bank on first load; once installed, the app works fully offline.
 
-- **424+ practice questions** across Numerical, Verbal, Reasoning, and Programming sections
-- **10 full previous papers** for mock test practice
-- **74 verified PYQs** from actual 2024 TCS NQT exam shifts with detailed explanations
-- **12 PWA features** — quiz builder, flashcards, notes, Pomodoro timer, bookmarks, analytics, dark mode, and more
-- **4 open-source contributors** within the first week
-- **Live:** [atavisticrystal6888.github.io/TCS-NQT-Prep-Hub](https://atavisticrystal6888.github.io/TCS-NQT-Prep-Hub/)
+</UnderTheHood>
 
-## Learnings
-
-### What Worked
-
-Going zero-dependency was the right call. The app loads in under 1 second on 3G, installs as a PWA on any device, and contributors don't need to learn a framework. Plain Markdown for study content means anyone can contribute without touching code.
-
-### What I'd Change
-
-Would add a spaced-repetition algorithm (SM-2) for flashcards instead of simple random shuffling. The current implementation shows cards randomly — a proper SRS would significantly improve retention efficiency for users preparing over multiple weeks.
+<Artifacts>
+  <ArtifactLink href="https://github.com/atavisticrystal6888/TCS-NQT-Prep-Hub" type="repo" title="TCS-NQT-Prep-Hub on GitHub" note="Markdown content, vanilla JS app, contribution guidelines." />
+</Artifacts>
