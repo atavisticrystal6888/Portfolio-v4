@@ -1,7 +1,9 @@
 /**
- * Simple markdown-to-HTML converter for case study and blog content.
+ * Simple markdown-to-HTML converter for BLOG content only. Case studies use
+ * real MDX via src/lib/mdx.ts and the block grammar in
+ * src/components/case-study/blocks.
  * Handles: headings, paragraphs, bold, italic, code, links, lists, blockquotes, hr, images, tables.
- * For full MDX support, swap to @next/mdx or mdx-bundler.
+ * Not used for content/case-studies anymore.
  */
 export function markdownToHtml(md: string): string {
   // Normalize line endings to LF
