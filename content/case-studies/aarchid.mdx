@@ -17,96 +17,123 @@ metrics:
     value: 92
     displayValue: "92%"
     chartType: "bar"
+    kind: "product"
   - label: "Cited Recommendations"
     value: 90
     displayValue: "90%"
     chartType: "bar"
+    kind: "product"
   - label: "P95 Latency (edge)"
     value: 85
     displayValue: "<10s"
     chartType: "bar"
+    kind: "product"
   - label: "Infra Cost / User / Mo"
     value: 80
     displayValue: "$0.25"
     chartType: "bar"
+    kind: "product"
 prevSlug: "portfolio-site"
 nextSlug: "hackmate"
 ---
 
-## Context & Problem
+## Who it's for, and why
 
-Plant enthusiasts and collectors struggle to diagnose plant-health issues early. Existing apps (Planta, PictureThis, Greg) lean on static care calendars and species lookups. None correlate visual symptoms with environmental history, and none cite their sources.
+Aarchid is for plant enthusiasts and collectors, the people who own enough plants that one dying quietly in a corner is a real loss. Their job is to catch a problem early and know what to do about it.
 
-The gap: a forensic, auditable diagnosis — look at _your_ plant, factor in _your_ local conditions, and recommend an action grounded in botanical research, not generic templates.
+The apps they already use, Planta, PictureThis and Greg, lean on static care calendars and species lookups. None correlate what the leaf in front of you looks like with the environmental history that produced it, and none cite a source you could check.
+
+The gap: a forensic, auditable diagnosis that looks at your plant, factors in your local conditions, and recommends an action grounded in botanical research, not a template.
+
+Aarchid is a two-person side project built with Dilpreet Grover (@dfordp). I owned product scope, the golden eval set and the citation-grounding requirement; platform engineering was shared.
 
 > Source: aarchid-rework (no longer public — it holds the Workers orchestrator and the eval harness described below) · [aarchid-api](https://github.com/dfordp/aarchid-api) (the public data-layer API only; it does not contain the diagnosis pipeline) · live at [aarchid.space](https://www.aarchid.space/).
 
-## Research & Discovery
+## What I learned before building
 
-- Interviewed 10+ plant enthusiasts about failure modes and trust gaps in existing apps
-- Benchmarked top 4 apps on diagnostic specificity, citation quality, and edge-case handling
-- Unmet need crystallised: image-based diagnosis + hyper-local environmental context + cited recommendations
+I interviewed 10+ plant enthusiasts about failure modes and where they had stopped trusting an app, and benchmarked the top 4 apps on diagnostic specificity, citation quality and edge-case handling. Three things changed the plan:
 
-## Constraints
+- **The trust gap is a sourcing gap.** Users could not check why an app said what it said, so every recommendation read as a guess.
+- **Diagnosis has to be visual and local.** A species lookup answers "what is this plant". The real question was "what is wrong with this one, here".
+- **Citations are the differentiator.** None of the benchmarked apps cite sources.
 
-Three constraints were fixed before the first line of code and shaped everything downstream:
+## The bets, and what we cut
 
-- **Latency:** a diagnosis that arrives after the user closes the app is worthless — P95 had to stay under 10s end-to-end, photo upload included.
-- **Cost ceiling:** a two-person side project can't carry idle server bills — fixed infrastructure had to stay in single-digit dollars per month, with per-user cost measured in cents.
-- **Auditability:** an AI that prescribes treatment for a living thing has to show its sources — every recommendation needed a citation a user could follow, not a confident guess.
+Three constraints were fixed before the first line of code.
 
-## Solution & Approach
+- **Latency.** A diagnosis that arrives after the user has closed the app is worthless. P95 under 10 s end to end, photo upload included.
+- **Cost ceiling.** A two-person side project cannot carry idle server bills. Fixed infrastructure in single-digit dollars a month, per-user cost in cents.
+- **Auditability.** An AI that prescribes treatment for a living thing has to show its sources. Every recommendation needed a citation a user could follow, not a confident guess.
 
-### 1. Architecture — the "Edge Stack"
+<Options>
+  <Option name="Generic care calendar and species lookup" status="rejected" why="Planta, PictureThis and Greg already do this; it never connects symptoms to environmental history." />
+  <Option name="A citation on every recommendation, via Exa AI API" status="chosen" why="Users can audit why the app recommended neem oil for that spider-mite presentation." />
+  <Option name="Cloudflare Workers (Hono) as orchestrator" status="chosen" why="No cold starts, under 50 ms overhead, global by default, fixed infra under $5 a month." />
+  <Option name="Traditional monolith backend" status="rejected" why="Idle server bills a two-person side project cannot carry." />
+  <Option name="Golden eval set, 200 samples across 12 failure modes" status="chosen" why="Every model or prompt change reports an accuracy delta in minutes." />
+  <Option name="Prompt iteration by vibe check" status="rejected" why="No way to tell whether a change helped or hurt." />
+  <Option name="User confirm-or-correct loop feeding the golden set" status="deferred" why="The harness exists; the human-in-the-loop pipe is the next PR." />
+</Options>
 
-Next.js PWA → Cloudflare Workers (Hono) orchestrator → Gemini 1.5 Pro (vision) + Exa AI API (research) + OpenWeather (environment) → Supabase (Postgres) + Cloudflare R2 (image storage, zero egress). Result: sub-$5/mo fixed infra at low usage, ~$0.25 per active user at scale.
+## What we built
 
-### 2. Forensic Health Audit
+It starts with a photo.
 
-Upload photo → Gemini 1.5 Pro detects pests, deficiencies, stress → Workers call Exa AI API to pull peer-reviewed citations → OpenWeather adds 7-day local context → response returns a health score (1–100), severity tier (Healthy / Warning / Critical), and a cited action plan.
+**Forensic Health Audit.** Gemini 1.5 Pro reads the photo for pests, deficiencies and stress. In parallel, the Exa AI API pulls peer-reviewed citations for the symptoms and species, and OpenWeather adds 7 days of local context. Back comes a health score from 1 to 100, a severity tier (Healthy, Warning or Critical) and an action plan with a citation on each recommendation.
 
-### 3. Growth Velocity Tracking
+**Growth Velocity Tracking.** Over weeks of photo logs, pixel-based measurement tracks leaf expansion, stem elongation and internodal distance. Species-specific benchmarks turn that into a verdict: thriving, stagnating or declining.
 
-Pixel-based measurement across photo logs tracks leaf expansion, stem elongation, and internodal distance over weeks. Species-specific benchmarks tell users whether a plant is thriving, stagnating, or declining.
+**Pro-sumer Asset Management.** For collectors with 50+ plants, care actions can be batched by micro-climate zone. Exportable, timestamped Health Certificates give a plant verifiable provenance for peer-to-peer sales. This is the business wedge.
 
-### 4. Pro-sumer Asset Management
+<Gallery>
+  <Shot src="/images/projects/aarchid/hero.png" alt="Aarchid landing page showing the digital twin positioning and AI plant health mockup." caption="The landing page positions Aarchid as a digital twin for plants and previews a diagnosis before sign-up." />
+  <Shot src="/images/projects/aarchid/platform.png" alt="Aarchid platform section showing digital twin profile and feature cards." caption="The platform is an ongoing care system, not a one-off scan." />
+  <Shot src="/images/projects/aarchid/pricing.png" alt="Aarchid pricing and monetization section showing per-plant pricing and data value proposition." caption="Per-plant pricing, reminders and data value cues make the commercial thesis concrete." />
+</Gallery>
 
-Batch care actions for 50+ plants at once grouped by "micro-climate zones". Exportable timestamped **Health Certificates** enable peer-to-peer plant sales with verifiable provenance — the business wedge.
+<Decision>
 
-## Product Gallery
+The most consequential call was keeping the orchestrator stateless, with persistence in Supabase (history, growth tracking) and R2 (images). The Worker is cheap to re-run and trivial to version, and the eval harness can replay any historical photo against a new model without touching user data.
 
-These three screens capture the product arc: sharp positioning on the landing page, a structured diagnosis workflow inside the platform, and a pricing/data story that makes the business model legible.
+</Decision>
 
-<div class="case-gallery">
-  <figure class="case-gallery__figure">
-    <a class="case-gallery__link" href="/images/projects/aarchid/hero.png" target="_blank" rel="noopener noreferrer">
-      <img src="/images/projects/aarchid/hero.png" alt="Aarchid landing page showing the digital twin positioning and AI plant health mockup." loading="lazy" />
-    </a>
-    <figcaption>Landing page: a clear "digital twin for plants" value prop with an immediate diagnosis preview.</figcaption>
-  </figure>
-  <figure class="case-gallery__figure">
-    <a class="case-gallery__link" href="/images/projects/aarchid/platform.png" target="_blank" rel="noopener noreferrer">
-      <img src="/images/projects/aarchid/platform.png" alt="Aarchid platform section showing digital twin profile and feature cards." loading="lazy" />
-    </a>
-    <figcaption>Platform overview: feature modules turn the diagnosis product into an ongoing care system, not a one-off scan.</figcaption>
-  </figure>
-  <figure class="case-gallery__figure">
-    <a class="case-gallery__link" href="/images/projects/aarchid/pricing.png" target="_blank" rel="noopener noreferrer">
-      <img src="/images/projects/aarchid/pricing.png" alt="Aarchid pricing and monetization section showing per-plant pricing and data value proposition." loading="lazy" />
-    </a>
-    <figcaption>Business model: pricing, reminders, and data monetization cues make the commercial thesis concrete.</figcaption>
-  </figure>
-</div>
+## How we knew it worked
 
-## Decisions & Trade-offs
+The eval set is 200 labelled samples across 12 common plant-health failure modes. Every model or prompt change re-runs the whole set and reports the accuracy delta, so prompt iteration went from vibes to measurable, with a result in minutes.
 
-The constraints above forced choices; three decisions shaped the build:
+Aarchid is live at [aarchid.space](https://www.aarchid.space/). The limits of the evidence: accuracy is measured on our golden set, not on live user photos, and with no confirm-or-correct loop yet, field accuracy is not measured. Usage figures are not reported here.
 
-**1. Cloudflare Workers (Hono) as orchestrator, not a monolith backend.** Image upload lands on R2 (zero egress). A single Worker fans out three parallel calls — Gemini vision, Exa research, OpenWeather — then composes the response. No cold starts, <50ms overhead, global by default.
+## Outcome
 
-**2. Every claim cites a source.** Exa AI API returns peer-reviewed citations inline. The frontend renders them as a footnote trail so users can audit *why* the app recommended neem oil for that particular spider-mite presentation.
+Product:
 
-**3. A golden eval set, not a vibe check.** 200 labelled samples across 12 common plant-health failure modes. Every model/prompt change re-runs the set and reports accuracy deltas. Current model + prompt: **92% on the golden set, 90% citation grounding, P95 <10s end-to-end**.
+- **Diagnosis accuracy:** 92% on a 200-sample golden set covering 12 failure modes
+- **Citation grounding:** 90% of recommendations carry a peer-reviewed source link
+- **Latency:** P95 under 10 s end to end on Cloudflare's edge
+- **Unit economics:** ~$0.25 per active user per month at scale; sub-$5 a month fixed infra at low usage
+- **Live:** [aarchid.space](https://www.aarchid.space/), co-built with [Dilpreet Grover](https://github.com/dfordp)
+
+Build:
+
+- Two-person side project, Aug 2025 to present, with a replayable eval harness
+
+## What I'd do next
+
+- **Next bet:** a structured feedback loop. Users confirm or correct a diagnosis and the deltas feed back into the golden set. The harness exists; the pipe is the next PR.
+- **Open question:** whether Health Certificates are the wedge we think they are. The provenance story is built; whether sellers pay for it is not measured yet.
+- **What I'd do differently:** build the correction loop alongside the harness. The 12 failure modes are the ones we chose; users will find the ones we did not.
+
+<UnderTheHood title="Architecture and implementation">
+
+### The Edge Stack
+
+Next.js PWA → Cloudflare Workers (Hono) orchestrator → Gemini 1.5 Pro (vision) + Exa AI API (research) + OpenWeather (environment) → Supabase (Postgres) + Cloudflare R2 (image storage, zero egress).
+
+### Request flow
+
+Image upload lands on R2 (zero egress). A single Worker fans out three parallel calls, Gemini vision, Exa research and OpenWeather (7-day local context), then composes the response. No cold starts, under 50 ms overhead, global by default. Exa returns peer-reviewed citations inline; the frontend renders them as a footnote trail.
+
+<Artifact title="Simplified orchestrator flow inside the Worker">
 
 ```ts
 // Simplified orchestrator flow inside the Worker
@@ -120,24 +147,15 @@ const report = composeReport({ diagnosis, research, weather });
 return c.json(report); // <10s P95 on the edge
 ```
 
-<div class="case-decision">
-  <p>Keeping the orchestrator stateless pushed all persistence to Supabase (history, growth tracking) and R2 (images). The Worker is cheap to re-run, trivial to version, and the eval harness can replay any historical photo against a new model without touching user data.</p>
-</div>
+</Artifact>
 
-## Outcome & Metrics
+### Eval harness
 
-- **Diagnosis accuracy:** 92% on a 200-sample golden set covering 12 failure modes
-- **Citation grounding:** 90% of recommendations carry a peer-reviewed source link
-- **Latency:** P95 <10s end-to-end on Cloudflare's edge
-- **Unit economics:** ~$0.25 per active user per month at scale; sub-$5/mo fixed infra at low usage
-- **Live:** [aarchid.space](https://www.aarchid.space/) — co-built with [Dilpreet Grover](https://github.com/dfordp)
+Because the Worker is stateless, the harness replays any historical photo against a new model or prompt and reports the accuracy delta, without touching user data.
 
-## Learnings
+</UnderTheHood>
 
-### What worked
-
-The eval harness was the unlock. Once we had a labelled golden set, prompt iteration went from "vibes" to measurable — every change produced an accuracy delta in minutes. The edge stack was the second: pushing orchestration to a Worker (instead of a traditional backend) kept fixed costs at single-digit dollars and made the app globally fast from day one.
-
-### What I'd change
-
-A structured feedback loop — let users confirm or correct diagnoses, then feed the deltas back into the golden set. The harness exists; the human-in-the-loop pipe to update it is the next PR.
+<Artifacts>
+  <ArtifactLink href="https://github.com/dfordp/aarchid-api" type="repo" title="aarchid-api" note="Public data-layer API only; the diagnosis pipeline is private." />
+  <ArtifactLink href="https://www.aarchid.space/" type="doc" title="aarchid.space" note="Live product." />
+</Artifacts>

@@ -8,6 +8,7 @@ import { ListRow, ListRows } from "@/components/ui/ListRow";
 import { SectionLabel } from "@/components/ui/SectionLabel";
 import type { Project } from "@/types/project";
 import type { BlogArticle } from "@/types/blog";
+import { shownOnHome } from "./selection";
 import styles from "./Suggestions.module.css";
 
 interface SuggestionsProps {
@@ -18,9 +19,18 @@ interface SuggestionsProps {
 export function Suggestions({ projects, posts }: SuggestionsProps) {
   const { behavior } = useBehavior();
 
+  // Everything already listed under Selected work stays out of "Where to go
+  // next", as do card-only projects with no page to go to.
+  const candidates = useMemo(() => {
+    const shown = shownOnHome(projects);
+    return projects.filter(
+      (p) => !shown.has(p.slug) && p.hasCaseStudy !== false
+    );
+  }, [projects]);
+
   const suggestions = useMemo(
-    () => scoreSuggestions(projects, posts, behavior),
-    [projects, posts, behavior]
+    () => scoreSuggestions(candidates, posts, behavior),
+    [candidates, posts, behavior]
   );
 
   if (suggestions.length === 0) return null;

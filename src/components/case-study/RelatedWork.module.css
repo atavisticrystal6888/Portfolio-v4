@@ -1,5 +1,5 @@
 .wrapper {
-  max-width: var(--container-md);
+  max-width: var(--container-max);
   margin: var(--space-10) auto 0;
   padding: var(--space-9) var(--space-6) 0;
   border-top: var(--rule-strong);
@@ -14,6 +14,76 @@
   line-height: var(--leading-tight);
   color: var(--text-strong);
   margin-bottom: var(--space-7);
+}
+
+/* Image cards: three across, one column on small screens. The whole card is
+   the link; the frame carries the hover, not a box. */
+.cards {
+  list-style: none;
+  margin: 0 0 var(--space-7);
+  padding: 0;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-6);
+}
+
+@media (min-width: 640px) {
+  .cards {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.cardItem {
+  min-width: 0;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  height: 100%;
+  color: inherit;
+  text-decoration: none;
+  border-radius: var(--radius-md);
+}
+
+.card:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+}
+
+.card:hover .cardName,
+.card:focus-visible .cardName {
+  color: var(--accent);
+}
+
+.cardBody {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-2);
+  min-width: 0;
+}
+
+.cardName {
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  font-weight: 700;
+  color: var(--text-strong);
+  line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-tight);
+  transition: color var(--transition-fast);
+}
+
+.cardTagline {
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+  line-height: var(--leading-body);
+  text-wrap: pretty;
+}
+
+.cardStatus {
+  margin-top: var(--space-1);
 }
 
 .metric {

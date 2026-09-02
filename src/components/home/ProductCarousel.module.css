@@ -1,0 +1,182 @@
+/* One card plus a 15% peek of the next on phones; two plus a peek from 640px.
+   Widths come from the rail's own width so the peek is exact at every size. */
+.carousel {
+  --peek: 0.15;
+  --rail-gap: var(--space-5);
+  --card-w: calc((100% - var(--rail-gap)) / (1 + var(--peek)));
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  min-width: 0;
+}
+
+@media (min-width: 640px) {
+  .carousel {
+    --rail-gap: var(--space-6);
+    --card-w: calc((100% - 2 * var(--rail-gap)) / (2 + var(--peek)));
+  }
+}
+
+/* Native horizontal scrolling with mandatory snap; the scrollbar is hidden
+   but the rail stays scrollable with wheel, trackpad, touch and keyboard. */
+.rail {
+  display: flex;
+  gap: var(--rail-gap);
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  overscroll-behavior-x: contain;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  /* Room for the framed shot's shadow and card focus rings. */
+  padding-block: var(--space-2);
+  min-width: 0;
+}
+
+.rail::-webkit-scrollbar {
+  display: none;
+}
+
+.rail:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 6px;
+  border-radius: var(--radius-sm);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rail {
+    scroll-behavior: auto;
+  }
+}
+
+.slide {
+  flex: 0 0 var(--card-w);
+  min-width: 0;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+}
+
+/* Fills the rail's tail so the final card can snap to the start edge; without
+   it the last position would show cards 4 and 5 and no dot could mean "5". */
+.tail {
+  flex: 0 0 calc(100% - var(--card-w) - var(--rail-gap));
+}
+
+/* Controls arrive with hydration; with JavaScript off the rail is simply a
+   horizontally scrollable row and there is nothing here to click. */
+.controls {
+  display: none;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.hydrated .controls {
+  display: flex;
+}
+
+.arrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: var(--hairline);
+  border-radius: var(--radius-editorial);
+  background: transparent;
+  color: var(--text-strong);
+  cursor: pointer;
+  transition: background var(--transition-fast), color var(--transition-fast),
+    border-color var(--transition-fast);
+}
+
+.arrow:hover:not(:disabled) {
+  background: var(--surface);
+  border-color: var(--border-strong);
+  color: var(--accent);
+}
+
+.arrow:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.arrow:disabled {
+  color: var(--text-muted);
+  opacity: 0.4;
+  cursor: default;
+}
+
+.dots {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+/* 28px hit target (WCAG 2.5.8 minimum is 24) around an 8px printed dot. */
+.dot {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+.dot::after {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: var(--radius-full);
+  background: var(--border-strong);
+  transition: background var(--transition-fast), transform var(--transition-fast);
+}
+
+.dot:hover::after {
+  background: var(--text-muted);
+}
+
+.dotActive::after {
+  background: var(--accent);
+  transform: scale(1.25);
+}
+
+.dot:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
+  border-radius: var(--radius-editorial);
+}
+
+.counter {
+  display: none;
+  margin-left: auto;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-label);
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+/* The dots already say where you are; the printed counter is a desktop extra. */
+@media (min-width: 640px) {
+  .counter {
+    display: inline;
+  }
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}

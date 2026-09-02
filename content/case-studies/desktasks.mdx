@@ -8,61 +8,115 @@ duration: "2026 – present"
 stack: ["Electron", "JavaScript", "IndexedDB", "Supabase", "PWA"]
 tldr: "Todo apps compete for your attention; DeskTasks refuses it. The widget sits at the bottom of the window stack — visible exactly when you glance at your desktop, invisible while you work. Local-first and accountless with atomic JSON storage, a natural-language quick-add parser, honest calendar import/export, and an offline-first companion PWA. Shipped: 4 tagged releases, Windows + macOS builds, 540+ test assertions."
 metrics:
-  - label: "Test Assertions"
-    value: 540
-    displayValue: "540+"
-    chartType: "bar"
   - label: "Tagged Releases"
     value: 4
     displayValue: "4"
     chartType: "bar"
+    kind: product
   - label: "Export Formats"
     value: 3
     displayValue: "3"
     chartType: "bar"
+    kind: product
   - label: "Platforms"
     value: 2
     displayValue: "2"
     chartType: "bar"
+    kind: product
+  - label: "Test Assertions"
+    value: 540
+    displayValue: "540+"
+    chartType: "bar"
+    kind: build
 prevSlug: "experiment-hub"
 nextSlug: "better-half"
 ---
 
-## Context & Problem
+## Who it's for, and why
 
-Every task manager makes the same bet: to be used, it must be seen, so it floats, badges, and notifies. The result is that checking your tasks becomes another context switch — and the app you bought to reduce friction adds some.
+DeskTasks is a solo side project: product, design and engineering were mine. It is a live task widget for Windows and macOS desktop users; the repository is private, so this page links the product and not the code.
 
-The insight behind DeskTasks is the opposite bet: the desktop wallpaper is the one surface you glance at dozens of times a day without meaning to. A widget pinned *behind* every window (`HWND_BOTTOM` on Windows) is invisible while you work and present the moment you look up. No window management, no dock icon to chase, no account to create.
+Every task manager makes the same bet: to be used, it must be seen, so it floats, badges and notifies. Checking your tasks becomes another context switch.
 
-## Product Decisions
+The gap: a task list that is there when you glance at the desktop and gone while you work, with no window, dock icon or account to manage.
 
-- **Local-first, accountless.** Data lives in one portable JSON file with atomic writes (temp file → fsync → `.bak` → rename), 7 daily snapshots, and automatic corruption recovery with a visible banner. Sync via Supabase exists but is strictly opt-in convenience — the product is complete without a network.
-- **Capture must be one line.** The quick-add parser turns `pay rent tomorrow 4pm !high #home every month` into a titled, tagged, scheduled, prioritised, recurring task. It handles relative times, ranges, day words, and recurrence including `last friday of month` and `every N days after done`.
-- **Never approximate.** Calendar rules that can't round-trip honestly (a "2nd Tuesday" .ics rule the engine can't represent, or "after done" recurrence with no calendar equivalent) import as clearly-labelled single tasks or export with an explaining note — instead of silently drifting.
-- **One timer, not many.** Time tracking allows a single active timer, caps a forgotten one at 8 hours, and banks time when the task is ticked off. Completion is the clearest "I'm done" signal, so it's the one that commits the number.
+## What I learned before building
 
-## Implementation
+There was no user study behind DeskTasks. The plan came from one observation and one rule.
 
-The Electron main process owns all state: every mutation goes through IPC to one store, and the renderer re-renders from a single broadcast — UI and disk can never disagree, which is what makes crash recovery boring. Reminders ride Windows toast notifications with repeat nudges, a morning summary, and an end-of-day recap. Notes allow only `http`/`https`/`mailto` links — `file:`, `shell:`, and `javascript:` are refused outright.
+The desktop wallpaper is glanced at dozens of times a day without meaning to. A widget pinned behind every window inherits that attention without asking for it.
 
-The companion PWA (Vite + IndexedDB + service worker) reuses the same shared modules — parser, recurrence, dates, CSV — so widget and phone can never disagree about what "biweekly" means. It reads and writes the exact same JSON format, works fully offline, and syncs through a single Supabase `records` table when the user opts in.
+The rule: a local-first product is only trustworthy if it never loses a task and never quietly changes one. Never approximate.
 
-macOS got a deliberate compromise: Electron offers no window level below normal there, so DeskTasks floats like Stickies does, and focus detection leans on a best-effort, documented-as-fragile OS file. Shipping an honest 80% beat holding the release for a native rewrite.
+## The bets, and what we cut
 
-## Outcome & Metrics
+**Local-first, accountless.** Data lives in one portable JSON file; Supabase sync is strictly opt-in, and the product is complete without a network.
 
-- **4 tagged releases** (v1.1.0 → v1.2.2), packaged for Windows (installer + portable) and macOS (arm64 + x64)
-- **540+ test assertions** — 409+ unit (parser, recurrence, platform, sync round-trips) plus 131 e2e assertions that restart the real app to prove persistence and crash recovery
-- **3 import/export formats** — `.ics` with RRULE, CSV with BOM, Markdown — with UID-based dedupe on re-import
-- **Offline-first companion PWA** sharing the widget's exact data format and parsing rules
-- **Zero telemetry, zero accounts** — sync is opt-in; the data file is portable by hand
+**Capture is one line.** `pay rent tomorrow 4pm !high #home every month` becomes a titled, tagged, scheduled, prioritised, recurring task.
 
-## Learnings
+**Never approximate.** A calendar rule that cannot round-trip honestly imports as a clearly labelled single task or exports with an explaining note, instead of silently drifting.
 
-### What Worked
+<Options>
+  <Option name="Pin behind every window, z-order check once a second" status="chosen" why="Shipped. Survives Win+D. A workaround." />
+  <Option name="Wallpaper-layer reparenting as the default" status="deferred" why="More robust; the focus-loss trade-off needs a cleaner answer." />
+  <Option name="Native macOS rewrite" status="rejected" why="Would have held the release. An honest 80% shipped." />
+  <Option name="Multiple concurrent timers" status="rejected" why="One timer, capped at 8 hours, banked when the task is ticked off." />
+</Options>
 
-Making the main process the single writer bought disproportionate reliability: e2e tests assert on both renderer state *and* bytes on disk, and the two never diverge. The shared-modules decision (one parser, two surfaces) eliminated the entire class of "phone and desktop disagree" bugs before they existed.
+## What we built
 
-### What I'd Change
+<Figure src="/images/projects/desktasks/hero.png" alt="Three DeskTasks widget panels on a dark ground: the pinned task list, natural-language quick-add parsing a date, time and tag, and a filtered search." caption="The pinned list, quick-add turning one line into a dated, timed and tagged task, and a filtered search." size="wide" />
 
-The z-order dance on Windows (a once-per-second check to survive Win+D) works but is a workaround; the wallpaper-layer reparenting mode is more robust and should become the default once its focus-loss trade-off has a cleaner answer. And unsigned builds are the real adoption tax — a code-signing certificate matters more to first-run experience than the next feature.
+Capture is one line; the parser reads date, time, priority, tag and recurrence out of it, so a task never needs a form. Reminders come as toast notifications with repeat nudges, a morning summary and an end-of-day recap. One timer runs at a time, and completion banks the time.
+
+The companion PWA works fully offline on the phone, reads and writes the same JSON file and syncs only when you opt in. Widget and phone share one parser, so they cannot disagree about what "biweekly" means.
+
+<Decision>
+Pin the widget behind every window rather than on top of them. Everything else follows from refusing attention: accountless, local-first, no dock icon.
+</Decision>
+
+## How we knew it worked
+
+Reliability was tested rather than assumed: unit tests for the parser, recurrence, platform and sync round-trips, and end-to-end tests that restart the real app to prove persistence and crash recovery, asserting on renderer state and on the bytes on disk. The two never diverge.
+
+The honest limit: there is no usage data. Zero telemetry means I cannot say how many people run DeskTasks. The evidence is that the product survives its own tests and that four releases shipped on two platforms.
+
+## Outcome
+
+Product:
+
+- **4 tagged releases** (v1.1.0 to v1.2.2) for Windows (installer and portable) and macOS (arm64 and x64)
+- **3 import/export formats**: .ics with RRULE, CSV with BOM, Markdown
+- **Offline-first companion PWA** on the same data format and parser
+- **Zero telemetry, zero accounts**; the data file is portable by hand
+- **Users**: not measured yet
+
+Build:
+
+- **540+ test assertions**: 409+ unit plus 131 e2e that restart the real app
+
+## What I'd do next
+
+- **Next bet:** a code-signing certificate. Unsigned builds are the real adoption tax and matter more to first-run experience than the next feature.
+- **Open question:** whether wallpaper-layer reparenting can become the Windows default; its focus-loss trade-off needs a cleaner answer.
+- **Do differently:** nothing in the data layer. The single-writer main process and the shared parser removed whole classes of bugs before they existed.
+
+<UnderTheHood title="Architecture and implementation">
+
+**Single writer.** The Electron main process owns all state: every mutation goes through IPC to one store, and the renderer re-renders from a single broadcast. UI and disk can never disagree, which is what makes crash recovery boring.
+
+**Storage.** One portable JSON file with atomic writes (temp file, fsync, `.bak`, rename), 7 daily snapshots and automatic corruption recovery with a visible banner.
+
+**Parser.** Relative times, ranges, day words and recurrence, including `last friday of month` and `every N days after done`.
+
+**Z-order.** On Windows the widget is pinned with `HWND_BOTTOM`; a once-per-second check keeps it there through Win+D. A wallpaper-layer reparenting mode is more robust but trades focus. On macOS Electron offers no window level below normal, so DeskTasks floats like Stickies, and focus detection leans on a best-effort OS file, documented as fragile.
+
+**Links.** Notes allow only `http`, `https` and `mailto`; `file:`, `shell:` and `javascript:` are refused outright.
+
+**Companion PWA.** Vite, IndexedDB and a service worker, reusing the shared modules (parser, recurrence, dates, CSV) and syncing through a single Supabase `records` table when the user opts in.
+
+**Formats.** `.ics` with RRULE, CSV with BOM, Markdown; UID-based dedupe on re-import. A "2nd Tuesday" rule the engine cannot represent, or "after done" recurrence with no calendar equivalent, imports as a labelled single task or exports with a note.
+
+**Tests.** 409+ unit assertions and 131 e2e assertions that restart the real app.
+
+</UnderTheHood>

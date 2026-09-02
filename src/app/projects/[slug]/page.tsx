@@ -5,8 +5,9 @@ import {
   getCaseStudyBySlug,
   getAllProjects,
 } from "@/lib/content";
-import { markdownToHtml } from "@/lib/markdown";
+import { ProductMasthead } from "@/components/case-study/ProductMasthead";
 import { CaseStudyHero } from "@/components/case-study/CaseStudyHero";
+import { ChapterRail } from "@/components/case-study/ChapterRail";
 import { MetricChart } from "@/components/case-study/MetricChart";
 import { MdxContent } from "@/components/case-study/MdxContent";
 import { CaseStudyNav } from "@/components/case-study/CaseStudyNav";
@@ -59,19 +60,25 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
     author: { "@type": "Person", name: "Dhruv Singhal" },
   };
 
-  const contentHtml = markdownToHtml(caseStudy.content);
-
   return (
     <div className={styles.page}>
       <JsonLd id="case-study-breadcrumb-jsonld" data={breadcrumbJsonLd} />
       <JsonLd id="case-study-creative-work-jsonld" data={creativeWorkJsonLd} />
 
-      {/* Header */}
+      {/* Product identity: name, tagline, audience, status, try/source. */}
+      {currentProject && (
+        <ProductMasthead project={currentProject} title={caseStudy.title} />
+      )}
+
+      {/* Header: subtitle, spec table, framed shot (the h1 when there is no masthead) */}
       <CaseStudyHero
         caseStudy={caseStudy}
         imageUrl={currentProject?.imageUrl}
         imageAlt={currentProject?.imageAlt}
         liveUrl={currentProject?.liveUrl}
+        accent={currentProject?.accent}
+        demoVideo={currentProject?.demoVideo}
+        belowMasthead={Boolean(currentProject)}
       />
 
       {/* TL;DR */}
@@ -85,10 +92,14 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
         <MetricChart metrics={caseStudy.metrics} />
       </section>
 
-      {/* Content */}
-      <article aria-label="Case study content">
-        <MdxContent html={contentHtml} />
-      </article>
+      {/* Body: sticky chapter rail beside the article on wide screens. The rail
+          reads the article's h2s from the DOM after mount. */}
+      <div className={styles.body}>
+        <ChapterRail className={styles.rail} />
+        <article aria-label="Case study content" className={styles.article}>
+          <MdxContent source={caseStudy.content} slug={slug} />
+        </article>
+      </div>
 
       {/* Related Work */}
       <RelatedWork

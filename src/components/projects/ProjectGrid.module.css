@@ -46,12 +46,42 @@
   color: var(--accent);
 }
 
+/* Featured: product cards, one column on phones, two from 960px, three in
+   the dense view. Cards size everything from their own width. */
+.featured {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-9) var(--space-8);
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 0 var(--space-6);
+}
+
+@media (min-width: 960px) {
+  .featured {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .featuredDense {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-8) var(--space-6);
+  }
+}
+
 /* Rows carry their own separators, so the container only sets the measure. */
 .rows {
   max-width: var(--container-max);
   margin: 0 auto;
   padding: 0 var(--space-6);
   border-top: var(--hairline);
+}
+
+@media (min-width: 960px) {
+  .rowsDense {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: var(--space-8);
+  }
 }
 
 .empty {
@@ -72,4 +102,11 @@
   letter-spacing: var(--tracking-label);
   text-transform: uppercase;
   color: var(--accent);
+}
+
+/* When the filter leaves only one group there is no heading above it, so
+   the first group takes the gap the heading would have carried. */
+.controls + .featured,
+.controls + .rows {
+  margin-top: var(--space-9);
 }

@@ -3,8 +3,9 @@
 import { useState, useSyncExternalStore } from "react";
 import type { Project } from "@/types/project";
 import { FilterBar } from "@/components/projects/FilterBar";
-import { ProjectCard } from "@/components/projects/ProjectCard";
-import { MasonryGrid } from "@/components/projects/MasonryGrid";
+import { ProductCard } from "@/components/projects/ProductCard";
+import { CompactRow } from "@/components/projects/CompactRow";
+import { cn } from "@/lib/utils";
 import styles from "./ProjectGrid.module.css";
 
 type LayoutMode = "rows" | "dense";
@@ -40,28 +41,29 @@ function writeLayout(mode: LayoutMode) {
   listeners.forEach((l) => l());
 }
 
+/** Flagships get the product card; everything else is a compact index row. */
+function isFlagship(p: Project): boolean {
+  return p.tier ? p.tier === "flagship" : p.featured;
+}
+
 interface ProjectGridProps {
   projects: Project[];
 }
 
+/**
+ * Featured = the flagship product cards in a grid (two across from 960px,
+ * three in the dense view). More work = compact rows, no imagery. The
+ * category filter applies to both; headings appear only when both groups
+ * have something to show.
+ */
 export function ProjectGrid({ projects }: ProjectGridProps) {
   const [filtered, setFiltered] = useState(projects);
   const layout = useSyncExternalStore(subscribe, readLayout, serverLayout);
 
-  const featured = filtered.filter((p) => p.featured);
-  const more = filtered.filter((p) => !p.featured);
-  const showSections = featured.length > 0 && more.length > 0;
-
-  const renderGroup = (list: Project[], compact = false) =>
-    layout === "dense" ? (
-      <MasonryGrid projects={list} compact={compact} />
-    ) : (
-      <div className={styles.rows}>
-        {list.map((p) => (
-          <ProjectCard key={p.slug} project={p} />
-        ))}
-      </div>
-    );
+  const flagships = filtered.filter(isFlagship);
+  const compact = filtered.filter((p) => !isFlagship(p));
+  const showHeadings = flagships.length > 0 && compact.length > 0;
+  const dense = layout === "dense";
 
   return (
     <div>
@@ -69,9 +71,9 @@ export function ProjectGrid({ projects }: ProjectGridProps) {
         <FilterBar projects={projects} onFilter={setFiltered} />
         <div className={styles.layoutToggle} role="group" aria-label="Layout view">
           <button
-            className={`${styles.layoutBtn} ${layout === "rows" ? styles.layoutActive : ""}`}
+            className={cn(styles.layoutBtn, !dense && styles.layoutActive)}
             onClick={() => writeLayout("rows")}
-            aria-pressed={layout === "rows"}
+            aria-pressed={!dense}
             title="Row view"
           >
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
@@ -81,9 +83,9 @@ export function ProjectGrid({ projects }: ProjectGridProps) {
             </svg>
           </button>
           <button
-            className={`${styles.layoutBtn} ${layout === "dense" ? styles.layoutActive : ""}`}
+            className={cn(styles.layoutBtn, dense && styles.layoutActive)}
             onClick={() => writeLayout("dense")}
-            aria-pressed={layout === "dense"}
+            aria-pressed={dense}
             title="Dense view"
           >
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
@@ -96,16 +98,37 @@ export function ProjectGrid({ projects }: ProjectGridProps) {
         </div>
       </div>
 
-      {showSections ? (
+      {flagships.length > 0 && (
         <>
-          <h2 className={styles.sectionHeading}>Featured</h2>
-          {renderGroup(featured)}
-          <h2 className={styles.sectionHeading}>More work</h2>
-          {renderGroup(more, true)}
+          {showHeadings && <h2 className={styles.sectionHeading}>Featured</h2>}
+          <div className={cn(styles.featured, dense && styles.featuredDense)}>
+            {flagships.map((p, i) => (
+              <ProductCard
+                key={p.slug}
+                project={p}
+                priority={i < 2}
+                sizes={
+                  dense
+                    ? "(max-width: 960px) 100vw, 360px"
+                    : "(max-width: 960px) 100vw, 540px"
+                }
+              />
+            ))}
+          </div>
         </>
-      ) : (
-        renderGroup(filtered)
       )}
+
+      {compact.length > 0 && (
+        <>
+          {showHeadings && <h2 className={styles.sectionHeading}>More work</h2>}
+          <div className={cn(styles.rows, dense && styles.rowsDense)}>
+            {compact.map((p) => (
+              <CompactRow key={p.slug} project={p} />
+            ))}
+          </div>
+        </>
+      )}
+
       {filtered.length === 0 && (
         <p className={styles.empty}>No projects match this filter.</p>
       )}

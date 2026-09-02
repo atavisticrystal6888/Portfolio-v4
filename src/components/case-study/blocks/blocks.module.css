@@ -1,0 +1,574 @@
+/* Case-study block grammar. Tokens only (src/styles/tokens.css); works in both
+   themes; every transition is gated behind prefers-reduced-motion. Selectors
+   are two-class where they need to beat the `.prose img` / `.prose pre` /
+   `.prose th` rules in MdxContent.module.css. */
+
+/* ---- shared ------------------------------------------------------------ */
+
+.eyebrow,
+.eyebrowMuted,
+.decisionEyebrow {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-label);
+  line-height: 1.4;
+}
+
+.eyebrow { color: var(--accent); }
+.eyebrowMuted { color: var(--text-muted); }
+
+.caption {
+  margin-top: var(--space-3);
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  line-height: 1.6;
+  color: var(--text-muted);
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Zoomable image button: reset the button, keep focus visible. */
+.zoom {
+  display: block;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  cursor: zoom-in;
+  border-radius: inherit;
+}
+
+.zoom:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+/* Matte: hairline frame on a soft ground so pale screenshots don't glare in
+   dark mode. Two-class selectors beat `.prose img`. */
+.matte {
+  border: var(--hairline);
+  border-radius: var(--radius-editorial);
+  background: var(--surface-hover);
+  padding: var(--space-3);
+  overflow: hidden;
+}
+
+.matte .media,
+.matte .media img,
+.artifactBody .media img,
+.proseImage .media img {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin: 0;
+  border-radius: var(--radius-sm);
+}
+
+.matte .media img,
+.artifactBody .media img,
+.proseImage .media img,
+.shotFrame .shotMedia img {
+  box-shadow: var(--shadow-sm);
+}
+
+:global([data-theme="dark"]) .matte .media img,
+:global([data-theme="dark"]) .shotFrame .shotMedia img,
+:global([data-theme="dark"]) .artifactBody .media img,
+:global([data-theme="dark"]) .proseImage .media img {
+  filter: brightness(0.9) contrast(0.98);
+}
+
+.proseImage {
+  display: block;
+  margin: var(--space-6) 0;
+}
+
+/* ---- Figure ------------------------------------------------------------ */
+
+.figure {
+  margin: var(--space-8) 0;
+}
+
+.figure video.media {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+}
+
+@media (min-width: 1024px) {
+  .figure[data-size="wide"] {
+    width: min(calc(100vw - 2 * var(--space-8)), var(--container-wide));
+    margin-left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .figure[data-size="full"] {
+    width: min(calc(100vw - 2 * var(--space-6)), var(--container-max));
+    margin-left: 50%;
+    transform: translateX(-50%);
+  }
+}
+
+/* ---- Gallery / Shot ---------------------------------------------------- */
+
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-5);
+  margin: var(--space-7) 0;
+}
+
+@media (max-width: 639px) {
+  .gallery { grid-template-columns: minmax(0, 1fr); }
+}
+
+/* An odd shot at the end closes the gallery across both columns, held to 72%
+   of the measure so it reads as a wide closing frame rather than a balloon. */
+@media (min-width: 640px) {
+  .gallery > .shot:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+    justify-self: center;
+    width: 72%;
+  }
+}
+
+.shot {
+  margin: 0;
+  min-width: 0;
+}
+
+.shotFrame {
+  border: var(--hairline);
+  border-radius: var(--radius-editorial);
+  background: var(--surface-hover);
+  overflow: hidden;
+}
+
+.shotFrame .shotMedia img {
+  width: 100%;
+  margin: 0;
+  display: block;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  object-position: top center;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.shotCaption {
+  padding: var(--space-3) var(--space-1) 0;
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  line-height: 1.55;
+  color: var(--text-muted);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .shotFrame .shotMedia img { transition: transform var(--transition-base); }
+  .shotFrame:hover .shotMedia img { transform: scale(1.03); }
+}
+
+/* ---- Compare ----------------------------------------------------------- */
+
+.compare {
+  margin: var(--space-8) 0;
+}
+
+.compareGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-5);
+}
+
+@media (max-width: 719px) {
+  .compareGrid { grid-template-columns: minmax(0, 1fr); }
+}
+
+.comparePane {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  min-width: 0;
+}
+
+/* ---- Quote ------------------------------------------------------------- */
+
+.quote {
+  margin: var(--space-8) 0;
+  padding-left: var(--space-6);
+  border-left: 2px solid var(--accent);
+}
+
+.quote .quoteText {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: var(--text-xl);
+  line-height: var(--leading-snug);
+  color: var(--text-strong);
+}
+
+.quote .quoteText p { margin: 0 0 var(--space-3); }
+.quote .quoteText p:last-child { margin-bottom: 0; }
+
+.quoteBy {
+  margin-top: var(--space-3);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.quoteName { color: var(--text-strong); }
+
+/* ---- Options (alternatives considered) --------------------------------- */
+
+.optionsWrap {
+  margin: var(--space-7) 0;
+  overflow-x: auto;
+}
+
+.options {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0;
+  font-size: var(--text-sm);
+}
+
+.optionsCaption {
+  caption-side: top;
+  text-align: left;
+  padding-bottom: var(--space-3);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-label);
+  color: var(--text-muted);
+}
+
+.options .optionsHead {
+  text-align: left;
+  padding: var(--space-3);
+  border: 0;
+  border-bottom: var(--hairline);
+  background: none;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-label);
+  color: var(--text-muted);
+}
+
+.options .optionName,
+.options .optionCell {
+  padding: var(--space-3);
+  border: 0;
+  border-bottom: var(--hairline);
+  vertical-align: top;
+  text-align: left;
+  background: none;
+  font-size: var(--text-sm);
+  line-height: 1.6;
+}
+
+.options .optionName {
+  font-weight: 600;
+  color: var(--text-strong);
+}
+
+/* Column weights, roughly 1.1fr / auto / 1.5fr: WHY is the widest column and
+   the option name wraps rather than starving it. The status column shrinks to
+   its pill. */
+.options .optionsHead:nth-child(1) { width: 34%; }
+.options .optionsHead:nth-child(2) { width: 1%; white-space: nowrap; }
+.options .optionsHead:nth-child(3) { width: 52%; }
+
+.status {
+  display: inline-block;
+  padding: 2px 10px;
+  border: 1px solid var(--chip-border);
+  border-radius: var(--radius-pill);
+  background: var(--chip-bg);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--text-muted);
+}
+
+.status[data-status="chosen"] {
+  color: color-mix(in srgb, var(--success) 75%, var(--text-strong)); /* #15803d alone is 4.24:1 at 12px on the light row tint; mix lands ~#166534 (~6:1) */
+  border-color: currentColor;
+}
+
+.status[data-status="deferred"] {
+  color: var(--info);
+  border-color: currentColor;
+}
+
+.status[data-status="rejected"] {
+  color: var(--text-muted);
+  text-decoration: line-through;
+  text-decoration-thickness: 1px;
+}
+
+/* ---- Timeline ---------------------------------------------------------- */
+
+.timeline {
+  list-style: none;
+  margin: var(--space-7) 0;
+  padding: 0 0 0 var(--space-6);
+  border-left: var(--hairline);
+}
+
+.milestone {
+  position: relative;
+  margin: 0 0 var(--space-6);
+  padding-left: var(--space-2);
+}
+
+.milestone:last-child { margin-bottom: 0; }
+
+.milestone::before {
+  content: "";
+  position: absolute;
+  left: calc(-1 * var(--space-6) - 5px);
+  top: 0.45em;
+  width: 9px;
+  height: 9px;
+  border-radius: var(--radius-full);
+  background: var(--accent);
+  box-shadow: 0 0 0 3px var(--bg);
+}
+
+.milestoneTitle {
+  display: block;
+  margin-top: var(--space-1);
+  font-weight: 600;
+  color: var(--text-strong);
+}
+
+.milestoneBody {
+  margin-top: var(--space-2);
+  color: var(--text-body);
+}
+
+.milestoneBody p:last-child { margin-bottom: 0; }
+
+/* ---- Under the hood ---------------------------------------------------- */
+
+.hood {
+  margin: var(--space-8) 0;
+  border: var(--hairline);
+  border-radius: var(--radius-editorial);
+  background: var(--surface);
+}
+
+.hoodSummary {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-rows: auto auto;
+  column-gap: var(--space-4);
+  row-gap: var(--space-1);
+  align-items: center;
+  padding: var(--space-4) var(--space-5);
+  cursor: pointer;
+  list-style: none;
+  color: var(--text-strong);
+}
+
+.hoodSummary::-webkit-details-marker { display: none; }
+
+.hoodSummary:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
+  border-radius: var(--radius-editorial);
+}
+
+.hoodSummary .eyebrow { grid-column: 1; grid-row: 1; }
+
+.hoodTitle {
+  grid-column: 1;
+  grid-row: 2;
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  font-weight: 600;
+  line-height: var(--leading-snug);
+}
+
+.hoodChevron {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  width: 0.6rem;
+  height: 0.6rem;
+  border-right: 2px solid var(--text-muted);
+  border-bottom: 2px solid var(--text-muted);
+  transform: rotate(45deg);
+  margin-right: var(--space-1);
+}
+
+.hood[open] .hoodChevron { transform: rotate(-135deg); }
+
+@media (prefers-reduced-motion: no-preference) {
+  .hoodChevron { transition: transform var(--transition-fast); }
+}
+
+.hoodBody {
+  padding: 0 var(--space-5) var(--space-5);
+  border-top: var(--hairline);
+}
+
+.hoodBody > :first-child { margin-top: var(--space-5); }
+.hoodBody > :last-child { margin-bottom: 0; }
+
+/* ---- Decision ---------------------------------------------------------- */
+
+.decision {
+  border: var(--hairline);
+  border-left: 2px solid var(--accent);
+  border-radius: var(--radius-editorial);
+  background: var(--accent-subtle);
+  padding: var(--space-5) var(--space-6);
+  margin: var(--space-7) 0;
+}
+
+.decisionEyebrow {
+  color: var(--accent);
+  margin: 0 0 var(--space-3);
+}
+
+.decisionBody p:last-child { margin-bottom: 0; }
+
+/* ---- Artifact ---------------------------------------------------------- */
+
+.artifact {
+  margin: var(--space-8) 0;
+  border: var(--hairline);
+  border-radius: var(--radius-editorial);
+  background: var(--surface);
+  padding: var(--space-5) var(--space-5) var(--space-4);
+}
+
+.artifactHead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-2) var(--space-3);
+  margin-bottom: var(--space-3);
+}
+
+.artifactTitle {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  color: var(--text-strong);
+}
+
+.artifactBody .media img {
+  border-radius: var(--radius-sm);
+  box-shadow: none;
+}
+
+.artifactBody pre,
+.artifact .artifactBody pre {
+  margin: 0;
+}
+
+.artifactCaption {
+  padding-top: var(--space-3);
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: var(--text-muted);
+}
+
+.artifactCaption p { margin: 0 0 var(--space-2); }
+.artifactCaption p:last-child { margin-bottom: 0; }
+
+/* On narrow screens the artifact frame's padding ate a third of the measure
+   and the readout needed nearly 3x horizontal scroll. */
+@media (max-width: 480px) {
+  .artifact { padding: var(--space-3); }
+  .artifact .artifactBody pre { font-size: 12px; }
+}
+
+/* ---- Artifacts row ----------------------------------------------------- */
+
+.artifacts {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin: var(--space-7) 0;
+  padding: 0;
+}
+
+.artifactItem { margin: 0; }
+
+.artifactChip {
+  position: relative;
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-4);
+  border: 1px solid var(--chip-border);
+  border-radius: var(--radius-pill);
+  background: var(--chip-bg);
+  color: var(--text-strong);
+  text-decoration: none;
+  font-size: var(--text-sm);
+  line-height: 1.5;
+}
+
+.artifactChip:hover,
+.artifactChip:focus-visible {
+  border-color: var(--accent);
+  opacity: 1;
+}
+
+.artifactChip:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .artifactChip { transition: border-color var(--transition-fast); }
+}
+
+.artifactType {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-label);
+  color: var(--accent);
+}
+
+.artifactLinkTitle { font-weight: 600; }
+
+.artifactNote {
+  color: var(--text-muted);
+  font-size: var(--text-xs);
+}

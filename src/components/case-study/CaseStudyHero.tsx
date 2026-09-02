@@ -1,7 +1,7 @@
-import Image from "next/image";
 import type { CaseStudyFrontmatter } from "@/types/project";
 import { CoCreatorChips } from "@/components/ui/CoCreatorChips";
 import { SignatureScene } from "@/components/interactive/SignatureScene";
+import { FramedShot } from "@/components/case-study/FramedShot";
 import { cn } from "@/lib/utils";
 import styles from "./CaseStudyHero.module.css";
 
@@ -12,6 +12,16 @@ interface CaseStudyHeroProps {
   imageAlt?: string;
   /** Deployed URL from projects.json — rendered as a spec row, not a footnote. */
   liveUrl?: string | null;
+  /** Product accent (hex) for the framed shot's ground. */
+  accent?: string | null;
+  /** Muted demo loop; replaces the screenshot inside the frame when present. */
+  demoVideo?: string | null;
+  /**
+   * True when a ProductMasthead sits above: the header drops its nav clearance
+   * and its h1, since the masthead's product name is the page heading and the
+   * title's descriptor half lives in the masthead eyebrow.
+   */
+  belowMasthead?: boolean;
 }
 
 /**
@@ -19,11 +29,20 @@ interface CaseStudyHeroProps {
  * role / timeline / team / outcome / stack — the same instrument-readout
  * language as the home metrics strip.
  *
- * Where the project has a screenshot, it sits beside the spec table so the
- * header shows the thing as well as describing it; where it does not, the
- * table keeps the full measure and only the signature scene sits behind.
+ * Where the project has a screenshot, it sits beside the spec table inside a
+ * browser frame on the product's tinted ground, never cropped; where it does
+ * not, the table keeps the full measure and only the signature scene sits
+ * behind.
  */
-export function CaseStudyHero({ caseStudy, imageUrl, imageAlt, liveUrl }: CaseStudyHeroProps) {
+export function CaseStudyHero({
+  caseStudy,
+  imageUrl,
+  imageAlt,
+  liveUrl,
+  accent,
+  demoVideo,
+  belowMasthead = false,
+}: CaseStudyHeroProps) {
   const headline = caseStudy.metrics?.[0];
   const hasTeam = (caseStudy.coCreators?.length ?? 0) > 0;
   const liveHost = liveUrl
@@ -31,14 +50,17 @@ export function CaseStudyHero({ caseStudy, imageUrl, imageAlt, liveUrl }: CaseSt
     : null;
 
   return (
-    <section className={styles.hero} aria-label="Case study header">
+    <section
+      className={cn(styles.hero, belowMasthead && styles.heroBelowMasthead)}
+      aria-label="Case study header"
+    >
       {/* The scene and the screenshot both want the right half of the header.
           Where there is a screenshot it wins - the page already has its visual
           anchor, and the lattice behind it only read as a stray arc clipped by
           the top of the page. Dossiers without a shot still get the motif. */}
       {!imageUrl && <SignatureScene variant="dossier" />}
       <div className={cn(styles.inner, imageUrl && styles.innerSplit)}>
-        <h1 className={styles.title}>{caseStudy.title}</h1>
+        {!belowMasthead && <h1 className={styles.title}>{caseStudy.title}</h1>}
         <p className={styles.subtitle}>{caseStudy.subtitle}</p>
 
         <dl className={styles.spec}>
@@ -105,17 +127,15 @@ export function CaseStudyHero({ caseStudy, imageUrl, imageAlt, liveUrl }: CaseSt
         </dl>
 
         {imageUrl && (
-          <figure className={styles.shot}>
-            <Image
-              src={imageUrl}
-              alt={imageAlt ?? ""}
-              width={1600}
-              height={1000}
-              sizes="(max-width: 900px) 100vw, 44vw"
-              className={styles.shotImage}
-              priority
-            />
-          </figure>
+          <FramedShot
+            src={imageUrl}
+            alt={imageAlt ?? ""}
+            accent={accent}
+            video={demoVideo}
+            variant="hero"
+            priority
+            className={styles.shot}
+          />
         )}
       </div>
     </section>

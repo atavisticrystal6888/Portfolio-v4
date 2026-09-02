@@ -25,6 +25,12 @@
   margin-bottom: var(--space-9);
 }
 
+/* The product rail wants to sit as high as it can: the whole first card
+   should clear the fold at 1440x900. */
+.sectionHeaderTight {
+  margin-bottom: var(--space-6);
+}
+
 .sectionTitle {
   font-family: var(--font-display);
   font-size: clamp(var(--text-xl), 3vw, var(--text-2xl));

@@ -39,3 +39,36 @@
   padding: 0 var(--space-6) var(--space-9);
   width: 100%;
 }
+
+/* Body: the chapter rail sits in the left gutter beside the 760px article on
+   wide screens. Below 1200px the rail is hidden and the article keeps the
+   measure it always had. */
+.body {
+  width: 100%;
+}
+
+.article {
+  min-width: 0;
+}
+
+.article h2 {
+  scroll-margin-top: calc(var(--nav-height) + var(--space-6));
+}
+
+@media (min-width: 1200px) {
+  .body {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, var(--container-md)) minmax(0, 1fr);
+    column-gap: var(--space-8);
+    align-items: start;
+  }
+
+  .rail {
+    grid-column: 1;
+    justify-self: end;
+  }
+
+  .article {
+    grid-column: 2;
+  }
+}

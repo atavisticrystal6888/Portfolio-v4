@@ -6,6 +6,11 @@
   overflow: hidden;
 }
 
+/* The masthead above already clears the fixed nav. */
+.heroBelowMasthead {
+  padding-top: var(--space-4);
+}
+
 .hero .inner {
   position: relative;
   z-index: 1;
@@ -40,33 +45,16 @@
     grid-column: 1 / -1;
   }
 
-  /* The spec column usually runs taller than the screenshot; stretching the
-     figure to match keeps the header's right column from ending in dead
-     space, with the crop absorbing the difference. */
+  /* The spec column usually runs taller than the screenshot. The framed shot
+     keeps its own height and its ground hugs the frame at a fixed padding;
+     stretching it left a band of empty tint above and below the frame. */
   .innerSplit > .shot {
-    align-self: stretch;
-  }
-
-  .innerSplit > .shot .shotImage {
-    height: 100%;
-    object-fit: cover;
-    object-position: top center;
+    align-self: start;
   }
 }
 
 .shot {
   margin: 0;
-  width: 100%;
-  border: var(--hairline);
-  border-radius: var(--radius-editorial);
-  overflow: hidden;
-  background: var(--surface);
-}
-
-.shotImage {
-  display: block;
-  width: 100%;
-  height: auto;
 }
 
 .title {

@@ -1,51 +1,126 @@
 ---
 slug: "experiment-hub"
 title: "ExperimentHub — Self-Hosted A/B Testing Platform"
-subtitle: "Multi-tenant experimentation platform — deterministic Rust assignment core, Kafka event ingestion, a Python statistical engine, and a realtime React dashboard."
+subtitle: "Self-hosted, multi-tenant A/B testing for teams whose users' data cannot leave their infrastructure. Deterministic assignment, buffered ingestion, a statistics engine that can say keep running. Solo build."
 role: "Solo Builder · Product & Architecture"
 duration: "2026 – present"
 stack: ["Elixir", "Phoenix", "Rust", "Python", "FastAPI", "React", "TypeScript", "Kafka"]
-myPart: "Everything — product definition, architecture, and all ~8,000 lines of first-party code. Solo build."
-tldr: "Teams with strict data-residency needs can't ship their users' behaviour to SaaS experimentation vendors. I built ExperimentHub — a self-hosted, multi-tenant A/B testing platform where a 182-line Rust core makes variant assignment deterministic and stateless, Broadway/Kafka ingests events at batch scale, and a Python engine runs frequentist and sequential analyses — all behind 50+ tenant-scoped API routes and a realtime dashboard."
+myPart: "Everything: product definition, architecture, and all ~8,000 lines of first-party code. Solo build."
+tldr: "Teams with strict data-residency needs can't ship their users' behaviour to SaaS experimentation vendors. I built ExperimentHub solo: self-hosted, multi-tenant A/B testing where the same user always lands in the same variant, ingestion never slows the product being measured, and a 4-method statistics engine can say keep running when a naive p-value says ship."
 metrics:
-  - label: "API Routes"
-    value: 50
-    displayValue: "50+"
-    chartType: "bar"
   - label: "Statistical Methods"
     value: 4
     displayValue: "4"
     chartType: "bar"
+    kind: product
+  - label: "API Routes"
+    value: 50
+    displayValue: "50+"
+    chartType: "bar"
+    kind: build
   - label: "Runtime Components"
     value: 8
     displayValue: "8"
     chartType: "bar"
+    kind: build
   - label: "Background Workers"
     value: 8
     displayValue: "8"
     chartType: "bar"
+    kind: build
 prevSlug: "kite-edge"
 nextSlug: "desktasks"
 ---
 
-## Context & Problem
+## Who it's for, and why
 
-Experimentation is the closest thing product management has to a scientific instrument — and it's exactly the tooling most teams outsource. SaaS vendors like Optimizely and LaunchDarkly are excellent, but they come with two structural costs: your users' behavioural data leaves your infrastructure, and assignment decisions depend on an external network call.
+Experimentation is the closest thing product management has to a scientific instrument, and it is exactly the tooling most teams outsource. SaaS vendors like Optimizely and LaunchDarkly are excellent, but they carry two structural costs: your users' behavioural data leaves your infrastructure, and every assignment decision depends on an external network call.
 
-For privacy-sensitive teams — or anyone building an internal experimentation platform — that trade is unacceptable. The gap: a self-hosted platform covering the full experiment lifecycle (draft → running → paused → concluded) with assignment that is fast, deterministic, and entirely local.
+For privacy-sensitive teams, or anyone building an internal experimentation platform, that trade is unacceptable. I built ExperimentHub solo for the PM or analyst who wants an experiment they can trust on infrastructure their own company controls.
 
-## Design Principles
+The gap: a self-hosted platform covering the full lifecycle (draft → running → paused → concluded) with assignment that is fast, deterministic and entirely local.
 
-- **Assignment must be a pure function.** Same experiment, same user → same variant, forever, with no database lookup and no network call. This is what makes SDKs trivial and results trustworthy.
-- **Ingestion and analysis are decoupled.** Events flow through a buffer (Kafka via Broadway) so analysis load can never slow down the product being measured.
-- **Statistics are a service, not a library call.** Peeking at results mid-experiment inflates false positives; the platform should offer sequential methods with proper alpha-spending, not just a t-test endpoint.
-- **Multi-tenant from day one.** Tenancy, roles (viewer/editor/admin), API keys, and audit logging are platform features, not bolt-ons.
+## What I learned before building
 
-## Solution & Approach
+There was no interview programme behind this one, and adoption is not measured yet. Three things I already knew about how experiments go wrong shaped the plan.
 
-### 1. Deterministic assignment in Rust
+Assignment is where trust leaks first. If the variant depends on a database row or a network call, the same person can land in different buckets, and every downstream result inherits that doubt.
 
-The assignment core is 182 lines of Rust exposed to Elixir as a Rustler NIF: MurmurHash3 (128-bit) over `"{experiment_key}:{user_id}"`, mapped into a 10,000-slot basis-points bucket space, then a cumulative-range lookup picks the variant. Stateless, sub-microsecond-scale work, and reproducible from any service that implements the same hash. A pure-Elixir fallback keeps development working where the NIF can't compile.
+Peeking is the quiet killer. Stopping at the first p-value under 0.05 inflates false positives, and a t-test endpoint encourages the habit. The question a PM actually asks is "can I stop this experiment today?"
+
+And analytics must never slow the product being measured, or analysis load becomes a regression in the thing under test.
+
+## The bets, and what we cut
+
+Four principles set the scope. Assignment is a pure function: same experiment, same user → same variant, forever. Ingestion and analysis are decoupled. Statistics are a service with proper alpha-spending, not a library call. And the platform is multi-tenant from day one, with roles (viewer/editor/admin), API keys and audit logging as platform features rather than bolt-ons.
+
+<Options caption="Alternatives considered, and where each landed">
+  <Option name="Sequential alpha-spending boundaries (O'Brien-Fleming, Pocock)" status="chosen" why="Peeking inflates false positives; early looks need a higher bar." />
+  <Option name="Plain t-test endpoint only" status="rejected" why="Would have called the demo experiment a winner at a look the boundary refused." />
+  <Option name="Pure-hash assignment, no lookup" status="chosen" why="Stateless; reproducible from any service with the same hash." />
+  <Option name="Assignment by database lookup" status="rejected" why="A round trip per decision; results depend on stored state, not a contract." />
+  <Option name="Buffered ingestion, analysis pulled on a schedule" status="chosen" why="Buffers through outages; analysis never touches the measured product." />
+  <Option name="Synchronous analysis on event write" status="rejected" why="Ties product latency to whatever the statistics engine is doing." />
+  <Option name="Schema-level tenant isolation" status="deferred" why="A harder boundary than row-level, at the cost of migration convenience." />
+  <Option name="Bayesian exposure, CUPED, flag-creation UI, persistent results cache" status="deferred" why="Deliberately deferred; the results cache is still in-memory." />
+</Options>
+
+## What we built
+
+An experiment begins as a draft. The PM defines variants and the metrics that decide it, and the power and sample-size calculator says how many users each variant needs, so the experiment is sized before it starts rather than argued about afterwards.
+
+Starting it hands assignment to the platform. Each user is placed by a deterministic calculation over the experiment and the user's ID, so the same person sees the same variant on every visit, from every service. Events land in a buffer first, so a traffic spike or a slow analysis never touches the product's own speed.
+
+Experiments move through explicit states, with scheduled starts and ends, guardrails and notifications handled in the background. The results view puts p-value, power and effect size above the variant table, and under sequential monitoring the engine says whether the boundary is crossed and recommends continue or stop.
+
+<Gallery>
+  <Shot src="/images/projects/experiment-hub/dashboard.png" alt="ExperimentHub dashboard showing running experiments, draft queue, assignments today, enabled flags, a recent-experiments list, and a lifecycle portfolio snapshot." caption="Command centre: portfolio counters plus the next action each experiment needs, so lifecycle drift is visible rather than discovered." />
+  <Shot src="/images/projects/experiment-hub/results.png" alt="ExperimentHub results view for a concluded experiment showing p-value, power, effect size, a variant performance table with lift, and confidence-interval and conversion-over-time charts." caption="Results: p-value, power and effect size sit above the variant table, so the read is a decision and not a vibe." />
+</Gallery>
+
+<Decision>
+The statistics engine is allowed to say no. At the demo experiment's interim look the p-value was 0.0337 and the O'Brien-Fleming boundary still said keep running. Returning that verdict, not a bare p-value, is the call the platform rests on.
+</Decision>
+
+## How we knew it worked
+
+The evidence comes from the seeded demo tenant, not from production use.
+
+The clearest proof is the engine's readout on the demo checkout-copy experiment at an interim look, 5,500 of 7,678 required samples in. The z-test gave p = 0.0337 and a 17.9% relative lift, which looks shippable. The O'Brien-Fleming boundary at 71.6% information demanded an observed z above 2.316; the observed z was 2.127. Verdict: continue, computed in 6 ms.
+
+Assignment is verifiable by construction: the bucket math is small enough to re-implement in any SDK and check against golden vectors.
+
+The limits are real. There is no production tenant, so adoption, assignment latency under load and ingestion throughput are not measured yet.
+
+## Outcome
+
+Product:
+
+- **Full lifecycle with an audit trail**, draft → running → paused → concluded.
+- **Deterministic assignment**: same experiment, same user, same variant, with no lookup and no vendor call.
+- **4 statistical methods**, z-test, Welch's t-test, O'Brien-Fleming and Pocock sequential boundaries, plus power analysis.
+- **Multi-tenant** with roles, API keys, feature flags, audit and GDPR export/erase.
+- **Honest scope:** feature-flag creation UI, Bayesian analysis exposure and CUPED are deliberately deferred; the results cache is still in-memory.
+
+Build:
+
+- **50+ API routes** across experiments, metrics, flags, analytics, audit, GDPR and admin.
+- **8 runtime components**, roughly 8,000 lines of first-party code.
+- **8 background workers** for lifecycle automation, guardrails, retention and partitioning.
+- **182-line Rust assignment core** with an Elixir fallback.
+- **Source:** [github.com/atavisticrystal6888/A-B-Testing-Platform](https://github.com/atavisticrystal6888/A-B-Testing-Platform)
+
+## What I'd do next
+
+- **Next bet:** work the deferred list in the order a PM would feel it: results cache out of memory, then the feature-flag creation UI, then Bayesian exposure.
+- **Open question:** whether row-level tenancy is enough. It keeps deployment simple but pushes discipline into every query.
+- **What I'd do differently:** wire the sequential-analysis recommendation into the dashboard sooner. A PM's real question is "can I stop this experiment today?", and the UI should answer exactly that.
+
+<UnderTheHood title="Architecture and implementation">
+
+### Deterministic assignment in Rust
+
+The assignment core is 182 lines of Rust exposed to Elixir as a Rustler NIF: MurmurHash3 (128-bit) over `"{experiment_key}:{user_id}"`, mapped into a 10,000-slot basis-points bucket space, then a cumulative-range lookup picks the variant. Stateless, sub-microsecond-scale work, reproducible from any service that implements the same hash. A pure-Elixir fallback keeps development working where the NIF can't compile.
 
 ```rust
 // assignment_core: bucket = murmur3_128(key) % 10_000
@@ -56,15 +131,16 @@ pub fn assign(experiment_key: &str, user_id: &str, ranges: &[Range]) -> usize {
 }
 ```
 
-### 2. Event ingestion built to absorb bursts
+### Event ingestion built to absorb bursts
 
-An `event_collector` app receives single and batch events, publishes to Kafka through Broadway, and buffers through Kafka outages. Analysis is pulled by Oban-scheduled workers, never pushed synchronously — the measured product stays fast no matter what analytics is doing.
+An `event_collector` app receives single and batch events, publishes to Kafka through Broadway, and buffers through Kafka outages. Analysis is pulled by Oban-scheduled workers, never pushed synchronously, so the statistical engine reads aggregates on a schedule instead of chasing a stream.
 
-### 3. A statistical engine that respects peeking
+### A statistical engine that respects peeking
 
-The Python/FastAPI engine implements z-tests for proportions and Welch's t-test for the classic cases, plus O'Brien-Fleming and Pocock alpha-spending boundaries for sequential monitoring, and a power/sample-size calculator so experiments are sized before they start. Services authenticate to it with an internal key and propagate W3C trace context.
+The Python/FastAPI engine implements z-tests for proportions and Welch's t-test, O'Brien-Fleming and Pocock alpha-spending boundaries for sequential monitoring, and a power/sample-size calculator. Services authenticate with an internal key and propagate W3C trace context.
 
-<figure class="case-artifact">
+<Artifact title="analyze --experiment checkout-copy-demo">
+
 ```text
 $ analyze --experiment checkout-copy-demo --metric checkout_conversion
 ExperimentHub statistical engine · frequentist + sequential readout
@@ -92,52 +168,19 @@ sequential monitoring · obrien_fleming α-spending
 recommendation  insufficient_data: Only 5500 of 7678 required samples collected. Continue running.
 overall_status  insufficient_data · computed in 6 ms
 ```
-  <figcaption>The engine's actual output, run in-process against the seeded demo experiment at an interim look. This run is the whole thesis in one screen: the naive p-value (0.0337) clears α=0.05 and looks shippable, but the O'Brien-Fleming boundary at 71.6% information demands |z| &gt; 2.316 and the observed z is 2.127 — so the honest verdict is keep running. A t-test endpoint would have called it a winner today.</figcaption>
-</figure>
 
-### 4. Lifecycle, guardrails, and audit as first-class objects
+The engine's actual output against the seeded demo experiment at an interim look. The naive p-value clears α=0.05; the O'Brien-Fleming boundary does not.
 
-Experiments move through explicit state machines with optimistic locking. Eight background workers handle scheduled starts/ends, analysis triggers, guardrail monitoring, notifications, data retention, and partition management. Every state change lands in an audit log; GDPR export/erase endpoints exist because a data platform without them isn't self-hostable in good conscience.
+</Artifact>
 
-## Product Gallery
+### Lifecycle, tenancy and components
 
-Two screens carry the argument: the operator view that says what needs attention next, and the results view where the statistical engine either clears a variant to ship or refuses to. Both are running against the seeded demo tenant.
+Explicit state machines with optimistic locking. Eight background workers handle scheduled starts/ends, analysis triggers, guardrail monitoring, notifications, data retention and partition management. Every state change lands in an audit log.
 
-<div class="case-gallery">
-  <figure class="case-gallery__figure">
-    <a class="case-gallery__link" href="/images/projects/experiment-hub/dashboard.png" target="_blank" rel="noopener noreferrer">
-      <img src="/images/projects/experiment-hub/dashboard.png" alt="ExperimentHub dashboard showing running experiments, draft queue, assignments today, enabled flags, a recent-experiments list, and a lifecycle portfolio snapshot." loading="lazy" />
-    </a>
-    <figcaption>Command centre: portfolio counters plus the next action each experiment needs, so lifecycle drift is visible rather than discovered.</figcaption>
-  </figure>
-  <figure class="case-gallery__figure">
-    <a class="case-gallery__link" href="/images/projects/experiment-hub/results.png" target="_blank" rel="noopener noreferrer">
-      <img src="/images/projects/experiment-hub/results.png" alt="ExperimentHub results view for a concluded experiment showing p-value, power, effect size, a variant performance table with lift, and confidence-interval and conversion-over-time charts." loading="lazy" />
-    </a>
-    <figcaption>Results: p-value, power, and effect size sit above the variant table, so the read is a decision and not a vibe.</figcaption>
-  </figure>
-</div>
+Four Elixir umbrella apps (domain core, Phoenix web layer, event collector, assignment engine wrapper) plus the Rust core, the Python engine and a React 19 + TypeScript dashboard with Phoenix Channels pushing live updates. JWT sessions and API keys are tenant-scoped; tenancy is enforced at row level.
 
-## Implementation
+</UnderTheHood>
 
-Four Elixir umbrella apps (domain core, Phoenix web layer, event collector, assignment engine wrapper) plus the Rust core, the Python statistical engine, and a React 19 + TypeScript dashboard — 8 runtime components, roughly 8,000 lines of first-party code. The dashboard covers experiment CRUD, lifecycle actions, metric definitions, feature flags, API-key and user administration, and an audit log, with Phoenix Channels pushing live updates to open experiment pages. JWT sessions and API keys are tenant-scoped; tenancy is enforced at row level.
-
-## Outcome & Metrics
-
-- **50+ API routes** across experiments, metrics, flags, analytics, audit, GDPR, and admin — all tenant-scoped
-- **Deterministic assignment** — MurmurHash3 into 10,000 basis-point buckets, served from a 182-line Rust NIF with Elixir fallback
-- **4 statistical methods** — z-test, Welch's t-test, O'Brien-Fleming and Pocock sequential boundaries — plus power analysis
-- **8 background workers** for lifecycle automation, guardrails, retention, and partitioning
-- **Full lifecycle + audit** — draft → running → paused → concluded with optimistic locking and audit trail
-- **Honest scope:** feature-flag creation UI, Bayesian analysis exposure, and CUPED are deliberately deferred; the results cache is still in-memory
-- **Source:** [github.com/atavisticrystal6888/A-B-Testing-Platform](https://github.com/atavisticrystal6888/A-B-Testing-Platform)
-
-## Learnings
-
-### What Worked
-
-Putting the hash in Rust was less about raw speed and more about making determinism a *contract*: the bucket math is small enough to re-implement in any SDK language and verify against golden vectors. Decoupling ingestion from analysis via Kafka meant the statistical engine could stay simple — it reads aggregates on a schedule instead of chasing a stream.
-
-### What I'd Change
-
-Multi-tenancy at row level keeps deployment simple but pushes discipline into every query — schema-level isolation would trade migration convenience for a harder security boundary. And I'd wire sequential-analysis recommendations into the dashboard sooner: the methods exist, but a PM's real question is "can I stop this experiment today?", and the UI should answer exactly that.
+<Artifacts>
+  <ArtifactLink href="https://github.com/atavisticrystal6888/A-B-Testing-Platform" type="repo" title="A-B-Testing-Platform on GitHub" note="Elixir umbrella, Rust core, Python engine, React dashboard." />
+</Artifacts>

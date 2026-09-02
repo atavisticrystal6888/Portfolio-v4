@@ -53,9 +53,9 @@ export default function Home() {
         className={styles.section}
       >
         <div className={styles.inner}>
-          <header className={styles.sectionHeader}>
+          <header className={`${styles.sectionHeader} ${styles.sectionHeaderTight}`}>
             <SectionLabel index="01">Selected work</SectionLabel>
-            <h2 className={styles.sectionTitle}>Three builds, end to end</h2>
+            <h2 className={styles.sectionTitle}>Five products, built end to end</h2>
           </header>
           <SelectedWork projects={allProjects} />
         </div>
