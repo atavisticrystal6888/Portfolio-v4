@@ -141,8 +141,15 @@ export function LightboxProvider({ children }: { children: ReactNode }) {
               )}
 
               <figure className={styles.lightboxFigure}>
+                {/* Eager on purpose: this is the image the reader just opened. */}
                 {/* eslint-disable-next-line @next/next/no-img-element -- lightbox shows arbitrary-size MDX images */}
-                <img src={activeItem.src} alt={activeItem.alt} className={styles.lightboxImage} />
+                <img
+                  src={activeItem.src}
+                  alt={activeItem.alt}
+                  className={styles.lightboxImage}
+                  loading="eager"
+                  decoding="async"
+                />
                 {activeItem.caption && (
                   <figcaption className={styles.lightboxCaption}>{activeItem.caption}</figcaption>
                 )}
