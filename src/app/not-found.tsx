@@ -6,7 +6,7 @@ import { SITE_NAME } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Page not found",
-  description: "That route doesn't exist on this site.",
+  description: "That route doesn't exist on this site. The page may have moved or the link is mistyped — try my projects, blog, or contact page instead.",
   // The root layout sets a site-wide canonical; without this override a 404
   // told crawlers it was canonically the home page.
   alternates: { canonical: undefined },
@@ -14,7 +14,7 @@ export const metadata: Metadata = {
   // second robots meta tag only muddies it.
   openGraph: {
     title: `Page not found | ${SITE_NAME}`,
-    description: "That route doesn't exist on this site.",
+    description: "That route doesn't exist on this site. The page may have moved or the link is mistyped — try my projects, blog, or contact page instead.",
   },
 };
 

@@ -9,7 +9,9 @@
     "lint": "eslint .",
     "test": "vitest run",
     "test:e2e": "playwright test",
-    "resume:pdf": "node scripts/generate-resume-pdf.mjs"
+    "resume:pdf": "node scripts/generate-resume-pdf.mjs",
+    "images:optimize": "node scripts/optimize-images.mjs",
+    "favicon:generate": "node scripts/generate-favicon.mjs"
   },
   "dependencies": {
     "@mdx-js/loader": "^3.1.1",

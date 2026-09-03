@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
@@ -84,6 +84,18 @@ export const metadata: Metadata = {
   },
 };
 
+// Declared explicitly rather than leaning on Next's default so the contract is
+// visible in the repo. No maximumScale / userScalable: pinch-zoom stays
+// available, which a chunk of readers rely on.
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  themeColor: [
+    { media: "(prefers-color-scheme: dark)", color: "#0d1322" },
+    { media: "(prefers-color-scheme: light)", color: "#f6f5f1" },
+  ],
+};
+
 const personJsonLd = generatePersonJsonLd();
 
 export default function RootLayout({
@@ -120,8 +132,7 @@ export default function RootLayout({
           title="Dhruv Singhal — Blog RSS"
           href="/rss.xml"
         />
-        <meta name="theme-color" content="#0d1322" media="(prefers-color-scheme: dark)" />
-        <meta name="theme-color" content="#f6f5f1" media="(prefers-color-scheme: light)" />
+        {/* theme-color now ships from the `viewport` export above. */}
         {/* Applies a STORED theme before first paint, so a returning visitor
             who chose dark (or another palette) never sees the default flash
             by until React hydrates. No stored choice means the working-paper
