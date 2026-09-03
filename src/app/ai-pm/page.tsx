@@ -201,7 +201,9 @@ export default function AIPMPage() {
             </li>
             <li>
               <strong>Essay series: &ldquo;The PRD is dead, long live the eval
-              set&rdquo;</strong> — in progress.
+              set&rdquo;</strong> — opener published,{" "}
+              <Link href="/blog/the-prd-is-dead-long-live-the-eval-set">read
+              part one</Link>.
             </li>
           </ul>
         </div>

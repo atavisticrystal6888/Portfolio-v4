@@ -1,0 +1,87 @@
+---
+slug: "the-prd-is-dead-long-live-the-eval-set"
+title: "The PRD Is Dead, Long Live the Eval Set"
+date: "2026-09-03"
+updatedDate: null
+category: "AI"
+tags: ["ai-pm", "llm", "evaluation", "prd", "product-management"]
+readingTime: "6 min read"
+excerpt: "I wrote a PRD that passed review with no blocking comments, and then nobody could tell me whether the feature worked. Prose cannot spec a probabilistic system."
+socialImage: null
+---
+
+## The PRD that passed review
+
+I once wrote a PRD I was proud of. Personas, user stories with acceptance criteria, a state for every screen. It went through review without a single blocking comment. It described an AI feature that read a user's input and returned a recommendation.
+
+Then it got built, and nobody could tell me whether it was working.
+
+Not "the metrics were flat". Worse. Every acceptance criterion was satisfied: the output appeared, formatted correctly, in time, with every field the spec demanded. And still, when three of us read the same twenty outputs, we disagreed about four of them. Nothing settled it, because the document had never been asked to.
+
+The PRD was complete. It just wasn't a spec.
+
+## What a PRD cannot say about a probabilistic feature
+
+A traditional PRD works because deterministic software has a right answer. "When the user taps Save, the record persists and a toast appears." An engineer reads that, writes a test, and the test is green or red. Requirement and verification are the same sentence.
+
+An LLM feature breaks that link. The same input gives you a different output tomorrow. Two outputs can both satisfy every line in the document and still differ in a way the user cares about. Quality lives in the distribution over outputs, and prose cannot describe a distribution.
+
+So the prose starts overreaching. It says the response should be "helpful and accurate", which is not a requirement but a hope with a font. It says the model will answer questions about X, which is a capability statement, not a spec.
+
+You can feel writers straining against this, adding scenarios and qualifiers and more "the system should". None of it converges. Prose can assert what good means. It can never adjudicate.
+
+## What an eval set says instead
+
+An eval set adjudicates. It is four things, each replacing a paragraph that did a bad job.
+
+**Cases.** Real inputs with hand-labelled ground truth. Not the three the demo was built on: the awkward ones, the ambiguous ones, the ones where sensible people disagree. This is the requirements document, written in examples instead of adjectives.
+
+**A rubric.** Three to six axes, scored the same way by whoever is scoring. This is where "helpful and accurate" finally decomposes into things you can be precise about.
+
+**Thresholds.** The number the score must clear before this ships, agreed in advance, with a name attached. A threshold set after you have seen the score is a rationalisation.
+
+**Refusal behaviour.** What the system does when it does not know. PRDs skip this most reliably, and users judge it hardest. Silence beats a confident wrong answer, but only if you specified the silence.
+
+Write those four and you have a spec that verifies itself.
+
+## What this looked like on Aarchid
+
+On Aarchid, the plant-diagnosis product I co-created with Dilpreet Grover, we built the harness before the feature.
+
+The eval set started as 60 hand-labelled photos: species, condition, severity, recommended action. It now stands at 200 labelled samples across 12 common plant-health failure modes, grown out of things that broke v1. The rubric has four dimensions: diagnostic accuracy, citation fidelity, severity calibration, and latency. They stay separate on purpose, because one collapsed number tells you that you got worse without telling you where.
+
+The thresholds were the interesting part. 92% diagnosis accuracy on the golden set. 90% of recommendations carrying a peer-reviewed source link. P95 under 10 seconds end to end on the edge. Roughly $0.25 per active user per month. Cost sat on the rubric as a first-class axis, not a footnote, because a diagnosis we cannot afford to serve is not a feature.
+
+Then refusal. If the vision model returns low confidence on species identification, Aarchid declines to diagnose rather than guessing. One line in the spec, and it did more for trust than any wording change.
+
+The honest limit: those numbers come from our golden set, not live user photos, and with no confirm-or-correct loop yet, field accuracy is unmeasured. An eval set tells you what it tested. Claiming more is the same old sin in new clothes.
+
+## The division of labour now
+
+The PRD does not die. It gets shorter, and much better at the few things prose is genuinely good at.
+
+| The PRD still owns | The eval set now owns |
+| --- | --- |
+| Who the user is and what job they are hiring this for | What a correct output looks like, case by case |
+| What it costs the user when it is wrong | How wrong is too wrong, per axis |
+| Which axes belong on the rubric, and why | The score on each axis, per release |
+| Who owns the threshold, by name | Whether we are above the threshold today |
+| When we refuse, and what we say | Whether we actually refused |
+
+Read the left column again. It is all judgement, none of it automatable. That is the job.
+
+## Three ways this goes wrong
+
+**The eval set that mirrors the demo.** If your cases are the inputs you tuned the prompt against, you have written a test that hardcodes its own answer. Every case should have been capable of failing.
+
+**The rubric nobody disagrees on.** If two people score the same output identically every time, that axis is measuring format, not quality. The useful axes are the ones that start arguments, because the argument is where the real spec was hiding.
+
+**The threshold nobody owns.** "We will ship at around 90%" is not a decision. Someone must be accountable for the number before the score exists, or it relocates to wherever the score lands.
+
+## The short version
+
+Stop writing the paragraph that describes good output. Write the fifty examples of it, the rubric that scores them, and the line you will not ship below.
+
+What is left for the PRD is to say who this is for, what a bad answer costs them, and who owns the number. That is one page. The spec is the eval set.
+
+The mechanics of the harness itself are in [Shipping LLM Products Starts With the Eval Harness, Not the Prompt](/blog/shipping-llm-products-eval-harness). The full build is written up at [Aarchid](/projects/aarchid).

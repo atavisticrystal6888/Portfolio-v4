@@ -1,0 +1,84 @@
+---
+slug: "figma-to-live-parity-audit"
+title: "From 'It Looks Off' to a Ranked Tracker: Running a Figma-to-Live Parity Audit"
+date: "2026-09-01"
+updatedDate: null
+category: "Product"
+tags: ["product-management","design","qa","process","stakeholder-alignment"]
+readingTime: "6 min read"
+excerpt: "A design review ended with it looks off and nothing anyone could pick up. How I turned that into 45 ranked, located, owned rows."
+socialImage: null
+---
+
+## The review that ended in a shrug
+
+A design review on a multi-step web configurator ran for most of an hour. Eight or so screens: a welcome panel, a two-step selection, a colour step, a visualiser stage with a side rail, a curated-looks gallery, saved looks, a cart, and a shared top panel. The design team clicked through the live build. People pointed at the screen. The verdict, in three different phrasings, was that it looked off.
+
+Nobody was wrong. The build did not match the frames. But when the call ended there was nothing anyone could pick up. No ticket, no list, not even agreement on which screens were the problem. The next planning session would start from memory, and memory in a room of eight is not an input.
+
+I have been doing this job about a year. Converting that feeling into rows is the most useful thing I have learned.
+
+## Why vague feedback dies
+
+"It looks off" is missing three things, and each absence is fatal on its own.
+
+No owner. A comment addressed to the room is addressed to nobody, so it survives until someone volunteers, which is never.
+
+No location. "The gallery feels wrong" could mean the card, the spacing, the arrows, or the copy inside them. An engineer forced to guess picks the cheapest reading.
+
+No severity. Everything is then urgent or ignorable depending on who raised it last, and the sprint fills with cosmetics while a broken control ships.
+
+A parity audit supplies all three.
+
+## The tracker is the artefact
+
+I went through every screen against its frame, clicking the build and reading the code where behaviour was ambiguous. The output was about 45 rows across eleven columns. **ID** as screen.number, so 4.2 means the same item in every conversation. **Screen**, and **Where**, the exact panel or region on it. **Action item**, the change rather than the complaint. **Differs from Figma**, what the build does instead, with the frame reference. Then **Priority**, **Source**, **Owner**, **Target date**, **Status** and **Notes**.
+
+A trimmed illustrative slice:
+
+| ID | Screen | Action item | Differs from Figma | Priority |
+| --- | --- | --- | --- | --- |
+| 2.3 | Selection, step two | Carry the step-one choice into the summary | Summary shows a value the user never picked, frame S-12 | P1 |
+| 4.1 | Visualiser stage | Scale the product to the frame proportions | Renders roughly 40% smaller than frame V-03 | P2 |
+| 5.2 | Curated looks | Move the arrows in to hug the card | Arrows pinned to the screen edges, frame G-07 | P2 |
+| 6.4 | Saved looks | Restore the square badge shape | Badge rendered round, frame L-05 | P3 |
+
+The columns are the trick. "Where" ends the guessing. "Differs from Figma" stops the row being an opinion, because it names a frame anyone can open.
+
+## The priority rule
+
+I agreed a rule of thumb and applied it uniformly, which matters more than the rule being perfect.
+
+**P1 is wrong data or a dead control on the happy path.** A choice made on step one displaying as something else on step three. A fullscreen button that only bounces the route. Summary text overlapping the card it belongs to. Placeholder totals hardcoded into the cart. These are not visual defects; they are the product telling the user something untrue.
+
+**P2 is drift that changes comprehension.** The stage rendering the product noticeably smaller than the frame, so the thing being configured stops being the focus. A carousel showing one card where the frame shows a stack, hiding that there is more to browse. The user finishes, but understands less than intended.
+
+**P3 is cosmetic.** A label in the wrong colour. A badge rendered round where the frame has it square. A live count still showing the placeholder number.
+
+## Where each row came from
+
+Roughly a third of the rows came from the design team's walkthrough; the rest from my own pass through the build and the code. A Source column recorded which.
+
+That made the tracker auditable. A challenged row got one of two answers: design raised it on the walkthrough, or I found it and here is the frame. Neither is an opinion.
+
+It also made room for the rows that ran the other way. A handful had the build right and the frame wrong, so the action item was to change the design. Those matter more than their count suggests. An audit that only produces work for engineering reads as a list of complaints; one where the arrow sometimes points at design is a shared quality exercise.
+
+## Splitting out content dependencies
+
+Several items were not code at all. Real photographs instead of stand-ins, real catalogue entries, textures that had to exist before the colour step could load them. Left in the main list they read as engineering failures, and status reviews get spent re-explaining that they are blocked elsewhere. So they went into a separate C-series with their own owners.
+
+## What happened next
+
+The tracker became the sprint's ranked backlog, more or less unedited. That was the point: once a row has an ID, a location, a severity and a name against it, prioritisation is mostly arithmetic.
+
+The P1s went first, for a reason that fits in one sentence. Those were the ones that lied to the user. A misaligned arrow makes a build look unfinished; a summary showing a value nobody chose makes it untrustworthy, and polish elsewhere does not repair that.
+
+## What I would do differently
+
+Link every row to a frame ID from day one rather than adding references afterwards. Retrofitting cost an afternoon, and half the review disputes turned out to be two people looking at different versions of a frame.
+
+Agree the priority rule before the walkthrough, not after. With the tiers settled up front, the walkthrough produces sorted rows, and nobody relitigates later whether a badge shape is urgent. That is the same instinct as scoping an ambiguous problem before solving it, which I wrote about in [my structured thinking framework](/blog/structured-thinking-framework).
+
+## Do the boring version
+
+If a review ends with "it looks off", the review has failed. Open the frames, open the build, write the rows. Give every row a place, a severity and a name. Vague feedback is not kindness to your team. It is work you have declined to do, handed to someone with less context than you.

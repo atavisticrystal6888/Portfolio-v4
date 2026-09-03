@@ -1,0 +1,71 @@
+---
+slug: "seventeen-checks-before-you-call-a-site-done"
+title: "Seventeen Checks Before You Call a Site Done"
+date: "2026-08-29"
+updatedDate: null
+category: "Product"
+tags: ["portfolio", "qa", "testing", "product-management", "web-performance"]
+readingTime: "6 min read"
+excerpt: "A seventeen-item launch checklist looked like a week of work. Ten items were already done, and the four worst defects were never on the list at all."
+socialImage: null
+---
+
+## The list arrives, and the urge to tick
+
+A seventeen-item launch checklist is a comfortable thing to be handed. No horizontal scroll. Meta descriptions. A favicon. Compressed images. A clickable email. A mobile menu. An empty state. Error messages. A 404 page. Every item is reasonable, and every item is phrased so that a quick glance can answer it.
+
+That is exactly the problem. A glance answers the question the list asked, not the question the list was standing in for. "Is there a favicon?" and "is the favicon yours?" are different questions sharing one tick box. I had already shipped several versions of this site. I could have ticked most of the seventeen in an afternoon and felt productive.
+
+So I ticked nothing. I audited first.
+
+## Four read-only passes before a single edit
+
+Before any code changed, the site went through four read-only passes. Read the source, record what it actually does, map every finding back to a checklist item, change nothing. Read-only is the load-bearing constraint here: the moment you are allowed to fix things, you start fixing the easy ones and you stop looking.
+
+The tally was not what I expected. Ten of the seventeen were already done and needed only verification — the mobile drawer with its focus trap, the 404 page, the mailto link, the absence of placeholder copy, the overflow rules already sitting in the base stylesheet. One needed a two-line addition, an explicit viewport export. Six were genuine gaps.
+
+Being honest about those ten matters. An already-done item is not a wasted pass; it is the audit telling you where not to spend the week.
+
+## The defects the list never named
+
+Then the interesting part. The worst things the audit found were mostly not the things the list predicted.
+
+The site's `favicon.ico` was the stock framework triangle, untouched since the very first commit. The branded mark rendered everywhere else: the SVG icon, the Apple touch icon, the social images. Only the one file that shows up in a browser tab and a bookmark bar was generic. Checklist item three read "favicon", and it would have passed.
+
+The contact API returned success when its mail key was missing. In production, with no key configured, a visitor would fill in the form, see a confirmation, and the message would go nowhere. Nothing logged an error. Nothing failed a test. "Add success messages" was item fifteen, and the site had one. It was lying. That route now answers with an honest failure and a direct email fallback.
+
+The contact tiles copied to the clipboard on click, cancelling the link's default behaviour. On a desktop that is a convenience. On a phone it means tapping a phone number copies it instead of dialling it, which is precisely what someone reaching for "call" does not want. The anchors now navigate, and copying moved to a separate 44px button inside the tile but outside the link.
+
+And a comparison table inside a case study scrolls horizontally without being focusable, so a keyboard user saw a clipped table with no way to scroll it. That one is invisible to any check that does not model a person without a mouse.
+
+Four defects. Not one of them is a checklist item. All four are things a real visitor hits inside a minute.
+
+## The numbers
+
+| Measure | Result |
+|---|---|
+| Images in `public/images` | 4,106 KB down to 1,426 KB |
+| Playwright suite | 590 passed, 10 skipped |
+| Device coverage | Desktop Chromium, Pixel 5, iPhone 13 |
+| Lighthouse, home | 65 performance, 100 accessibility, 100 best practices, 100 SEO |
+| Lighthouse, contact | 75 performance, 100 accessibility, 100 best practices, 100 SEO |
+
+The performance score is the one I refuse to dress up. The home page sits at 65 on throttled mobile because the 3D hero ships a heavy rendering and animation bundle, and no amount of image squeezing moves it. Lifting that number means changing what the hero is, which is a decision about what the first screen is for, not a polish task. I would rather publish a 65 with the reason attached than a 95 with the hero quietly deleted.
+
+## What emulation cannot tell you
+
+590 tests across three device profiles sounds like mobile coverage. It is not. A Pixel 5 or an iPhone 13 in a test runner is a viewport, a user agent string and synthetic touch events. It is not a real thumb on real glass, not Safari's actual scroll physics, not a slow connection on a train. Emulation catches layout and logic faithfully. It cannot tell me whether the drawer feels laggy, or whether the `tel:` link genuinely opens the dialler on someone's phone.
+
+That pass is still outstanding, on an actual device, against a written list of URLs and gestures. Until it runs, "tested on mobile" is a claim rather than a fact, and I would rather say so than round it up.
+
+## The lesson worth keeping
+
+Here is the reframe I am taking into product work that has nothing to do with websites.
+
+A checklist is a hypothesis about where the defects are. It encodes someone else's experience of what usually breaks, which is genuinely valuable and is not evidence about yours. The audit is the test of that hypothesis. Run it read-only, run it before you have permission to fix anything, and record the already-done items as carefully as the gaps.
+
+Ten of my seventeen were fine before I started. Four of my worst defects were never named. Had I spent the week ticking boxes, I would have finished with a spotless checklist, a stock favicon and a contact form that swallowed mail.
+
+Audit the list before you work the list. Then publish the number you could not fix, with its reason in plain sight.
+
+More on how this site got here in [Building My Portfolio Like a Product](/blog/building-portfolio-as-product), and the build itself in the [portfolio case study](/projects/portfolio-site).

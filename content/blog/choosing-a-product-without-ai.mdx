@@ -1,0 +1,67 @@
+---
+slug: "choosing-a-product-without-ai"
+title: "Choosing a Product Without AI in It"
+date: "2026-09-02"
+updatedDate: null
+category: "AI"
+tags: ["ai-pm", "prioritisation", "product-strategy", "side-projects", "decision-making"]
+readingTime: "6 min read"
+excerpt: "I ranked my next side project on five criteria. The AI-heavy ideas scored highest on excitement and lowest on everything that predicts a finished tool."
+socialImage: null
+---
+
+## The shortlist, first pass
+
+At the start of September I worked out what to build next. One product, built solo, on free hosting, with real people using it inside a month. The research ended with three candidates in rank order.
+
+First was a Spec-to-Eval Kit: paste a feature spec with acceptance criteria, get back a stratified eval set (happy path, edge, adversarial), a rubric, and a run across two or three models with pass rate and cost per task. Second was a Review Miner for Indian D2C: upload a CSV of product reviews, get themes ranked by their pull on one-star versus five-star ratings, with Hinglish and regional-language reviews handled rather than dropped. Third was an Address Lint with a return-to-origin risk overlay for Indian checkouts, deterministic at its core.
+
+Two of those three had a model at the centre. They were also the two I most wanted to build. That should have been the first warning.
+
+## Five criteria, and why each one existed
+
+The scoring was deliberately boring. Every candidate took a one-to-five score on five criteria, and only ideas scoring four or better on **One-shot fit** and **Not saturated** made the shortlist.
+
+**Gap fill** asked whether the idea covered a hole in my existing roster, which leans on developer infrastructure and personal productivity and is thin on anything a growth team would open twice. **One-shot fit** asked whether it sat inside the build envelope: no auth, no billing, a single deployable. **Users in 4 weeks** asked whether I already had a channel reaching thirty or so real people, because a live URL with a few dozen users beats a polished demo with none. **Defensible insight** asked whether there was a non-obvious product decision I could be interviewed on. **Not saturated** asked whether the research had actually found incumbents doing exactly this.
+
+Notice what is missing. Nothing rewards a product for being technically interesting, or for using a model. Every criterion asks whether the thing gets finished, gets used, and can be defended out loud.
+
+## What changed when the AI premium came off
+
+Then I added two constraints: no model inside the product, and free-tier hosting only. I re-scored on the same five criteria. Both LLM-centred candidates dropped out entirely, and the reasons were not ideological.
+
+The first is evaluation cost, paid in my own hours. The Review Miner's whole value was theme quality on mixed-language text, and proving that meant hand-labelling a hundred reviews, thirty of them Hinglish or regional. My note on that line was blunt: human hours, no way around it.
+
+The second is non-determinism. The address linter needed no model for its core, because a rule engine over the public India Post pincode directory is checkable and repeatable. Where a model was optional, it had to be evaluated against the deterministic path to earn its place. A rule that fails always fails the same way, which is a feature when one person supports the thing.
+
+The third is data access. The Review Miner had no data of its own: it needed a public dataset, and employer data was out without written permission.
+
+The fourth is trust, and it decided the question. The research flagged that reviewers are tired of candidates who ship a stack of AI-generated apps and cannot explain why the choices were right, and that a chat-with-your-X wrapper is the archetype of what gets discounted. My own risk note on the eval kit said it plainly: perceived as a prompt wrapper if the rubric method is thin. Adding a model raised the bar rather than lowering it.
+
+## The winner has no model in it
+
+The pick is a Cohort and Retention Studio. Drop an orders CSV into the browser and get cohort retention curves, repeat purchase rate, time to second order, lifetime value by first product, and a free-shipping threshold what-if. Nothing is uploaded to a server. The users are growth people and founders at brands on WooCommerce, Amazon, Dukaan or Shopify Basic, and the gap check came back open and verified: Lifetimely, Peel and Polar all need a Shopify install and charge hundreds of dollars a month, with no free CSV-only alternative found. It has a wow moment on the user's own data, a monthly reason to return, and a privacy line operators respond to.
+
+## Before and after
+
+Totals are the sum of the five criteria, out of 25.
+
+| Idea | First pass | After the re-score |
+| --- | --- | --- |
+| Spec-to-Eval Kit | 1st, 23 | Out, LLM at the core |
+| Review Miner for Indian D2C | 2nd, 21 | Out, LLM at the core |
+| Address Lint + RTO Risk | 3rd, 20 | 1st at 22, then struck the same day |
+| Eval Workbench, no LLM | not scored | 2nd at 20 |
+| Cohort and repeat-purchase analyser | not scored | 3rd at 18, then the flagship pick |
+
+The third row is the honest part. The rescored winner survived a day before I argued myself out of it: the risk band is a network-data problem incumbents win by construction, the decision point lives inside checkout where a standalone tool cannot reach, and usage would be occasional and bulk, with no retention signal. Scoring got it wrong, and reasoning corrected the score.
+
+## What this means for an AI PM
+
+None of this is a retreat from AI. I still think the eval harness is the real artefact of an LLM feature, and I have written about [why the harness comes before the prompt](/blog/shipping-llm-products-eval-harness). Choosing a model is a decision with a cost curve, a labelling bill, a failure distribution and a trust discount attached, and a PM who cannot say no to a model cannot really say yes to one either.
+
+The tell is simple. If you can describe the output as a rule, write the rule. Retention curves are arithmetic. Address defects are lookups. Reaching for a model there buys a demo and sells the thing people came for: an answer they can check.
+
+> Knowing when a model is the wrong tool is part of the job, not a step back from it.
+
+Score the boring criteria first, before you fall in love. Build the version a reviewer can verify. Then, if a model beats the rules on the same labelled set, ship it and publish the comparison. More of how I think about this lives on my [AI PM page](/ai-pm).

@@ -1,0 +1,69 @@
+---
+slug: "cohorts-before-dashboards"
+title: "Cohorts Before Dashboards"
+date: "2026-08-31"
+updatedDate: null
+category: "Data"
+tags: ["data", "retention", "cohorts", "analytics", "product-management"]
+readingTime: "6 min read"
+excerpt: "Two products can share a DAU line and have opposite futures. A retention curve cut by acquisition cohort tells you which one is actually compounding."
+socialImage: null
+---
+
+## Two Products, One Chart
+
+Picture two products. Both sit at roughly 40,000 daily actives, and both lines have drifted gently upward for six months. On a dashboard they are indistinguishable.
+
+One of them is compounding. The other is leaking.
+
+A DAU line cannot tell you which, because it sums newly acquired users and surviving older users into one number. A product that loses four in five users by month two can hold that line flat indefinitely, as long as acquisition keeps topping the bucket up. The chart looks stable. The business is a treadmill that speeds up every month.
+
+The question it hides is plain: are the people we acquired last month still here, and is each new cohort better or worse than the last? A retention curve cut by acquisition cohort answers exactly that.
+
+## What a Cohort Actually Is
+
+Three ingredients. An **acquisition cohort** groups users by when they arrived: March cohort, April cohort, May cohort. A user belongs to exactly one, permanently, by their first qualifying action. A **period** is the interval you count in, month 0 being the month they arrived. **Retained if** is the rule deciding whether a user counts in a given period.
+
+The third is where teams skip ahead, and it decides what the whole chart means. Retained-if is a product decision, not an analytics one. An analyst can implement any rule you name; only the product team can say which one describes the value the product claims to deliver. If the promise is that people buy again, retention means a repeat purchase. If the promise is a daily habit, it means a real session on most days, not one accidental app open. Hand the choice to whoever writes the query and you get whichever definition was cheapest to compute.
+
+## A Worked Example
+
+Three monthly cohorts across four periods. The percentages are invented for illustration but internally consistent.
+
+| Cohort | Size | M0 | M1 | M2 | M3 |
+| --- | --- | --- | --- | --- | --- |
+| March | 1,240 | 100% | 34% | 26% | 24% |
+| April | 1,510 | 100% | 31% | 21% | 17% |
+| May | 1,700 | 100% | 29% | 17% | 12% |
+
+March flattens: eight points given up from M1 to M2, then only two more, settling near a quarter of the cohort. May keeps decaying, twelve points then five, with no floor in sight. The cohorts are getting larger and worse at once, which is the signature of acquisition outrunning the product. Summed into a single DAU line they would read as healthy growth. Cut apart, they say the opposite.
+
+## The Three Reads That Matter
+
+**The floor.** Every retention curve either flattens or goes to zero. Where it flattens is the honest fit number: the share of an intake that returns without reacquisition. March looks like it has a floor near 24%. May has not found one. A cohort with no floor is not a retention problem to be optimised, it is a value proposition that has not landed.
+
+**The slope between M1 and M2.** M0 to M1 is dominated by trial, curiosity, and whatever the campaign promised. M1 to M2 is closer to the truth, because everyone in it already came back once deliberately. When I want one number out of a cohort table, I take this one.
+
+**Cohort over cohort.** Read down a column, not across a row. Is M1 improving from March to May? If the product work is landing, later cohorts should retain better at the same age — and that comparison is only fair at the same age. A six-month-old cohort's M3 against a two-month-old cohort's M1 is not a comparison.
+
+## What Building the Tool Taught Me
+
+I have spent the past few weeks on a side project called Cohort & Retention Studio. An orders CSV goes in; cohort retention curves, repeat rate, time to second order and LTV by first product come out, computed in the browser with nothing uploaded. There is no AI in it, deliberately: every number is arithmetic, which left nowhere to hide from the definitions.
+
+Almost every hard decision was a definition rather than a calculation. A cohort is customers whose first valid order falls in a given month, which forces you to define a valid order: cancelled, fully refunded, duplicate-id and zero-value replacement orders are out by default, the last because leaving them in quietly inflates repeat rate. Same-day orders count separately, since split shipments are real orders, though that one is a toggle: reasonable people disagree. Month boundaries follow the store's timezone, not the browser's.
+
+The one I did not predict is censoring. If a cohort is only two months old, its month-three cell is not zero — it is unknown. Showing zero there is the most common way a hand-built cohort analysis lies to its owner, so those cells stay blank and cohorts under three months old are labelled immature. The same instinct put every definition one click from its number.
+
+## Three Mistakes
+
+**Mixing signup cohorts with first-purchase cohorts.** Different populations, different clocks. Signup cohorts include everyone who never activated, so they read lower and answer onboarding questions; first-purchase cohorts read higher and answer buying-experience ones. Put both in one table and the trend is an artefact of the mixture.
+
+**Counting a login as retention.** A login is an accident of session expiry about as often as it is intent. If a user counts as retained without doing the thing the product exists to do, the curve will flatter you right up until renewal.
+
+**Reading a small cohort's M3 as signal.** Sixty customers at 18% and sixty at 24% are the same cohort with different luck. Set a minimum size below which you report the count and refuse the rate.
+
+## Start With the Curve
+
+Cut your users into acquisition cohorts. Write down the retained-if rule before anyone writes the query. Look at the curve before you commission a dashboard. If it has no floor, no amount of dashboard polish will give it one.
+
+That ordering is the argument in [Data-Driven Doesn't Mean Dashboard-Driven](/blog/data-driven-product-decisions), and the retention floor is a strong candidate for the health metric in [The Three Metrics That Actually Matter for PMs](/blog/metrics-that-matter-for-pms).
