@@ -67,8 +67,29 @@ test.describe("Contact form", () => {
           "This is a sufficiently long test message to pass validation checks.",
       },
     });
-    // Its own client IP, so this is a clean first send every run.
+    // Its own client IP, so this is a clean first send every run. The suite
+    // runs against a production build, where the route now answers honestly:
+    // 200 when RESEND_API_KEY is configured, 503 when it is not. Either is a
+    // pass; a 4xx would mean validation or rate limiting rejected a good send.
+    expect([200, 503]).toContain(response.status());
+  });
+
+  test("API route silently accepts and drops a honeypot submission", async ({
+    request,
+  }) => {
+    const response = await request.post("/api/contact", {
+      headers: { "x-forwarded-for": "203.0.113.15" },
+      data: {
+        name: "Spam Bot",
+        email: "bot@example.com",
+        subject: "Valid inquiry",
+        message: "A long enough message that a bot would happily send anyway.",
+        website: "http://spam.example",
+      },
+    });
+    // Drops before the offline check too, so this is 200 with or without a key.
     expect(response.status()).toBe(200);
+    expect(await response.json()).toMatchObject({ ok: true });
   });
 
   test("API route rejects missing fields", async ({ request }) => {
@@ -100,6 +121,9 @@ test.describe("Contact form", () => {
         message: "A long enough message that should still be accepted after typos.",
       },
     });
-    expect(good.status()).toBe(200);
+    // The point is that the typo attempts did not spend the budget: anything
+    // but 429 proves that. (503 when no Resend key is configured.)
+    expect(good.status()).not.toBe(429);
+    expect([200, 503]).toContain(good.status());
   });
 });

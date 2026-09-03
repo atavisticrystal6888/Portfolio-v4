@@ -5,7 +5,7 @@ import { ContactForm } from "@/components/contact/ContactForm";
 import { FAQAccordion } from "@/components/contact/FAQAccordion";
 import { DirectLinks } from "@/components/contact/DirectLinks";
 import { JsonLd } from "@/components/ui/JsonLd";
-import { CONTACT_EMAIL } from "@/lib/site";
+import { absoluteUrl, CONTACT_EMAIL, CONTACT_PHONE, SITE_NAME, SITE_URL } from "@/lib/site";
 import styles from "./contact.module.css";
 
 export const metadata = generatePageMetadata({
@@ -60,9 +60,34 @@ export default function ContactPage() {
     ],
   };
 
+  // ContactPage carries the reachable channels themselves; the Person node in
+  // the root layout stays the canonical identity.
+  const contactPageJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "ContactPage",
+    name: "Contact Dhruv Singhal",
+    url: absoluteUrl("/contact"),
+    mainEntity: {
+      "@type": "Person",
+      name: SITE_NAME,
+      url: SITE_URL,
+      email: CONTACT_EMAIL,
+      telephone: CONTACT_PHONE,
+      contactPoint: {
+        "@type": "ContactPoint",
+        contactType: "Recruiting and product enquiries",
+        email: CONTACT_EMAIL,
+        telephone: CONTACT_PHONE,
+        areaServed: "Worldwide",
+        availableLanguage: ["English", "Hindi"],
+      },
+    },
+  };
+
   return (
     <div className={styles.page}>
       <JsonLd id="contact-breadcrumb-jsonld" data={breadcrumbJsonLd} />
+      <JsonLd id="contact-page-jsonld" data={contactPageJsonLd} />
       <JsonLd id="contact-faq-jsonld" data={faqJsonLd} />
 
       {/* The badge says what he is actually looking for rather than the

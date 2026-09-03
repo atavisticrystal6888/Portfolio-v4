@@ -7,22 +7,33 @@
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
 }
 
-.link {
+/* The tile carries the surface; the anchor and the copy button are separate
+   interactives inside it, so neither is nested in the other. */
+.tile {
   display: flex;
-  align-items: center;
-  gap: var(--space-3);
-  padding: var(--space-4);
+  align-items: stretch;
   background: var(--surface);
   border: var(--hairline);
   border-radius: var(--radius-editorial);
-  text-decoration: none;
   transition: border-color var(--transition-fast), background var(--transition-fast);
-  min-height: 44px;
 }
 
-.link:hover {
+.tile:hover,
+.tile:focus-within {
   border-color: var(--accent);
   background: var(--accent-subtle);
+}
+
+.link {
+  display: flex;
+  flex: 1;
+  min-width: 0;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  text-decoration: none;
+  border-radius: var(--radius-editorial);
+  min-height: 44px;
 }
 
 .icon { color: var(--accent); flex-shrink: 0; }
@@ -37,4 +48,32 @@
   font-size: 0.8rem;
   color: var(--text-muted);
   margin-left: auto;
+  overflow-wrap: anywhere;
+}
+
+/* Secondary to the tile itself: same 44px tap target as every other control
+   (src/styles/base.css), but no fill of its own until hover/focus. */
+.copy {
+  flex-shrink: 0;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0 var(--space-3);
+  margin: var(--space-2) var(--space-2) var(--space-2) 0;
+  background: transparent;
+  border: var(--hairline);
+  border-radius: var(--radius-sm);
+  color: var(--text-muted);
+  font-family: inherit;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  transition: color var(--transition-fast), border-color var(--transition-fast),
+    background var(--transition-fast);
+}
+
+.copy:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+  background: var(--surface);
 }

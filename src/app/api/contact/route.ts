@@ -6,6 +6,10 @@ const resend = process.env.RESEND_API_KEY
   ? new Resend(process.env.RESEND_API_KEY)
   : null;
 
+// One body for both a genuine send and a honeypot drop, so the two are
+// indistinguishable from the client.
+const SUCCESS_BODY = { ok: true, success: true, message: "Message received successfully" };
+
 // Rate limiting: simple in-memory store (resets on server restart)
 const rateLimitMap = new Map<string, { count: number; resetAt: number }>();
 
@@ -35,7 +39,15 @@ export async function POST(request: NextRequest) {
 
   try {
     const body = await request.json();
-    const { name, email, subject, message } = body;
+    const { name, email, subject, message, website } = body;
+
+    // Honeypot: `website` is visually hidden and off the tab order, so only a
+    // form-filling bot ever supplies it. Drop the message but answer with the
+    // exact success body a real send produces - a distinguishable rejection
+    // would just teach the bot to leave the field alone.
+    if (typeof website === "string" && website.trim().length > 0) {
+      return NextResponse.json(SUCCESS_BODY);
+    }
 
     // Server-side validation
     if (!name || typeof name !== "string" || name.trim().length === 0) {
@@ -49,6 +61,19 @@ export async function POST(request: NextRequest) {
     }
     if (!message || typeof message !== "string" || message.trim().length < 20) {
       return NextResponse.json({ error: "Message must be at least 20 characters" }, { status: 400 });
+    }
+
+    // Without a Resend key in production there is no path to the inbox, so a
+    // well-formed message gets an honest 503 rather than a fake 200 that loses
+    // it silently. This runs *after* validation - a malformed request is a 400
+    // whatever the server's mail config is, and 503 would wrongly tell the
+    // sender to retry - and *before* the rate limiter, so an outage does not
+    // spend the sender's budget.
+    if (!resend && process.env.NODE_ENV === "production") {
+      return NextResponse.json(
+        { error: "The contact form is temporarily offline — please email me directly." },
+        { status: 503 }
+      );
     }
 
     // Rate limiting runs after validation on purpose: a request that never
@@ -86,7 +111,7 @@ export async function POST(request: NextRequest) {
       console.log("📧 Contact form submission (Resend not configured):", sanitized);
     }
 
-    return NextResponse.json({ success: true, message: "Message received successfully" });
+    return NextResponse.json(SUCCESS_BODY);
   } catch {
     return NextResponse.json({ error: "Invalid request" }, { status: 400 });
   }

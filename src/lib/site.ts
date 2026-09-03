@@ -15,6 +15,11 @@ export const WWW_SITE_HOST = SITE_HOST.startsWith("www.")
 export const PERSON_TITLE = "Product Manager & Builder";
 export const CONTACT_EMAIL = "dhruvsinghal6888@gmail.com";
 export const CONTACT_EMAIL_HREF = `mailto:${CONTACT_EMAIL}`;
+/** E.164 — what gets copied to the clipboard and published in schema.org. */
+export const CONTACT_PHONE = "+917015131885";
+/** Grouped for humans; the display form never goes into an href. */
+export const CONTACT_PHONE_DISPLAY = "+91 70151 31885";
+export const CONTACT_PHONE_HREF = `tel:${CONTACT_PHONE}`;
 export const GITHUB_URL = "https://github.com/atavisticrystal6888";
 export const LINKEDIN_URL = "https://linkedin.com/in/dhruvsinghal6888";
 export const RESUME_HREF = "/resume/dhruv-singhal-resume.pdf";

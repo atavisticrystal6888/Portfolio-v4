@@ -2,7 +2,7 @@
 
 import { useRef, useState, type FormEvent } from "react";
 import { Button } from "@/components/ui/Button";
-import { CONTACT_EMAIL_HREF } from "@/lib/site";
+import { CONTACT_EMAIL, CONTACT_EMAIL_HREF } from "@/lib/site";
 import styles from "./ContactForm.module.css";
 
 interface FormData {
@@ -30,6 +30,9 @@ export function ContactForm() {
   // limit reads very differently from "something went wrong".
   const [serverError, setServerError] = useState<string | null>(null);
   const formRef = useRef<HTMLFormElement>(null);
+  // Uncontrolled on purpose: a bot that writes straight to the DOM node never
+  // fires React's change event, so a controlled value would read empty.
+  const honeypotRef = useRef<HTMLInputElement>(null);
 
   const validate = (): FormErrors => {
     const errs: FormErrors = {};
@@ -61,7 +64,7 @@ export function ContactForm() {
       const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
+        body: JSON.stringify({ ...data, website: honeypotRef.current?.value ?? "" }),
       });
       if (res.ok) {
         setServerError(null);
@@ -80,6 +83,18 @@ export function ContactForm() {
 
   return (
     <form ref={formRef} className={styles.form} onSubmit={handleSubmit} noValidate>
+      {/* Honeypot. Positioned off-screen rather than display:none or hidden,
+          because form-filling bots skip fields they can tell are invisible.
+          Out of the tab order and out of the accessibility tree, so no human
+          ever meets it; the server silently drops anything that fills it. */}
+      <div className={styles.honeypot} aria-hidden="true">
+        <label htmlFor="website">Website</label>
+        <input
+          id="website" name="website" type="text" ref={honeypotRef}
+          tabIndex={-1} autoComplete="off" defaultValue=""
+        />
+      </div>
+
       <div className={styles.field}>
         <label htmlFor="name" className={styles.label}>Name <span className={styles.required}>*</span></label>
         <input
@@ -134,8 +149,11 @@ export function ContactForm() {
       {status === "success" && <p role="status" className={styles.success}>Message sent successfully! I&apos;ll get back to you soon.</p>}
       {status === "error" && (
         <p role="alert" className={styles.errorMsg}>
-          {serverError ?? "Something went wrong."} Please try{" "}
-          <a href={CONTACT_EMAIL_HREF}>emailing directly</a>.
+          {/* The server's own wording when it has one - "temporarily offline"
+              and "too many requests" need different next steps - and the
+              address itself either way, so the fallback is one click. */}
+          {serverError ?? "Something went wrong. Please email me directly."}{" "}
+          <a href={CONTACT_EMAIL_HREF}>{CONTACT_EMAIL}</a>
         </p>
       )}
     </form>
