@@ -11,8 +11,16 @@ const STATUS_LABEL: Record<OptionStatus, string> = {
 
 export function Options({ children, caption }: { children: ReactNode; caption?: string }) {
   const rows = Children.toArray(children).filter(isValidElement);
+  // The wrapper scrolls horizontally on narrow viewports, so it must be
+  // reachable by keyboard (axe: scrollable-region-focusable / WCAG 2.1.1).
+  // role="region" needs an accessible name, hence the caption fallback.
   return (
-    <div className={styles.optionsWrap}>
+    <div
+      className={styles.optionsWrap}
+      tabIndex={0}
+      role="region"
+      aria-label={caption ?? "Alternatives considered"}
+    >
       <table className={styles.options}>
         {caption && <caption className={styles.optionsCaption}>{caption}</caption>}
         <thead>

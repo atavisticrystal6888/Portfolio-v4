@@ -36,7 +36,11 @@ export function CoCreatorChips({
               target="_blank"
               rel="noopener noreferrer"
               className={styles.link}
-              aria-label={`${c.name} (${c.role}) — opens in new tab`}
+              // WCAG 2.5.3 (Label in Name): the accessible name must contain
+              // the visible text in visible order, handle included - the old
+              // "Name (Role)" form dropped the handle and voice control could
+              // not match what the user reads.
+              aria-label={`${c.name}${c.handle ? ` ${c.handle}` : ""} · ${c.role} — opens in new tab`}
             >
               <span className={styles.name}>{c.name}</span>
               {c.handle && <span className={styles.handle}>{c.handle}</span>}

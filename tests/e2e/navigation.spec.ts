@@ -21,7 +21,20 @@ test.describe("Navigation", () => {
 
   test("navigates from home to about via navbar link", async ({ page }) => {
     await page.goto("/");
-    await page.getByRole("link", { name: /about/i }).first().click();
+
+    // On mobile the navbar links collapse into the drawer, so an unscoped
+    // /about/i link lookup lands on body copy instead of the nav. Drive the
+    // affordance the viewport actually exposes.
+    const burger = page.locator('button[aria-label="Toggle navigation"]');
+    if (await burger.isVisible()) {
+      await burger.click();
+      const drawer = page.locator('[aria-label="Mobile navigation"]');
+      await drawer.getByRole("link", { name: /^about$/i }).click();
+    } else {
+      const nav = page.locator('nav[aria-label="Main navigation"]');
+      await nav.getByRole("link", { name: /^about$/i }).click();
+    }
+
     await expect(page).toHaveURL(/\/about$/);
   });
 

@@ -1,15 +1,28 @@
 import { test, expect } from "@playwright/test";
 
 const viewports = [
-  { name: "mobile-small", width: 320, height: 568 },
+  { name: "mobile-xs", width: 320, height: 568 },
+  { name: "mobile-sm", width: 360, height: 740 },
   { name: "mobile", width: 375, height: 667 },
+  { name: "mobile-lg", width: 414, height: 896 },
   { name: "tablet", width: 768, height: 1024 },
   { name: "laptop", width: 1024, height: 768 },
   { name: "desktop", width: 1440, height: 900 },
   { name: "wide", width: 1920, height: 1080 },
 ];
 
-const routes = ["/", "/about", "/projects", "/blog", "/contact"];
+const routes = [
+  "/",
+  "/about",
+  "/projects",
+  "/projects/aarchid",
+  "/blog",
+  "/blog/why-pms-should-code",
+  "/ai-pm",
+  "/lab",
+  "/contact",
+  "/uses",
+];
 
 for (const route of routes) {
   for (const vp of viewports) {

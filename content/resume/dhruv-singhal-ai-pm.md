@@ -48,7 +48,6 @@ _Gemini 1.5 Pro · Exa AI API · Next.js · Cloudflare Workers · Supabase_
 ### KiteEdge - Portfolio Analytics Platform for Zerodha Kite | Solo Builder | In Progress
 
 _Elixir/Phoenix · Python · React · Kafka · PostgreSQL_
-[GitHub](https://github.com/atavisticrystal6888/Kite-edge)
 
 - Designing an analytics platform combining forecasting, risk modelling, and decision-support workflows for retail investors.
 - Scoped experiences across **43+ indicators**, forecasting, and trade-review flows while working across a polyglot stack.
