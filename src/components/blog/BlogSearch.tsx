@@ -4,6 +4,7 @@ import { useState, useMemo } from "react";
 import { debounce } from "@/lib/utils";
 import type { BlogArticle } from "@/types/blog";
 import { ListRows } from "@/components/ui/ListRow";
+import { EmptyState } from "@/components/ui/EmptyState";
 import { BlogCard } from "./BlogCard";
 import styles from "./BlogSearch.module.css";
 
@@ -16,6 +17,9 @@ interface BlogSearchProps {
 export function BlogSearch({ posts }: BlogSearchProps) {
   const [query, setQuery] = useState("");
   const [activeCategory, setActiveCategory] = useState("All");
+  // The search box is uncontrolled so the debounce doesn't fight the keystroke;
+  // bumping this key remounts it, which is how "Clear search" empties the field.
+  const [inputKey, setInputKey] = useState(0);
 
   const filtered = useMemo(() => {
     let result = posts;
@@ -38,6 +42,21 @@ export function BlogSearch({ posts }: BlogSearchProps) {
     setQuery(value);
   }, 200);
 
+  function clearFilters() {
+    setQuery("");
+    setActiveCategory("All");
+    setInputKey((k) => k + 1);
+  }
+
+  const trimmedQuery = query.trim();
+  const emptyDescription = [
+    trimmedQuery ? `Nothing matches “${trimmedQuery}”` : "Nothing matches this filter",
+    activeCategory !== "All" ? `in ${activeCategory}` : null,
+  ]
+    .filter(Boolean)
+    .join(" ")
+    .concat(". Clear the search to see every article.");
+
   return (
     <div className={styles.wrapper}>
       <div className={styles.controls}>
@@ -58,6 +77,7 @@ export function BlogSearch({ posts }: BlogSearchProps) {
             <path d="m21 21-4.3-4.3" />
           </svg>
           <input
+            key={inputKey}
             type="search"
             className={styles.search}
             placeholder="Search articles..."
@@ -75,7 +95,11 @@ export function BlogSearch({ posts }: BlogSearchProps) {
         </ListRows>
       ) : (
         <div className={styles.empty}>
-          <p>No articles found matching your criteria.</p>
+          <EmptyState
+            title="No articles match"
+            description={emptyDescription}
+            action={{ label: "Clear search", onClick: clearFilters }}
+          />
         </div>
       )}
     </div>

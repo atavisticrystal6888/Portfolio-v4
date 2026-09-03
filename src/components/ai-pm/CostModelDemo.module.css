@@ -152,6 +152,10 @@
 }
 
 @media (max-width: 600px) {
+  .controls {
+    grid-template-columns: 1fr;
+  }
+
   .statRow {
     grid-template-columns: 1fr;
   }

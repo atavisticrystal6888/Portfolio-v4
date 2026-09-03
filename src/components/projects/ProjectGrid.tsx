@@ -5,6 +5,7 @@ import type { Project } from "@/types/project";
 import { FilterBar } from "@/components/projects/FilterBar";
 import { ProductCard } from "@/components/projects/ProductCard";
 import { CompactRow } from "@/components/projects/CompactRow";
+import { EmptyState } from "@/components/ui/EmptyState";
 import { cn } from "@/lib/utils";
 import styles from "./ProjectGrid.module.css";
 
@@ -58,7 +59,15 @@ interface ProjectGridProps {
  */
 export function ProjectGrid({ projects }: ProjectGridProps) {
   const [filtered, setFiltered] = useState(projects);
+  // FilterBar owns the active pill; bumping this key remounts it so "Show all
+  // projects" resets the highlighted pill as well as the list.
+  const [filterKey, setFilterKey] = useState(0);
   const layout = useSyncExternalStore(subscribe, readLayout, serverLayout);
+
+  function showAll() {
+    setFiltered(projects);
+    setFilterKey((k) => k + 1);
+  }
 
   const flagships = filtered.filter(isFlagship);
   const compact = filtered.filter((p) => !isFlagship(p));
@@ -68,7 +77,7 @@ export function ProjectGrid({ projects }: ProjectGridProps) {
   return (
     <div>
       <div className={styles.controls}>
-        <FilterBar projects={projects} onFilter={setFiltered} />
+        <FilterBar key={filterKey} projects={projects} onFilter={setFiltered} />
         <div className={styles.layoutToggle} role="group" aria-label="Layout view">
           <button
             className={cn(styles.layoutBtn, !dense && styles.layoutActive)}
@@ -130,7 +139,13 @@ export function ProjectGrid({ projects }: ProjectGridProps) {
       )}
 
       {filtered.length === 0 && (
-        <p className={styles.empty}>No projects match this filter.</p>
+        <div className={styles.empty}>
+          <EmptyState
+            title="No projects match this filter"
+            description="Nothing in this category yet. Clear the filter to see every case study and side project."
+            action={{ label: "Show all projects", onClick: showAll }}
+          />
+        </div>
       )}
     </div>
   );
