@@ -104,6 +104,58 @@ describe("POST /api/contact", { timeout: 30_000 }, () => {
     const res = await post({ ...VALID, message: "too short" }, "198.51.100.6");
     expect(res.status).toBe(400);
   });
+
+  describe("with Resend configured", () => {
+    // resend v6 resolves { data, error } instead of throwing, so a rejected
+    // send (bad key, unverified sender, sandbox recipient limit) only shows up
+    // in the result. The SDK is mocked: nothing is sent.
+    const send = vi.fn();
+    beforeEach(() => {
+      send.mockReset();
+      vi.doMock("resend", () => ({
+        Resend: class {
+          emails = { send };
+        },
+      }));
+    });
+    afterEach(() => {
+      vi.doUnmock("resend");
+    });
+    const SEND_FAILED = "The message could not be sent — please email me directly.";
+
+    it("answers 200 only after Resend accepts the message", async () => {
+      send.mockResolvedValue({ data: { id: "email_123" }, error: null });
+      const post = await loadRoute({ NODE_ENV: "production", RESEND_API_KEY: "re_test" });
+      const res = await post(VALID, "198.51.100.8");
+      expect(res.status).toBe(200);
+      expect(send).toHaveBeenCalledWith(expect.objectContaining({ replyTo: VALID.email }));
+    });
+
+    it("reports a rejected send as 502, never as success", async () => {
+      send.mockResolvedValue({
+        data: null,
+        error: { name: "validation_error", message: "You can only send testing emails to your own address" },
+      });
+      const err = vi.spyOn(console, "error").mockImplementation(() => {});
+      const post = await loadRoute({ NODE_ENV: "production", RESEND_API_KEY: "re_test" });
+      const res = await post(VALID, "198.51.100.9");
+      expect(res.status).toBe(502);
+      const body = await res.json();
+      expect(body.error).toBe(SEND_FAILED);
+      expect(body.success).toBeUndefined();
+      err.mockRestore();
+    });
+
+    it("reports a thrown send (network) as 502, not as a bad request", async () => {
+      send.mockRejectedValue(new Error("fetch failed"));
+      const err = vi.spyOn(console, "error").mockImplementation(() => {});
+      const post = await loadRoute({ NODE_ENV: "production", RESEND_API_KEY: "re_test" });
+      const res = await post(VALID, "198.51.100.10");
+      expect(res.status).toBe(502);
+      expect((await res.json()).error).toBe(SEND_FAILED);
+      err.mockRestore();
+    });
+  });
 });
 
 describe("DirectLinks", () => {

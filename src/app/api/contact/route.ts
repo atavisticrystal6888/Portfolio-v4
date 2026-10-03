@@ -100,13 +100,29 @@ export async function POST(request: NextRequest) {
     if (resend) {
       const toEmail = process.env.CONTACT_EMAIL || CONTACT_EMAIL;
       const fromEmail = process.env.RESEND_FROM_EMAIL || "Portfolio Contact <onboarding@resend.dev>";
-      await resend.emails.send({
-        from: fromEmail,
-        to: toEmail,
-        subject: `[Portfolio] ${sanitized.subject}`,
-        replyTo: sanitized.email,
-        text: `Name: ${sanitized.name}\nEmail: ${sanitized.email}\n\n${sanitized.message}`,
-      });
+      // resend resolves { data, error } rather than throwing, so a rejected
+      // send (bad key, unverified sender, sandbox recipient limit) must be read
+      // from the result. Either way the sender is told it did not go through.
+      let sendError: unknown = null;
+      try {
+        const { error } = await resend.emails.send({
+          from: fromEmail,
+          to: toEmail,
+          subject: `[Portfolio] ${sanitized.subject}`,
+          replyTo: sanitized.email,
+          text: `Name: ${sanitized.name}\nEmail: ${sanitized.email}\n\n${sanitized.message}`,
+        });
+        sendError = error;
+      } catch (err) {
+        sendError = err;
+      }
+      if (sendError) {
+        console.error("Contact form: Resend did not accept the message:", sendError);
+        return NextResponse.json(
+          { error: "The message could not be sent — please email me directly." },
+          { status: 502 }
+        );
+      }
     } else {
       console.log("📧 Contact form submission (Resend not configured):", sanitized);
     }
