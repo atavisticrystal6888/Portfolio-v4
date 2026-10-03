@@ -1,27 +1,18 @@
-"use client";
-
-import { useState } from "react";
-
-const PM_QUOTES = [
-  "Looks like this feature was deprioritized in the last sprint.",
-  "This page shipped to production without a spec.",
-  "The backlog ate this page. We'll groom it next quarter.",
-  "404: This route didn't make it past the PRD review.",
-  "No user stories matched this path. Try one of the links below.",
-];
-
 /**
- * The one interactive scrap of the 404 page. It lives here so not-found.tsx can
- * stay a server component and export its own metadata — as a client component
- * it inherited the home page's title and canonical URL.
+ * The 404 page's one line of personality, kept out of not-found.tsx so that
+ * page stays a plain server component that exports its own metadata (as a
+ * client component it inherited the home page's title and canonical URL).
+ *
+ * One fixed line, nothing derived from the URL: every unknown path is answered
+ * with the same prerendered /_not-found document, where usePathname() is
+ * "/_not-found", while in the browser it is the requested path. A quote picked
+ * from the pathname rendered one line on the server and another during
+ * hydration, so most unknown paths threw React error #418
+ * (tests/e2e/not-found-hydration.spec.ts).
  */
 export function NotFoundQuote() {
-  // Randomize on initial render; suppressHydrationWarning handles server/client mismatch
-  const [quote] = useState(() => PM_QUOTES[Math.floor(Math.random() * PM_QUOTES.length)]!);
-
   return (
     <p
-      suppressHydrationWarning
       style={{
         marginTop: "1.25rem",
         fontSize: "1.15rem",
@@ -29,7 +20,7 @@ export function NotFoundQuote() {
         color: "var(--text)",
       }}
     >
-      {quote}
+      No user stories matched this path. Try one of the links below.
     </p>
   );
 }
