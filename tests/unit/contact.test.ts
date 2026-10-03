@@ -38,10 +38,12 @@ const VALID = {
 // Cold-importing next/server + resend costs several seconds on first use;
 // the default 5s per-test budget is not a statement about this route.
 describe("POST /api/contact", { timeout: 30_000 }, () => {
+  // Hooks have their own 10s default that the describe timeout does not lift;
+  // on a fresh install (CI) the cold import alone exceeded it.
   beforeAll(async () => {
     await import("next/server");
     await import("resend");
-  });
+  }, 60_000);
 
   beforeEach(() => {
     vi.stubEnv("RESEND_API_KEY", "");

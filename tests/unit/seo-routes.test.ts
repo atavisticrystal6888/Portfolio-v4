@@ -6,6 +6,7 @@ import sitemap from "@/app/sitemap";
 import robots from "@/app/robots";
 import { GET as rssGet } from "@/app/rss.xml/route";
 import { contentDate } from "@/lib/metadata";
+import { WITHDRAWN_ROUTES } from "../e2e/route-manifest";
 
 const SITE = "https://dhruvsinghal.codes";
 const contentDir = path.join(process.cwd(), "content");
@@ -30,15 +31,25 @@ const mdxSlugs = (dir: string) =>
     .filter((f) => f.endsWith(".mdx"))
     .map((f) => f.replace(/\.mdx$/, ""));
 
-/** Slugs that exist only in private-drafts/ or withdrawn/: must never surface. */
-const hiddenSlugs = ["private-drafts", "withdrawn"].flatMap((dir) => {
-  const full = path.join(contentDir, dir);
-  if (!fs.existsSync(full)) return [];
-  return fs
-    .readdirSync(full)
-    .filter((f) => /\.(mdx?|json)$/.test(f) && !/^readme\.md$/i.test(f))
-    .map((f) => f.replace(/\.(mdx?|json)$/, ""));
-});
+/**
+ * Slugs that must never surface: the publicly known withdrawn routes, plus
+ * whatever sits in the gitignored private-drafts/ and withdrawn/ folders. Those
+ * folders exist only on the author's machine, so a clean checkout (CI) checks
+ * the manifest's withdrawn routes alone.
+ */
+const hiddenSlugs = [
+  ...new Set([
+    ...WITHDRAWN_ROUTES.map((r) => r.split("/").pop()!),
+    ...["private-drafts", "withdrawn"].flatMap((dir) => {
+      const full = path.join(contentDir, dir);
+      if (!fs.existsSync(full)) return [];
+      return fs
+        .readdirSync(full)
+        .filter((f) => /\.(mdx?|json)$/.test(f) && !/^readme\.md$/i.test(f))
+        .map((f) => f.replace(/\.(mdx?|json)$/, ""));
+    }),
+  ]),
+];
 
 const toPath = (url: string) => url.replace(SITE, "") || "/";
 

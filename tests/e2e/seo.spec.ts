@@ -17,14 +17,6 @@ const ROUTES = [
 // eyes on the value that actually reaches the browser tab.
 // Keep in sync with SITE_NAME / SITE_TITLE in src/lib/site.ts.
 const SITE_NAME = "Dhruv Singhal";
-
-// Private drafts live in the gitignored content/private-drafts/. Their slugs
-// are read from disk so the public repo never names them; in CI the folder
-// does not exist and only the withdrawn routes are probed.
-const PRIVATE_DRAFTS_DIR = path.join(process.cwd(), "content", "private-drafts");
-const PRIVATE_DRAFT_SLUGS = fs.existsSync(PRIVATE_DRAFTS_DIR)
-  ? fs.readdirSync(PRIVATE_DRAFTS_DIR).filter((f) => f.endsWith(".mdx")).map((f) => f.replace(/\.mdx$/, ""))
-  : [];
 const SITE_TITLE = "Dhruv Singhal — Product Manager & Builder";
 const TITLE_SUFFIX = ` | ${SITE_NAME}`;
 
@@ -191,15 +183,25 @@ const PUBLIC_ROUTES = MANIFEST_ROUTES.filter((r) => r.expectStatus === 200);
 const ARTICLES = PUBLIC_ROUTES.filter((r) => r.kind === "article");
 const CONTENT_DIR = path.join(process.cwd(), "content");
 
-/** Slugs that live only in content/private-drafts or content/withdrawn. */
-const HIDDEN_SLUGS = ["private-drafts", "withdrawn"].flatMap((dir) => {
-  const full = path.join(CONTENT_DIR, dir);
-  if (!fs.existsSync(full)) return [];
-  return fs
-    .readdirSync(full)
-    .filter((f) => /\.(mdx?|json)$/.test(f) && !/^readme\.md$/i.test(f))
-    .map((f) => f.replace(/\.(mdx?|json)$/, ""));
-});
+/**
+ * Slugs that must never surface: the manifest's withdrawn routes, plus the
+ * files in the gitignored content/private-drafts and content/withdrawn. Read
+ * from disk so the public repo never names the drafts; on a clean checkout
+ * (CI) those folders do not exist and only the withdrawn routes are checked.
+ */
+const HIDDEN_SLUGS = [
+  ...new Set([
+    ...WITHDRAWN_ROUTES.map((r) => r.split("/").pop()!),
+    ...["private-drafts", "withdrawn"].flatMap((dir) => {
+      const full = path.join(CONTENT_DIR, dir);
+      if (!fs.existsSync(full)) return [];
+      return fs
+        .readdirSync(full)
+        .filter((f) => /\.(mdx?|json)$/.test(f) && !/^readme\.md$/i.test(f))
+        .map((f) => f.replace(/\.(mdx?|json)$/, ""));
+    }),
+  ]),
+];
 
 /**
  * Titles allowed past 60 chars, each named with its reason. A ceiling still
@@ -580,9 +582,7 @@ test.describe("SEO baseline: status codes and images", () => {
     expect(ok.status()).toBe(200);
     expect(ok.headers()["content-type"]).toContain("image/png");
     for (const p of [
-      ...PRIVATE_DRAFT_SLUGS.flatMap((s) => [`/og/projects/${s}`, `/og/blog/${s}`]),
-      "/og/projects/churn-analysis",
-      "/og/blog/churn-analysis",
+      ...HIDDEN_SLUGS.flatMap((s) => [`/og/projects/${s}`, `/og/blog/${s}`]),
       // Mixed case is left out on case-insensitive filesystems for the same
       // reason as the slug test above.
       ...(CASE_INSENSITIVE_FS ? [] : ["/og/projects/Aarchid"]),
