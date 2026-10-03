@@ -2,42 +2,48 @@
 slug: "building-portfolio-as-product"
 title: "Building My Portfolio Like a Product"
 date: "2026-04-22"
-updatedDate: null
+updatedDate: "2026-10-02"
 category: "Product"
 tags: ["portfolio", "product-thinking", "next.js", "iteration", "case-study"]
-readingTime: "6 min read"
-excerpt: "Five versions, three frameworks, and zero regrets. What treating a personal site like a real product taught me about scope, speed, and shipping."
+related: ["seventeen-checks-before-you-call-a-site-done", "why-pms-should-code"]
+excerpt: "Updated through v6: from a 2-hour HTML page on, each release fixed a specific failure of the one before. What running a site like a product taught me."
 socialImage: null
 ---
+
+I run this site like a product: every version exists because the one before it failed at something specific.
+
+*First written on 22 Apr 2026. Updated on 2 Oct 2026 to match the release history in the [changelog](/changelog): v5 merged on 22 Aug 2026, v6 shipped in September 2026, and the Lighthouse figure below comes from a run on 29 Aug 2026.*
 
 ## Version 1: The 2-Hour HTML Page
 
 My first portfolio was a single `index.html` with inline CSS. No JavaScript, no animations, no case studies. Just my name, a link to my resume, and three bullet points about what I do.
 
-It shipped in 2 hours. And it worked — I got my first interview through it.
+It shipped in 2 hours. And it did its job: the first interview that came through the site came through that page (self-reported).
 
 But it taught me nothing about how to present work in a way that builds trust. A resume link is not a product. It's a file download.
 
 ## Why I Kept Iterating
 
-Each version solved a specific failure mode of the previous:
+Each version solved a specific failure mode of the previous one. Release names and months follow the [changelog](/changelog); build times are my own estimates.
 
 | Version | Problem Solved | Stack | Time |
 |---------|---------------|-------|------|
-| v1 | "I don't have a site" | HTML/CSS | 2 hours |
-| v2 | "Nobody understands my work" | Static HTML, GSAP, CDN libs | 3 weeks |
-| v3 | "Can't maintain 14 HTML files" | Next.js 14, TypeScript | 2 weeks |
-| v4 | "Performance + SEO + accessibility gaps" | Next.js 16, React 19 | 1 week |
-| v5 | "Polish, trust signals, real content" | Same stack, content focus | 3 days |
+| v1 (Jan 2026) | "I don't have a site" | HTML/CSS | 2 hours |
+| v2 (Feb 2026) | "Nobody understands my work" | Static HTML, GSAP, CDN libs | 3 weeks |
+| v3 (Mar 2026) | "Can't maintain 14 HTML files" | Next.js 14, TypeScript | 2 weeks |
+| v4 (Apr 2026, phases to Aug) | "Performance + SEO + accessibility gaps" | Next.js 16, React 19 | 1 week |
+| v5 (Aug 2026) | "The work is buried under decoration" | Same stack, working-paper redesign | 3 days |
+| v6 (Sept 2026) | "Case studies read like reports, not products" | Same stack, MDX block library | not logged |
 
-The key insight: **each version was a response to real user feedback**, not a tech upgrade for its own sake. v2 happened because interviewers said "I don't understand what you actually do." v3 happened because I kept forgetting to update all 14 HTML files. v4 happened because Lighthouse scores mattered for SEO.
+The key insight: **each version answered a specific failure of the one before**, not a tech upgrade for its own sake. v2 happened because reviewers told me they could not tell what I actually do. v3 happened because I kept forgetting to update all 14 HTML files. v4 happened because Lighthouse scores mattered for SEO. v6 happened because the case studies read like reports, when what a reviewer needs is the product, the decision and the evidence.
 
 ## Product Thinking Applied
 
 ### 1. Define Success Before Building
 
 For v5, I defined exactly what "launch-ready" means:
-- Lighthouse > 90 across all categories
+
+- Lighthouse > 90 across all categories (a target; the v5 home page measured 65 for performance on 29 Aug 2026)
 - Real testimonials with verifiable context
 - Case studies with measurable outcomes
 - Zero broken links, zero console errors
@@ -51,6 +57,7 @@ My initial v5 improvement list had 32 items. I ranked them by effort × impact a
 ### 3. Ship Incremental Value
 
 I didn't rebuild from scratch. Each change was atomic and independently valuable:
+
 - Better tagline → immediate clarity improvement
 - Security headers → immediate trust improvement
 - Headshot → immediate personal connection
@@ -59,7 +66,7 @@ No change depended on another. If I stopped after 10 items, the site was still b
 
 ## Technical Decisions Worth Noting
 
-**Why Next.js?** Static HTML worked but didn't scale. With 4 case studies, 4 blog articles, and 14 pages, any content change meant touching multiple files. Next.js gives me component reuse, MDX for content, and SSG for performance.
+**Why Next.js?** Static HTML worked but didn't scale. At the time of the move (v3), with 4 case studies, 4 blog articles, and 14 pages, any content change meant touching multiple files. Next.js gives me component reuse, MDX for content, and SSG for performance.
 
 **Why not a CMS?** I write in VS Code. Adding Sanity or Contentful would add a build step, a dependency, and a failure mode — all for content I update monthly. MDX files in `/content/` work perfectly.
 
@@ -74,6 +81,8 @@ No change depended on another. If I stopped after 10 items, the site was still b
 
 ## What's Next
 
-v5 is the first version I'd call "complete." Not perfect — but sufficient for its job: earning interviews through demonstrated competence. The next iteration will be driven by the next failure mode I discover.
+v5, merged on 22 Aug 2026, was the first version I'd have called "complete" at the time. Not perfect, but sufficient for its job: earning interviews through demonstrated competence. The launch audit that followed is in [Seventeen Checks Before You Call a Site Done](/blog/seventeen-checks-before-you-call-a-site-done).
+
+The next failure mode arrived quickly: the case studies read like reports. v6, in September 2026, rebuilt them as product pages, and the build is written up in the [portfolio case study](/projects/portfolio-site). The next iteration will be driven by the next failure mode I discover.
 
 And if that failure mode is "nobody found my site" — then the next version will be about distribution, not design.

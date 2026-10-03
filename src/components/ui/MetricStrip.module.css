@@ -10,6 +10,10 @@
 .item {
   padding: var(--space-6) var(--space-5);
   min-width: 0;
+  /* A long label word ("RECOMMENDATIONS") or a word value must wrap inside
+     its cell, never run past the cell rule or the screen edge. Numeric home
+     metrics are short, so this only engages when a word would overflow. */
+  overflow-wrap: anywhere;
 }
 
 .item:nth-child(2n) {

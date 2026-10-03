@@ -37,11 +37,12 @@
   outline-offset: 2px;
 }
 
+/* Filled, the same active state as the /projects and /blog filters. */
 .filterActive,
 .filterActive:hover {
   border-color: var(--accent);
-  background: var(--accent-subtle);
-  color: var(--accent-hover);
+  background: var(--accent);
+  color: var(--accent-contrast);
 }
 
 .filterCount {
@@ -50,7 +51,7 @@
 }
 
 .filterActive .filterCount {
-  color: var(--accent-hover);
+  color: var(--accent-contrast);
 }
 
 /* The PM angle on each idea, in sentence case rather than the all-caps mono

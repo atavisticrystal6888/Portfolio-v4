@@ -51,6 +51,20 @@
   overflow-wrap: anywhere;
 }
 
+/* Narrow columns: the handle takes its own line under the label, so the
+   email address no longer breaks mid-word ("…gmail.c / om") at 390px. */
+@media (max-width: 480px) {
+  .link {
+    flex-wrap: wrap;
+    row-gap: var(--space-1);
+  }
+
+  .handle {
+    flex-basis: 100%;
+    margin-left: calc(20px + var(--space-3));
+  }
+}
+
 /* Secondary to the tile itself: same 44px tap target as every other control
    (src/styles/base.css), but no fill of its own until hover/focus. */
 .copy {

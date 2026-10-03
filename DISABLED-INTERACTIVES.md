@@ -9,6 +9,10 @@
 > hero's `SignatureScene` mount was also removed (the scene component itself
 > stays for dossier/lab variants; three.js deps untouched pending the user's
 > call). The tables below are kept as the historical record.
+>
+> **September 2026 update:** `MusicToggle` / `BackgroundMusic` were **removed**
+> as well, together with the `howler` and `@types/howler` dependencies. See the
+> struck entry under "What is deliberately still on" below.
 
 Four interactive extras were **switched off in the round-2 UI pass
 (2026-08-20)** and deleted in v5.
@@ -26,8 +30,15 @@ Four interactive extras were **switched off in the round-2 UI pass
 
 - **`AnimatedGradient`** (`src/app/layout.tsx`) — ambient background wash; costs
   nothing and is never in the visitor's way.
-- **`MusicToggle` / `BackgroundMusic`** (`src/components/layout/Navbar.tsx`) —
-  opt-in and off by default, so it is a feature rather than an imposition.
+- ~~**`MusicToggle` / `BackgroundMusic`** (`src/components/layout/Navbar.tsx`) —
+  opt-in and off by default, so it is a feature rather than an imposition.~~
+  **Removed in September 2026.** It was listed here as live until then. Being
+  opt-in did not make it useful: the control sat in the navbar of a product
+  portfolio with no reason to exist, and it pulled `howler` into the global
+  client bundle for every visitor. The two components, their CSS module, and
+  the `howler` / `@types/howler` packages are gone; the code lives in git
+  history (`git log -- src/components/interactive/MusicToggle.tsx`) if ever
+  wanted back.
 - **`CommandPalette`** (Ctrl+K), **`ScrollProgress`**, **`ThemeToggle`** — real
   navigation and preference features, not flourish. Palette switching lives in
   the command palette ("Accent: …"), not in a visible control.

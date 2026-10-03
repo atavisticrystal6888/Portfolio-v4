@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { Project } from "@/types/project";
 import { ListRow, ListRows } from "@/components/ui/ListRow";
+import { EvidenceChip, StatusPill } from "@/components/case-study/ProjectFacts";
 import { ProductCarousel } from "./ProductCarousel";
 import { splitSelectedWork } from "./selection";
 import styles from "./SelectedWork.module.css";
@@ -31,6 +32,21 @@ export function SelectedWork({ projects }: SelectedWorkProps) {
                 href={`/projects/${project.slug}`}
                 title={project.name}
                 dek={project.description}
+                trailing={
+                  (project.ownership || project.status || project.evidenceTier) && (
+                    <span className={styles.facts}>
+                      {/* Contribution first: on TCS NQT the question bank is
+                          other people's work, and the row must say so. */}
+                      {project.ownership && (
+                        <span className={styles.ownership} data-testid="also-built-ownership">
+                          {project.ownership}
+                        </span>
+                      )}
+                      {project.status && <StatusPill status={project.status} />}
+                      {project.evidenceTier && <EvidenceChip tier={project.evidenceTier} />}
+                    </span>
+                  )
+                }
                 rail={
                   <>
                     <span>{project.metricValue}</span>

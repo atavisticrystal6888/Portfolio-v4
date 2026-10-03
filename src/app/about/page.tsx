@@ -1,14 +1,14 @@
-import { generatePageMetadata, generateBreadcrumbJsonLd } from "@/lib/metadata";
+import { generatePageMetadata } from "@/lib/metadata";
 import { getGitHubProfile } from "@/lib/github";
 import { SectionLabel } from "@/components/ui/SectionLabel";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { Button } from "@/components/ui/Button";
+import { WhereNext } from "@/components/ui/WhereNext";
 import { Philosophy } from "@/components/about/Philosophy";
-import { SkillsRadar } from "@/components/about/SkillsRadar";
+import { Skills } from "@/components/about/Skills";
 import { Timeline } from "@/components/about/Timeline";
 import { Achievements } from "@/components/about/Achievements";
 import { GitHubStats } from "@/components/about/GitHubStats";
-import { JsonLd } from "@/components/ui/JsonLd";
 import Image from "next/image";
 import Link from "next/link";
 import dhruvImage from "@/assets/Dhruv_Image.jpg";
@@ -17,15 +17,11 @@ import styles from "./about.module.css";
 export const metadata = generatePageMetadata({
   title: "About",
   description:
-    "Learn about Dhruv Singhal — a Product Manager & Builder with experience across D2C e-commerce, enterprise AI workflows, analytics, and technical execution.",
+    "About Dhruv Singhal: about a year of product management internships, most recently in growth at The Sleep Company (Jul–Oct 2026), aiming for APM and PM roles.",
   path: "/about",
 });
 
 export default async function AboutPage() {
-  const breadcrumbJsonLd = generateBreadcrumbJsonLd([
-    { name: "Home", url: "/" },
-    { name: "About", url: "/about" },
-  ]);
   const github = await getGitHubProfile();
   // GitHubStats self-hides when the API had nothing to give, which would
   // otherwise leave this page holding an empty ruled section.
@@ -39,24 +35,15 @@ export default async function AboutPage() {
 
   return (
     <div className={styles.page}>
-      <JsonLd id="about-breadcrumb-jsonld" data={breadcrumbJsonLd} />
-
       {/* Header */}
       <PageHeader
+        breadcrumbs={[
+          { name: "Home", href: "/" },
+          { name: "About", href: "/about" },
+        ]}
         title="Dhruv Singhal"
         subtitle="Product Manager & Builder — turning ambiguous domain problems into product decisions, specs, and shipped systems."
       />
-
-      {/* Philosophy */}
-      <section aria-label="Philosophy" data-section="philosophy" className={styles.section}>
-        <div className={styles.inner}>
-          <header className={styles.sectionHeader}>
-            <SectionLabel index={num()}>Philosophy</SectionLabel>
-            <h2 className={styles.sectionTitle}>How I think</h2>
-          </header>
-          <Philosophy />
-        </div>
-      </section>
 
       {/* Bio */}
       <section aria-label="Biography" data-section="bio" className={styles.section}>
@@ -71,40 +58,42 @@ export default async function AboutPage() {
               alt="Portrait of Dhruv Singhal"
               className={styles.headshot}
               sizes="(max-width: 640px) 220px, 280px"
-              priority
+              preload
             />
             <div>
               <p className={styles.bio}>
                 I pick up a domain by building something in it. That has been
                 the pattern since my first internship. I get close enough to the
                 problem to write the PRD, close enough to the data to build the
-                eval set, and close enough to the code to ship the first version
-                myself. Then whatever breaks tells me what I got wrong in the
-                spec.
+                eval set, and close enough to the code to build a first version
+                when that is the fastest way to learn. Where someone built it
+                with me, I say so. Then whatever breaks tells me what I got
+                wrong in the spec.
               </p>
               <p className={styles.bio}>
                 At Omniful.ai, &ldquo;find better prospects&rdquo; turned into a
                 scoring model built on firmographic and behavioural signals.
                 Qualified prospects went from about 10 a day to over 200, and
-                the work supported 10 client acquisitions. At Read Riches I ran
+                the work supported 10 client acquisitions (both self-reported;
+                I have no artefact to share). At Read Riches I ran
                 the founder&apos;s office side of content-led growth. I managed a
                 4-person research and content team and ran publishing
-                experiments that contributed to a 4x retention improvement.
+                experiments that contributed to a 4x retention improvement
+                (self-reported).
                 Different industries, same job: find the loop, instrument it,
                 then turn the handle.
               </p>
               <p className={styles.bio}>
-                At Wipro TOPS I scoped Auriga ReX, an AI-powered enterprise
-                workflow platform, along with the Crew Mobile and Non-Crew
-                Records workflows across 12+ aviation scenarios. Most of that
+                At Wipro TOPS I scoped an internal AI-powered enterprise
+                workflow platform, along with workflows for an internal crew
+                mobile micro-app and an internal records platform for non-crew
+                staff, across 12+ aviation scenarios (self-reported). Most of that
                 job was finding edge cases early enough that they became sprint
                 tickets instead of incidents. It is also where I killed 37
                 low-signal dashboard charts and kept the 3 that actually drove a
-                decision. At The Sleep Company I am on growth now, evaluating
-                vendors across BSPs, CRMs, payment aggregators, OMS and WMS,
-                standardising the Shopify Master Catalogue, mapping PDP user
-                flows, and building AI operational agents on a knowledge
-                repository that did not exist before.
+                decision (self-reported). Most recently I was a product intern
+                on the growth team at The Sleep Company (Jul–Oct 2026), on
+                pre-launch work; the internal detail stays internal.
               </p>
               <p className={styles.bio}>
                 Outside of work there is{" "}
@@ -113,13 +102,20 @@ export default async function AboutPage() {
                 <a href="https://github.com/dfordp" target="_blank" rel="noopener noreferrer">
                   Dilpreet Grover
                 </a>
-                . It diagnoses plant health from a photo, hits 92% accuracy on
-                our 200-sample golden set, and runs at the edge for under a
-                quarter per active user per month. I wrote the PRD, built the
-                eval harness, and shipped V1. The harness said we were at 92%.
-                The user interviews said trust was the real bottleneck. Learning
-                to hold both of those at once is the part of the job I actually
-                like.
+                . It diagnoses plant health from a photo. I wrote the PRD and
+                built the eval harness, and we shipped V1 together.
+                Self-reported: the team ran an offline eval on a golden set
+                (about 200 samples, as reported by the team); the result is
+                withheld until the eval artefact or the co-builder&apos;s
+                confirmation is available. No offline score could say whether
+                someone would trust a diagnosis enough to act on it. Holding both
+                of those at once is the part of the job I actually like.
+              </p>
+              <p className={styles.bio}>
+                What I am working on this month is on the{" "}
+                <Link href="/now">now page</Link>. The books that shaped how I
+                think are on the <Link href="/bookshelf">bookshelf</Link>, and
+                the tools I use are listed on <Link href="/uses">uses</Link>.
               </p>
             </div>
           </div>
@@ -136,6 +132,28 @@ export default async function AboutPage() {
         </div>
       </section>
 
+      {/* Experience Timeline */}
+      <section aria-label="Experience" data-section="experience" className={styles.section}>
+        <div className={styles.innerNarrow}>
+          <header className={styles.sectionHeader}>
+            <SectionLabel index={num()}>Experience</SectionLabel>
+            <h2 className={styles.sectionTitle}>Four teams, four problems</h2>
+          </header>
+          <Timeline />
+        </div>
+      </section>
+
+      {/* Philosophy */}
+      <section aria-label="Philosophy" data-section="philosophy" className={styles.section}>
+        <div className={styles.inner}>
+          <header className={styles.sectionHeader}>
+            <SectionLabel index={num()}>Philosophy</SectionLabel>
+            <h2 className={styles.sectionTitle}>How I think</h2>
+          </header>
+          <Philosophy />
+        </div>
+      </section>
+
       {/* Skills */}
       <section aria-label="Skills" data-section="skills" className={styles.section}>
         <div className={styles.inner}>
@@ -145,18 +163,7 @@ export default async function AboutPage() {
               Product, data, and enough engineering
             </h2>
           </header>
-          <SkillsRadar />
-        </div>
-      </section>
-
-      {/* Experience Timeline */}
-      <section aria-label="Experience" data-section="experience" className={styles.section}>
-        <div className={styles.innerNarrow}>
-          <header className={styles.sectionHeader}>
-            <SectionLabel index={num()}>Experience</SectionLabel>
-            <h2 className={styles.sectionTitle}>Four teams, four problems</h2>
-          </header>
-          <Timeline />
+          <Skills />
         </div>
       </section>
 
@@ -195,10 +202,19 @@ export default async function AboutPage() {
             {[
               // The 37-charts story moved up into "My story", so this row
               // carries different evidence rather than repeating it.
-              { label: "High-Ownership", detail: "Owned vendor evaluation across BSPs, CRMs, payment aggregators, OMS and WMS at The Sleep Company" },
-              { label: "Low-Dependency", detail: "Wrote the PRD, built the eval harness, and shipped v1 of Aarchid myself" },
-              { label: "Data-First", detail: "Every feature proposal comes with a success metric and a kill criteria" },
-              { label: "Fast Execution", detail: "Portfolio shipped through 5 iterations in 3 months, using feedback to sharpen positioning, content, and navigation." },
+              { label: "High-Ownership", detail: "Run my own release gates: the DeskTasks gate run of 15 Sep 2026 finished with zero failures" },
+              { label: "Close to the build", detail: "Wrote the Aarchid PRD and eval harness, and co-built v1 with Dilpreet Grover" },
+              { label: "Data-First", detail: "Every feature proposal comes with a success metric and a kill criterion" },
+              {
+                label: "Fast Execution",
+                detail: (
+                  <>
+                    Portfolio iterated from v1 (Jan 2026) to v6 (Sept 2026), each
+                    version sharpening positioning, content, or navigation; the{" "}
+                    <Link href="/changelog">changelog</Link> has every release.
+                  </>
+                ),
+              },
             ].map((v) => (
               <div key={v.label} className={styles.valueRow}>
                 <dt className={styles.valueName}>{v.label}</dt>
@@ -217,6 +233,8 @@ export default async function AboutPage() {
           </Button>
         </div>
       </div>
+
+      <WhereNext />
     </div>
   );
 }

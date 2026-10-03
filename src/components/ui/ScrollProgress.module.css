@@ -8,11 +8,41 @@
   background: transparent;
 }
 
+/* Full-width bar scaled from the left: transform only, so updates never
+   trigger layout. The JS fallback in ScrollProgress.tsx writes scaleX(). */
 .fill {
   height: 100%;
   background: var(--accent);
-  border-radius: 0 2px 2px 0;
-  transition: width 0.1s linear;
+  transform-origin: 0 50%;
+  transform: scaleX(0);
+  will-change: transform;
+}
+
+/* Where supported, the bar is driven by the root scroller in CSS alone. */
+@supports (animation-timeline: scroll()) {
+  .fill {
+    animation: scrollProgressGrow linear both;
+    animation-timeline: scroll(root block);
+  }
+
+  /* The global reduced-motion rule (styles/animations.css) forces every
+     animation-duration to 0.01ms. Keep this one on its scroll timeline: it
+     tracks position, it does not move on its own, exactly as the old bar
+     kept tracking under reduced motion. */
+  @media (prefers-reduced-motion: reduce) {
+    .fill {
+      animation-duration: auto !important;
+    }
+  }
+}
+
+@keyframes scrollProgressGrow {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
 }
 
 @media print {

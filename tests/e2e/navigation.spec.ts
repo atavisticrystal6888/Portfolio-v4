@@ -38,6 +38,20 @@ test.describe("Navigation", () => {
     await expect(page).toHaveURL(/\/about$/);
   });
 
+  // Lab (unbuilt ideas) was demoted from the primary nav to the footer's
+  // "More" group on 2026-09-30; the route itself still exists.
+  test("Lab is in the footer More group, not the primary nav", async ({ page }) => {
+    await page.goto("/");
+    const primary = page.locator('nav[aria-label="Main navigation"]');
+    // DOM-level so it also holds on mobile, where the bar links are hidden
+    // behind the drawer toggle (role queries skip display:none links).
+    await expect(primary.locator('a[href="/projects"]')).not.toHaveCount(0);
+    await expect(primary.locator('a[href="/lab"]')).toHaveCount(0);
+
+    const more = page.getByRole("navigation", { name: "Footer navigation: More" });
+    await expect(more.getByRole("link", { name: /^lab$/i })).toHaveAttribute("href", "/lab");
+  });
+
   test("404 page renders for unknown route", async ({ page }) => {
     const response = await page.goto("/nonexistent-page-xyz");
     expect(response?.status()).toBe(404);

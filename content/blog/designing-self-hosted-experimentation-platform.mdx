@@ -2,11 +2,13 @@
 slug: "designing-self-hosted-experimentation-platform"
 title: "Designing a Self-Hosted Experimentation Platform"
 date: "2026-08-16"
-updatedDate: null
+updatedDate: "2026-10-02"
 category: "Product"
 tags: ["experimentation", "ab-testing", "product-management", "architecture", "statistics"]
-readingTime: "7 min read"
+related: ["metrics-that-matter-for-pms", "privacy-contract-regression-suite"]
 excerpt: "Experimentation is the PM's scientific instrument — and the tooling most teams outsource. What I learned building ExperimentHub: assignment as a pure function, ingestion that can't slow the product, and statistics that respect peeking."
+seoTitle: "Designing a Self-Hosted A/B Testing Platform"
+metaDescription: "Lessons from building ExperimentHub: assignment as a pure function, ingestion that cannot slow the product, and statistics that hold up when people peek."
 socialImage: null
 ---
 
@@ -14,7 +16,7 @@ socialImage: null
 
 Optimizely and LaunchDarkly are excellent products. But they carry two structural costs that some teams simply cannot pay: your users' behavioural data leaves your infrastructure, and every assignment decision depends on an external network call.
 
-For a privacy-sensitive team — or anyone whose compliance posture forbids shipping user behaviour to a third party — that's not a pricing discussion, it's a disqualifier. That gap is why I built [ExperimentHub](/projects/experiment-hub): a self-hosted, multi-tenant experimentation platform. Building it taught me more about experimentation than running a hundred tests ever did, because every convenience a vendor hides became a decision I had to make explicitly.
+For a privacy-sensitive team — or anyone whose compliance posture forbids shipping user behaviour to a third party — that's not a pricing discussion, it's a disqualifier. That gap is why I built [ExperimentHub](/projects/experiment-hub): a self-hosted, multi-tenant experimentation platform. Building it taught me a lot about experimentation, because every convenience a vendor hides became a decision I had to make explicitly.
 
 Three of those decisions are worth writing down.
 
@@ -22,9 +24,9 @@ Three of those decisions are worth writing down.
 
 The core promise of an A/B test is that the same user always sees the same variant. Most platforms deliver that promise with a database: look up the user, store the assignment, return it forever after.
 
-ExperimentHub instead makes assignment a *pure function*: MurmurHash3 over `"{experiment_key}:{user_id}"`, mapped into a 10,000-slot basis-points bucket space, with variants owning cumulative ranges. Same inputs, same variant, forever — no lookup, no network call, no stored state.
+ExperimentHub instead makes assignment a *pure function*: MurmurHash3 over the string `{experiment_key}:{user_id}`, mapped into a 10,000-slot basis-points bucket space, with variants owning cumulative ranges. Same inputs, same variant, forever — no lookup, no network call, no stored state.
 
-The interesting part isn't the speed (though a 182-line Rust core makes it effectively free). It's that determinism becomes a **contract**. Any SDK, in any language, can re-implement the bucket math and verify it against golden vectors. The platform can't disagree with the client, because there's nothing to disagree about — they're computing the same function.
+The interesting part isn't the speed (though a Rust core of 122 lines of library source makes it effectively free; that count was updated on 30 Sep 2026, after this post first went up). It's that determinism becomes a **contract**. Any SDK, in any language, can re-implement the bucket math and verify it against golden vectors. The platform can't disagree with the client, because there's nothing to disagree about — they're computing the same function.
 
 The PM lesson underneath: when a guarantee matters, prefer designs where the guarantee is *structural* over designs where it's *operational*. A stored assignment can be lost, corrupted, or slow. A hash can't.
 
@@ -50,4 +52,4 @@ Scope honesty matters more on platforms than on features, because platform gaps 
 
 If you're evaluating experimentation tooling — buying or building — the questions that mattered most in the building were: Where does assignment happen, and can it drift? Can measurement load ever touch product latency? And what does the tool do when a human peeks?
 
-Those three answers tell you more than any feature matrix.
+Those three answers tell you more than any feature matrix. For choosing the metrics an experiment should move, and the guardrail it must not break, see [The Three Metrics That Actually Matter for PMs](/blog/metrics-that-matter-for-pms).

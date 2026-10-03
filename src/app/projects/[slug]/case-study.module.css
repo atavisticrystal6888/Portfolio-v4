@@ -55,6 +55,17 @@
   scroll-margin-top: calc(var(--nav-height) + var(--space-6));
 }
 
+/* Headings take focus after a chapter jump; the jump itself is the cue, so
+   no ring on a heading reached by script, but a keyboard ring stays. */
+.article h2:focus {
+  outline: none;
+}
+
+.article h2:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+}
+
 @media (min-width: 1200px) {
   .body {
     display: grid;

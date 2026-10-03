@@ -1,12 +1,13 @@
 import type { Metadata } from "next";
+import dhruvImage from "@/assets/Dhruv_Image.jpg";
 import {
+  ABOUT_PATH,
   absoluteUrl,
   CONTACT_EMAIL,
   CONTACT_PHONE,
   GITHUB_URL,
-  HEADSHOT_PATH,
   LINKEDIN_URL,
-  PERSON_TITLE,
+  PERSON_DESCRIPTION,
   SITE_DESCRIPTION,
   SITE_NAME,
   SITE_TITLE,
@@ -14,6 +15,24 @@ import {
 } from "@/lib/site";
 
 const DEFAULT_DESCRIPTION = SITE_DESCRIPTION;
+
+/**
+ * One stable identifier for the person, so the site-wide Person block and the
+ * `author` of every article resolve to the same entity.
+ */
+export const PERSON_ID = `${SITE_URL}/#person`;
+
+/**
+ * Absolute URL of a raster portrait for schema.org `image`. Next's static
+ * import yields `{ src }` (a hashed /_next/static/media URL); Vite (unit
+ * tests) yields the URL string itself. The SVG monogram is not used here:
+ * rich-result images should be raster.
+ */
+const dhruvImageSrc: string =
+  typeof (dhruvImage as unknown) === "string"
+    ? (dhruvImage as unknown as string)
+    : dhruvImage.src;
+export const PERSON_IMAGE_URL = absoluteUrl(dhruvImageSrc);
 
 interface PageMetadataOptions {
   title: string;
@@ -25,8 +44,26 @@ interface PageMetadataOptions {
   category?: string;
   article?: {
     publishedTime?: string;
+    /** Optional: emitted as `article:modified_time` when provided. */
+    modifiedTime?: string;
     author?: string;
   };
+}
+
+/**
+ * Normalises a frontmatter / JSON date to `YYYY-MM-DD` (or the string as
+ * authored). gray-matter turns an unquoted YAML date into a `Date`, a quoted
+ * one stays a string, and `null` / empty means "no date": callers must then
+ * omit the field rather than invent one.
+ */
+export function contentDate(value: unknown): string | undefined {
+  if (value instanceof Date) {
+    return Number.isNaN(value.getTime()) ? undefined : value.toISOString().slice(0, 10);
+  }
+  if (typeof value === "string" && value.trim() !== "") {
+    return value.trim();
+  }
+  return undefined;
 }
 
 /**
@@ -100,7 +137,11 @@ export function generatePageMetadata({
       images: [{ url: absoluteUrl(ogImage), width: 1200, height: 630, alt: socialTitle }],
       ...(article && {
         publishedTime: article.publishedTime,
-        authors: article.author ? [article.author] : undefined,
+        ...(article.modifiedTime ? { modifiedTime: article.modifiedTime } : {}),
+        // OG `article:author` expects a profile URL, not a display name.
+        authors: article.author
+          ? [article.author === SITE_NAME ? absoluteUrl(ABOUT_PATH) : article.author]
+          : undefined,
       }),
     },
     twitter: {
@@ -112,15 +153,32 @@ export function generatePageMetadata({
   };
 }
 
+/**
+ * The person as an article/page author: name, profile page and the profiles
+ * that confirm the identity. No `jobTitle` and no `worksFor`: both would be
+ * undated present-tense claims (owner decision, 3 Oct 2026).
+ */
+export function generateAuthorPerson() {
+  return {
+    "@type": "Person" as const,
+    "@id": PERSON_ID,
+    name: SITE_NAME,
+    url: absoluteUrl(ABOUT_PATH),
+    image: PERSON_IMAGE_URL,
+    sameAs: [LINKEDIN_URL, GITHUB_URL],
+  };
+}
+
 export function generatePersonJsonLd() {
   return {
     "@context": "https://schema.org",
     "@type": "Person",
+    "@id": PERSON_ID,
     name: SITE_NAME,
-    jobTitle: PERSON_TITLE,
     url: SITE_URL,
-    image: absoluteUrl(HEADSHOT_PATH),
-    description: SITE_DESCRIPTION,
+    mainEntityOfPage: absoluteUrl(ABOUT_PATH),
+    image: PERSON_IMAGE_URL,
+    description: PERSON_DESCRIPTION,
     email: CONTACT_EMAIL,
     telephone: CONTACT_PHONE,
     alumniOf: {
@@ -142,6 +200,7 @@ export function generateWebSiteJsonLd() {
     inLanguage: "en-US",
     publisher: {
       "@type": "Person",
+      "@id": PERSON_ID,
       name: SITE_NAME,
       url: SITE_URL,
     },
@@ -163,34 +222,41 @@ export function generateBreadcrumbJsonLd(
   };
 }
 
+/**
+ * BlogPosting (a schema.org Article subtype) for a post. `dateModified` is
+ * optional: pass the post's `updatedDate`; without one, or with one earlier
+ * than publication, it falls back to `datePublished` so it is never earlier.
+ */
 export function generateArticleJsonLd(article: {
   title: string;
   description: string;
   datePublished: string;
-  dateModified?: string;
+  dateModified?: string | null;
   url: string;
   image?: string;
 }) {
+  const modified = contentDate(article.dateModified);
+  const dateModified =
+    modified && modified >= article.datePublished ? modified : article.datePublished;
+
   return {
     "@context": "https://schema.org",
-    "@type": "Article",
+    "@type": "BlogPosting",
     headline: article.title,
     description: article.description,
     datePublished: article.datePublished,
-    dateModified: article.dateModified || article.datePublished,
-    author: {
-      "@type": "Person",
-      name: SITE_NAME,
-      url: SITE_URL,
-    },
+    dateModified,
+    author: generateAuthorPerson(),
     publisher: {
       "@type": "Person",
+      "@id": PERSON_ID,
       name: SITE_NAME,
       url: SITE_URL,
-      image: absoluteUrl(HEADSHOT_PATH),
+      image: PERSON_IMAGE_URL,
     },
     mainEntityOfPage: absoluteUrl(article.url),
     url: absoluteUrl(article.url),
     image: absoluteUrl(article.image || `/og${article.url}`),
+    inLanguage: "en-US",
   };
 }

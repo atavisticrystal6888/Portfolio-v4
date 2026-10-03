@@ -68,6 +68,15 @@
 
 .logoText {
   display: inline-block;
+  white-space: nowrap;
+}
+
+/* At 320px the name wrapped onto two lines beside the two icon buttons. */
+@media (max-width: 360px) {
+  .logo {
+    font-size: 1.05rem;
+    gap: 8px;
+  }
 }
 
 /* Nav links */

@@ -159,7 +159,10 @@ export function ProductCarousel({
             aria-roledescription="slide"
             aria-label={`${i + 1} of ${count}`}
           >
-            <ProductCard project={project} priority={i === 0} />
+            {/* No priority: on home the LCP element is the hero h1 at every
+                width, so a high-priority carousel image would only compete
+                with the fonts and CSS (perf audit, LCP image hints). */}
+            <ProductCard project={project} />
           </div>
         ))}
         {/* Lets the last card snap to the start edge like every other. */}

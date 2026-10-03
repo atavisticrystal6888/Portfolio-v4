@@ -3,20 +3,16 @@
 import { useState } from "react";
 import styles from "./FAQAccordion.module.css";
 import { cn } from "@/lib/utils";
-import { CONTACT_EMAIL } from "@/lib/site";
+import { FAQ_ITEMS } from "./faq";
 
-interface FAQItem {
-  question: string;
-  answer: string;
-}
+export { FAQ_ITEMS } from "./faq";
 
-const FAQ_ITEMS: FAQItem[] = [
-  { question: "What roles are you looking for?", answer: "Product Manager, Associate Product Manager (APM), or e-commerce and AI product roles where I can blend domain context, analytics, and execution." },
-  { question: "Are you open to remote or relocation?", answer: "Yes to both. I'm based in India and open to remote roles or relocation for the right opportunity." },
-  { question: "What's the best way to reach you?", answer: `Email at ${CONTACT_EMAIL} or connect on LinkedIn. I typically respond within 24 hours.` },
-  { question: "Do you take freelance or consulting work?", answer: "Selectively, but I am primarily focused on full-time Product, APM, and AI product roles right now." },
-];
-
+/**
+ * Disclosure list, not a set of landmarks: the page's FAQ section is the one
+ * named region (labelled by its visible heading), each button owns its answer
+ * through aria-controls, and a collapsed answer is `hidden` so it leaves the
+ * accessibility tree instead of sitting there as an empty region.
+ */
 export function FAQAccordion() {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
@@ -25,10 +21,12 @@ export function FAQAccordion() {
   };
 
   return (
-    <div className={styles.accordion} role="region" aria-label="Frequently asked questions">
+    <div className={styles.accordion}>
       {FAQ_ITEMS.map((item, i) => (
         <div key={i} className={styles.item}>
           <button
+            type="button"
+            id={`faq-question-${i}`}
             className={styles.question}
             onClick={() => toggle(i)}
             aria-expanded={openIndex === i}
@@ -45,7 +43,7 @@ export function FAQAccordion() {
           <div
             id={`faq-answer-${i}`}
             className={cn(styles.answer, openIndex === i && styles.answerOpen)}
-            role="region"
+            hidden={openIndex !== i}
           >
             <p>{item.answer}</p>
           </div>

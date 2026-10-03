@@ -1,11 +1,11 @@
 ---
 slug: "cohorts-before-dashboards"
 title: "Cohorts Before Dashboards"
-date: "2026-08-31"
-updatedDate: null
+date: "2026-09-03"
+updatedDate: "2026-10-02"
 category: "Data"
 tags: ["data", "retention", "cohorts", "analytics", "product-management"]
-readingTime: "6 min read"
+related: ["choosing-a-product-without-ai", "metrics-that-matter-for-pms"]
 excerpt: "Two products can share a DAU line and have opposite futures. A retention curve cut by acquisition cohort tells you which one is actually compounding."
 socialImage: null
 ---
@@ -46,11 +46,11 @@ March flattens: eight points given up from M1 to M2, then only two more, settlin
 
 **Cohort over cohort.** Read down a column, not across a row. Is M1 improving from March to May? If the product work is landing, later cohorts should retain better at the same age — and that comparison is only fair at the same age. A six-month-old cohort's M3 against a two-month-old cohort's M1 is not a comparison.
 
-## What Building the Tool Taught Me
+## What Starting the Build Taught Me
 
-I have spent the past few weeks on a side project called Cohort & Retention Studio. An orders CSV goes in; cohort retention curves, repeat rate, time to second order and LTV by first product come out, computed in the browser with nothing uploaded. There is no AI in it, deliberately: every number is arithmetic, which left nowhere to hide from the definitions.
+This week I started building [Cohort & Retention Studio](/projects/cohort-retention-studio) (chosen on 2 September; see [the selection post](/blog/choosing-a-product-without-ai)). An orders CSV goes in; cohort retention curves, repeat rate, time to second order and LTV by first product come out, computed in the browser with nothing uploaded. There is no AI in it, deliberately: every number is arithmetic, which left nowhere to hide from the definitions. (Update, 2 Oct 2026: the Studio is ready for a local pilot. It has no users yet, so everything below is about definitions, not usage.)
 
-Almost every hard decision was a definition rather than a calculation. A cohort is customers whose first valid order falls in a given month, which forces you to define a valid order: cancelled, fully refunded, duplicate-id and zero-value replacement orders are out by default, the last because leaving them in quietly inflates repeat rate. Same-day orders count separately, since split shipments are real orders, though that one is a toggle: reasonable people disagree. Month boundaries follow the store's timezone, not the browser's.
+Almost every hard decision in the first days was a definition rather than a calculation. A cohort is customers whose first valid order falls in a given month, which forces you to define a valid order: cancelled, fully refunded, duplicate-id and zero-value replacement orders are out by default, the last because leaving them in quietly inflates repeat rate. Same-day orders count separately, since split shipments are real orders, though that one is a toggle: reasonable people disagree. Month boundaries follow the store's timezone, not the browser's.
 
 The one I did not predict is censoring. If a cohort is only two months old, its month-three cell is not zero — it is unknown. Showing zero there is the most common way a hand-built cohort analysis lies to its owner, so those cells stay blank and cohorts under three months old are labelled immature. The same instinct put every definition one click from its number.
 

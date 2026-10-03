@@ -1,19 +1,24 @@
 /* Title block, not a stage: sized by its content, flat working-paper ground.
    The old 3D scene is unmounted (see docs/v5-design-notes.md). */
 .hero {
-  padding: calc(var(--nav-height) + var(--space-10)) var(--space-6) var(--space-10);
+  /* Tight enough that the CTAs and the guide line sit inside the first
+     screen at 1440x900 and 320x700 (asserted in tests/e2e/routes/home.spec.ts). */
+  padding: calc(var(--nav-height) + var(--space-7)) 0 var(--space-10);
 }
 
+/* Side padding lives inside the container, exactly as in home.module.css
+   .inner, so the hero's left edge matches every section below it. */
 .inner {
   max-width: var(--container-max);
   margin: 0 auto;
+  padding: 0 var(--space-6);
   width: 100%;
 }
 
 .titleBlock {
   display: flex;
   flex-direction: column;
-  gap: var(--space-5);
+  gap: var(--space-4);
 }
 
 .eyebrow {
@@ -27,12 +32,14 @@
 
 .thesis {
   font-family: var(--font-display);
-  font-size: var(--text-hero);
+  /* 32px at 320, 72px from ~1350px up. Smaller than --text-hero so the
+     thesis no longer pushes the CTAs below the fold. */
+  font-size: clamp(2rem, 1.1rem + 3.9vw, 4.5rem);
   font-weight: 600;
   letter-spacing: var(--tracking-tight);
-  line-height: 1.05;
+  line-height: 1.04;
   color: var(--text-strong);
-  max-width: 16ch;
+  max-width: 17ch;
   text-wrap: balance;
 }
 
@@ -58,7 +65,16 @@
   display: flex;
   gap: var(--space-4);
   flex-wrap: wrap;
-  margin-top: var(--space-3);
+  margin-top: var(--space-1);
+}
+
+/* One plain line under the CTAs: what every case study below contains. */
+.guide {
+  max-width: 60ch;
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+  line-height: var(--leading-body);
+  text-wrap: pretty;
 }
 
 /* Contents index: navigation set like a paper's table of contents. Hidden on
@@ -140,6 +156,24 @@
 
 @media (max-width: 767px) {
   .hero {
-    padding: calc(var(--nav-height) + var(--space-8)) var(--space-6) var(--space-9);
+    padding: calc(var(--nav-height) + var(--space-5)) 0 var(--space-9);
+  }
+
+  .titleBlock {
+    gap: var(--space-3);
+  }
+
+  .statement {
+    font-size: var(--text-base);
+  }
+}
+
+/* Narrowest phones: desktop WebKit (scrollbar included in the viewport)
+   wrapped the 32px thesis onto a seventh line at 320px and pushed the guide
+   line to 708px of a 700px screen. 28px keeps it at six lines with margin
+   (guide bottom about 600-620px on chromium, firefox and webkit). */
+@media (max-width: 359px) {
+  .thesis {
+    font-size: 1.75rem;
   }
 }

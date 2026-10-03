@@ -3,18 +3,44 @@ import path from "node:path";
 import { chromium } from "playwright";
 
 const rootDir = process.cwd();
-const sourcePath = path.join(
+const defaultSourcePath = path.join(
   rootDir,
   "content",
   "resume",
   "dhruv-singhal-product-canonical.md"
 );
-const outputPath = path.join(
+const defaultOutputPath = path.join(
   rootDir,
   "public",
   "resume",
   "dhruv-singhal-resume.pdf"
 );
+
+// Optional overrides: --in <markdown> --out <pdf> (also --in=<path>).
+// With no flags the canonical source and public PDF are used, so
+// `npm run resume:pdf` behaves exactly as before.
+function readFlag(argv, name) {
+  for (let index = 0; index < argv.length; index += 1) {
+    const arg = argv[index];
+    if (arg === `--${name}`) {
+      const value = argv[index + 1];
+      if (!value || value.startsWith("--")) {
+        throw new Error(`Missing value for --${name}`);
+      }
+      return value;
+    }
+    if (arg.startsWith(`--${name}=`)) {
+      return arg.slice(name.length + 3);
+    }
+  }
+  return undefined;
+}
+
+const cliArgs = process.argv.slice(2);
+const inArg = readFlag(cliArgs, "in");
+const outArg = readFlag(cliArgs, "out");
+const sourcePath = inArg ? path.resolve(rootDir, inArg) : defaultSourcePath;
+const outputPath = outArg ? path.resolve(rootDir, outArg) : defaultOutputPath;
 
 function escapeHtml(value) {
   return value
@@ -382,8 +408,12 @@ function buildHtml(markdown) {
 }
 
 async function main() {
-  const markdown = await fs.readFile(sourcePath, "utf8");
+  const rawMarkdown = await fs.readFile(sourcePath, "utf8");
+  // HTML comments (e.g. open-gate notes) are for editors, not the PDF.
+  const markdown = rawMarkdown.replace(/<!--[\s\S]*?-->\s*/g, "");
   const html = buildHtml(markdown);
+
+  await fs.mkdir(path.dirname(outputPath), { recursive: true });
 
   const browser = await chromium.launch();
   const page = await browser.newPage();

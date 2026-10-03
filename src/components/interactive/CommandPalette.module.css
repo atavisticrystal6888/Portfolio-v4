@@ -11,6 +11,7 @@
   align-items: flex-start;
   justify-content: center;
   padding-top: 15vh;
+  animation: paletteOverlayIn 0.15s ease-out;
 }
 
 .palette {
@@ -21,6 +22,27 @@
   border-radius: var(--radius-xl);
   box-shadow: var(--shadow-lg);
   overflow: hidden;
+  animation: paletteIn 0.2s ease-out;
+}
+
+/* Entrance only (was framer-motion). Opacity and transform run on the
+   compositor. No exit animation: closing unmounts the dialog at once, so it
+   never lingers in the accessibility tree or the tab order. */
+@keyframes paletteOverlayIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes paletteIn {
+  from { opacity: 0; transform: translateY(-20px) scale(0.98); }
+  to { opacity: 1; transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .overlay,
+  .palette {
+    animation: none;
+  }
 }
 
 .header {

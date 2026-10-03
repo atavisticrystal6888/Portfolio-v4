@@ -51,10 +51,11 @@
   color: var(--text-strong);
 }
 
+/* A solid ring: the old accent-glow box-shadow was nearly invisible in dark. */
 .modelOn:focus-visible,
 .modelOff:focus-visible {
-  outline: none;
-  box-shadow: 0 0 0 2px var(--accent-glow);
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
 }
 
 .modelName {
@@ -151,7 +152,7 @@
 }
 
 .caseRowFail {
-  border-left-color: #d97757;
+  border-left-color: var(--error);
 }
 
 .caseHead {
@@ -177,9 +178,13 @@
   color: var(--accent);
 }
 
+/* --error on the card surface: 2.67:1 with the old #d97757 on its own tint
+   (axe serious once v1, which has FAIL rows, became the default). The
+   outline keeps the chip shape without a tint that would lower contrast. */
 .badgeFail {
-  background: rgba(217, 119, 87, 0.12);
-  color: #d97757;
+  background: transparent;
+  box-shadow: inset 0 0 0 1px var(--error);
+  color: var(--error);
 }
 
 .caseInput {

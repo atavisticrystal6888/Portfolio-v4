@@ -12,7 +12,10 @@
   letter-spacing: var(--tracking-label);
   border-radius: var(--radius-editorial);
   line-height: 1.5;
-  white-space: nowrap;
+  /* Long labels wrap instead of clipping at 320px. */
+  white-space: normal;
+  max-width: 100%;
+  overflow-wrap: anywhere;
 }
 
 .default {

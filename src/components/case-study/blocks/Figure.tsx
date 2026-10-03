@@ -10,11 +10,14 @@ export interface FigureProps {
   size?: "wide" | "full" | "inline";
   /** Poster frame for .webm/.mp4 sources. */
   poster?: string;
+  /** Optional intrinsic size override; otherwise read from the file in public/. */
+  width?: number;
+  height?: number;
 }
 
 const VIDEO_RE = /\.(webm|mp4)(\?.*)?$/i;
 
-export function Figure({ src, alt, caption, size = "inline", poster }: FigureProps) {
+export function Figure({ src, alt, caption, size = "inline", poster, width, height }: FigureProps) {
   const isVideo = VIDEO_RE.test(src);
   return (
     <figure className={styles.figure} data-size={size}>
@@ -22,7 +25,14 @@ export function Figure({ src, alt, caption, size = "inline", poster }: FigurePro
         {isVideo ? (
           <MotionVideo src={src} poster={poster} label={alt} className={styles.media} />
         ) : (
-          <ZoomImage src={src} alt={alt} caption={caption} className={styles.media} />
+          <ZoomImage
+            src={src}
+            alt={alt}
+            caption={caption}
+            className={styles.media}
+            width={width}
+            height={height}
+          />
         )}
       </div>
       {caption && <figcaption className={styles.caption}>{caption}</figcaption>}

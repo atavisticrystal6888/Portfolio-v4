@@ -1,0 +1,141 @@
+---
+slug: "sawari"
+title: "Sawari"
+subtitle: "Rider-to-rider auto-rickshaw sharing for Mumbai and Bangalore: one rider offers the auto they booked, others whose pickup and drop lie along the route join, and the fare is split by the kilometres each rider shared. Solo side project, locally built, not deployed."
+role: "Solo builder · product and engineering"
+duration: "2 Sep 2026 to 10 Sep 2026 (last commit)"
+stack: ["Elixir", "Phoenix LiveView", "Ash Framework", "Postgres + PostGIS", "Oban", "MapLibre GL JS", "DaisyUI"]
+tldr: "A commuter looking at an auto-rickshaw ride needs three answers at once: is there an auto along my route soon, can I trust the person whose auto it is, and will the fare be split fairly if someone does not turn up. Sawari answers them with post-and-join matching, owner approval of every joiner, free trust signals and a kilometre-weighted fare split. It is locally built, not deployed: it has never run anywhere but localhost, and it has no users."
+myPart: "All of it, as a solo side project: the product decisions, the matching, trust and fare rules, and the build, done with AI coding agents working under my direction. The two latest product rulings, the 50 km ride cap and the iOS install hint, were mine."
+metrics:
+  - label: "Tests passing, 9 Sep 2026 (33 doctests, 4 properties, 860 tests)"
+    value: 897
+    displayValue: "897"
+    chartType: "bar"
+    kind: "build"
+prevSlug: "cohort-retention-studio"
+nextSlug: "experiment-hub"
+heroNote: "No screenshot: Sawari has never been deployed, and no capture from a local run has been published yet."
+seoTitle: "Sawari — Shared Auto-Rickshaw Rides"
+metaDescription: "Sawari is rider-to-rider auto-rickshaw sharing with owner approval of joiners and a kilometre-weighted fare split. Locally built, not deployed, and no users."
+alternative: "a two-sided marketplace with a driver app and live GPS."
+tradeoff: "no hopping onto a moving auto; matches come only from rides already posted."
+---
+
+## Problem
+
+Sawari is a rider-to-rider auto-rickshaw sharing app. One rider books an auto through any aggregator or off the street. Other riders whose pickup and drop lie along that route join the same auto, and the fare is split by the kilometres each rider actually shared. The driver never touches the app.
+
+The v2 plan frames the job as three questions a commuter should be able to answer in one glance: is there an auto along my route in the next hour, can I trust the person whose auto it is and what should I do next, and will the fare be split fairly if someone does not turn up. Matching, trust and fare fairness are the product; everything else supports them.
+
+I did not run user research for this build. No interviews or surveys are recorded in the repo; the framing comes from the design spec and the v2 plan.
+
+## Users
+
+The intended users are commuters in Mumbai and Bangalore, in two roles. The **owner** books the auto, posts the ride and approves every joiner. The **co-rider** finds a ride along their route, requests a seat and settles their share with the owner. Drivers are deliberately not users.
+
+There are no real users. The latest handover says Sawari has never run anywhere but localhost, and there is no environment an alpha tester could open. Everything below describes built behaviour, not observed use.
+
+## Decision
+
+<Decision>
+
+The most consequential call is at the top of the design spec: **"Riders only. Driver is out of the loop"** and **"Post-and-join in v1. Live hop-on later. Owner approves each joiner."** The recorded reason is that post-and-join needs no live location, so it can ship on a PWA.
+
+</Decision>
+
+That removed a two-sided marketplace and live GPS in one move. The owner already books the auto, so the app only has to coordinate riders. Owner approval puts a person, not an algorithm, on the trust decision, and a seat is row-locked so it is never given to two riders. [Hackmate](/projects/hackmate), an earlier matching product, made a similar call: legible matching inputs over an opaque score.
+
+The cost is speed and reach. A rider cannot hop on a moving auto, and matching is limited to rides someone has already posted. Seek commutes narrow that gap: a standing wish for a seat is matched the moment a ride is posted, with a push to each matched rider.
+
+## Trade-offs
+
+The repo records these choices across matching, trust, fare fairness, verification, cancellation and disputes.
+
+<Options>
+  <Option name="Two-sided marketplace with a driver app" status="rejected" why="Post-and-join needs no live location, so it can ship as a PWA; the owner already books the auto." />
+  <Option name="Corridor match: joiner's stops within 500 m of the route, in route order" status="chosen" why="One stored route geometry, no re-routing cost per request." />
+  <Option name="Detour matching and re-routing on approve" status="rejected" why="Dropped for v2: it changes approved riders' shares, costs routing quota, and the 500 m corridor is fixed." />
+  <Option name="Live hop-on and owner live location" status="deferred" why="iOS PWA suspends geolocation on screen lock." />
+  <Option name="Segment-sharing split weighted by seats, with a per-ride equal toggle" status="chosen" why="Fair for intermediate stops; equal split is the cheap escape hatch." />
+  <Option name="Money through Sawari" status="rejected" why="No money moves: a UPI intent on the rider's own phone plus a paid and confirmed handshake." />
+  <Option name="Phone OTP verification" status="deferred" why="SMS costs money on a free stack; phone shows as added, never verified." />
+  <Option name="Free, schema-derived trust signals" status="chosen" why="Rating, rides completed, rode-together count, no-show and late-cancel warnings; never render an email or a zero." />
+  <Option name="Meter photo for fare disputes" status="rejected" why="Dropped for v2: photos would be stored as bytea in a 0.5 GB free Neon database." />
+  <Option name="Boarding PIN" status="rejected" why="Dropped in the v2 plan; the docs do not record a reason." />
+</Options>
+
+**Fare fairness.** The split has invariants checked by property tests: shares sum to the total, no share is negative, a rider on a superset of legs never pays less than one on a subset, and equal mode gives equal per-seat amounts. Money is integer paise, so there are no floats in fare maths. The v2 plan also fixed a fairness bug where the split billed riders who never showed: the owner now marks each joiner rode or no-show, and only riders who rode are counted.
+
+**Cancellation.** Cancel reasons are a fixed list (auto not available, plans changed, running late, other, lapsed). Cancels and leaves inside 30 minutes of the window are flagged late and feed the trust chip.
+
+**Disputes.** A rider marked no-show is told they can dispute through Report, and the report reasons include a fare dispute. How a dispute is resolved is not decided yet.
+
+**Two late rulings.** I raised the ride cap from 25 km to 50 km of routed distance, because 25 km refused an everyday commute like Colaba to Powai while 50 km still refuses intercity runs. I chose an iOS install hint over an email notification leg, accepting that an iOS rider who dismisses the hint gets in-app notifications only.
+
+## What shipped
+
+In the order a rider meets it:
+
+**Profile gate.** A display name and phone are required before the first offer, join request or commute, not at registration.
+
+**Offer and find.** The owner picks places, previews the route on a map, sets a time window and seats. A co-rider's search returns open rides covering both stops in route order, with walk minutes, ride kilometres and an estimated share.
+
+**Join.** The co-rider requests, the owner approves or declines, and a waiting panel shows the request state. Every rider name carries a trust chip.
+
+**The ride.** A ride room shows the lifecycle, one "what to do now" sentence per role and state, and live updates. Riders can say they are at the pickup or running late. A safety sheet links to the emergency contact and 112, and a revocable share link shows the trip to someone outside the app.
+
+**Fares and settlement.** Per-city rate cards give an estimate, or the owner enters the aggregator amount. The split excludes no-shows, and settlement is a UPI link plus "I've paid" and "Mark paid".
+
+**Commutes and notifications.** Repeat rides spawn nightly; seek commutes match within 20 minutes either side, with fan-out capped at 50 and no push between 22:00 and 06:30.
+
+<UnderTheHood title="Architecture and implementation">
+
+### Structure
+
+Ash domains for Accounts, Geo, Rides, Fares and Notifications, with boundaries enforced at compile time by the Boundary library. Every ride or membership change writes a `RideEvent` in the same transaction and broadcasts after commit. Oban workers lock rides, lapse them, spawn commutes, match seekers and send reminders.
+
+### Fare computation
+
+<Artifact title="Segment-mode split, from the design spec">
+
+```text
+legs     = consecutive stop pairs, sorted by distance along the route
+present  = riders whose pickup is at or before the leg start
+           and whose drop is at or after the leg end
+leg cost = (total + extras) * leg length / route length
+share    = leg cost * rider seats / seats present on that leg
+remainder after rounding to whole paise goes to the owner
+```
+
+</Artifact>
+
+Geo and push providers sit behind behaviours with fakes, so tests never hit the network.
+
+</UnderTheHood>
+
+## Validation
+
+Validation is tests and local runs only. The last recorded gate, on 9 Sep 2026, reads `897 passed (33 doctests, 4 properties, 860 tests)` across 93 test files, with `credo --strict` clean, no compiler warnings and the Ash codegen check passing.
+
+One process lesson came from that session. Parallel lanes were told to verify each queued finding from the code before implementing it, and four of the seven queued items had premises that did not survive that check.
+
+The limits are plain. The manual test script has never been hand-run; the click-through that passed was automated. No tester, rider or owner has used the app.
+
+## Limits and next
+
+**Status: locally built, not deployed.** Render plus Neon is the planned free hosting and `render.yaml` exists, but nothing is deployed. The alpha gate is mostly deployment work:
+
+- Deploy on Render and Neon, with production push keys and host set. Nothing exists yet.
+- Verify a Brevo mail sender. Without it, sign-up succeeds but confirmation, magic-link and reset mails silently never arrive.
+- Add Google OAuth credentials.
+- Check the seeded 2026-09-01 tariffs against current Mumbai and Bangalore transport authority notices, because the app quotes real money.
+- Confirm the trusted-proxy setting on first real traffic, so rate limits are not shared by every visitor.
+- Decide on error tracking; there is none today.
+- Hand-run the manual test script after rewriting its obsolete ride-cap step.
+
+Free Render services sleep after 15 minutes idle, and scheduled jobs only fire while awake, so the runbook calls for an external uptime pinger. Dispute resolution is not decided yet, and there is no licence file.
+
+## Credits
+
+Solo side project. All 54 commits are mine. I built it with AI coding agents, one planning and verifying and one coding, with parallel lanes on disjoint files and a gate per wave, as recorded in the repo's handover docs. Maps and routing use open data services: Photon by komoot, OpenRouteService, OSRM and OpenFreeMap. The repo is not linked here.

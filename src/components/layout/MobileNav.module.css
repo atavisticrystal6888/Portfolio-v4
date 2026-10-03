@@ -6,6 +6,7 @@
   bottom: 0;
   z-index: var(--z-overlay);
   background: var(--bg);
+  animation: drawerOverlayIn 0.2s ease-out;
 }
 
 .nav {
@@ -15,6 +16,39 @@
   padding: var(--space-7) var(--space-6);
   height: 100%;
   overflow-y: auto;
+  animation: drawerSlideIn 0.3s ease-in-out;
+}
+
+/* Staggered link entrance; --i is set inline per item. `backwards` keeps
+   each link at its start state during its delay. */
+.item {
+  animation: drawerItemIn 0.2s ease-out backwards;
+  animation-delay: calc(var(--i, 0) * 50ms);
+}
+
+/* Entrance only (was framer-motion); opacity/transform are compositor-only.
+   No exit animation: closing unmounts the drawer at once. */
+@keyframes drawerOverlayIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes drawerSlideIn {
+  from { transform: translateX(100%); }
+  to { transform: none; }
+}
+
+@keyframes drawerItemIn {
+  from { opacity: 0; transform: translateX(20px); }
+  to { opacity: 1; transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .overlay,
+  .nav,
+  .item {
+    animation: none;
+  }
 }
 
 .link {

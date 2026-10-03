@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import { preload } from "react-dom";
 import "./globals.css";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
@@ -8,7 +9,6 @@ import { ToastProvider } from "@/components/ui/Toast";
 import { SkipLink } from "@/components/ui/SkipLink";
 import { ScrollProgress } from "@/components/ui/ScrollProgress";
 import { JsonLd } from "@/components/ui/JsonLd";
-import { MotionPrefs } from "@/components/ui/MotionPrefs";
 import { generatePersonJsonLd } from "@/lib/metadata";
 import { absoluteUrl, SITE_DESCRIPTION, SITE_NAME, SITE_TITLE, SITE_URL } from "@/lib/site";
 import { Analytics } from "@vercel/analytics/react";
@@ -98,11 +98,27 @@ export const viewport: Viewport = {
 
 const personJsonLd = generatePersonJsonLd();
 
+// The three self-hosted faces in src/styles/base.css are all used above the
+// fold on every route (Manrope body copy, Fraunces h1, JetBrains Mono eyebrow
+// / badge / tag labels), so all three are preloaded, once each. React dedupes
+// preload() by href and emits a single <link rel="preload"> at the top of
+// <head>. Keep the hrefs in sync with the @font-face src URLs or the preload
+// is wasted (and Chrome warns that it went unused).
+const FONT_PRELOADS = [
+  "/fonts/manrope-variable.woff2",
+  "/fonts/fraunces-variable.woff2",
+  "/fonts/jetbrains-mono-latin.woff2",
+];
+
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  for (const href of FONT_PRELOADS) {
+    preload(href, { as: "font", type: "font/woff2", crossOrigin: "anonymous" });
+  }
+
   return (
     <html
       lang="en"
@@ -112,20 +128,9 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <head>
-        <link
-          rel="preload"
-          href="/fonts/manrope-variable.woff2"
-          as="font"
-          type="font/woff2"
-          crossOrigin="anonymous"
-        />
-        <link
-          rel="preload"
-          href="/fonts/fraunces-variable.woff2"
-          as="font"
-          type="font/woff2"
-          crossOrigin="anonymous"
-        />
+        {/* Font preloads come from the preload() calls above, not <link>
+            tags: React 19 hoisted the old JSX tags AND kept them in place,
+            so every page shipped each font preload twice. */}
         <link
           rel="alternate"
           type="application/rss+xml"
@@ -146,21 +151,22 @@ export default function RootLayout({
         <JsonLd id="site-person-jsonld" data={personJsonLd} />
       </head>
       <body>
-        <MotionPrefs>
-          <ToastProvider>
-            <SkipLink />
-            <ScrollProgress />
-            <AnimatedGradient />
-            <Navbar />
-            {/* tabIndex -1 so the skip link actually moves focus here, not just
-                the scroll position. */}
-            <main id="main-content" tabIndex={-1}>
-              {children}
-            </main>
-            <Footer />
-            <CommandPalette />
-          </ToastProvider>
-        </MotionPrefs>
+        {/* No MotionConfig wrapper any more: the drawer and the palette
+            animate with CSS, which the reduced-motion media queries already
+            cover, so framer-motion is out of the shared bundle. */}
+        <ToastProvider>
+          <SkipLink />
+          <ScrollProgress />
+          <AnimatedGradient />
+          <Navbar />
+          {/* tabIndex -1 so the skip link actually moves focus here, not just
+              the scroll position. */}
+          <main id="main-content" tabIndex={-1}>
+            {children}
+          </main>
+          <Footer />
+          <CommandPalette />
+        </ToastProvider>
         {process.env.VERCEL && <Analytics />}
         {process.env.VERCEL && <SpeedInsights />}
       </body>

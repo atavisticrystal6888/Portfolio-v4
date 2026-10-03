@@ -4,7 +4,7 @@ import { useEffect, useRef, useState, type MouseEvent } from "react";
 import { cn, slugify } from "@/lib/utils";
 import styles from "./ChapterRail.module.css";
 
-interface Chapter {
+export interface Chapter {
   id: string;
   text: string;
 }
@@ -40,15 +40,110 @@ function collectChapters(): { chapters: Chapter[]; elements: HTMLElement[] } {
 }
 
 /**
- * Sticky chapter list beside the article on wide screens. It reads the h2s
- * out of the rendered article after mount (so it works whatever renders the
- * body), numbers them the way the home Contents index numbers its sections,
- * and follows the reader with an IntersectionObserver.
+ * Scrolls to a heading and moves focus onto it, so keyboard and screen-reader
+ * users land where sighted users do. The heading takes tabindex="-1" (focusable
+ * by script, not in the tab order); scroll-margin-top on the heading keeps it
+ * clear of the fixed nav.
  */
-export function ChapterRail({ className, label = "Chapters" }: ChapterRailProps) {
+export function jumpToHeading(id: string): boolean {
+  const target = document.getElementById(id);
+  if (!target) return false;
+  const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const behavior: ScrollBehavior = reduced ? "auto" : "smooth";
+  if (!target.hasAttribute("tabindex")) target.setAttribute("tabindex", "-1");
+  target.scrollIntoView({ behavior, block: "start" });
+  target.focus({ preventScroll: true });
+  window.history.replaceState(null, "", `#${id}`);
+  keepAligned(target, behavior);
+  return true;
+}
+
+/** Window after a jump in which late layout (images above loading) re-aligns. */
+const REALIGN_MS = 1500;
+let stopAligning: (() => void) | null = null;
+
+/**
+ * Images or embeds above the target can finish loading during the scroll and
+ * push the heading down, so the jump lands short. For a short window, re-align
+ * whenever the article resizes or an image loads. The window ends on any sign
+ * that someone else is scrolling: user input (wheel, touch, pointer, key), or
+ * the page moving away from where our own scroll settled (a scrollbar drag,
+ * find-in-page, browser scroll anchoring). So this never fights the reader.
+ */
+function keepAligned(target: HTMLElement, behavior: ScrollBehavior) {
+  stopAligning?.();
+  const container = target.closest("article") ?? document.body;
+  let frame = 0;
+  let settleTimer = 0;
+  let settled = false;
+  let settledY = window.scrollY;
+  let lastTop = target.getBoundingClientRect().top + window.scrollY;
+
+  const realign = () => {
+    cancelAnimationFrame(frame);
+    frame = requestAnimationFrame(() => {
+      const top = target.getBoundingClientRect().top + window.scrollY;
+      if (Math.abs(top - lastTop) < 1) return;
+      lastTop = top;
+      settled = false;
+      target.scrollIntoView({ behavior, block: "start" });
+      armSettle();
+    });
+  };
+
+  // Our scroll counts as settled once scroll events pause; after that, any
+  // movement is not ours.
+  const armSettle = () => {
+    clearTimeout(settleTimer);
+    settleTimer = window.setTimeout(() => {
+      settled = true;
+      settledY = window.scrollY;
+    }, 150);
+  };
+  const onScroll = () => {
+    if (settled && Math.abs(window.scrollY - settledY) > 2) {
+      stop();
+      return;
+    }
+    if (!settled) armSettle();
+  };
+
+  const resize = new ResizeObserver(realign);
+  resize.observe(container);
+  const onLoad = (event: Event) => {
+    if (event.target instanceof HTMLImageElement) realign();
+  };
+  document.addEventListener("load", onLoad, true);
+  window.addEventListener("scroll", onScroll, { passive: true });
+
+  const userEvents = ["wheel", "touchstart", "pointerdown", "keydown"] as const;
+  const stop = () => {
+    cancelAnimationFrame(frame);
+    clearTimeout(timer);
+    clearTimeout(settleTimer);
+    resize.disconnect();
+    document.removeEventListener("load", onLoad, true);
+    window.removeEventListener("scroll", onScroll);
+    userEvents.forEach((type) => window.removeEventListener(type, stop, true));
+    if (stopAligning === stop) stopAligning = null;
+  };
+  const timer = window.setTimeout(stop, REALIGN_MS);
+  userEvents.forEach((type) =>
+    window.addEventListener(type, stop, { capture: true, passive: true })
+  );
+  armSettle();
+  stopAligning = stop;
+}
+
+/**
+ * Reads the article's h2s after mount (assigning ids where missing, so every
+ * link has a target before any list renders) and tracks the chapter the
+ * reader is in. Shared by the wide-screen rail and the narrow-screen menu.
+ */
+export function useChapters() {
   const [chapters, setChapters] = useState<Chapter[]>([]);
   const [activeId, setActiveId] = useState("");
-  const railRef = useRef<HTMLElement>(null);
+  const [ready, setReady] = useState(false);
 
   useEffect(() => {
     let observer: IntersectionObserver | null = null;
@@ -72,6 +167,7 @@ export function ChapterRail({ className, label = "Chapters" }: ChapterRailProps)
     const run = () => {
       const { chapters: found, elements } = collectChapters();
       setChapters(found);
+      setReady(true);
       if (found.length > 0) {
         wire(elements);
         mutations?.disconnect();
@@ -100,6 +196,19 @@ export function ChapterRail({ className, label = "Chapters" }: ChapterRailProps)
       cancelAnimationFrame(frame);
     };
   }, []);
+
+  return { chapters, activeId, setActiveId, ready };
+}
+
+/**
+ * Sticky chapter list beside the article on wide screens. It reads the h2s
+ * out of the rendered article after mount (so it works whatever renders the
+ * body), numbers them the way the home Contents index numbers its sections,
+ * and follows the reader with an IntersectionObserver.
+ */
+export function ChapterRail({ className, label = "Chapters" }: ChapterRailProps) {
+  const { chapters, activeId, setActiveId } = useChapters();
+  const railRef = useRef<HTMLElement>(null);
 
   /*
    * Sticky fallback. If body ever becomes a scroll container again (any
@@ -153,12 +262,8 @@ export function ChapterRail({ className, label = "Chapters" }: ChapterRailProps)
   }, [chapters.length]);
 
   const handleClick = (event: MouseEvent<HTMLAnchorElement>, id: string) => {
-    const target = document.getElementById(id);
-    if (!target) return;
+    if (!jumpToHeading(id)) return;
     event.preventDefault();
-    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    target.scrollIntoView({ behavior: reduced ? "auto" : "smooth", block: "start" });
-    window.history.replaceState(null, "", `#${id}`);
     setActiveId(id);
   };
 

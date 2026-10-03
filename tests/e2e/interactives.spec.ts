@@ -20,19 +20,20 @@ test.describe("AI PM interactive demos", () => {
       const v1 = harness.getByRole("radio", { name: /v1.*vision-only/i });
       const v2 = harness.getByRole("radio", { name: /v2.*grounded/i });
 
-      // v2 (grounded) is the default; switching to v1 must not throw and
-      // must change the radio state.
-      await v1.click();
+      // v1 (the baseline) is the default, so the page never opens on a
+      // perfect 6/6; switching must not throw and must change the radio state.
       await expect(v1).toHaveAttribute("aria-checked", "true");
-      await expect(v2).toHaveAttribute("aria-checked", "false");
-
       await v2.click();
       await expect(v2).toHaveAttribute("aria-checked", "true");
+      await expect(v1).toHaveAttribute("aria-checked", "false");
+
+      await v1.click();
+      await expect(v1).toHaveAttribute("aria-checked", "true");
     });
 
     test("confidence slider updates the threshold label", async ({ page }) => {
       const harness = page.getByRole("region", { name: /eval harness demo/i });
-      const slider = harness.getByLabel(/minimum confidence threshold/i);
+      const slider = harness.getByRole("slider", { name: "Confidence gate" });
 
       await slider.focus();
       // Bump threshold to 100% - every case should fail at that gate.
@@ -52,7 +53,7 @@ test.describe("AI PM interactive demos", () => {
   test.describe("Cost model", () => {
     test("sliders move and stat tiles update", async ({ page }) => {
       const harness = page.getByRole("region", { name: /cost model demo/i });
-      const usersSlider = harness.getByLabel(/active monthly users/i);
+      const usersSlider = harness.getByRole("slider", { name: "Active users" });
 
       await usersSlider.focus();
       await page.keyboard.press("End"); // max users

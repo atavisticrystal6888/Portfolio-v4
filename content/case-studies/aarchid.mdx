@@ -1,161 +1,140 @@
 ---
 slug: "aarchid"
 title: "Aarchid — AI Botanical Intelligence"
-subtitle: "Forensic plant-health platform: multimodal vision diagnosis grounded by real-time, citation-backed LLM reasoning. Built as co-creator — PM + engineer."
+subtitle: "Plant-health diagnosis from one photo, with a source link on each recommendation. Co-built with Dilpreet Grover: I owned product scope, the eval set and the citation requirement."
 role: "Co-creator · Product + Engineering"
-duration: "Aug 2025 – present"
-stack: ["Gemini 1.5 Pro", "Exa AI API", "Next.js", "Cloudflare Workers", "Hono", "Supabase", "TypeScript"]
-tldr: "Plant owners had no personalized, real-time care guidance. Built with Dilpreet Grover (@dfordp), Aarchid diagnoses plant health from a single photo by combining Gemini 1.5 Pro vision with Exa AI API research-augmented reasoning — returning a health score, severity tier, and cited action plan in under 10s on the edge."
-myPart: "Product scope and spec, the 200-sample golden eval set and prompt iteration, and the citation-grounding requirement; platform engineering shared with Dilpreet Grover."
+duration: "Aug 2025 onward (site reachable when checked on 30 Sep 2026)"
+stack: ["Gemini 1.5 Pro", "Web-search API", "Next.js", "Cloudflare Workers", "Hono", "Supabase", "TypeScript"]
+tldr: "Plant owners had no care guidance they could check. Co-built with Dilpreet Grover (@dfordp), Aarchid diagnoses plant health from a single photo by combining Gemini 1.5 Pro vision with a call to a web-search API that attaches a source to each recommendation. The team ran an offline eval on a golden set; its result is withheld here until the eval artefact or the co-builder's confirmation is available, and field accuracy is not measured."
+metaDescription: "Aarchid, co-built with Dilpreet Grover, diagnoses plant health from one photo with a source per tip. Offline eval result withheld; field accuracy unmeasured."
+alternative: "care calendars and prompt tuning by feel."
+tradeoff: "a parallel web-search call on every diagnosis, inside a 10 s P95 target."
+myPart: "Product scope and spec, the golden eval set (about 200 samples, as reported by the team) and prompt iteration, and the citation-grounding requirement; platform engineering shared with Dilpreet Grover."
 coCreators:
   - name: "Dilpreet Grover"
     role: "Engineering"
     url: "https://github.com/dfordp"
     handle: "@dfordp"
-metrics:
-  - label: "Diagnosis Accuracy"
-    value: 92
-    displayValue: "92%"
-    chartType: "bar"
-    kind: "product"
-  - label: "Cited Recommendations"
-    value: 90
-    displayValue: "90%"
-    chartType: "bar"
-    kind: "product"
-  - label: "P95 Latency (edge)"
-    value: 85
-    displayValue: "<10s"
-    chartType: "bar"
-    kind: "product"
-  - label: "Infra Cost / User / Mo"
-    value: 80
-    displayValue: "$0.25"
-    chartType: "bar"
-    kind: "product"
+metrics: []
 prevSlug: "portfolio-site"
-nextSlug: "hackmate"
+nextSlug: "desktasks"
 ---
 
-## Who it's for, and why
+## Problem
 
-Aarchid is for plant enthusiasts and collectors, the people who own enough plants that one dying quietly in a corner is a real loss. Their job is to catch a problem early and know what to do about it.
+Plant owners who lose a plant usually lose it slowly: a symptom shows on a leaf, nobody knows what it means, and by the time a care calendar says anything it is too late. The apps in this space lean on static care calendars and species lookups. In our informal comparison, none connected what the leaf looks like with the conditions that produced it, and none gave a source you could check.
 
-The apps they already use, Planta, PictureThis and Greg, lean on static care calendars and species lookups. None correlate what the leaf in front of you looks like with the environmental history that produced it, and none cite a source you could check.
+The gap: a diagnosis that looks at your plant, factors in your local conditions, and recommends an action with a source attached, not a template.
 
-The gap: a forensic, auditable diagnosis that looks at your plant, factors in your local conditions, and recommends an action grounded in botanical research, not a template.
+## Users
 
-Aarchid is a two-person side project built with Dilpreet Grover (@dfordp). I owned product scope, the golden eval set and the citation-grounding requirement; platform engineering was shared.
+Plant enthusiasts and collectors, the people who own enough plants that one dying quietly in a corner is a real loss. Their job is to catch a problem early and know what to do about it.
 
-> Source: aarchid-rework (no longer public — it holds the Workers orchestrator and the eval harness described below) · [aarchid-api](https://github.com/dfordp/aarchid-api) (the public data-layer API only; it does not contain the diagnosis pipeline) · live at [aarchid.space](https://www.aarchid.space/).
+What we heard came from informal conversations with plant owners (self-reported, not a study) and a side-by-side look at popular care apps. Three things changed the plan:
 
-## What I learned before building
-
-I interviewed 10+ plant enthusiasts about failure modes and where they had stopped trusting an app, and benchmarked the top 4 apps on diagnostic specificity, citation quality and edge-case handling. Three things changed the plan:
-
-- **The trust gap is a sourcing gap.** Users could not check why an app said what it said, so every recommendation read as a guess.
+- **The trust gap is a sourcing gap.** People could not check why an app said what it said, so every recommendation read as a guess.
 - **Diagnosis has to be visual and local.** A species lookup answers "what is this plant". The real question was "what is wrong with this one, here".
-- **Citations are the differentiator.** None of the benchmarked apps cite sources.
+- **Citations are the differentiator.** None of the apps we compared showed a source.
 
-## The bets, and what we cut
+## Decision
+
+<Decision>
+
+Make a source link on every recommendation a hard requirement, and measure prompt changes against a fixed golden set instead of by feel. Everything else (a stateless edge orchestrator, a cost ceiling, a latency budget) was chosen to make those two rules cheap to keep.
+
+</Decision>
+
+The call that made the eval loop possible was keeping the orchestrator stateless, with persistence in Supabase (history, growth tracking) and R2 (images). The Worker is cheap to re-run and trivial to version, and the eval harness can replay any stored photo against a new model without touching user data.
+
+## Trade-offs
 
 Three constraints were fixed before the first line of code.
 
-- **Latency.** A diagnosis that arrives after the user has closed the app is worthless. P95 under 10 s end to end, photo upload included.
+- **Latency.** A diagnosis that arrives after the user has closed the app is worthless. Target: P95 under 10 s end to end, photo upload included.
 - **Cost ceiling.** A two-person side project cannot carry idle server bills. Fixed infrastructure in single-digit dollars a month, per-user cost in cents.
-- **Auditability.** An AI that prescribes treatment for a living thing has to show its sources. Every recommendation needed a citation a user could follow, not a confident guess.
+- **Auditability.** An AI that prescribes treatment for a living thing has to show its sources.
 
 <Options>
-  <Option name="Generic care calendar and species lookup" status="rejected" why="Planta, PictureThis and Greg already do this; it never connects symptoms to environmental history." />
-  <Option name="A citation on every recommendation, via Exa AI API" status="chosen" why="Users can audit why the app recommended neem oil for that spider-mite presentation." />
-  <Option name="Cloudflare Workers (Hono) as orchestrator" status="chosen" why="No cold starts, under 50 ms overhead, global by default, fixed infra under $5 a month." />
+  <Option name="Generic care calendar and species lookup" status="rejected" why="Existing apps already do this; it never connects symptoms to environmental history." />
+  <Option name="A source link on every recommendation, via a web-search API" status="chosen" why="Users can check why the app recommended a treatment for that symptom." />
+  <Option name="Cloudflare Workers (Hono) as orchestrator" status="chosen" why="No cold starts, global by default, fixed infra in single-digit dollars a month." />
   <Option name="Traditional monolith backend" status="rejected" why="Idle server bills a two-person side project cannot carry." />
-  <Option name="Golden eval set, 200 samples across 12 failure modes" status="chosen" why="Every model or prompt change reports an accuracy delta in minutes." />
+  <Option name="Golden eval set across 12 failure modes (about 200 samples, as reported by the team)" status="chosen" why="Every model or prompt change reports an accuracy delta in minutes." />
   <Option name="Prompt iteration by vibe check" status="rejected" why="No way to tell whether a change helped or hurt." />
   <Option name="User confirm-or-correct loop feeding the golden set" status="deferred" why="The harness exists; the human-in-the-loop pipe is the next PR." />
 </Options>
 
-## What we built
+## What shipped
 
 It starts with a photo.
 
-**Forensic Health Audit.** Gemini 1.5 Pro reads the photo for pests, deficiencies and stress. In parallel, the Exa AI API pulls peer-reviewed citations for the symptoms and species, and OpenWeather adds 7 days of local context. Back comes a health score from 1 to 100, a severity tier (Healthy, Warning or Critical) and an action plan with a citation on each recommendation.
+**Forensic Health Audit.** Gemini 1.5 Pro reads the photo for pests, deficiencies and stress. In parallel, a web-search call pulls source links for the symptoms and species, and OpenWeather adds 7 days of local context. Back comes a health score from 1 to 100, a severity tier (Healthy, Warning or Critical) and an action plan with a source on each recommendation.
 
-**Growth Velocity Tracking.** Over weeks of photo logs, pixel-based measurement tracks leaf expansion, stem elongation and internodal distance. Species-specific benchmarks turn that into a verdict: thriving, stagnating or declining.
+**Growth Velocity Tracking.** Over weeks of photo logs, pixel-based measurement tracks leaf expansion, stem elongation and internodal distance, and turns that into a verdict: thriving, stagnating or declining.
 
-**Pro-sumer Asset Management.** For collectors with 50+ plants, care actions can be batched by micro-climate zone. Exportable, timestamped Health Certificates give a plant verifiable provenance for peer-to-peer sales. This is the business wedge.
+**Pro-sumer Asset Management.** For collectors with many plants, care actions can be batched by micro-climate zone, and exportable Health Certificates give a plant a record for peer-to-peer sales. This is the business bet, not a proven one.
+
+The landing page at the top of this page positions Aarchid as a digital twin for plants and previews a diagnosis before sign-up.
 
 <Gallery>
-  <Shot src="/images/projects/aarchid/hero.png" alt="Aarchid landing page showing the digital twin positioning and AI plant health mockup." caption="The landing page positions Aarchid as a digital twin for plants and previews a diagnosis before sign-up." />
   <Shot src="/images/projects/aarchid/platform.png" alt="Aarchid platform section showing digital twin profile and feature cards." caption="The platform is an ongoing care system, not a one-off scan." />
-  <Shot src="/images/projects/aarchid/pricing.png" alt="Aarchid pricing and monetization section showing per-plant pricing and data value proposition." caption="Per-plant pricing, reminders and data value cues make the commercial thesis concrete." />
+  <Shot src="/images/projects/aarchid/pricing.png" alt="Aarchid pricing and monetization section showing per-plant pricing and data value proposition." caption="Per-plant pricing and reminders make the commercial thesis concrete. Willingness to pay is not measured." />
 </Gallery>
-
-<Decision>
-
-The most consequential call was keeping the orchestrator stateless, with persistence in Supabase (history, growth tracking) and R2 (images). The Worker is cheap to re-run and trivial to version, and the eval harness can replay any historical photo against a new model without touching user data.
-
-</Decision>
-
-## How we knew it worked
-
-The eval set is 200 labelled samples across 12 common plant-health failure modes. Every model or prompt change re-runs the whole set and reports the accuracy delta, so prompt iteration went from vibes to measurable, with a result in minutes.
-
-Aarchid is live at [aarchid.space](https://www.aarchid.space/). The limits of the evidence: accuracy is measured on our golden set, not on live user photos, and with no confirm-or-correct loop yet, field accuracy is not measured. Usage figures are not reported here.
-
-## Outcome
-
-Product:
-
-- **Diagnosis accuracy:** 92% on a 200-sample golden set covering 12 failure modes
-- **Citation grounding:** 90% of recommendations carry a peer-reviewed source link
-- **Latency:** P95 under 10 s end to end on Cloudflare's edge
-- **Unit economics:** ~$0.25 per active user per month at scale; sub-$5 a month fixed infra at low usage
-- **Live:** [aarchid.space](https://www.aarchid.space/), co-built with [Dilpreet Grover](https://github.com/dfordp)
-
-Build:
-
-- Two-person side project, Aug 2025 to present, with a replayable eval harness
-
-## What I'd do next
-
-- **Next bet:** a structured feedback loop. Users confirm or correct a diagnosis and the deltas feed back into the golden set. The harness exists; the pipe is the next PR.
-- **Open question:** whether Health Certificates are the wedge we think they are. The provenance story is built; whether sellers pay for it is not measured yet.
-- **What I'd do differently:** build the correction loop alongside the harness. The 12 failure modes are the ones we chose; users will find the ones we did not.
 
 <UnderTheHood title="Architecture and implementation">
 
 ### The Edge Stack
 
-Next.js PWA → Cloudflare Workers (Hono) orchestrator → Gemini 1.5 Pro (vision) + Exa AI API (research) + OpenWeather (environment) → Supabase (Postgres) + Cloudflare R2 (image storage, zero egress).
+Next.js PWA → Cloudflare Workers (Hono) orchestrator → Gemini 1.5 Pro (vision) + a web-search API (sources) + OpenWeather (environment) → Supabase (Postgres) + Cloudflare R2 (image storage).
 
 ### Request flow
 
-Image upload lands on R2 (zero egress). A single Worker fans out three parallel calls, Gemini vision, Exa research and OpenWeather (7-day local context), then composes the response. No cold starts, under 50 ms overhead, global by default. Exa returns peer-reviewed citations inline; the frontend renders them as a footnote trail.
+Image upload lands on R2. A single Worker fans out three parallel calls, Gemini vision, the web-search call and OpenWeather (7-day local context), then composes the response. The web-search call returns source links inline; the frontend renders them as a footnote trail.
 
-<Artifact title="Simplified orchestrator flow inside the Worker">
+<Artifact title="Orchestrator flow inside the Worker (simplified; provider names omitted)">
 
 ```ts
-// Simplified orchestrator flow inside the Worker
-const [diagnosis, research, weather] = await Promise.all([
-  gemini.analyze({ image, prompt: DIAGNOSIS_PROMPT }),
-  perplexity.research({ symptoms, species }),
-  openweather.local({ lat, lon, days: 7 }),
+// Simplified; provider names omitted
+const [diagnosis, sources, weather] = await Promise.all([
+  vision.analyze({ image, prompt: DIAGNOSIS_PROMPT }),
+  research.search({ symptoms, species }),
+  weather.local({ lat, lon, days: 7 }),
 ]);
 
-const report = composeReport({ diagnosis, research, weather });
-return c.json(report); // <10s P95 on the edge
+const report = composeReport({ diagnosis, sources, weather });
+return c.json(report);
 ```
 
 </Artifact>
 
 ### Eval harness
 
-Because the Worker is stateless, the harness replays any historical photo against a new model or prompt and reports the accuracy delta, without touching user data.
+Because the Worker is stateless, the harness replays any stored photo against a new model or prompt and reports the accuracy delta, without touching user data.
 
 </UnderTheHood>
 
+## Validation
+
+Evidence here is self-reported. The team ran an offline eval on a golden set (about 200 samples across 12 failure modes, as reported by the team). The eval artefacts live in the private aarchid-rework repo, so the result is withheld here until the eval artefact or the co-builder's confirmation is available.
+
+What an offline eval can and cannot tell you is the point of this section. It can tell you whether a prompt or model change helped or hurt on the cases you chose: every change re-runs the whole set and reports the delta. It cannot tell you whether a real plant owner, with their own photo and their own plant, gets a diagnosis they trust enough to act on.
+
+- **Live:** [aarchid.space](https://www.aarchid.space/) returned HTTP 200 on 30 Sep 2026.
+
+## Limits and next
+
+- **Field accuracy is not measured.** The only accuracy check is the team's offline golden-set eval, whose result is withheld here; nothing comes from live user photos, and there is no confirm-or-correct loop yet. Usage figures are not reported here.
+- **Next bet:** a structured feedback loop. Users confirm or correct a diagnosis and the deltas feed back into the golden set. The harness exists; the pipe is the next PR.
+- **Open question:** whether Health Certificates are the wedge we think they are. Whether sellers pay for provenance is not measured.
+- **What I'd do differently:** build the correction loop alongside the harness. The 12 failure modes are the ones we chose; users will find the ones we did not.
+
+## Credits
+
+Aarchid is a two-person side project, co-built with [Dilpreet Grover](https://github.com/dfordp) (@dfordp). I owned product scope, the golden eval set and the citation-grounding requirement; platform engineering was shared.
+
+The orchestrator and eval harness live in aarchid-rework, which is no longer public. The public [aarchid-api](https://github.com/dfordp/aarchid-api) repo holds the data-layer API only; it does not contain the diagnosis pipeline.
+
 <Artifacts>
   <ArtifactLink href="https://github.com/dfordp/aarchid-api" type="repo" title="aarchid-api" note="Public data-layer API only; the diagnosis pipeline is private." />
-  <ArtifactLink href="https://www.aarchid.space/" type="doc" title="aarchid.space" note="Live product." />
+  <ArtifactLink href="https://www.aarchid.space/" type="doc" title="aarchid.space" note="Public site; returned HTTP 200 on 30 Sep 2026." />
 </Artifacts>

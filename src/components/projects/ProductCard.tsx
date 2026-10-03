@@ -2,7 +2,11 @@ import type { CSSProperties } from "react";
 import Link from "next/link";
 import type { Project } from "@/types/project";
 import { FramedShot } from "@/components/case-study/FramedShot";
-import { StatusPill } from "@/components/case-study/ProductMasthead";
+import {
+  EvidenceChip,
+  OwnershipLine,
+  StatusPill,
+} from "@/components/case-study/ProjectFacts";
 import { cn, formatCategoryLabel } from "@/lib/utils";
 import styles from "./ProductCard.module.css";
 
@@ -45,12 +49,25 @@ export function ProductCard({
       priority={priority}
       className={styles.shot}
     />
-  ) : null;
+  ) : (
+    // No screenshot: a set title plate on the product's tinted ground, the
+    // same shape as a framed shot so a grid of mixed cards stays aligned.
+    // The plate carries the PM decision, so the first product view shows the
+    // call rather than an empty image slot.
+    <div className={styles.plate} data-testid="card-plate">
+      <span className={styles.plateMark} />
+      <span className={styles.plateName}>{name}</span>
+      {project.decision && (
+        <span className={styles.plateDecision}>
+          <span className={styles.plateDecisionKey}>Decision</span> {project.decision}
+        </span>
+      )}
+    </div>
+  );
 
   return (
     <article className={cn(styles.card, className)} style={style}>
-      {shot &&
-        (hasCaseStudy ? (
+      {hasCaseStudy ? (
           <Link
             href={href}
             className={styles.media}
@@ -60,17 +77,13 @@ export function ProductCard({
             {shot}
           </Link>
         ) : (
-          <div className={styles.media}>{shot}</div>
-        ))}
+          <div className={styles.media} aria-hidden={project.imageUrl ? undefined : true}>
+            {shot}
+          </div>
+        )}
 
       <div className={styles.body}>
-        <p className={styles.eyebrow}>
-          <span>{project.duration}</span>
-          <span className={styles.sep} aria-hidden="true">
-            &middot;
-          </span>
-          <span>{formatCategoryLabel(project.category)}</span>
-        </p>
+        <p className={styles.eyebrow}>{formatCategoryLabel(project.category)}</p>
 
         <h3 className={styles.name}>
           {hasCaseStudy ? <Link href={href}>{name}</Link> : name}
@@ -78,8 +91,28 @@ export function ProductCard({
 
         {project.tagline && <p className={styles.tagline}>{project.tagline}</p>}
 
-        {project.status && (
-          <StatusPill status={project.status} className={styles.status} />
+        {/* With a screenshot the decision is the card's secondary line. On a
+            plate it is already shown in the (aria-hidden) media, so it is
+            repeated here for assistive tech only. */}
+        {project.decision && (
+          <p
+            className={project.imageUrl ? styles.decision : styles.srOnly}
+            data-testid="card-decision"
+          >
+            <span className={styles.decisionKey}>Decision:</span> {project.decision}
+          </p>
+        )}
+
+        {project.ownership && <OwnershipLine ownership={project.ownership} />}
+
+        {(project.status || project.evidenceTier) && (
+          <div className={styles.chips}>
+            {project.status && <StatusPill status={project.status} />}
+            {project.statusNote && (
+              <span className={styles.statusNote}>{project.statusNote}</span>
+            )}
+            {project.evidenceTier && <EvidenceChip tier={project.evidenceTier} />}
+          </div>
         )}
 
         <p className={styles.outcome}>

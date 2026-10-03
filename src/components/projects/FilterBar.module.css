@@ -1,3 +1,8 @@
+/* Wrapper keeps the chip row and its status line one flex item in the parent. */
+.wrap {
+  min-width: 0;
+}
+
 .bar {
   display: flex;
   flex-wrap: wrap;
@@ -20,6 +25,7 @@
   transition: border-color var(--transition-fast), color var(--transition-fast),
               background-color var(--transition-fast);
   min-height: 44px;
+  min-width: 44px;
 }
 
 .pill:hover {
@@ -44,4 +50,28 @@
 
 .active:hover {
   color: var(--accent-contrast);
+}
+
+/* Narrow phones: tighter padding so five chips wrap to two tidy rows at
+   320px instead of leaving one orphan per line. Height stays 44px. */
+@media (max-width: 420px) {
+  .pill {
+    padding: 8px 12px;
+  }
+
+  .bar {
+    gap: var(--space-2);
+  }
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }

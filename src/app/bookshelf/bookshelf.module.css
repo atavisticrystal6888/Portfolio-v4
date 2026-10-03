@@ -1,0 +1,10 @@
+/* The READING chip sits on its own line under the title, so every card
+   places it the same way (inline, it wrapped under some titles only). */
+.statusRow {
+  margin: 0 0 var(--space-2);
+  line-height: 1;
+}
+
+.statusRow > span {
+  margin-left: 0;
+}

@@ -1,205 +1,111 @@
 ---
 slug: "kite-edge"
-title: "KiteEdge — Portfolio Intelligence Platform"
-subtitle: "A self-hosted analytics desk for one retail Zerodha trader: 43+ technical indicators, Monte Carlo VaR, ARIMA/Prophet forecasting and live streaming. It never places a trade."
-role: "Full-Stack Developer & Architect"
-duration: "May 2026 – present"
+title: "KiteEdge — Personal Portfolio-Analytics Desk"
+metaDescription: "KiteEdge is a solo-built, local portfolio analytics tool for one Zerodha account: risk, forecasting and technical analysis. By design it never places an order."
+alternative: "trade execution through the platform."
+tradeoff: "it can analyse a position but never act on it: it reads the account and writes nothing back."
+subtitle: "A private, personal analytics desk for one retail Zerodha trader (me): risk, forecasting and technical analysis on my own holdings. It reads the account and never places a trade."
+role: "Solo builder · Product & Engineering (personal tool)"
+duration: "May 2026 – Sep 2026 (last commit 24 Sep 2026)"
 stack: ["Elixir", "Phoenix", "Python", "FastAPI", "React", "TypeScript", "PostgreSQL", "Kafka"]
-myPart: "Solo. The architecture, every service, and the product boundary decisions, including analytics-only."
-tldr: "A personal tool in a private repo, built solo, for a retail Zerodha trader who wanted the analytics a fund desk gets. KiteEdge delivers 43+ technical indicators, Monte Carlo VaR, ensemble forecasting, a NIFTY 500 screener, a FIFO trade journal and Power BI export, self-hosted, without ever executing a trade."
+myPart: "Solo. The product boundary (analytics only), the architecture and every service."
+tldr: "A personal tool in a private repo, built solo, for one retail Zerodha trader who wanted more than holdings and day P&L. KiteEdge runs in Docker Desktop on my own laptop with my own Kite Connect credentials and adds risk, forecasting and technical analysis on top of the account. The defining call: analytics only, it never places an order."
 metrics:
+  - label: "Never places an order · synthetic data in tests"
+    displayValue: "Analytics only"
+    kind: product
   - label: "Technical Indicators"
     value: 43
     displayValue: "43+"
-    kind: product
+    kind: build
     chartType: "bar"
   - label: "VaR Methods"
     value: 4
     displayValue: "4"
-    kind: product
+    kind: build
   - label: "Forecast Models"
     value: 3
     displayValue: "3"
-    kind: product
-  - label: "API Endpoints"
-    value: 50
-    displayValue: "50"
     kind: build
-    chartType: "bar"
-  - label: "Compose Services"
-    value: 13
-    displayValue: "13"
-    kind: build
-    chartType: "bar"
-  - label: "Kafka Topics"
-    value: 8
-    displayValue: "8"
-    kind: build
-    chartType: "bar"
-  - label: "Test Files"
-    value: 127
-    displayValue: "127"
-    kind: build
-prevSlug: "hackmate"
-nextSlug: "experiment-hub"
+prevSlug: "experiment-hub"
+nextSlug: "tcs-nqt-prep-hub"
 ---
 
-## Who it's for, and why
+## Problem
 
 Zerodha Kite shows a retail trader holdings, day P&L and a simple chart, and stops there. It does not say how a position looks across timeframes, how much the portfolio could lose, how it would have behaved through a crash, or where a forecast puts it with an honest error bar.
 
-Those answers cost a Bloomberg or Refinitiv terminal; the retail alternative is a folder of fragmented Python scripts.
+Those answers usually mean a paid terminal or a folder of fragmented Python scripts.
 
-KiteEdge is a personal tool: a private repo, built solo, run against my own Kite account, with no public link and no user base to report. The gap: a self-hosted, privacy-first platform that delivers institutional-quality analytics without ever touching a trade.
+## Users
 
-## What I learned before building
+One user: me. KiteEdge is a personal tool in a private repository (all rights reserved), run against my own Kite account, with no public link and no user base to report.
 
-Two strands: what a professional portfolio manager tracks daily, and a benchmark of Smallcase, Tickertape and Screener.in on technical depth, risk quantification and forecasting.
+Before building I did desk research on what portfolio analytics tools track and compared Smallcase, Tickertape and Screener.in on technical depth, risk quantification and forecasting. That set three requirements: multi-timeframe technical analysis, not just daily; portfolio-level risk with scenario stress tests as a core module rather than a chart; and forecasts that always ship with their error. It also set one constraint: no free source covers Indian small-cap fundamentals completely.
 
-Three findings changed the plan: multi-timeframe technical analysis, not just daily; portfolio-level risk decomposition with scenario stress testing, which became a core module rather than a chart; and forecasting with confidence intervals, which set the rule that every predicted number ships with its error.
+## Decision
 
-A fourth finding set a constraint: no free source covers Indian small-cap fundamentals completely.
+<Decision>
+Analytics only. The platform reads a Kite account and never writes to it: no order placement. That keeps the tool out of order-execution risk, means I never have to trust it with a trade, and shaped every integration from the first endpoint.
+</Decision>
 
-## The bets, and what we cut
+## Trade-offs
 
-**Analytics only.** The platform never executes a trade: zero regulatory exposure, and the user never trusts it with an order. Set before the first endpoint, it shaped every integration.
+**Run it where the data already is.** KiteEdge runs in Docker Desktop on my own laptop with my own Kite Connect credentials. Kite OAuth tokens are held in Redis with a fixed TTL rather than written to the app's database. It is not a zero-egress system: it calls the Kite Connect API for market and account data, and alert emails leave the machine through an SMTP provider.
 
-**Self-hosted privacy.** Kite OAuth tokens live only in Redis with an 18-hour TTL, never on disk; no data leaves the user's machine. Trust is enforced by architecture, not policy.
-
-**Free data sources.** No Bloomberg budget, so fundamentals are best-effort and nullable by design, and every derived number carries its methodology.
+**Free data sources.** No terminal budget, so fundamentals are best-effort and nullable by design, and every derived number carries its methodology.
 
 <Options>
-  <Option name="Analytics only, no order placement" status="chosen" why="Zero regulatory exposure; the user never trusts it with a trade." />
-  <Option name="Trade execution through the platform" status="rejected" why="Adds order risk and regulatory exposure." />
+  <Option name="Analytics only, no order placement" status="chosen" why="No order-execution risk; I never trust it with a trade." />
+  <Option name="Trade execution through the platform" status="rejected" why="Adds order risk and a much higher bar for correctness." />
   <Option name="Best-effort free data" status="chosen" why="Honest gaps beat false precision." />
-  <Option name="Paid terminal-grade data feed" status="rejected" why="No Bloomberg or Refinitiv budget." />
-  <Option name="Polyglot: Elixir streaming, Python maths, React UI" status="chosen" why="Each service does what its language does best." />
-  <Option name="Single-language monolith" status="rejected" why="Would compromise both streaming and the maths." />
+  <Option name="Paid terminal-grade data feed" status="rejected" why="No budget for a personal tool." />
   <Option name="Ensemble forecast with walk-forward validation" status="chosen" why="Every forecast carries its own error metrics." />
   <Option name="Single-model point forecast" status="rejected" why="A number without an error bar is a black box." />
   <Option name="Event-sourced analytics pipeline" status="deferred" why="Kafka consumers shipped first; replay is harder." />
 </Options>
 
-## What we built
+## What shipped
 
-**Connect, then watch it move.** Sign in with Kite; the dashboard updates live as ticks arrive, and alert rules send an email when a condition is met.
+Shipped between May and Sep 2026, organised around the questions I actually ask of my portfolio:
 
-**What have I actually earned?** Multi-year XIRR per holding and for the portfolio, nightly dividend tracking, and breakdowns by sector, asset class and market cap.
-
-**What is this position doing?** 43+ technical indicators across trend, momentum, volatility and volume, on timeframes from one minute to daily, composited into a Technical Summary Score from -100 to +100 with buy and sell bands.
-
-**How much could I lose?** Sharpe, Sortino, Calmar, Treynor, beta and alpha; Value at Risk by four methods including Conditional VaR; a correlation matrix; drawdown depth, duration and recovery; and stress tests against COVID-19, the GFC, Demonetisation and the Taper Tantrum. Every figure carries its method.
-
-<Decision>
-Analytics only was the most consequential call. The platform reads a Kite account and never writes to it: no order placement, ever, in exchange for zero regulatory exposure and a trust story a self-hosted tool can keep.
-</Decision>
-
-**Where might it go?** An ARIMA/SARIMA and Prophet ensemble, with MAE, RMSE, MAPE and directional accuracy from walk-forward backtesting attached to every forecast.
-
-**Am I any good, and are the models?** A FIFO-matched trade journal turns order history into realized P&L, win rate, profit factor and expectancy. An append-only suggestion journal records what the models recommended and how those calls aged; the user cannot edit it.
-
-**What should I look at next?** A NIFTY 500 screener with fundamentals per symbol and tier-ranked composite scoring, refreshed nightly, and a deploy advisor that proposes allocations in whole shares.
-
-**Take it where I already work.** QuantStats tear sheets as HTML, and OData v4 entity sets so Power BI and Excel can live-refresh.
-
-<Figure src="/images/projects/kite-edge/quantstats-tearsheet.png" alt="QuantStats tear sheet from KiteEdge's report module on synthetic demo returns." caption="The same code path that serves real holdings renders a full QuantStats tear sheet: cumulative return against a benchmark, plus Sharpe, Sortino, max drawdown, volatility and VaR. This run uses seeded synthetic returns over 248 trading days; real account data, mine included, never leaves the machine." size="wide" />
-
-## How we knew it worked
-
-Forecasts report their walk-forward error, Monte Carlo VaR states its simulation count and distribution assumptions, stress tests cite the event and date range, and the suggestion journal records every model call and how it aged. 127 test files cover the Elixir apps and the Python engine.
-
-The limits are plain: one user, no pilot, and I have not yet recorded how long I have run it or on how many positions. There is no headline accuracy figure; the walk-forward metrics live in the tool.
-
-## Outcome
-
-Product:
-
-- 43+ technical indicators with multi-timeframe support
-- 4 VaR models and 4 historical stress scenarios
-- 3 forecast models with walk-forward validation
-- NIFTY 500 screener, FIFO trade journal, append-only suggestion journal, XIRR and dividend tracking, deploy advisor
-- One user (me), internal, private repo; usage duration and positions not measured yet
-
-Build:
-
-- 50 documented API endpoints across portfolio, risk, forecasting, screener, trade journal, watchlists and reports
-- 13 Docker Compose services: 8 application services plus Postgres, Redis, Kafka, Prometheus and Grafana
-- 8 Kafka topics
-- 127 test files across Elixir and Python
-
-## What I'd do next
-
-- **Next bet.** Replace direct Kafka consumers with an event store, so any analysis can be re-run against historical market conditions.
-- **Open question.** Whether the suggestion journal, once its calls have aged, shows the models earning their place or argues for fewer of them.
-- **Differently.** Record my own usage from day one: run time, positions, and what it changed about my decisions. Without that, the evidence here is method, not outcome.
+- **What have I actually earned?** Multi-year XIRR per holding and for the portfolio, dividend tracking, and breakdowns by sector, asset class and market cap.
+- **What is this position doing?** 43+ technical indicators across trend, momentum, volatility and volume, on timeframes from one minute to daily, rolled into a single summary score.
+- **How much could I lose?** Value at Risk by four methods (historical, parametric, Monte Carlo and conditional VaR), drawdown analysis, and stress tests against COVID-19, the GFC, Demonetisation and the Taper Tantrum.
+- **Where might it go?** An ARIMA/SARIMA and Prophet ensemble, with walk-forward error metrics attached to every forecast.
+- **Am I any good, and are the models?** A FIFO-matched trade journal, and an append-only suggestion journal that records what the models recommended and how those calls aged.
+- **Alerts.** Price and percentage-change alerts, in-app and by email.
 
 <UnderTheHood title="Architecture and implementation">
 
-### Polyglot services
+<Figure src="/images/projects/kite-edge/analytics-api.png" alt="The KiteEdge analytics engine running locally, serving its own OpenAPI docs: technical analysis, fundamentals, portfolio risk (VaR, Monte Carlo, stress test, correlation) and forecasting endpoints. No account data." caption="The analytics engine serving its own OpenAPI docs locally. The tear sheet at the top of this page comes from the report module, rendered on seeded synthetic returns over 248 trading days; synthetic data is used only for tests and demos." size="wide" />
 
-Elixir/OTP for real-time streaming and concurrency (Phoenix Channels, Broadway for Kafka consumers); Python for quantitative computation (pandas, NumPy, SciPy, statsmodels); React/TypeScript for visualisation. Elixir handles 100K+ concurrent WebSocket connections with minimal memory.
+### Services
 
-### Umbrella monorepo with service boundaries
-
-Gateway (Phoenix), Market Data (OTP GenServer) and Notification (Broadway) live in an Elixir umbrella; the Analytics Engine (Python/FastAPI) and Data Pipeline (Kafka consumers plus nightly schedulers) are separate services. Docker Compose runs 13 services with health checks on every stateful one.
-
-```
-KiteEdge/
-├── apps/
-│   ├── kite_edge/          # Core domain - Ecto schemas, Kite API client
-│   ├── kite_edge_web/      # Phoenix REST + channels - 50 endpoints
-│   ├── market_data/        # KiteTicker → Kafka publisher
-│   └── notification/       # Broadway Kafka consumer → alerts + email
-├── analytics_engine/       # Python FastAPI - indicators, risk, forecasts
-├── data_pipeline/          # Kafka consumers + nightly schedulers
-│                           #   candles, indicators, alerts, forecasts,
-│                           #   fundamentals, dividends, universe screener
-├── dashboard/              # React SPA - interactive dashboard
-└── infra/                  # Docker, Grafana, Kafka, Prometheus config
-```
+Elixir/OTP for streaming (Phoenix Channels, Broadway for Kafka consumers), Python/FastAPI for the quantitative work (pandas, NumPy, SciPy, statsmodels, Prophet, QuantStats), and a React/TypeScript dashboard. Docker Compose runs the stack locally, with Postgres, Redis and Kafka alongside.
 
 ### Streaming path
 
-Market Data connects to Kite's binary WebSocket (KiteTicker), decodes ticks and publishes to 8 Kafka topics. The Data Pipeline builds 1m, 5m, 15m, 1h and daily candles, computes indicators and evaluates alert rules; Notification emails alerts. Phoenix Channels push live updates to the dashboard.
+Market Data connects to Kite's WebSocket feed, decodes ticks and publishes to Kafka. The data pipeline builds candles from one minute to daily, computes indicators and evaluates alert rules; the notification service sends alert emails, and Phoenix Channels push live updates to the dashboard.
 
-### Technical analysis engine
+### Risk and forecasting
 
-Trend (SMA, EMA, MACD, ADX, Ichimoku, Parabolic SAR, Aroon), Momentum (RSI, Stochastic RSI, Williams %R, CCI, ROC, KAMA), Volatility (ATR, Bollinger Bands, Keltner Channel, Donchian) and Volume (OBV, VWAP, CMF, MFI, ADI).
-
-### Risk analytics
-
-VaR via Historical, Parametric Gaussian and Monte Carlo (10,000 GBM simulations), plus Conditional VaR / Expected Shortfall. The correlation matrix uses Ledoit-Wolf shrinkage.
-
-```python
-# Monte Carlo VaR - 10,000 GBM simulations
-def monte_carlo_var(returns, portfolio_value, days=10, sims=10_000, ci=0.95):
-    mu = returns.mean()
-    sigma = returns.std()
-    
-    # Geometric Brownian Motion
-    Z = np.random.standard_normal((sims, days))
-    daily_returns = np.exp((mu - 0.5 * sigma**2) + sigma * Z)
-    price_paths = portfolio_value * np.cumprod(daily_returns, axis=1)
-    
-    final_values = price_paths[:, -1]
-    var_absolute = portfolio_value - np.percentile(final_values, (1 - ci) * 100)
-    cvar = portfolio_value - final_values[final_values <= np.percentile(
-        final_values, (1 - ci) * 100
-    )].mean()
-    
-    return {"VaR": var_absolute, "CVaR": cvar, "simulations": sims}
-```
-
-### Forecasting
-
-ARIMA/SARIMA auto-fitted via AIC/BIC selection; Prophet on the NSE trading calendar with weekly seasonality; combined by an inverse-MAE weighted ensemble.
-
-### Portfolio intelligence layer (shipped May to Aug 2026)
-
-The screener runs a 400-bar backfill plus fundamentals per symbol on a resumable nightly scheduler. Tear sheets come from QuantStats 0.0.81 (the sheet above: seeded RNG, 248 trading days, benchmark alongside). Tax estimates carry documented caveats instead of posing as advice.
-
-### Testing and observability
-
-127 test files across the Elixir apps and the Python analytics engine; Prometheus and Grafana for observability.
+VaR via historical, parametric Gaussian and Monte Carlo (10,000 simulated paths), plus conditional VaR. ARIMA/SARIMA is auto-fitted by information criteria; Prophet runs on the NSE trading calendar; the two are combined by an inverse-error weighted ensemble.
 
 </UnderTheHood>
+
+## Validation
+
+Forecasts report their walk-forward error, Monte Carlo VaR states its simulation count and assumptions, stress tests cite the event and date range, and the suggestion journal records every model call and how it aged. The Elixir apps and the Python engine have automated tests, but no test count or dated run is quoted on this page because none was re-run for it; synthetic data appears only in those tests and in demo renders like the tear sheet above. This is evidence about method, not outcome.
+
+## Limits and next
+
+- **One user, no pilot.** I have not recorded how long I have run it or on how many positions, and there is no headline accuracy figure; the walk-forward metrics live in the tool.
+- **Private by design.** The repository is private and all rights are reserved; there is nothing to link.
+- **Next bet:** replace direct Kafka consumers with an event store, so any analysis can be re-run against historical market conditions.
+- **Open question:** whether the suggestion journal, once its calls have aged, shows the models earning their place or argues for fewer of them.
+- **What I'd do differently:** record my own usage from day one: run time, positions, and what it changed about my decisions. Without that, the evidence here is method, not outcome.
+
+## Credits
+
+Solo, personal project: product boundary, architecture and every service are mine. Market data and account access come from Zerodha's Kite Connect API under my own credentials.

@@ -1,3 +1,11 @@
+/* Static background wash. It used to run `gradientShift` (30 s, infinite) on
+   background-position, a non-composited property, so the browser repainted
+   this full-viewport layer on every frame of every page, forever. That cost
+   main-thread rendering time in every interaction (perf audit P6). At 15%
+   opacity the drift was barely visible; this keeps the animation's first
+   frame (background-position 0% 50%), which is exactly what reduced-motion
+   visitors always saw. Colours still come from the theme tokens, so it
+   follows light/dark and the accent palette as before. */
 .gradient {
   position: fixed;
   top: 0;
@@ -15,29 +23,7 @@
     var(--accent-glow) 100%
   );
   background-size: 400% 400%;
-  animation: gradientShift 30s ease infinite;
-}
-
-.gradient.paused {
-  animation: none;
-}
-
-@keyframes gradientShift {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .gradient {
-    animation: none;
-  }
+  background-position: 0% 50%;
 }
 
 @media print {

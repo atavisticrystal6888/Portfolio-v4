@@ -56,16 +56,15 @@
   transform: rotate(180deg);
 }
 
+/* Collapse is the `hidden` attribute (display: none), so a closed answer is
+   out of the accessibility tree and the open one is never clipped by a fixed
+   max-height at narrow widths. */
 .answer {
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.3s ease, padding 0.3s ease;
-  padding: 0 var(--space-5);
+  padding: 0 var(--space-5) var(--space-4);
 }
 
-.answerOpen {
-  max-height: 200px;
-  padding: 0 var(--space-5) var(--space-4);
+.answer[hidden] {
+  display: none;
 }
 
 .answer p {

@@ -1,139 +1,135 @@
 ---
 slug: "portfolio-site"
 title: "This Portfolio — A Product in Itself"
-subtitle: "Applied PM thinking to build a production-grade portfolio through 5 shipped iterations — from a single HTML file to a Next.js app with 95+ Lighthouse scores."
-role: "Full-Stack Developer & Product Manager"
-myPart: "Everything — the spec, the success metrics, and the build. Solo."
-duration: "2025 – 2026"
+subtitle: "Treated my own portfolio as a product: six versions between Jan 2026 and Sep 2026, from a single HTML file to a Next.js app with MDX case studies and CI quality gates."
+role: "Product manager and builder"
+myPart: "Everything: the spec, the success criteria, and the build. Solo."
+duration: "Jan 2026 – Sep 2026"
 stack: ["Next.js", "React", "TypeScript", "Three.js", "MDX", "Framer Motion"]
-tldr: "Needed to stand out as a PM candidate with a non-traditional path into product. I treated the portfolio itself as a product — conducting user research, writing specs, and shipping 5 iterations in 3 months. v1 was a single HTML file; the current build is a Next.js app with MDX case studies, dynamic OG images, ISR, and 95+ Lighthouse scores."
+tldr: "Needed to show PM skills with a non-traditional path into product, not just claim them. I treated the portfolio itself as a product: specs before code, and six versions between Jan 2026 (v1, a single HTML file) and Sep 2026 (v6, case studies as product pages). The current build is a Next.js app with MDX case studies, dynamic OG images, hourly-revalidated GitHub data, and CI that runs lint, unit tests, the build, Playwright end-to-end and accessibility tests, and Lighthouse CI on every push and pull request to main."
+metaDescription: "How I ran this portfolio as a product: specs before code, six versions from Jan to Sep 2026, and CI with end-to-end, accessibility and Lighthouse checks."
+alternative: "hand-built pages for each case study."
+tradeoff: "specs before code slowed every start, and the static v2 cost a full rewrite."
 metrics:
-  - label: "Lighthouse Score"
-    value: 95
-    displayValue: "95+"
+  - label: "Versions (Jan to Sep 2026)"
+    value: 6
+    displayValue: "6"
     chartType: "bar"
-  - label: "Pages"
-    value: 14
-    displayValue: "14+"
+  - label: "Indexable URLs in the sitemap (2 Oct 2026)"
+    value: 35
+    displayValue: "35"
     chartType: "bar"
-  - label: "Versions"
-    value: 5
-    displayValue: "5"
+  - label: "CI jobs on push to main"
+    value: 4
+    displayValue: "4"
     chartType: "bar"
-  - label: "Accessibility"
-    value: 100
-    displayValue: "100"
-    chartType: "bar"
-prevSlug: "tcs-nqt-prep-hub"
+prevSlug: "better-half"
 nextSlug: "aarchid"
 ---
 
-## Context & Problem
+## Problem
 
-Breaking into product management with a non-traditional background requires demonstrating PM skills, not just claiming them. A standard resume-style portfolio wouldn't cut it — I needed something that was itself proof of product thinking.
+Breaking into product management with a non-traditional background requires demonstrating PM skills, not just claiming them. A standard resume-style portfolio would not do that; the site needed to be proof of product thinking in itself.
 
-The meta-challenge: the portfolio needed to demonstrate the same skills it was showcasing — user research, spec writing, iterative development, and data-driven decisions.
+The meta-challenge: the portfolio had to demonstrate the same skills it was showcasing, from research and spec writing to iteration and honest measurement.
 
-## Research & Discovery
+## Users
 
-- Analyzed 20+ PM portfolios to identify what worked and what didn't
-- Researched what hiring managers and recruiters actually look at (spoiler: case studies and proof of structured thinking)
-- Identified reference sites (similar PM portfolios) for interaction patterns and content strategy
-- Key insight: depth beats breadth — one well-documented case study outweighs five bullet points
+Recruiters and hiring managers who skim, and interviewers who read one case study deeply. Before building I reviewed a set of PM portfolios (self-reported: 20 or more) and what reviewers say they look for. The takeaway that shaped every version: depth beats breadth, and one well-documented case study outweighs five bullet points.
 
-## Solution & Approach
+## Decision
 
-### v1: Single HTML File
+<Decision>
+Treat case studies as content, not pages. Each one is a single MDX file with frontmatter for metrics and navigation, so adding or correcting a study is a one-file change and the site can be rewritten around the writing rather than the other way round.
+</Decision>
 
-Everything in one file — validated the content strategy, tested with initial reviewers, identified what was missing. Proved the concept with zero infrastructure.
+## Trade-offs
 
-### v2: Multi-Page Static Architecture
+- **Specs before code.** Each version started from a written spec (constitution → spec → plan → tasks), which kept scope crisp at the cost of slower starts.
+- **Static first, framework later.** v2 was a multi-page static site before the move to Next.js. It taught architecture patterns but cost a rewrite; in hindsight I would have adopted the framework at v2.
+- **Honest gates over headline scores.** Lighthouse CI asserts thresholds (below), rather than the site quoting a best-case score from one run.
 
-Refactored into 14 HTML pages with modular CSS/JS. Added Three.js hero particles, GSAP scroll animations, Chart.js skills radar, command palette, and dark mode. Full SpecKit workflow: constitution → spec → plan → 56 tasks across 8 phases.
+## What shipped
 
-### v3: Next.js Migration (First Attempt)
+| Version | When | Architecture | Focus |
+|---------|------|-------------|-------|
+| v1 | Jan 2026 | Single HTML file | Content-first draft |
+| v2 | Jan–Apr 2026 | Multi-page static (14 HTML pages) | Interaction design: Three.js, GSAP, command palette, dark mode |
+| v3 | Jan–Apr 2026 | Next.js migration | App Router, SSR, route-level organisation |
+| v4 | Apr 2026 (repo started 18 Apr) | Production rebuild | MDX case studies, OG images, ISR, GitHub API, accessibility tests |
+| v5 | Aug 2026 | Hiring-focused refinement | Sharper positioning, resume sync, stronger case-study writing |
+| v6 | Sep 2026 | Case studies as product pages | Decision-first case studies, claim audit |
 
-Ported the static site to Next.js with App Router. Gained SSR, image optimisation, and route-based code splitting. But the architecture still carried over v2's patterns — it was a migration, not a rethink.
+v2 and v3 have no dated record, so they are placed only between v1 and the v4 repository's first commit. The release notes for the current site are on the [changelog](/changelog), the tools behind it on [uses](/uses), and the thinking behind treating it as a product in [Building a portfolio as a product](/blog/building-portfolio-as-product).
 
-### v4: Production Rebuild
-
-Ground-up rebuild with a mature component architecture. MDX for case studies (write in Markdown, render with React components), dynamic OG image generation via Edge functions, GitHub API integration for live project stats, ISR for data freshness, Framer Motion for performant animations, and full accessibility (axe-core + Playwright tests).
-
-### v5: Hiring-Focused Refinement
-
-Refined the production build around sharper positioning, stronger case-study writing, canonical resume sync, and more intentional recruiter flows. The product did not need a visual redesign — it needed clearer proof, tighter messaging, and better consistency across the site.
-
-## Visual Tour
-
-The current build is intentionally multi-surface: the home page establishes positioning, the Projects page makes proof easy to skim, and the About page adds credibility without turning into a biography dump.
+The v2 build was run through the full spec workflow: 56 tasks across 8 phases (self-reported from the project notes at the time).
 
 <Gallery>
-  <Shot src="/images/projects/portfolio-site/home.png" alt="Portfolio home page showing the hero section and product-focused positioning." caption="Home: headline, positioning, and CTA structure are optimised for recruiter skim in the first screenful." />
-  <Shot src="/images/projects/portfolio-site/projects.png" alt="Portfolio projects page showing filter controls and screenshot-backed project cards." caption="Projects: the portfolio now behaves like a proof library, with screenshot-backed cards and case-study navigation." />
-  <Shot src="/images/projects/portfolio-site/about.png" alt="Portfolio about page: the headshot beside the story, ending on the education line." caption="About: narrative depth and the real headshot reinforce credibility without sacrificing the product lens." />
+  <Shot src="/images/projects/portfolio-site/projects.png" alt="Portfolio projects page: breadcrumb, a one-line promise about each entry, category filters, a list and grid switch, and featured product cards that each show status, ownership and evidence tier." caption="Projects, October 2026 build: every entry states the problem, the decision, who built it, where it runs and how strong the evidence is." />
+  <Shot src="/images/projects/portfolio-site/about.png" alt="Portfolio about page: the name, a one-line positioning statement, a portrait and the opening of the background story." caption="About, October 2026 build: positioning line, then the background told as problems picked up and what was measured." />
 </Gallery>
 
-## Implementation
+<UnderTheHood title="Architecture and implementation">
 
-Five decisions shaped the current architecture:
-
-**1. MDX for case studies — content as code.** Each case study is a `.mdx` file with YAML frontmatter (metrics, navigation, stack) and Markdown body. The build system compiles them into React pages with automatic prev/next navigation, breadcrumbs, and SEO metadata. Adding a case study is a single-file operation.
+**MDX for case studies.** Each case study is a `.mdx` file with YAML frontmatter (metrics, navigation, stack) and a Markdown body. The build compiles them into React pages with prev/next navigation, breadcrumbs and SEO metadata.
 
 ```mdx
 ---
-slug: "aarchid"
-title: "Aarchid - AI Botanical Intelligence"
+slug: "desktasks"
+title: "DeskTasks — The Task Widget That Stays Out of Your Way"
 metrics:
-  - label: "Diagnosis Accuracy"
-    value: 92
-    displayValue: "92%"
-prevSlug: "portfolio-site"
-nextSlug: "churn-analysis"
+  - label: "Failures at the 15 Sep 2026 release gate"
+    displayValue: "0"
+    kind: product
+prevSlug: "aarchid"
+nextSlug: "cohort-retention-studio"
 ---
 
-## Context & Problem
+## Problem
 Content renders with full React component support...
 ```
 
-**2. Dynamic OG images at the edge.** Every page generates a unique OpenGraph image via a `/og/[...slug]` route using `@vercel/og`. Social shares show a branded card with the page title, description, and domain — not a generic fallback.
+**Dynamic OG images at the edge.** An `/og/[...slug]` route renders a branded card per page with `next/og`, on the edge runtime.
 
-**3. GitHub API integration with ISR.** The Projects and About pages fetch pinned repos, contribution graph, and language stats via GitHub's GraphQL API. Data revalidates hourly via ISR — always fresh, never blocking the build.
+**GitHub data with ISR.** The Projects and About pages fetch repository data through GitHub's GraphQL API and revalidate hourly.
 
-**4. Component-driven design system.** `GlassCard`, `SectionLabel`, `MetricCounter`, `AnimatedSection` — reusable primitives that enforce visual consistency. The command palette reaches every page from anywhere with fuzzy search.
+**Reusable primitives.** `SectionLabel`, `MetricCounter`, `ScrollReveal` and similar components keep the visual system consistent; a command palette reaches every page.
 
-**5. Quality gates before every deploy.** ESLint, TypeScript strict mode, Vitest unit tests, Playwright E2E and accessibility tests, and Lighthouse CI thresholds. No commit ships without passing all gates.
+**Quality gates.** CI runs four jobs on every push and pull request to `main`:
 
 ```bash
-npm run lint          # ESLint
-npx tsc --noEmit      # TypeScript strict
-npm test              # Vitest unit tests
-npm run test:a11y     # axe-core accessibility
-npm run build         # Next.js production build
+# Job 1: lint + unit
+npm run lint                             # ESLint
+npm test                                 # Vitest unit tests
+# Job 2: build
+npm run build                            # Next.js production build (includes type checking)
+# Job 3: Playwright e2e + a11y
+npm run test:e2e                         # runs tests/e2e and tests/accessibility
+npx playwright test tests/accessibility  # the axe-core checks on their own, locally
+# Job 4: Lighthouse CI
+npx @lhci/cli autorun                    # thresholds from lighthouserc.json
 ```
 
-## Outcome & Metrics
+</UnderTheHood>
 
-| Version | Architecture | Focus | Key Features |
-|---------|-------------|-------|-------------|
-| v1 | Single HTML | Content validation | Narrative and proof-of-work baseline |
-| v2 | Multi-page static | Interaction design | Three.js, GSAP, command palette, 14 pages |
-| v3 | Next.js migration | Framework foundations | App Router, SSR, route-level organisation |
-| v4 | Production rebuild | Scalable content system | MDX, OG images, ISR, GitHub API, a11y tests |
-| v5 | Hiring-focused refinement | Narrative clarity | Resume sync, stronger case-study writing, tighter recruiter flows |
+## Validation
 
-- **Lighthouse:** 95+ Performance, 100 Accessibility, 95+ Best Practices, 100 SEO
-- **Pages:** 14+ including case studies, blog articles, and utility pages
-- **Versions:** 5 shipped iterations in 3 months
-- **Testing:** Unit (Vitest), E2E (Playwright), Accessibility (axe-core), Lighthouse CI
-- **Live:** [dhruvsinghal.codes](https://dhruvsinghal.codes)
-- **Source:** [github.com/atavisticrystal6888/Portfolio-v4](https://github.com/atavisticrystal6888/Portfolio-v4)
+What the gates actually enforce, from `lighthouserc.json`: accessibility must score at least 0.9 and SEO at least 0.95 (failures), while performance and best practices at 0.9, plus FCP, LCP and CLS budgets, are warnings only. Accessibility is also checked with axe-core through Playwright. CI runs these on push and pull request.
 
-## Learnings
+**Performance, measured 2 October 2026.** On a local production build, Lighthouse 13.5.0 mobile tests with simulated throttling improved Home LCP from 4.30 s to 3.23 s and its performance score from 79 to 93 (median of three runs). Across five tested page types, final mobile LCP was 3.12–3.34 s and measured lab CLS was 0. The under-2-second target was not met. These are local lab results, not field Core Web Vitals or a guarantee for visitors.
 
-### What Worked
+**Accessibility, checked 30 Sep 2026.** axe-core reported zero violations at the WCAG 2.2 AA tags across 36 routes, in two themes and two viewports.
 
-Writing full specs before coding prevented scope creep and made each version's scope crisp. The SpecKit workflow (constitution → spec → plan → tasks) is a PM artifact in itself. MDX was the right content format — case studies are written in Markdown but render with full React component support.
+Colour contrast is partly machine-unverifiable where text sits on gradients; axe marks those nodes "needs review", and I checked them by pixel sampling instead. None of this replaces a screen-reader pass or a test on a physical phone; both are still open.
 
-### What I'd Change
+The live site at [dhruvsinghal.codes](https://dhruvsinghal.codes) returned HTTP 200 on 30 Sep 2026. There is no conversion data: I cannot attribute interviews to the site.
 
-Would have jumped to Next.js at v2 instead of building a static multi-page site first. The v2 → v3 migration required rewriting all JS orchestration. The static site taught me architecture patterns, but the effort-to-learning ratio favoured an earlier framework adoption.
+## Limits and next
+
+- **No outcome metric.** Recruiter behaviour on the site is not measured, so the evidence is the build and its gates, not hiring outcomes.
+- **Screenshots are dated.** The header image and gallery show the October 2026 build; later changes will not be in them until they are recaptured.
+- **What I'd change:** jump to Next.js at v2 instead of building a static multi-page site first. The v2 to v3 migration required rewriting all the JavaScript orchestration.
+
+## Credits
+
+Solo: spec, design and build. Source: [github.com/atavisticrystal6888/Portfolio-v4](https://github.com/atavisticrystal6888/Portfolio-v4).

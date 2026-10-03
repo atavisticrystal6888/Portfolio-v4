@@ -1,56 +1,66 @@
 ---
 slug: "desktasks"
 title: "DeskTasks — The Task Widget That Stays Out of Your Way"
-subtitle: "A local-first desktop widget pinned behind every window — natural-language capture, recurring tasks, reminders, and time tracking, shipped for Windows and macOS with an offline-first companion PWA."
+subtitle: "A local-first desktop widget pinned behind every window, for Windows and macOS, with a companion phone app. Two release lines: a hosted v1.3 line (frozen Sep 2026) and a serverless v2 alpha."
 role: "Solo Builder · Product & Engineering"
-myPart: "Everything — product, design, and engineering. Solo build."
-duration: "2026 – present"
-stack: ["Electron", "JavaScript", "IndexedDB", "Supabase", "PWA"]
-tldr: "Todo apps compete for your attention; DeskTasks refuses it. The widget sits at the bottom of the window stack — visible exactly when you glance at your desktop, invisible while you work. Local-first and accountless with atomic JSON storage, a natural-language quick-add parser, honest calendar import/export, and an offline-first companion PWA. Shipped: 4 tagged releases, Windows + macOS builds, 540+ test assertions."
+myPart: "Everything: product, design, and engineering. Solo build (all commits authored by me)."
+duration: "Aug 2026 – Sep 2026 (last commit 19 Sep 2026)"
+stack: ["Electron", "JavaScript", "IndexedDB", "PWA", "Supabase (v1.3 line only)"]
+tldr: "Todo apps compete for your attention; DeskTasks refuses it. The widget sits at the bottom of the window stack, visible when you glance at your desktop and invisible while you work. Local-first and accountless, with a one-line quick-add parser and honest calendar import/export. The hosted v1.3.1 line syncs through opt-in Supabase and was frozen in Sep 2026; the main line (v2.0.0-alpha.9) replaces the server with a hub on your own Wi-Fi. Gate run on 15 Sep 2026: 531 logic, 206 sync and 271 end-to-end tests, zero failures."
+seoTitle: "DeskTasks — Local-First Desktop Task Widget"
+metaDescription: "DeskTasks is a local-first, accountless desktop task widget that sits behind your windows, with natural-language quick-add and calendar import and export."
+alternative: "a floating widget that notifies and badges."
+tradeoff: "macOS can only float it like Stickies, and Windows needs a once-a-second z-order check."
 metrics:
-  - label: "Tagged Releases"
-    value: 4
-    displayValue: "4"
+  - label: "Failures at the 15 Sep 2026 release gate (531 logic, 206 sync, 271 e2e)"
+    value: 0
+    displayValue: "0"
     chartType: "bar"
     kind: product
-  - label: "Export Formats"
-    value: 3
-    displayValue: "3"
+  - label: "Tagged releases (v1.1.0 to v1.3.1)"
+    value: 6
+    displayValue: "6"
     chartType: "bar"
     kind: product
-  - label: "Platforms"
-    value: 2
-    displayValue: "2"
-    chartType: "bar"
-    kind: product
-  - label: "Test Assertions"
-    value: 540
-    displayValue: "540+"
+  - label: "Logic tests (15 Sep 2026 gate)"
+    value: 531
+    displayValue: "531"
     chartType: "bar"
     kind: build
-prevSlug: "experiment-hub"
-nextSlug: "better-half"
+  - label: "E2E tests (15 Sep 2026 gate)"
+    value: 271
+    displayValue: "271"
+    chartType: "bar"
+    kind: build
+prevSlug: "aarchid"
+nextSlug: "cohort-retention-studio"
 ---
 
-## Who it's for, and why
-
-DeskTasks is a solo side project: product, design and engineering were mine. It is a live task widget for Windows and macOS desktop users; the repository is private, so this page links the product and not the code.
+## Problem
 
 Every task manager makes the same bet: to be used, it must be seen, so it floats, badges and notifies. Checking your tasks becomes another context switch.
 
 The gap: a task list that is there when you glance at the desktop and gone while you work, with no window, dock icon or account to manage.
 
-## What I learned before building
+## Users
 
-There was no user study behind DeskTasks. The plan came from one observation and one rule.
+Desktop users on Windows and macOS who keep a short running list and want it visible without it asking for attention. There was no user study behind DeskTasks; I built it for myself first. The plan came from one observation and one rule.
 
 The desktop wallpaper is glanced at dozens of times a day without meaning to. A widget pinned behind every window inherits that attention without asking for it.
 
 The rule: a local-first product is only trustworthy if it never loses a task and never quietly changes one. Never approximate.
 
-## The bets, and what we cut
+## Decision
 
-**Local-first, accountless.** Data lives in one portable JSON file; Supabase sync is strictly opt-in, and the product is complete without a network.
+<Decision>
+Pin the widget behind every window rather than on top of them. Everything else follows from refusing attention: accountless, local-first, no dock icon.
+</Decision>
+
+The second decision came later, in September 2026: freeze the hosted Supabase line at v1.3.1 and move the main line to sync over the user's own Wi-Fi, with the widget itself acting as the hub. A local-first product that needs a hosted database to reach your phone was carrying a server it did not need. The Supabase path is frozen, not deleted, and still documented.
+
+## Trade-offs
+
+**Local-first, accountless.** Data lives in one portable JSON file; the product is complete without a network.
 
 **Capture is one line.** `pay rent tomorrow 4pm !high #home every month` becomes a titled, tagged, scheduled, prioritised, recurring task.
 
@@ -59,47 +69,24 @@ The rule: a local-first product is only trustworthy if it never loses a task and
 <Options>
   <Option name="Pin behind every window, z-order check once a second" status="chosen" why="Shipped. Survives Win+D. A workaround." />
   <Option name="Wallpaper-layer reparenting as the default" status="deferred" why="More robust; the focus-loss trade-off needs a cleaner answer." />
-  <Option name="Native macOS rewrite" status="rejected" why="Would have held the release. An honest 80% shipped." />
+  <Option name="Native macOS rewrite" status="rejected" why="Would have held the release. macOS shipped floating like Stickies instead, a documented limit." />
   <Option name="Multiple concurrent timers" status="rejected" why="One timer, capped at 8 hours, banked when the task is ticked off." />
+  <Option name="Opt-in Supabase sync (v1.3 line)" status="chosen" why="Shipped first; frozen at v1.3.1 in Sep 2026, still documented." />
+  <Option name="Sync through a hub on the user's own Wi-Fi (v2 alpha)" status="chosen" why="No server to run or pay for; the widget is the hub." />
 </Options>
 
-## What we built
+## What shipped
 
-<Figure src="/images/projects/desktasks/hero.png" alt="Three DeskTasks widget panels on a dark ground: the pinned task list, natural-language quick-add parsing a date, time and tag, and a filtered search." caption="The pinned list, quick-add turning one line into a dated, timed and tagged task, and a filtered search." size="wide" />
+The panels in the header image (select it to open full size) show the pinned list, quick-add turning one line into a dated, timed and tagged task, and a filtered search.
 
 Capture is one line; the parser reads date, time, priority, tag and recurrence out of it, so a task never needs a form. Reminders come as toast notifications with repeat nudges, a morning summary and an end-of-day recap. One timer runs at a time, and completion banks the time.
 
-The companion PWA works fully offline on the phone, reads and writes the same JSON file and syncs only when you opt in. Widget and phone share one parser, so they cannot disagree about what "biweekly" means.
+Two release lines exist side by side:
 
-<Decision>
-Pin the widget behind every window rather than on top of them. Everything else follows from refusing attention: accountless, local-first, no dock icon.
-</Decision>
+- **Hosted line, v1.3.1** (tags v1.3.0 and v1.3.1, 8 to 9 Sep 2026). Windows and macOS builds plus a companion PWA that syncs through Supabase when the user opts in. Frozen in Sep 2026. The hosted PWA is live at [task-manager-one-sandy-94.vercel.app](https://task-manager-one-sandy-94.vercel.app/) (HTTP 200 on 30 Sep 2026).
+- **Main line, v2.0.0-alpha.9** (latest commit 19 Sep 2026). The same widget, but the phone app loads from the widget over the local network and syncs with no server at all.
 
-## How we knew it worked
-
-Reliability was tested rather than assumed: unit tests for the parser, recurrence, platform and sync round-trips, and end-to-end tests that restart the real app to prove persistence and crash recovery, asserting on renderer state and on the bytes on disk. The two never diverge.
-
-The honest limit: there is no usage data. Zero telemetry means I cannot say how many people run DeskTasks. The evidence is that the product survives its own tests and that four releases shipped on two platforms.
-
-## Outcome
-
-Product:
-
-- **4 tagged releases** (v1.1.0 to v1.2.2) for Windows (installer and portable) and macOS (arm64 and x64)
-- **3 import/export formats**: .ics with RRULE, CSV with BOM, Markdown
-- **Offline-first companion PWA** on the same data format and parser
-- **Zero telemetry, zero accounts**; the data file is portable by hand
-- **Users**: not measured yet
-
-Build:
-
-- **540+ test assertions**: 409+ unit plus 131 e2e that restart the real app
-
-## What I'd do next
-
-- **Next bet:** a code-signing certificate. Unsigned builds are the real adoption tax and matter more to first-run experience than the next feature.
-- **Open question:** whether wallpaper-layer reparenting can become the Windows default; its focus-loss trade-off needs a cleaner answer.
-- **Do differently:** nothing in the data layer. The single-writer main process and the shared parser removed whole classes of bugs before they existed.
+Other shipped pieces: three import/export formats (.ics with RRULE, CSV with BOM, Markdown), zero telemetry, zero accounts, and a data file that is portable by hand. Widget and phone share one parser, so they cannot disagree about what "biweekly" means.
 
 <UnderTheHood title="Architecture and implementation">
 
@@ -113,10 +100,31 @@ Build:
 
 **Links.** Notes allow only `http`, `https` and `mailto`; `file:`, `shell:` and `javascript:` are refused outright.
 
-**Companion PWA.** Vite, IndexedDB and a service worker, reusing the shared modules (parser, recurrence, dates, CSV) and syncing through a single Supabase `records` table when the user opts in.
+**Companion PWA.** Vite, IndexedDB and a service worker, reusing the shared modules (parser, recurrence, dates, CSV). On the v1.3 line it syncs through a single Supabase `records` table when the user opts in; on the v2 alpha it is served by the widget's local hub over HTTPS after a QR pairing step.
 
 **Formats.** `.ics` with RRULE, CSV with BOM, Markdown; UID-based dedupe on re-import. A "2nd Tuesday" rule the engine cannot represent, or "after done" recurrence with no calendar equivalent, imports as a labelled single task or exports with a note.
 
-**Tests.** 409+ unit assertions and 131 e2e assertions that restart the real app.
-
 </UnderTheHood>
+
+## Validation
+
+Reliability was tested rather than assumed. The acceptance gate recorded in the project roadmap ran on 15 Sep 2026, on the debug-sweep tree over commit `1feaa5a` plus the hub branch (so before the last v2 alpha commits of 19 Sep), with zero failures:
+
+- **Logic:** 531 tests
+- **Sync:** 206 tests, plus 177 sync-transport tests
+- **Companion PWA suites:** list 20, store 202, editor 76
+- **End-to-end:** 271 tests that restart the real app to prove persistence and crash recovery, asserting on renderer state and on the bytes on disk
+
+Those counts are from that dated run, not a promise about the next one.
+
+## Limits and next
+
+- **No usage data.** Zero telemetry means I cannot say how many people run DeskTasks. The evidence is that the product survives its own tests and that tagged builds shipped on two platforms.
+- **The hosted line is frozen.** v1.3.1 still works but is not the path to pick for a new setup; the v2 line is still an alpha.
+- **Licence.** `package.json` declares MIT, but the repository has no LICENSE file yet, and the repository is private.
+- **Next bet:** a code-signing certificate. Unsigned builds are the real adoption tax and matter more to first-run experience than the next feature.
+- **Open question:** whether wallpaper-layer reparenting can become the Windows default; its focus-loss trade-off needs a cleaner answer.
+
+## Credits
+
+Solo build: product, design and engineering are mine, and every commit in the repository is authored by me. The repository is private, so this page links the hosted v1.3.1 PWA ([task-manager-one-sandy-94.vercel.app](https://task-manager-one-sandy-94.vercel.app/)) rather than the code.

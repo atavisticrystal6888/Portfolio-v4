@@ -1,5 +1,5 @@
 import type { Project } from "@/types/project";
-import type { BlogArticle } from "@/types/blog";
+import type { BlogSummary } from "@/lib/blog-summary";
 import type { UserBehavior } from "@/types/theme";
 
 interface ScoredItem {
@@ -14,7 +14,7 @@ interface ScoredItem {
 
 export function scoreSuggestions(
   projects: Project[],
-  posts: BlogArticle[],
+  posts: BlogSummary[],
   behavior: UserBehavior
 ): ScoredItem[] {
   const visitedSlugs = new Set(behavior.pagesVisited.map((v) => v.slug));

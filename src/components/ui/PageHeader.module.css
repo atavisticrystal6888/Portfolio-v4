@@ -26,6 +26,20 @@
   line-height: var(--leading-tight);
 }
 
+/* The label's own bottom margin plus the column gap would double the space
+   above the title; the gap alone carries the rhythm. */
+.eyebrow > * {
+  margin-bottom: 0;
+}
+
+.meta {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-label);
+  color: var(--text-muted);
+}
+
 .subtitle {
   font-size: var(--text-lg);
   color: var(--text-muted);

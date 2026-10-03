@@ -1,54 +1,15 @@
-"use client";
+import { getPublicImageSize } from "@/lib/image-size";
+import { ZoomImageButton, type ZoomImageButtonProps } from "./ZoomImageButton";
 
-import { useLightbox, type LightboxItem } from "./Lightbox";
-import styles from "./blocks.module.css";
-
-interface ZoomImageProps {
-  src: string;
-  alt: string;
-  /** Shown under the image in the lightbox. Defaults to alt. */
-  caption?: string;
-  className?: string;
-  loading?: "lazy" | "eager";
-}
+export type ZoomImageProps = ZoomImageButtonProps;
 
 /**
- * An image that opens the case-study lightbox. If the image sits inside an
- * element with `data-lightbox-group`, every ZoomImage in that group becomes a
- * navigable set; otherwise it opens alone.
+ * Server wrapper for the lightbox image. Reads the file's intrinsic size from
+ * `public/` at render time so every case-study image reserves its box before
+ * it loads (no layout shift, and chapter jumps land on the heading). Explicit
+ * `width`/`height` props win over the file header.
  */
-export function ZoomImage({ src, alt, caption, className, loading = "lazy" }: ZoomImageProps) {
-  const lightbox = useLightbox();
-  const resolvedCaption = caption ?? alt;
-
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    if (!lightbox) return;
-    const self = event.currentTarget;
-    const group = self.closest<HTMLElement>("[data-lightbox-group]");
-    const nodes = group
-      ? Array.from(group.querySelectorAll<HTMLButtonElement>("[data-zoom-image]"))
-      : [self];
-    const items: LightboxItem[] = nodes.map((node) => ({
-      src: node.dataset.src ?? "",
-      alt: node.dataset.alt ?? "",
-      caption: node.dataset.caption ?? "",
-    }));
-    lightbox.open(items, Math.max(nodes.indexOf(self), 0));
-  };
-
-  return (
-    <button
-      type="button"
-      className={className ? `${styles.zoom} ${className}` : styles.zoom}
-      onClick={handleClick}
-      data-zoom-image=""
-      data-src={src}
-      data-alt={alt}
-      data-caption={resolvedCaption}
-      aria-label={`Open full-size image: ${alt}`}
-    >
-      {/* eslint-disable-next-line @next/next/no-img-element -- MDX images are arbitrary-size screenshots */}
-      <img src={src} alt={alt} loading={loading} decoding="async" />
-    </button>
-  );
+export function ZoomImage({ width, height, ...rest }: ZoomImageProps) {
+  const size = width && height ? { width, height } : getPublicImageSize(rest.src);
+  return <ZoomImageButton {...rest} width={size?.width} height={size?.height} />;
 }

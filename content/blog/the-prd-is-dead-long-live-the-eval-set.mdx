@@ -2,23 +2,23 @@
 slug: "the-prd-is-dead-long-live-the-eval-set"
 title: "The PRD Is Dead, Long Live the Eval Set"
 date: "2026-09-03"
-updatedDate: null
+updatedDate: "2026-10-03"
 category: "AI"
 tags: ["ai-pm", "llm", "evaluation", "prd", "product-management"]
-readingTime: "6 min read"
-excerpt: "I wrote a PRD that passed review with no blocking comments, and then nobody could tell me whether the feature worked. Prose cannot spec a probabilistic system."
+related: ["shipping-llm-products-eval-harness", "choosing-a-product-without-ai"]
+excerpt: "A PRD can pass review with no blocking comments and still leave nobody able to tell whether the feature works. Prose cannot spec a probabilistic system."
 socialImage: null
 ---
 
 ## The PRD that passed review
 
-I once wrote a PRD I was proud of. Personas, user stories with acceptance criteria, a state for every screen. It went through review without a single blocking comment. It described an AI feature that read a user's input and returned a recommendation.
+Picture a PRD for an AI feature. It is a composite of documents I have read, not one specific spec. It is a good one: personas, user stories with acceptance criteria, a state for every screen. It goes through review without a single blocking comment. It describes a feature that reads a user's input and returns a recommendation.
 
-Then it got built, and nobody could tell me whether it was working.
+Then it gets built, and nobody can say whether it is working.
 
-Not "the metrics were flat". Worse. Every acceptance criterion was satisfied: the output appeared, formatted correctly, in time, with every field the spec demanded. And still, when three of us read the same twenty outputs, we disagreed about four of them. Nothing settled it, because the document had never been asked to.
+Not "the metrics are flat". Worse. Every acceptance criterion is satisfied: the output appears, formatted correctly, in time, with every field the spec demanded. And still, when three people read the same twenty outputs, they disagree about four of them. Nothing settles it, because the document was never asked to.
 
-The PRD was complete. It just wasn't a spec.
+The PRD is complete. It just isn't a spec.
 
 ## What a PRD cannot say about a probabilistic feature
 
@@ -46,15 +46,15 @@ Write those four and you have a spec that verifies itself.
 
 ## What this looked like on Aarchid
 
-On Aarchid, the plant-diagnosis product I co-created with Dilpreet Grover, we built the harness before the feature.
+On Aarchid, the plant-diagnosis product I co-created with Dilpreet Grover, the team ran an offline eval on a golden set. Building the eval set before the feature is the order this post recommends; it is not a claim about the order we followed.
 
-The eval set started as 60 hand-labelled photos: species, condition, severity, recommended action. It now stands at 200 labelled samples across 12 common plant-health failure modes, grown out of things that broke v1. The rubric has four dimensions: diagnostic accuracy, citation fidelity, severity calibration, and latency. They stay separate on purpose, because one collapsed number tells you that you got worse without telling you where.
+The golden set is about 200 hand-labelled samples across 12 common plant-health failure modes, labelled for species, condition, severity and recommended action, none from production traffic (as reported by the team). The rubric has four dimensions: diagnostic accuracy, citation fidelity, severity calibration, and latency. They stay separate on purpose, because one collapsed number tells you that you got worse without telling you where.
 
-The thresholds were the interesting part. 92% diagnosis accuracy on the golden set. 90% of recommendations carrying a peer-reviewed source link. P95 under 10 seconds end to end on the edge. Roughly $0.25 per active user per month. Cost sat on the rubric as a first-class axis, not a footnote, because a diagnosis we cannot afford to serve is not a feature.
+The numbers are where it matters which were which. Two were targets: P95 under 10 seconds end to end on the edge, and a cost ceiling of roughly $0.25 per active user per month. The measured result of the offline eval is withheld here until the eval artefact or my co-builder's confirmation is available. Cost sat beside the rubric as a first-class constraint, not a footnote, because a diagnosis we cannot afford to serve is not a feature.
 
-Then refusal. If the vision model returns low confidence on species identification, Aarchid declines to diagnose rather than guessing. One line in the spec, and it did more for trust than any wording change.
+Then refusal. The spec says that when the vision model returns low confidence on species identification, Aarchid should decline to diagnose rather than guess. One line in the spec; it is a design rule, not a behaviour we have measured in the field.
 
-The honest limit: those numbers come from our golden set, not live user photos, and with no confirm-or-correct loop yet, field accuracy is unmeasured. An eval set tells you what it tested. Claiming more is the same old sin in new clothes.
+The honest limit: an offline eval scores the golden set, not live user photos, and with no confirm-or-correct loop yet, field accuracy is unmeasured. An eval set tells you what it tested. Claiming more is the same old sin in new clothes.
 
 ## The division of labour now
 

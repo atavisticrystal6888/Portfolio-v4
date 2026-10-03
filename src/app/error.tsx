@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect } from "react";
+import { startTransition, useEffect, useRef } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/Button";
 
 interface ErrorProps {
@@ -19,11 +20,26 @@ const SUGGESTED = [
  * render throws, so it keeps the root layout (nav, footer, theme) around it.
  */
 export default function Error({ error, reset }: ErrorProps) {
+  const router = useRouter();
+  const headingRef = useRef<HTMLHeadingElement>(null);
+
   useEffect(() => {
     // The digest is the only handle on the server-side stack, so log the whole
     // error object rather than just its message.
     console.error(error);
+    // Move focus to the explanation so keyboard and screen-reader users are
+    // not left on whatever triggered the failure.
+    headingRef.current?.focus();
   }, [error]);
+
+  // reset() alone only re-renders on the client, so a failed server render
+  // would throw the same cached error again. Refetch the segment first.
+  const retry = () => {
+    startTransition(() => {
+      router.refresh();
+      reset();
+    });
+  };
 
   return (
     <section
@@ -49,7 +65,10 @@ export default function Error({ error, reset }: ErrorProps) {
         Error · Unexpected
       </p>
       <h1
+        ref={headingRef}
+        tabIndex={-1}
         style={{
+          outline: "none",
           fontFamily: "var(--font-display)",
           fontSize: "clamp(1.8rem, 6vw, 2.8rem)",
           lineHeight: 1.15,
@@ -93,7 +112,7 @@ export default function Error({ error, reset }: ErrorProps) {
           flexWrap: "wrap",
         }}
       >
-        <Button onClick={reset}>Try again</Button>
+        <Button onClick={retry}>Try again</Button>
         <Button href="/" variant="secondary">
           Go home
         </Button>

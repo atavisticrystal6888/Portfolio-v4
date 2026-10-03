@@ -17,6 +17,9 @@
 .control {
   display: flex;
   flex-direction: column;
+  /* A two-line label ("Requests per user per month") must not push its
+     slider below the others: labels top, sliders on one baseline. */
+  justify-content: space-between;
   gap: var(--space-2);
 }
 

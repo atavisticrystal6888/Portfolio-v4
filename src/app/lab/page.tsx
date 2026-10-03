@@ -1,5 +1,7 @@
-import { generatePageMetadata, generateBreadcrumbJsonLd } from "@/lib/metadata";
-import { JsonLd } from "@/components/ui/JsonLd";
+import Link from "next/link";
+import { generatePageMetadata } from "@/lib/metadata";
+import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
+import { WhereNext } from "@/components/ui/WhereNext";
 import { LabMatrix } from "@/components/lab/LabMatrix";
 import { SignatureScene } from "@/components/interactive/SignatureScene";
 import { getAllLabIdeas } from "@/lib/content";
@@ -8,26 +10,30 @@ import styles from "./lab.module.css";
 export const metadata = generatePageMetadata({
   title: "Lab",
   description:
-    "A working matrix of product ideas at the intersection of PM and engineering — mapped by category, difficulty, and the PM skill they exercise. Some I'll ship. Most won't. Thinking in public.",
+    "A working matrix of product ideas at the PM and engineering boundary, mapped by category, difficulty and the PM skill each one exercises. Most will not ship.",
   path: "/lab",
 });
 
 export default function LabPage() {
   const ideas = getAllLabIdeas();
 
-  const breadcrumbJsonLd = generateBreadcrumbJsonLd([
-    { name: "Home", url: "/" },
-    { name: "Lab", url: "/lab" },
-  ]);
-
   return (
     <div className={styles.page}>
-      <JsonLd id="lab-breadcrumb-jsonld" data={breadcrumbJsonLd} />
-
       <header className={styles.header}>
         <div className={styles.headerInner}>
-          <SignatureScene variant="ambient" />
-          <p className={styles.kicker}>Ideas in motion</p>
+          {/* Decorative; hidden under 900px, where it sat behind the lede. */}
+          <div className={styles.scene}>
+            <SignatureScene variant="ambient" />
+          </div>
+          {/* Same top line as every PageHeader page: the breadcrumb trail. */}
+          <div className={styles.crumbs}>
+            <Breadcrumbs
+              items={[
+                { name: "Home", href: "/" },
+                { name: "Lab", href: "/lab" },
+              ]}
+            />
+          </div>
           <h1 className={styles.title}>Lab</h1>
           <p className={styles.lede}>
             {/* Explicit space: JSX trims the one that would otherwise sit
@@ -37,6 +43,12 @@ export default function LabPage() {
             maps a real PM skill to a real technical challenge. Most will stay
             ideas. A few will become projects. All of them are me thinking in
             public about what&apos;s worth making.
+          </p>
+          {/* Lab is out of the primary nav; say plainly what this page is
+              and where the built work lives. */}
+          <p className={styles.callout} role="note">
+            These are unbuilt ideas. Built and tested work lives in{" "}
+            <Link href="/projects">Projects</Link>.
           </p>
         </div>
       </header>
@@ -58,10 +70,13 @@ export default function LabPage() {
             >
               ideas.json
             </a>
-            . Want to build one of these together? Let&apos;s talk.
+            . Want to build one of these together?{" "}
+            <Link href="/contact">Let&apos;s talk</Link>.
           </p>
         </div>
       </section>
+
+      <WhereNext />
     </div>
   );
 }

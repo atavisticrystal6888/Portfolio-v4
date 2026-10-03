@@ -157,11 +157,11 @@
   content: "";
   width: 10px; height: 10px;
   border-radius: 50%;
-  background: var(--border-strong);
+  background: var(--text-muted);
   transition: background var(--transition-fast), transform var(--transition-fast);
 }
 
-.dot:hover::after { background: var(--text-muted); }
+.dot:hover::after { background: var(--text); }
 
 .dotActive::after {
   background: var(--accent);

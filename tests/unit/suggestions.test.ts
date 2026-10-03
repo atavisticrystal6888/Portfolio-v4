@@ -15,6 +15,8 @@ function makeProject(overrides: Partial<Project> = {}): Project {
     metricLabel: "Improvement",
     featured: false,
     githubUrl: null,
+    ownership: "Solo",
+    evidenceTier: "built",
     duration: "3 months",
     role: "PM",
     order: 1,

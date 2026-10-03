@@ -35,13 +35,22 @@
   }
 }
 
-.kicker {
-  font-family: var(--font-mono);
-  font-size: var(--text-xs);
-  letter-spacing: var(--tracking-label);
-  text-transform: uppercase;
-  color: var(--accent);
-  margin-bottom: var(--space-3);
+/* The scene wrapper must not become the scene's positioning box (the rule
+   above makes direct children relative), or the absolute scene collapses. */
+.headerInner > .scene {
+  position: static;
+  z-index: auto;
+}
+
+@media (max-width: 899px) {
+  .scene {
+    display: none;
+  }
+}
+
+/* Matches PageHeader's gap between the trail and the h1. */
+.crumbs {
+  margin-bottom: var(--space-4);
 }
 
 .title {
@@ -59,6 +68,25 @@
   color: var(--text-muted);
   max-width: 52ch;
   line-height: var(--leading-body);
+}
+
+/* Status note under the lede: a ruled accent edge, not a banner. */
+.callout {
+  margin-top: var(--space-5);
+  max-width: 52ch;
+  padding: var(--space-3) var(--space-4);
+  border-left: 2px solid var(--accent);
+  background: var(--accent-subtle);
+  font-size: var(--text-sm);
+  color: var(--text-body);
+  line-height: var(--leading-body);
+}
+
+.callout a {
+  color: var(--accent);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }
 
 .section {

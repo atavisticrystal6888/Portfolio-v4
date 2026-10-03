@@ -1,8 +1,8 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useRef, useEffect } from "react";
 import { debounce } from "@/lib/utils";
-import type { BlogArticle } from "@/types/blog";
+import type { BlogSummary } from "@/lib/blog-summary";
 import { ListRows } from "@/components/ui/ListRow";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { BlogCard } from "./BlogCard";
@@ -11,7 +11,7 @@ import styles from "./BlogSearch.module.css";
 const CATEGORIES = ["All", "Product", "Data", "AI", "Career"];
 
 interface BlogSearchProps {
-  posts: BlogArticle[];
+  posts: BlogSummary[];
 }
 
 export function BlogSearch({ posts }: BlogSearchProps) {
@@ -20,6 +20,12 @@ export function BlogSearch({ posts }: BlogSearchProps) {
   // The search box is uncontrolled so the debounce doesn't fight the keystroke;
   // bumping this key remounts it, which is how "Clear search" empties the field.
   const [inputKey, setInputKey] = useState(0);
+  const searchRef = useRef<HTMLInputElement>(null);
+  // Clear search unmounts its own button; without this focus fell to <body>.
+  // Only after a clear (inputKey > 0), never on first render.
+  useEffect(() => {
+    if (inputKey > 0) searchRef.current?.focus();
+  }, [inputKey]);
 
   const filtered = useMemo(() => {
     let result = posts;
@@ -60,16 +66,23 @@ export function BlogSearch({ posts }: BlogSearchProps) {
   return (
     <div className={styles.wrapper}>
       <div className={styles.controls}>
-        <div className={styles.categories}>
-          {CATEGORIES.map((cat) => (
-            <button
-              key={cat}
-              className={`${styles.pill} ${activeCategory === cat ? styles.active : ""}`}
-              onClick={() => setActiveCategory(cat)}
-            >
-              {cat}
-            </button>
-          ))}
+        {/* Single-select toggle buttons: aria-pressed carries the active
+            category to assistive tech, which the old class-only state did not. */}
+        <div className={styles.categories} role="group" aria-label="Filter articles by category">
+          {CATEGORIES.map((cat) => {
+            const isActive = activeCategory === cat;
+            return (
+              <button
+                key={cat}
+                type="button"
+                aria-pressed={isActive}
+                className={`${styles.pill} ${isActive ? styles.active : ""}`}
+                onClick={() => setActiveCategory(cat)}
+              >
+                {cat}
+              </button>
+            );
+          })}
         </div>
         <div className={styles.searchWrap}>
           <svg className={styles.searchIcon} width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
@@ -78,6 +91,7 @@ export function BlogSearch({ posts }: BlogSearchProps) {
           </svg>
           <input
             key={inputKey}
+            ref={searchRef}
             type="search"
             className={styles.search}
             placeholder="Search articles..."
@@ -86,6 +100,12 @@ export function BlogSearch({ posts }: BlogSearchProps) {
           />
         </div>
       </div>
+
+      {/* Persistent live region so each category or search change is announced
+          as a count; the empty state below keeps its own role="status". */}
+      <p className={styles.srOnly} role="status" aria-live="polite" aria-atomic="true">
+        {filtered.length === 1 ? "1 article shown" : `${filtered.length} articles shown`}
+      </p>
 
       {filtered.length > 0 ? (
         <ListRows>

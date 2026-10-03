@@ -1,0 +1,114 @@
+/* Full-bleed ruled band, same grammar as the home and AI PM sections. */
+.band {
+  width: 100%;
+  border-top: var(--rule-strong);
+  padding: var(--space-8) 0 var(--space-10);
+}
+
+.inner {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 0 var(--space-6);
+  width: 100%;
+}
+
+.list {
+  list-style: none;
+  padding: 0;
+  margin: var(--space-5) 0 0;
+  display: grid;
+  grid-template-columns: 1fr;
+  border-top: var(--hairline);
+}
+
+@media (min-width: 768px) {
+  .list {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+/* Each destination is a ruled cell; the whole cell is the click target via
+   the link's stretched ::after, but only the destination is its name. */
+.item {
+  position: relative;
+  padding: var(--space-5) 0;
+  border-bottom: var(--hairline);
+}
+
+@media (min-width: 768px) {
+  .item {
+    padding: var(--space-5) var(--space-5) var(--space-6);
+    border-bottom: none;
+  }
+
+  .item + .item {
+    border-left: var(--hairline);
+  }
+
+  .item:first-child {
+    padding-left: 0;
+  }
+}
+
+.item:hover .link {
+  color: var(--accent);
+}
+
+.link {
+  display: inline-flex;
+  align-items: baseline;
+  gap: var(--space-2);
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  font-weight: 700;
+  letter-spacing: var(--tracking-tight);
+  color: var(--text-strong);
+  text-decoration: none;
+}
+
+.link::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+}
+
+.arrow {
+  color: var(--accent);
+  transition: transform var(--transition-fast);
+}
+
+.item:hover .arrow {
+  transform: translateX(3px);
+}
+
+.link:focus-visible {
+  outline: none;
+}
+
+.link:focus-visible::after {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
+}
+
+.desc {
+  margin-top: var(--space-2);
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+  line-height: var(--leading-body);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .arrow {
+    transition: none;
+  }
+
+  .item:hover .arrow {
+    transform: none;
+  }
+}
+
+@media print {
+  .band {
+    display: none;
+  }
+}

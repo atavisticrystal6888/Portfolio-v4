@@ -140,3 +140,74 @@ describe("getAllTestimonials", () => {
     expect(testimonials[0]!.name).toBe("Alice");
   });
 });
+
+describe("slug lookups are exact-match", () => {
+  it("a case variant of a real slug is not found (no NTFS case folding)", async () => {
+    const { getCaseStudyBySlug, getBlogPostBySlug } = await import("@/lib/content");
+    expect(getCaseStudyBySlug("test")).not.toBeNull();
+    expect(getCaseStudyBySlug("Test")).toBeNull();
+    expect(getBlogPostBySlug("test")).not.toBeNull();
+    expect(getBlogPostBySlug("TEST")).toBeNull();
+  });
+});
+
+describe("blog reading time", () => {
+  it("is computed from the body at 200 words a minute, rounded up", async () => {
+    const { readingTimeFor, READING_WPM } = await import("@/lib/content");
+    expect(READING_WPM).toBe(200);
+    const words = (n: number) => Array.from({ length: n }, () => "word").join(" ");
+    expect(readingTimeFor(words(200))).toBe("1 min read");
+    expect(readingTimeFor(words(201))).toBe("2 min read");
+    expect(readingTimeFor("")).toBe("1 min read");
+  });
+
+  it("does not count link targets or table separator rows as words", async () => {
+    const { readingTimeFor } = await import("@/lib/content");
+    const url = Array.from({ length: 300 }, (_, i) => `seg${i}`).join("/");
+    expect(readingTimeFor(`[one](/${url})`)).toBe("1 min read");
+    const rule = Array.from({ length: 300 }, () => "---").join("|");
+    expect(readingTimeFor(`|${rule}|`)).toBe("1 min read");
+  });
+
+  it("overrides any readingTime in frontmatter", async () => {
+    vi.mocked(fs).readFileSync.mockImplementation(() =>
+      `---\nslug: test\ntitle: Test\nreadingTime: 9 min read\n---\n${"word ".repeat(450)}`
+    );
+    const { getBlogPostBySlug } = await import("@/lib/content");
+    expect(getBlogPostBySlug("test")!.readingTime).toBe("3 min read");
+  });
+});
+
+describe("pickRelatedPosts", () => {
+  type Post = import("@/types/blog").BlogArticle;
+  const post = (slug: string, extra: Partial<Post> = {}): Post => ({
+    slug,
+    title: slug,
+    date: "2026-01-01",
+    updatedDate: null,
+    category: "Product",
+    tags: [],
+    readingTime: "1 min read",
+    excerpt: "",
+    socialImage: null,
+    content: "",
+    ...extra,
+  });
+
+  it("uses the curated list first, in order, and skips unknown slugs", async () => {
+    const { pickRelatedPosts } = await import("@/lib/content");
+    const all = [post("a", { related: ["missing", "c", "b"] }), post("b"), post("c"), post("d")];
+    expect(pickRelatedPosts(all[0]!, all).map((p) => p.slug)).toEqual(["c", "b"]);
+  });
+
+  it("fills gaps by tag overlap and never returns the current post", async () => {
+    const { pickRelatedPosts } = await import("@/lib/content");
+    const all = [
+      post("a", { tags: ["x"], related: ["b"] }),
+      post("b"),
+      post("c", { tags: ["y"] }),
+      post("d", { tags: ["x"] }),
+    ];
+    expect(pickRelatedPosts(all[0]!, all).map((p) => p.slug)).toEqual(["b", "d"]);
+  });
+});

@@ -1,11 +1,11 @@
 import styles from "./Achievements.module.css";
 
 const ITEMS = [
-  { title: "Techstars Startup Weekend", desc: "1st Place — Built and pitched an ed-tech MVP in 54 hours." },
-  { title: "Code Clash Hackathon", desc: "Winner — Full-stack e-commerce solution in 24 hours." },
-  { title: "Smart India Hackathon", desc: "National Finalist — AI-based student assessment platform." },
-  { title: "Innovation Council Secretary", desc: "Led 15+ tech events and workshops for 500+ students." },
-  { title: "Event Organizer", desc: "Organized college tech fest with 1000+ participants." },
+  // Worded exactly as the resume has them (claim-gates F8;
+  // content/resume/dhruv-singhal-ai-pm.md lists the Code Clash entry).
+  { title: "Techstars Startup Weekend (DTU)", desc: "3rd Place — Led problem discovery, market sizing, GTM and the pitch for a job-matching platform." },
+  { title: "Smart India Hackathon", desc: "Top 5." },
+  { title: "Code Clash (VIT Vellore)", desc: "Top 10." },
 ];
 
 export function Achievements() {

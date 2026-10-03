@@ -1,14 +1,16 @@
 ---
 slug: "choosing-a-product-without-ai"
 title: "Choosing a Product Without AI in It"
-date: "2026-09-02"
-updatedDate: null
+date: "2026-09-03"
+updatedDate: "2026-10-02"
 category: "AI"
 tags: ["ai-pm", "prioritisation", "product-strategy", "side-projects", "decision-making"]
-readingTime: "6 min read"
+related: ["cohorts-before-dashboards", "the-prd-is-dead-long-live-the-eval-set"]
 excerpt: "I ranked my next side project on five criteria. The AI-heavy ideas scored highest on excitement and lowest on everything that predicts a finished tool."
 socialImage: null
 ---
+
+I picked a side project with no model in it. Here is the scoring that got me there, and the row where reasoning overruled the score.
 
 ## The shortlist, first pass
 
@@ -22,7 +24,11 @@ Two of those three had a model at the centre. They were also the two I most want
 
 The scoring was deliberately boring. Every candidate took a one-to-five score on five criteria, and only ideas scoring four or better on **One-shot fit** and **Not saturated** made the shortlist.
 
-**Gap fill** asked whether the idea covered a hole in my existing roster, which leans on developer infrastructure and personal productivity and is thin on anything a growth team would open twice. **One-shot fit** asked whether it sat inside the build envelope: no auth, no billing, a single deployable. **Users in 4 weeks** asked whether I already had a channel reaching thirty or so real people, because a live URL with a few dozen users beats a polished demo with none. **Defensible insight** asked whether there was a non-obvious product decision I could be interviewed on. **Not saturated** asked whether the research had actually found incumbents doing exactly this.
+- **Gap fill** asked whether the idea covered a hole in my existing roster, which leans on developer infrastructure and personal productivity and is thin on anything a growth team would open twice.
+- **One-shot fit** asked whether it sat inside the build envelope: no auth, no billing, a single deployable.
+- **Users in 4 weeks** asked whether I already had a channel to real users through a small personal network, because a live URL with a few dozen users beats a polished demo with none.
+- **Defensible insight** asked whether there was a non-obvious product decision I could be interviewed on.
+- **Not saturated** asked whether the research had actually found incumbents doing exactly this.
 
 Notice what is missing. Nothing rewards a product for being technically interesting, or for using a model. Every criterion asks whether the thing gets finished, gets used, and can be defended out loud.
 
@@ -40,7 +46,9 @@ The fourth is trust, and it decided the question. The research flagged that revi
 
 ## The winner has no model in it
 
-The pick is a Cohort and Retention Studio. Drop an orders CSV into the browser and get cohort retention curves, repeat purchase rate, time to second order, lifetime value by first product, and a free-shipping threshold what-if. Nothing is uploaded to a server. The users are growth people and founders at brands on WooCommerce, Amazon, Dukaan or Shopify Basic, and the gap check came back open and verified: Lifetimely, Peel and Polar all need a Shopify install and charge hundreds of dollars a month, with no free CSV-only alternative found. It has a wow moment on the user's own data, a monthly reason to return, and a privacy line operators respond to.
+The pick is a Cohort and Retention Studio. Drop an orders CSV into the browser and get cohort retention curves, repeat purchase rate, time to second order, lifetime value by first product, and a free-shipping threshold what-if. Nothing is uploaded to a server. The intended users are growth people and founders at brands on WooCommerce, Amazon, Dukaan or Shopify Basic, and the gap check came back open and verified: Lifetimely, Peel and Polar all need a Shopify install and charge hundreds of dollars a month, with no free CSV-only alternative found. It has a wow moment on the user's own data, a monthly reason to return, and a privacy line I expect operators to care about (untested).
+
+*Update, 30 Sep 2026:* the build is written up as a [case study](/projects/cohort-retention-studio). It is ready for a local pilot, with no hosted pilot verified and no users yet, so the one-month users goal above was missed.
 
 ## Before and after
 
@@ -54,7 +62,7 @@ Totals are the sum of the five criteria, out of 25.
 | Eval Workbench, no LLM | not scored | 2nd at 20 |
 | Cohort and repeat-purchase analyser | not scored | 3rd at 18, then the flagship pick |
 
-The third row is the honest part. The rescored winner survived a day before I argued myself out of it: the risk band is a network-data problem incumbents win by construction, the decision point lives inside checkout where a standalone tool cannot reach, and usage would be occasional and bulk, with no retention signal. Scoring got it wrong, and reasoning corrected the score.
+The third row is the honest part. The rescored winner did not survive the day: I argued myself out of it within hours. The risk band is a network-data problem incumbents win by construction, the decision point lives inside checkout where a standalone tool cannot reach, and usage would be occasional and bulk, with no retention signal. Scoring got it wrong, and reasoning corrected the score.
 
 ## What this means for an AI PM
 

@@ -1,7 +1,9 @@
-import { generatePageMetadata, generateBreadcrumbJsonLd } from "@/lib/metadata";
-import { JsonLd } from "@/components/ui/JsonLd";
+import { generatePageMetadata } from "@/lib/metadata";
 import { SectionLabel } from "@/components/ui/SectionLabel";
+import { PageHeader } from "@/components/ui/PageHeader";
+import { WhereNext } from "@/components/ui/WhereNext";
 import styles from "@/styles/content-page.module.css";
+import local from "./bookshelf.module.css";
 
 export const metadata = generatePageMetadata({
   title: "Bookshelf",
@@ -27,7 +29,7 @@ const CURRENT: Book[] = [
   {
     title: "Thinking in Systems",
     author: "Donella Meadows",
-    note: "Feedback loops, leverage points, and why most 'metrics that matter' are the wrong metric. Keeps me honest when modelling churn.",
+    note: "Feedback loops, leverage points, and why most 'metrics that matter' are the wrong metric. Keeps me honest when defining retention metrics.",
     status: "reading",
   },
 ];
@@ -41,7 +43,7 @@ const SHAPED_ME: Book[] = [
   {
     title: "Good Strategy / Bad Strategy",
     author: "Richard Rumelt",
-    note: "'Strategy is the application of strength against weakness.' I still use the diagnosis → guiding policy → coherent actions frame in every PRD.",
+    note: "'Strategy is the application of strength against weakness.' I still use the diagnosis → guiding policy → coherent actions frame in my PRDs.",
   },
   {
     title: "Measure What Matters",
@@ -51,7 +53,7 @@ const SHAPED_ME: Book[] = [
   {
     title: "High Output Management",
     author: "Andrew Grove",
-    note: "The operations manual for anyone who ships things through other people. Re-read every 18 months.",
+    note: "The operations manual for anyone who ships things through other people.",
   },
   {
     title: "Designing Data-Intensive Applications",
@@ -61,7 +63,7 @@ const SHAPED_ME: Book[] = [
   {
     title: "The Mom Test",
     author: "Rob Fitzpatrick",
-    note: "How to do customer research without flattering yourself. Short, sharp, and I quote it weekly.",
+    note: "How to do customer research without flattering yourself. Short, sharp, and I come back to it often.",
   },
 ];
 
@@ -88,14 +90,14 @@ function Shelf({ books }: { books: Book[] }) {
     <div className={styles.cardGrid}>
       {books.map((b) => (
         <div key={b.title} className={styles.card}>
-          <h3>
-            {b.title}
-            {b.status === "reading" && (
+          <h3>{b.title}</h3>
+          {b.status === "reading" && (
+            <p className={local.statusRow}>
               <span className={styles.badge}>Reading</span>
-            )}
-          </h3>
+            </p>
+          )}
           <p>
-            <strong style={{ color: "var(--text)" }}>{b.author}</strong>
+            <strong className={styles.cardAuthor}>{b.author}</strong>
             <br />
             {b.note}
           </p>
@@ -106,45 +108,48 @@ function Shelf({ books }: { books: Book[] }) {
 }
 
 export default function BookshelfPage() {
-  const breadcrumbJsonLd = generateBreadcrumbJsonLd([
-    { name: "Home", url: "/" },
-    { name: "Bookshelf", url: "/bookshelf" },
-  ]);
-
   return (
     <div className={styles.page}>
-      <JsonLd id="bookshelf-breadcrumb-jsonld" data={breadcrumbJsonLd} />
+      <PageHeader
+        breadcrumbs={[
+          { name: "Home", href: "/" },
+          { name: "Bookshelf", href: "/bookshelf" },
+        ]}
+        title="Bookshelf"
+        subtitle="The books I credit for shaping how I think about product, systems, and building. Not a reading list — a working bibliography."
+      />
 
-      <p className={styles.kicker}>Reading</p>
-      <h1 className={styles.title}>Bookshelf</h1>
-      <p className={styles.lede}>
-        The books I credit for shaping how I think about product, systems, and
-        building. Not a reading list — a working bibliography.
-      </p>
+      <section className={styles.section}>
+        <div className={styles.inner}>
+          <SectionLabel>Currently Reading</SectionLabel>
+          <h2 className={styles.sectionTitle}>On my desk right now</h2>
+          <Shelf books={CURRENT} />
+        </div>
+      </section>
 
-      <div className={styles.section}>
-        <SectionLabel>Currently Reading</SectionLabel>
-        <h2 className={styles.sectionTitle}>On my desk right now</h2>
-        <Shelf books={CURRENT} />
-      </div>
+      <section className={styles.section}>
+        <div className={styles.inner}>
+          <SectionLabel>Foundation</SectionLabel>
+          <h2 className={styles.sectionTitle}>Books that shaped me</h2>
+          <Shelf books={SHAPED_ME} />
+        </div>
+      </section>
 
-      <div className={styles.section}>
-        <SectionLabel>Foundation</SectionLabel>
-        <h2 className={styles.sectionTitle}>Books that shaped me</h2>
-        <Shelf books={SHAPED_ME} />
-      </div>
+      <section className={styles.section}>
+        <div className={styles.inner}>
+          <SectionLabel>Queue</SectionLabel>
+          <h2 className={styles.sectionTitle}>Next up</h2>
+          <Shelf books={NEXT_UP} />
 
-      <div className={styles.section}>
-        <SectionLabel>Queue</SectionLabel>
-        <h2 className={styles.sectionTitle}>Next up</h2>
-        <Shelf books={NEXT_UP} />
-      </div>
+          <p className={styles.note}>
+            Think I&apos;m missing one?{" "}
+            <a href="mailto:dhruvsinghal6888@gmail.com">Tell me</a> — reading
+            recommendations are welcome currency.
+          </p>
+        </div>
+      </section>
 
-      <p className={styles.note}>
-        Think I&apos;m missing one?{" "}
-        <a href="mailto:dhruvsinghal6888@gmail.com">Tell me</a> — reading
-        recommendations are welcome currency.
-      </p>
+      <WhereNext />
     </div>
   );
 }

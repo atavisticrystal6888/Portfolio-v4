@@ -80,7 +80,6 @@ const QUERY = `
 const REPO_SLUG_MAP: Record<string, string> = {
   "aarchid-api": "aarchid",
   "hackmate-rework": "hackmate",
-  "customer-churn-analysis": "churn-analysis",
   "tcs-nqt-prep-hub": "tcs-nqt-prep-hub",
   "kite-edge": "kite-edge",
   "portfolio-v4": "portfolio-site",

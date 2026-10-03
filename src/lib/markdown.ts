@@ -16,7 +16,7 @@ export function markdownToHtml(md: string): string {
   const codeBlocks: string[] = [];
   html = html.replace(/```(\w*)\n([\s\S]*?)```/g, (_m, lang: string, code: string) => {
     codeBlocks.push(
-      `<pre tabindex="0"><code class="language-${lang}">${escapeHtml(code.trim())}</code></pre>`
+      `<pre tabindex="0" role="group" aria-label="Code sample"><code class="language-${lang}">${escapeHtml(code.trim())}</code></pre>`
     );
     // Starts with "<", so the paragraph pass leaves it alone.
     return `<codeblock data-i="${codeBlocks.length - 1}"></codeblock>`;
@@ -40,11 +40,13 @@ export function markdownToHtml(md: string): string {
     return `<a href="${href}"${attrs}>${text}</a>`;
   });
 
-  // Headings
-  html = html.replace(/^#### (.+)$/gm, "<h4>$1</h4>");
-  html = html.replace(/^### (.+)$/gm, "<h3>$1</h3>");
-  html = html.replace(/^## (.+)$/gm, "<h2>$1</h2>");
-  html = html.replace(/^# (.+)$/gm, "<h1>$1</h1>");
+  // Headings, each fenced as its own block. A line written directly under a
+  // heading ("### Rubric\nThe axes…") used to share the heading's block, so
+  // the paragraph pass skipped it and the text was left outside any <p>.
+  html = html.replace(/^#### (.+)$/gm, "\n<h4>$1</h4>\n");
+  html = html.replace(/^### (.+)$/gm, "\n<h3>$1</h3>\n");
+  html = html.replace(/^## (.+)$/gm, "\n<h2>$1</h2>\n");
+  html = html.replace(/^# (.+)$/gm, "\n<h1>$1</h1>\n");
 
   // Horizontal rules
   html = html.replace(/^---$/gm, "<hr />");
@@ -99,29 +101,45 @@ export function markdownToHtml(md: string): string {
         tableHtml += '</tr>';
       }
       tableHtml += '</tbody></table>';
-      return tableHtml;
+      // Fenced by blank lines: the row pattern swallows the newline after the
+      // last row, so prose right below a table used to share its block and
+      // was left bare, outside any <p>.
+      return `\n\n${tableHtml}\n\n`;
     }
   );
 
+  // Lists. Each list is emitted as its own block, fenced by blank lines and
+  // with no newlines inside it. Prose written directly above or below a list
+  // ("It means:\n- a") used to share the list's paragraph block, so the
+  // paragraph pass wrapped the list in <p> and joined every line with <br />.
+  // The trailing newline the item patterns consume also swallowed the blank
+  // line after a list, so the next paragraph lost its <p>.
+  const listBlock = (tag: "ul" | "ol", items: string) =>
+    `\n\n<${tag}>${items.replace(/\n/g, "")}</${tag}>\n\n`;
+
   // Unordered lists
   html = html.replace(/^- (.+)$/gm, "<li>$1</li>");
-  html = html.replace(/((?:<li>.*<\/li>\n?)+)/g, "<ul>$1</ul>");
+  html = html.replace(/((?:<li>.*<\/li>\n?)+)/g, (match: string) => listBlock("ul", match));
 
   // Ordered lists - wrap consecutive numbered lines in <ol>
-  html = html.replace(/((?:^\d+\. .+$\n?)+)/gm, (match) => {
-    const items = match.replace(/^\d+\. (.+)$/gm, "<li>$1</li>");
-    return `<ol>${items}</ol>`;
-  });
+  html = html.replace(/((?:^\d+\. .+$\n?)+)/gm, (match: string) =>
+    listBlock("ol", match.replace(/^\d+\. (.+)$/gm, "<li>$1</li>"))
+  );
 
   // Paragraphs - wrap remaining text blocks
   html = html
-    .split("\n\n")
+    .split(/\n{2,}/)
     .map((block) => {
       const trimmed = block.trim();
       if (!trimmed) return "";
-      if (/^<[a-z]/.test(trimmed)) return trimmed; // Already an HTML element
+      // Only real block elements skip wrapping. Inline markup at the start
+      // of a paragraph (<strong>, <em>, <a>) used to match a bare "<[a-z]"
+      // test, so bold-led paragraphs lost their <p> and consecutive ones
+      // collapsed into one run-on block.
+      if (BLOCK_START.test(trimmed)) return trimmed;
       return `<p>${trimmed.replace(/\n/g, "<br />")}</p>`;
     })
+    .filter(Boolean)
     .join("\n");
 
   // Put the code back now that no transform can reach into it.
@@ -144,11 +162,21 @@ export function markdownToHtml(md: string): string {
  * which silently drops the emphasis pass over that whole span.
  */
 function replaceOutsideTags(html: string, transform: (text: string) => string): string {
-  return html
-    .split(/(<\/?[a-zA-Z][^>]*>)/)
-    .map((segment, i) => (i % 2 === 1 ? segment : transform(segment)))
-    .join("");
+  // Tags are masked rather than split on, so an emphasis span can wrap a
+  // link: "*see [x](y) here*" must become <em>see <a>x</a> here</em>, which
+  // a per-segment pass never matched. The mask holds no "*" or "_", so hrefs
+  // and attributes still cannot be touched.
+  const tags: string[] = [];
+  const masked = html.replace(/<\/?[a-zA-Z][^>]*>/g, (tag) => {
+    tags.push(tag);
+    return `\u0001${tags.length - 1}\u0001`;
+  });
+  return transform(masked).replace(/\u0001(\d+)\u0001/g, (_m, i: string) => tags[Number(i)] ?? "");
 }
+
+/** Block-level openers (and closers) that must not be wrapped in <p>. */
+const BLOCK_START =
+  /^<\/?(?:p|h[1-6]|ul|ol|li|pre|blockquote|table|thead|tbody|tr|div|figure|figcaption|hr|details|summary|section|codeblock)\b/i;
 
 function escapeHtml(text: string): string {
   return text

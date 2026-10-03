@@ -1,0 +1,89 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="750" viewBox="0 0 1200 750" role="img" aria-labelledby="bh-title bh-desc">
+  <title id="bh-title">Better-Half demo mock-up with fake data: Person A and Person B daily views side by side</title>
+  <desc id="bh-desc">An illustrative mock-up, not a screenshot. Left panel, Person A: a cycle phase estimate, a daily check-in, per-category sharing dials and one suggestion with feedback buttons. Right panel, Person B: their own state, guidance keyed on it, only the categories Person A chose to share, and a shared weekly retro. A badge reads DEMO DATA. All values are invented.</desc>
+  <style>
+    text { font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; fill: #1f2328; }
+    .muted { fill: #555b63; }
+    .small { font-size: 15px; }
+    .label { font-size: 13px; letter-spacing: 0.08em; font-weight: 600; fill: #555b63; }
+    .tile-title { font-size: 19px; font-weight: 600; }
+    .panel-title { font-size: 26px; font-weight: 700; }
+    .chip-text { font-size: 14px; font-weight: 600; }
+  </style>
+
+  <!-- Frame -->
+  <rect x="0.5" y="0.5" width="1199" height="749" rx="24" fill="#e8e6e1" stroke="#a9a49b"/>
+
+  <!-- Header -->
+  <text x="40" y="62" font-size="28" font-weight="700">Better-Half · Today</text>
+  <text x="40" y="88" class="small muted">Illustrative mock-up. Every name and value on this card is invented.</text>
+  <g>
+    <rect x="964" y="34" width="196" height="46" rx="23" fill="#2b2f36"/>
+    <text x="1062" y="64" text-anchor="middle" font-size="18" font-weight="800" letter-spacing="0.14em" style="fill:#ffffff">DEMO DATA</text>
+  </g>
+
+  <!-- Person A panel -->
+  <rect x="40" y="112" width="540" height="598" rx="18" fill="#f6f5f2" stroke="#bdb8af"/>
+  <text x="68" y="158" class="panel-title">Person A</text>
+  <text x="68" y="182" class="small muted">Her view: her data, her sharing choices</text>
+
+  <rect x="64" y="204" width="492" height="96" rx="12" fill="#ffffff" stroke="#cfcac1"/>
+  <text x="84" y="232" class="label">CYCLE</text>
+  <text x="84" y="260" class="tile-title">Luteal phase · day 22 (estimate)</text>
+  <text x="84" y="284" class="small muted">Window widens while cycles vary. Not for fertility planning.</text>
+
+  <rect x="64" y="314" width="492" height="96" rx="12" fill="#ffffff" stroke="#cfcac1"/>
+  <text x="84" y="342" class="label">DAILY CHECK-IN</text>
+  <text x="84" y="370" class="tile-title">Mood: steady · Stress: low · Energy: ok</text>
+  <rect x="84" y="384" width="440" height="10" rx="5" fill="#dcd8d0"/>
+  <rect x="84" y="384" width="300" height="10" rx="5" fill="#5f7f7a"/>
+
+  <rect x="64" y="424" width="492" height="120" rx="12" fill="#ffffff" stroke="#cfcac1"/>
+  <text x="84" y="452" class="label">SHARING DIALS</text>
+  <rect x="84" y="468" width="92" height="30" rx="15" fill="#5f7f7a"/>
+  <text x="130" y="488" text-anchor="middle" class="chip-text" style="fill:#ffffff">Mood</text>
+  <rect x="186" y="468" width="100" height="30" rx="15" fill="#5f7f7a"/>
+  <text x="236" y="488" text-anchor="middle" class="chip-text" style="fill:#ffffff">Energy</text>
+  <rect x="296" y="468" width="92" height="30" rx="15" fill="none" stroke="#8a857c" stroke-dasharray="4 3"/>
+  <text x="342" y="488" text-anchor="middle" class="chip-text muted">Cycle</text>
+  <rect x="398" y="468" width="112" height="30" rx="15" fill="none" stroke="#8a857c" stroke-dasharray="4 3"/>
+  <text x="454" y="488" text-anchor="middle" class="chip-text muted">Journal</text>
+  <text x="84" y="526" class="small muted">Filled = shared with Person B. Revocable any time.</text>
+
+  <rect x="64" y="558" width="492" height="128" rx="12" fill="#ffffff" stroke="#cfcac1"/>
+  <text x="84" y="586" class="label">SUGGESTION FOR TODAY</text>
+  <text x="84" y="614" class="tile-title">A short walk after lunch</text>
+  <rect x="84" y="634" width="96" height="32" rx="8" fill="#ece9e3" stroke="#bdb8af"/>
+  <text x="132" y="655" text-anchor="middle" class="chip-text">Helped</text>
+  <rect x="190" y="634" width="80" height="32" rx="8" fill="#ece9e3" stroke="#bdb8af"/>
+  <text x="230" y="655" text-anchor="middle" class="chip-text">Meh</text>
+  <rect x="280" y="634" width="90" height="32" rx="8" fill="#ece9e3" stroke="#bdb8af"/>
+  <text x="325" y="655" text-anchor="middle" class="chip-text">Worse</text>
+
+  <!-- Person B panel -->
+  <rect x="620" y="112" width="540" height="598" rx="18" fill="#f6f5f2" stroke="#bdb8af"/>
+  <text x="648" y="158" class="panel-title">Person B</text>
+  <text x="648" y="182" class="small muted">His view: keyed on his own state</text>
+
+  <rect x="644" y="204" width="492" height="96" rx="12" fill="#ffffff" stroke="#cfcac1"/>
+  <text x="664" y="232" class="label">YOUR STATE</text>
+  <text x="664" y="260" class="tile-title">Sleep 6.5 h · Stress: medium</text>
+  <text x="664" y="284" class="small muted">Check-in done in under 30 seconds.</text>
+
+  <rect x="644" y="314" width="492" height="96" rx="12" fill="#ffffff" stroke="#cfcac1"/>
+  <text x="664" y="342" class="label">TODAY FOR YOU</text>
+  <text x="664" y="370" class="tile-title">Keep the evening call short and warm</text>
+  <text x="664" y="394" class="small muted">Ranked by your past feedback, not a hidden model.</text>
+
+  <rect x="644" y="424" width="492" height="120" rx="12" fill="#ffffff" stroke="#cfcac1"/>
+  <text x="664" y="452" class="label">SHARED BY PERSON A</text>
+  <text x="664" y="480" class="tile-title">Mood: steady · Energy: ok</text>
+  <rect x="664" y="496" width="452" height="32" rx="8" fill="#ece9e3" stroke="#bdb8af" stroke-dasharray="4 3"/>
+  <text x="680" y="517" class="small muted">Cycle and journal: not shared, so not readable here</text>
+
+  <rect x="644" y="558" width="492" height="128" rx="12" fill="#ffffff" stroke="#cfcac1"/>
+  <text x="664" y="586" class="label">US</text>
+  <text x="664" y="614" class="tile-title">Weekly retro on Sunday</text>
+  <text x="664" y="640" class="small muted">2 appreciations queued · 1 scheduled note</text>
+  <text x="664" y="664" class="small muted">"I can give / I need" exchange: updated this week</text>
+</svg>

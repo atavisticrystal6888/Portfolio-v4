@@ -23,6 +23,8 @@ const eslintConfig = defineConfig([
     // and it carries its own conventions. Lint would fail CI the moment this
     // directory were committed.
     ".claude/**",
+    // Gitignored audit scratch (probe scripts, captures) — not application code.
+    "tmp/**",
   ]),
 ]);
 

@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useState, type KeyboardEvent } from "react";
 import styles from "./EvalHarnessDemo.module.css";
 
 /** A single test case in the "golden set". */
@@ -24,7 +24,7 @@ type ModelId = "v1-baseline" | "v2-grounded";
 
 const MODELS: { id: ModelId; name: string; tag: string }[] = [
   { id: "v1-baseline", name: "v1 · vision-only", tag: "Gemini 1.5 Pro, no retrieval" },
-  { id: "v2-grounded", name: "v2 · grounded", tag: "+ Exa AI API citations" },
+  { id: "v2-grounded", name: "v2 · grounded", tag: "+ web research citations" },
 ];
 
 /** Hand-picked plant-diagnosis cases, mirroring the kind of golden set used on Aarchid. */
@@ -62,7 +62,8 @@ const GOLDEN_SET: GoldenCase[] = [
     expected: "Insufficient light",
     outputs: {
       "v1-baseline": { label: "Insufficient light", confidence: 0.83, latencyMs: 1550, cited: false },
-      "v2-grounded": { label: "Insufficient light", confidence: 0.92, latencyMs: 2640, cited: true },
+      // 0.93, not 0.92: no illustrative value may echo the withheld Aarchid figure.
+      "v2-grounded": { label: "Insufficient light", confidence: 0.93, latencyMs: 2640, cited: true },
     },
   },
   {
@@ -94,7 +95,9 @@ function isMatch(expected: string, actual: string) {
 }
 
 export function EvalHarnessDemo() {
-  const [modelId, setModelId] = useState<ModelId>("v2-grounded");
+  // Opens on the v1 baseline: a perfect 6/6 as the first thing a visitor
+  // sees, read as Aarchid's own result (which is withheld).
+  const [modelId, setModelId] = useState<ModelId>("v1-baseline");
   const [threshold, setThreshold] = useState(0.7);
 
   const results = useMemo(() => {
@@ -118,16 +121,40 @@ export function EvalHarnessDemo() {
     return { total, passes, accuracy, avgLatency, avgConfidence };
   }, [results]);
 
+  const onRadioKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
+    const step =
+      e.key === "ArrowRight" || e.key === "ArrowDown"
+        ? 1
+        : e.key === "ArrowLeft" || e.key === "ArrowUp"
+          ? -1
+          : 0;
+    if (step === 0) return;
+    e.preventDefault();
+    const current = MODELS.findIndex((m) => m.id === modelId);
+    const next = MODELS[(current + step + MODELS.length) % MODELS.length]!;
+    setModelId(next.id);
+    e.currentTarget.querySelector<HTMLButtonElement>(`[data-model="${next.id}"]`)?.focus();
+  };
+
   return (
     <div className={styles.harness} role="region" aria-label="Eval harness demo">
       <div className={styles.controls}>
-        <div className={styles.modelToggle} role="radiogroup" aria-label="Model version">
+        <div
+          className={styles.modelToggle}
+          role="radiogroup"
+          aria-label="Model version"
+          onKeyDown={onRadioKeyDown}
+        >
+          {/* Roving tabindex: only the checked radio is in the tab order, and
+              the arrow keys move selection, as native radios do. */}
           {MODELS.map((m) => (
             <button
               key={m.id}
               type="button"
               role="radio"
               aria-checked={modelId === m.id}
+              tabIndex={modelId === m.id ? 0 : -1}
+              data-model={m.id}
               className={modelId === m.id ? styles.modelOn : styles.modelOff}
               onClick={() => setModelId(m.id)}
             >
@@ -148,7 +175,8 @@ export function EvalHarnessDemo() {
             step={0.05}
             value={threshold}
             onChange={(e) => setThreshold(parseFloat(e.target.value))}
-            aria-label="Minimum confidence threshold for a pass"
+            aria-label="Confidence gate"
+            aria-valuetext={`${Math.round(threshold * 100)}% minimum confidence to pass`}
           />
         </label>
       </div>
@@ -159,7 +187,7 @@ export function EvalHarnessDemo() {
             {Math.round(stats.accuracy * 100)}%
           </span>
           <span className={styles.statLabel}>
-            Accuracy ({stats.passes}/{stats.total})
+            Accuracy, illustrative set ({stats.passes}/{stats.total})
           </span>
         </div>
         <div className={styles.stat}>
@@ -180,10 +208,9 @@ export function EvalHarnessDemo() {
         {results.map(({ case: c, out, passed }) => (
           <li key={c.id} className={passed ? styles.caseRow : styles.caseRowFail}>
             <div className={styles.caseHead}>
-              <span
-                className={passed ? styles.badgePass : styles.badgeFail}
-                aria-label={passed ? "Pass" : "Fail"}
-              >
+              {/* Visible PASS/FAIL text is the name; an aria-label on a
+                  role-less span is prohibited (axe aria-prohibited-attr). */}
+              <span className={passed ? styles.badgePass : styles.badgeFail}>
                 {passed ? "PASS" : "FAIL"}
               </span>
               <span className={styles.caseInput}>{c.input}</span>
@@ -223,9 +250,11 @@ export function EvalHarnessDemo() {
 
       <p className={styles.note}>
         Toggle between the v1 baseline and the grounded v2 stack, or raise the
-        confidence gate, to see how the same golden set re-scores. This is the
-        same shape of harness we used on Aarchid to validate the 92% diagnosis
-        accuracy claim before any user saw the model in production.
+        confidence gate, to see how the same golden set re-scores. These are
+        illustrative fixed cases, not Aarchid&apos;s results. The harness we
+        used on Aarchid has the same shape; its offline result is withheld
+        until the eval artefact or the co-builder&apos;s confirmation is
+        available, and an offline score says nothing about field accuracy.
       </p>
     </div>
   );

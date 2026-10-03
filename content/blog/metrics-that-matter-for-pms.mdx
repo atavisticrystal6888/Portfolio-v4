@@ -2,17 +2,19 @@
 slug: "metrics-that-matter-for-pms"
 title: "The Three Metrics That Actually Matter for PMs"
 date: "2026-05-10"
-updatedDate: null
+updatedDate: "2026-10-02"
 category: "Product"
 tags: ["metrics", "product-management", "analytics", "okrs", "kpis"]
-readingTime: "4 min read"
+related: ["cohorts-before-dashboards", "data-driven-product-decisions"]
 excerpt: "Teams track DAU, WAU, MAU, D1/D7/D30, NPS, CSAT — and still decide in the meeting on whoever argues loudest. The three metrics I keep, and the decision each one is wired to."
+seoTitle: "Three Metrics That Matter for PMs"
+metaDescription: "Teams track DAU, D30, NPS and CSAT, then decide on whoever argues loudest. The three metrics I keep, and the product decision each one is wired to."
 socialImage: null
 ---
 
 ## The Metric Overload Problem
 
-Every product team I've worked with has the same disease: metric overload. They track DAU, WAU, MAU, D1/D7/D30 retention, session length, pages per session, conversion rate, NPS, CSAT, time-to-value, feature adoption, activation rate...
+Most product teams I have seen have the same disease: metric overload. They track DAU, WAU, MAU, D1/D7/D30 retention, session length, pages per session, conversion rate, NPS, CSAT, time-to-value, feature adoption, activation rate...
 
 And somehow, with all this data, decisions still get made in meetings based on whoever argues loudest.
 
@@ -20,38 +22,41 @@ The problem isn't insufficient data. It's insufficient **decision architecture**
 
 ## My Three-Metric Framework
 
-After working across analytics at Wipro, churn prediction, and marketing attribution at Read Riches, I've landed on a framework I use for every product context:
+From my internships so far (self-reported; I have no public artifacts from them) and the products I build myself, I've landed on a framework I reach for first:
 
 ### 1. The Health Metric (Are we okay?)
 
 This is the one number that tells you whether the product is fundamentally working. It should:
+
 - Be measurable weekly
 - Have a clear "danger zone"
 - Not be gameable by a single team
 
-**Examples:** 7-day retention for consumer apps. Monthly active revenue for B2B. Task completion rate for tools.
+**Examples:** 7-day retention for consumer apps. Net revenue retention for B2B. Task completion rate for tools.
 
-At the SaaS product where I built the churn model, our health metric was **monthly recurring revenue at risk** — the dollar value of accounts showing churn signals. When this crossed 15% of total MRR, we knew we had a systemic problem, not isolated cases.
+*Illustrative example, not a product I worked on:* for a subscription meal-kit service, a good health metric is **the share of active subscribers who skipped two or more deliveries in a row**. A team might set the danger line at one in five (an invented threshold): above it, the problem is systemic, not a set of isolated cases. For a product where people should come back on their own, a cohort retention floor works too; see [Cohorts Before Dashboards](/blog/cohorts-before-dashboards).
 
 ### 2. The Focus Metric (What are we improving?)
 
 This is the OKR-level metric your team owns for this quarter. It should:
+
 - Be directly influenced by the team's work
 - Move within 4-8 weeks of shipping changes
 - Connect to the health metric via a clear hypothesis
 
-**Example:** "If we improve onboarding completion from 40% to 65%, we expect D7 retention to improve by 10pp because users who complete onboarding are 3x more likely to return."
+**Example** (hypothetical numbers): "If we improve onboarding completion from 40% to 65%, we expect D7 retention to improve by 10pp because users who complete onboarding are 3x more likely to return."
 
 This is where most teams fail. They pick focus metrics that are too lagging (revenue), too leading (button clicks), or too disconnected from the health metric.
 
 ### 3. The Guardrail Metric (What can't we break?)
 
 Every improvement has a cost. The guardrail tells you when you've gone too far:
+
 - Speed improvements can't hurt accuracy
 - Engagement can't come from dark patterns
 - Conversion can't sacrifice long-term retention
 
-**At Read Riches**, when optimizing marketing spend allocation, our guardrail was **customer acquisition cost (CAC) payback period**. We could move budget freely between channels, but if payback exceeded 6 months on any cohort, we'd overcorrected.
+*Illustrative example:* a team reallocating paid marketing spend might use **customer acquisition cost (CAC) payback period** as its guardrail. Budget moves freely between channels, but if payback exceeds an agreed limit (say six months, an invented figure) on any cohort, the team has overcorrected. To test a focus-metric hypothesis without fooling yourself on the way, see [Designing a Self-Hosted Experimentation Platform](/blog/designing-self-hosted-experimentation-platform).
 
 ## Why Three, Not Ten
 

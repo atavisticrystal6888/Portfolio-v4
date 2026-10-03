@@ -5,9 +5,12 @@
 
 :root {
   /* Typography */
-  --font-display: 'Fraunces', 'Iowan Old Style', 'Palatino Linotype', 'Book Antiqua', Georgia, serif;
-  --font-body: 'Manrope', 'Aptos', 'Segoe UI Variable Text', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
-  --font-mono: 'JetBrains Mono', 'SFMono-Regular', 'Cascadia Code', 'Fira Code', monospace;
+  /* Each web font is followed by its metric-matched fallback face (defined in
+     base.css) so the font swap does not shift layout; the rest of each stack
+     only applies where that local font is missing. */
+  --font-display: 'Fraunces', 'Fraunces Fallback', 'Iowan Old Style', 'Palatino Linotype', 'Book Antiqua', Georgia, serif;
+  --font-body: 'Manrope', 'Manrope Fallback', 'Aptos', 'Segoe UI Variable Text', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+  --font-mono: 'JetBrains Mono', 'JetBrains Mono Fallback', 'SFMono-Regular', 'Cascadia Code', 'Fira Code', monospace;
 
   /* Spacing Scale (4px base) */
   --space-1: 4px;
@@ -133,6 +136,9 @@
   --badge-current-text: #8fa2ff;
   --chip-bg: rgba(214, 222, 255, 0.05);
   --chip-border: rgba(214, 222, 255, 0.12);
+  /* Form-control boundary: 3:1 against --bg and --surface (WCAG 1.4.11).
+     Hairlines stay decorative; inputs and selects should use this. */
+  --border-control: #6b7390;
   --shadow-sm: 0 1px 2px rgba(4, 8, 18, 0.3);
   --shadow-md: 0 4px 12px rgba(4, 8, 18, 0.4);
   --shadow-lg: 0 8px 30px rgba(4, 8, 18, 0.5);
@@ -189,8 +195,10 @@
   --metric: #14161a;
   --metric-bg: rgba(33, 55, 196, 0.05);
   --metric-border: rgba(33, 55, 196, 0.35);
-  --success: #15803d;
-  --error: #c93030;
+  /* success/error darkened one step (2026-09-30 contrast audit): the old
+     values fell to 4.25:1 on the toast tints. */
+  --success: #13773a;
+  --error: #bb2c2c;
   --info: #2137c4;
   --border: #d8d5cb;
   --border-strong: #b9b5a7;
@@ -202,6 +210,7 @@
   --badge-current-text: #1a2ca0;
   --chip-bg: rgba(20, 22, 26, 0.04);
   --chip-border: rgba(20, 22, 26, 0.12);
+  --border-control: #8c8778;
   --shadow-sm: 0 1px 2px rgba(30, 30, 20, 0.06);
   --shadow-md: 0 4px 12px rgba(30, 30, 20, 0.08);
   --shadow-lg: 0 8px 30px rgba(30, 30, 20, 0.1);
@@ -221,7 +230,7 @@
   --code-number: #0550ae;
   --callout-tip-bg: rgba(34, 197, 94, 0.06);
   --callout-tip-border: rgba(34, 197, 94, 0.3);
-  --callout-tip-icon: #22c55e;
+  --callout-tip-icon: #15803d;
   --callout-warning-bg: rgba(154, 106, 16, 0.06);
   --callout-warning-border: rgba(154, 106, 16, 0.3);
   --callout-warning-icon: #9a6a10;
@@ -348,7 +357,7 @@
   --border-accent: rgba(29, 78, 216, 0.28);
   --badge-current-bg: rgba(29, 78, 216, 0.1);
   --badge-current-text: #1e40af;
-  --metric: #8a6a14;
+  --metric: #7a5d11;
   --metric-bg: rgba(138, 106, 20, 0.08);
   --metric-border: rgba(138, 106, 20, 0.18);
 }
@@ -367,7 +376,7 @@
 }
 
 [data-theme="light"][data-palette="amber"] {
-  --accent: #a35a08;
+  --accent: #985307;
   --accent-hover: #8a4a06;
   --accent-glow: rgba(163, 90, 8, 0.12);
   --accent-subtle: rgba(163, 90, 8, 0.06);
@@ -392,9 +401,23 @@
   --metric-border: rgba(63, 63, 70, 0.18);
 }
 
-/* Hover has to lighten on a dark surface, not darken. */
+/* Hover has to lighten on a dark surface, not darken. Ocean's blue-500 also
+   sat at ~4:1 on the raised surface and in its own badge tint, so the dark
+   ocean accent moves one step lighter (blue-400) and hover to blue-300.
+   Emerald's hover and amber's indigo metric had the same dark-mode problem
+   (scripts/audit-contrast.mjs, 2026-09-30). */
 [data-theme="dark"][data-palette="ocean"] {
-  --accent-hover: #60a5fa;
+  --accent: #60a5fa;
+  --accent-hover: #93c5fd;
+  --badge-current-text: #60a5fa;
+}
+
+[data-theme="dark"][data-palette="emerald"] {
+  --accent-hover: #34d399;
+}
+
+[data-theme="dark"][data-palette="amber"] {
+  --metric: #818cf8;
 }
 
 [data-theme="dark"][data-palette="mono"] {

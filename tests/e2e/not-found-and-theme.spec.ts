@@ -7,6 +7,9 @@ test.describe("404 identity", () => {
     await expect(page).toHaveTitle(/Page not found/);
     await expect(page.locator('link[rel="canonical"]')).toHaveCount(0);
     await expect(page.locator('meta[name="robots"][content*="noindex"]')).toHaveCount(1);
+    // Exactly one robots directive: the layout's "index, follow" must not
+    // render beside the noindex.
+    await expect(page.locator('meta[name="robots"]')).toHaveCount(1);
   });
 });
 

@@ -44,10 +44,12 @@
   border-color: var(--border-strong);
 }
 
-.pill.active {
-  color: var(--accent);
+/* Filled, the same active state as the /projects and /lab filters. */
+.pill.active,
+.pill.active:hover {
+  color: var(--accent-contrast);
   border-color: var(--accent);
-  background: var(--accent-subtle);
+  background: var(--accent);
 }
 
 .searchWrap {
@@ -72,7 +74,9 @@
   font-size: 0.875rem;
   color: var(--text);
   background: var(--surface);
-  border: var(--hairline);
+  /* Resting edge must reach 3:1 against the page (WCAG 1.4.11); the
+     decorative hairline token sat near 1.3:1. */
+  border: 1px solid var(--border-control);
   border-radius: var(--radius-editorial);
   outline: none;
   transition: border-color var(--transition-fast);
@@ -83,7 +87,58 @@
   border-color: var(--accent);
 }
 
+/* A visible ring, the same one the chips use: a 1px border-colour change
+   alone was too weak a focus indicator. */
+.search:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
 /* Wrapper around the shared EmptyState panel: spacing only. */
 .empty {
   padding: var(--space-8) 0 0;
+}
+
+.pill:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Phones: category chips first on their own wrapped row, search full width
+   underneath (DOM order unchanged, so focus order matches what is seen).
+   Tighter chip padding keeps five chips on two rows at 320px; 16px input
+   text stops iOS zooming the page on focus. */
+@media (max-width: 640px) {
+  .controls {
+    gap: var(--space-4);
+  }
+
+  .categories {
+    width: 100%;
+  }
+
+  .pill {
+    padding: 8px 12px;
+  }
+
+  .searchWrap {
+    flex-basis: 100%;
+    min-width: 0;
+  }
+
+  .search {
+    font-size: 1rem;
+  }
 }

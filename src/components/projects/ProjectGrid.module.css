@@ -9,8 +9,10 @@
   padding: 0 var(--space-6);
 }
 
+/* The dense layout only exists from 960px (see .featuredDense/.rowsDense),
+   so the toggle is hidden where it would do nothing. */
 .layoutToggle {
-  display: flex;
+  display: none;
   gap: 2px;
   border: var(--hairline);
   border-radius: var(--radius-editorial);
@@ -70,13 +72,28 @@
 
 /* Rows carry their own separators, so the container only sets the measure. */
 .rows {
+  position: relative;
   max-width: var(--container-max);
   margin: 0 auto;
   padding: 0 var(--space-6);
+}
+
+/* The top rule spans the content box only, matching the rows' own
+   separators (a border on the padded box overhung them by 24px). */
+.rows::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: var(--space-6);
+  right: var(--space-6);
   border-top: var(--hairline);
 }
 
 @media (min-width: 960px) {
+  .layoutToggle {
+    display: flex;
+  }
+
   .rowsDense {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));

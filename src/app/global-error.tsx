@@ -19,6 +19,25 @@ export default function GlobalError({ error, reset }: GlobalErrorProps) {
 
   return (
     <html lang="en">
+      <head>
+        <title>Something went wrong · Dhruv Singhal</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="robots" content="noindex" />
+        {/* No design tokens here (globals.css is gone with the layout), so the
+            dark scheme is a few literal colours that follow the OS setting. */}
+        <style>{`
+          @media (prefers-color-scheme: dark) {
+            body { background: #0d1322 !important; color: #d6dcf0 !important; }
+            .ge-muted { color: #8f96aa !important; }
+            .ge-title { color: #f2f4fb !important; }
+            .ge-primary { background: #8fa2ff !important; color: #0d1322 !important; }
+            .ge-secondary { border-color: #8fa2ff !important; color: #8fa2ff !important; }
+          }
+          .ge-primary:focus-visible, .ge-secondary:focus-visible {
+            outline: 2px solid currentColor; outline-offset: 3px;
+          }
+        `}</style>
+      </head>
       <body
         style={{
           margin: 0,
@@ -35,6 +54,7 @@ export default function GlobalError({ error, reset }: GlobalErrorProps) {
       >
         <main style={{ maxWidth: "34rem", textAlign: "center" }}>
           <p
+            className="ge-muted"
             style={{
               fontSize: "0.75rem",
               letterSpacing: "0.12em",
@@ -46,6 +66,7 @@ export default function GlobalError({ error, reset }: GlobalErrorProps) {
             Error · Unexpected
           </p>
           <h1
+            className="ge-title"
             style={{
               fontSize: "1.75rem",
               lineHeight: 1.2,
@@ -55,12 +76,12 @@ export default function GlobalError({ error, reset }: GlobalErrorProps) {
           >
             Something went wrong on this page
           </h1>
-          <p style={{ marginTop: "1rem", color: "#5c5f66", lineHeight: 1.7 }}>
+          <p className="ge-muted" style={{ marginTop: "1rem", color: "#5c5f66", lineHeight: 1.7 }}>
             This part of the site failed to load. Trying again usually fixes it —
             if it doesn&apos;t, the rest of the site still works.
           </p>
           {error.digest && (
-            <p style={{ marginTop: "0.75rem", fontSize: "0.75rem", color: "#5c5f66" }}>
+            <p className="ge-muted" style={{ marginTop: "0.75rem", fontSize: "0.75rem", color: "#5c5f66" }}>
               Reference: {error.digest}
             </p>
           )}
@@ -75,6 +96,7 @@ export default function GlobalError({ error, reset }: GlobalErrorProps) {
           >
             <button
               type="button"
+              className="ge-primary"
               onClick={reset}
               style={{
                 minHeight: "44px",
@@ -96,6 +118,7 @@ export default function GlobalError({ error, reset }: GlobalErrorProps) {
             {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
             <a
               href="/"
+              className="ge-secondary"
               style={{
                 minHeight: "44px",
                 display: "inline-flex",

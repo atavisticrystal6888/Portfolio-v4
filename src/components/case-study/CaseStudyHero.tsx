@@ -3,7 +3,10 @@ import { CoCreatorChips } from "@/components/ui/CoCreatorChips";
 import { SignatureScene } from "@/components/interactive/SignatureScene";
 import { FramedShot } from "@/components/case-study/FramedShot";
 import { cn } from "@/lib/utils";
+import { HeroZoom } from "./HeroZoom";
+import { LightboxProvider } from "./blocks/Lightbox";
 import styles from "./CaseStudyHero.module.css";
+import layout from "./CaseStudyHeroLayout.module.css";
 
 interface CaseStudyHeroProps {
   caseStudy: CaseStudyFrontmatter;
@@ -16,6 +19,12 @@ interface CaseStudyHeroProps {
   accent?: string | null;
   /** Muted demo loop; replaces the screenshot inside the frame when present. */
   demoVideo?: string | null;
+  /** Visible caption under the shot, e.g. "Demo readout uses synthetic seed data." */
+  imageCaption?: string;
+  /** Full-size file the hero opens in the lightbox (defaults to imageUrl). */
+  zoomSrc?: string;
+  /** Team line from projects.json, shown when there are no linked co-creators. */
+  team?: string;
   /**
    * True when a ProductMasthead sits above: the header drops its nav clearance
    * and its h1, since the masthead's product name is the page heading and the
@@ -25,14 +34,15 @@ interface CaseStudyHeroProps {
 }
 
 /**
- * Dossier header: the title and subtitle over a mono spec table reading
- * role / timeline / team / outcome / stack — the same instrument-readout
- * language as the home metrics strip.
+ * Dossier header under the masthead: the subtitle, then one ruled row of
+ * facts (role, timeline, team) and the exact "my part" line. Stack sits in a
+ * collapsed disclosure so the first screen stays about the product, not the
+ * tools; the headline number lives in the metric strip below the TL;DR.
  *
- * Where the project has a screenshot, it sits beside the spec table inside a
- * browser frame on the product's tinted ground, never cropped; where it does
- * not, the table keeps the full measure and only the signature scene sits
- * behind.
+ * Where the project has a screenshot, it sits beside the facts inside a
+ * browser frame on the product's tinted ground, never cropped. Where it does
+ * not, the masthead above already carries the title plate, so nothing else
+ * competes for the eye; a standalone header (no masthead) keeps the scene.
  */
 export function CaseStudyHero({
   caseStudy,
@@ -41,103 +51,130 @@ export function CaseStudyHero({
   liveUrl,
   accent,
   demoVideo,
+  imageCaption,
+  zoomSrc,
+  team,
   belowMasthead = false,
 }: CaseStudyHeroProps) {
-  const headline = caseStudy.metrics?.[0];
   const hasTeam = (caseStudy.coCreators?.length ?? 0) > 0;
-  const liveHost = liveUrl
-    ? new URL(liveUrl).host.replace(/^www\./, "")
-    : null;
+  const liveHost =
+    liveUrl && !belowMasthead ? new URL(liveUrl).host.replace(/^www\./, "") : null;
+  const stack = caseStudy.stack ?? [];
 
   return (
+    <LightboxProvider>
     <section
       className={cn(styles.hero, belowMasthead && styles.heroBelowMasthead)}
       aria-label="Case study header"
     >
-      {/* The scene and the screenshot both want the right half of the header.
-          Where there is a screenshot it wins - the page already has its visual
-          anchor, and the lattice behind it only read as a stray arc clipped by
-          the top of the page. Dossiers without a shot still get the motif. */}
-      {!imageUrl && <SignatureScene variant="dossier" />}
-      <div className={cn(styles.inner, imageUrl && styles.innerSplit)}>
+      {!imageUrl && !belowMasthead && <SignatureScene variant="dossier" />}
+      <div
+        className={cn(
+          styles.inner,
+          imageUrl && styles.innerSplit,
+          // Imageless studies under a masthead: keep the masthead's left edge
+          // instead of indenting into a narrower centred column.
+          !imageUrl && belowMasthead && layout.alignWithMasthead
+        )}
+      >
         {!belowMasthead && <h1 className={styles.title}>{caseStudy.title}</h1>}
         <p className={styles.subtitle}>{caseStudy.subtitle}</p>
+        {!belowMasthead && !imageUrl && caseStudy.heroNote && (
+          <p className={styles.heroNote}>{caseStudy.heroNote}</p>
+        )}
 
-        <dl className={styles.spec}>
-          <div className={styles.specRow}>
-            <dt className={styles.specKey}>Role</dt>
-            <dd className={styles.specValue}>{caseStudy.role}</dd>
-          </div>
-
-          {caseStudy.myPart && (
-            <div className={styles.specRow}>
-              <dt className={styles.specKey}>My part</dt>
-              <dd className={styles.specValue}>{caseStudy.myPart}</dd>
+        <div className={styles.factsCol}>
+          <dl className={styles.facts} data-testid="case-study-facts">
+            <div className={styles.fact}>
+              <dt className={styles.specKey}>Role</dt>
+              <dd className={styles.specValue}>{caseStudy.role}</dd>
             </div>
-          )}
 
-          <div className={styles.specRow}>
-            <dt className={styles.specKey}>Timeline</dt>
-            <dd className={styles.specValue}>{caseStudy.duration}</dd>
-          </div>
+            <div className={styles.fact}>
+              <dt className={styles.specKey}>Timeline</dt>
+              <dd className={styles.specValue}>{caseStudy.duration}</dd>
+            </div>
 
-          <div className={styles.specRow}>
-            <dt className={styles.specKey}>Team</dt>
-            <dd className={styles.specValue}>
-              {hasTeam ? (
-                <CoCreatorChips coCreators={caseStudy.coCreators} label="" />
-              ) : (
-                "Solo"
-              )}
-            </dd>
-          </div>
-
-          {headline && (
-            <div className={styles.specRow}>
-              <dt className={styles.specKey}>Outcome</dt>
+            <div className={styles.fact}>
+              <dt className={styles.specKey}>Team</dt>
               <dd className={styles.specValue}>
-                <span className={styles.outcomeValue}>{headline.displayValue}</span>
-                <span className={styles.outcomeLabel}>{headline.label}</span>
+                {hasTeam ? (
+                  <CoCreatorChips coCreators={caseStudy.coCreators} label="" />
+                ) : (
+                  team ?? "Solo"
+                )}
               </dd>
             </div>
-          )}
 
-          {liveUrl && liveHost && (
-            <div className={styles.specRow}>
-              <dt className={styles.specKey}>Live</dt>
-              <dd className={styles.specValue}>
-                <a
-                  href={liveUrl}
-                  className={styles.liveLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  {liveHost} &#8599;
-                </a>
-              </dd>
-            </div>
-          )}
+            {caseStudy.myPart && (
+              <div className={cn(styles.fact, styles.factWide)}>
+                <dt className={styles.specKey}>My part</dt>
+                <dd className={styles.specValue}>{caseStudy.myPart}</dd>
+              </div>
+            )}
 
-          <div className={styles.specRow}>
-            <dt className={styles.specKey}>Stack</dt>
-            <dd className={`${styles.specValue} ${styles.stack}`}>
-              {caseStudy.stack.join(" · ")}
-            </dd>
-          </div>
-        </dl>
+            {liveUrl && liveHost && (
+              <div className={cn(styles.fact, styles.factWide)}>
+                <dt className={styles.specKey}>Live</dt>
+                <dd className={styles.specValue}>
+                  <a
+                    href={liveUrl}
+                    className={styles.liveLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {liveHost} &#8599;
+                  </a>
+                </dd>
+              </div>
+            )}
+          </dl>
+
+          {stack.length > 0 && (
+            <details className={styles.stackDetails}>
+              <summary className={styles.stackSummary}>
+                <span>Stack and tools</span>
+                <span className={styles.stackCount}>{stack.length}</span>
+                <span className={styles.chevron} aria-hidden="true" />
+              </summary>
+              <p className={styles.stack}>{stack.join(" · ")}</p>
+            </details>
+          )}
+        </div>
 
         {imageUrl && (
-          <FramedShot
-            src={imageUrl}
-            alt={imageAlt ?? ""}
-            accent={accent}
-            video={demoVideo}
-            variant="hero"
-            priority
-            className={styles.shot}
-          />
+          <div className={styles.shot}>
+            {demoVideo ? (
+              <FramedShot
+                src={imageUrl}
+                alt={imageAlt ?? ""}
+                accent={accent}
+                video={demoVideo}
+                variant="hero"
+                priority
+                className={styles.shotFrame}
+              />
+            ) : (
+              <HeroZoom src={zoomSrc ?? imageUrl} alt={imageAlt ?? ""} caption={imageCaption}>
+                <FramedShot
+                  src={imageUrl}
+                  alt={imageAlt ?? ""}
+                  accent={accent}
+                  variant="hero"
+                  priority
+                  className={styles.shotFrame}
+                />
+              </HeroZoom>
+            )}
+            {imageCaption && (
+              <p className={styles.shotCaption} data-testid="hero-caption">
+                {imageCaption}
+              </p>
+            )}
+          </div>
         )}
       </div>
     </section>
+    </LightboxProvider>
   );
 }

@@ -21,13 +21,16 @@ export function Options({ children, caption }: { children: ReactNode; caption?: 
       role="region"
       aria-label={caption ?? "Alternatives considered"}
     >
-      <table className={styles.options}>
+      {/* Explicit roles: below 480px the table is re-laid out as stacked
+          cards (display:block), which strips native table semantics in
+          some engines. */}
+      <table className={styles.options} role="table">
         {caption && <caption className={styles.optionsCaption}>{caption}</caption>}
         <thead>
-          <tr>
-            <th scope="col" className={styles.optionsHead}>Option</th>
-            <th scope="col" className={styles.optionsHead}>Status</th>
-            <th scope="col" className={styles.optionsHead}>Why</th>
+          <tr role="row">
+            <th scope="col" role="columnheader" className={styles.optionsHead}>Option</th>
+            <th scope="col" role="columnheader" className={styles.optionsHead}>Status</th>
+            <th scope="col" role="columnheader" className={styles.optionsHead}>Why</th>
           </tr>
         </thead>
         <tbody>{rows}</tbody>
@@ -45,14 +48,14 @@ export interface OptionProps {
 
 export function Option({ name, status, why, children }: OptionProps) {
   return (
-    <tr className={styles.optionRow}>
-      <th scope="row" className={styles.optionName}>{name}</th>
-      <td className={styles.optionCell}>
+    <tr className={styles.optionRow} role="row">
+      <th scope="row" role="rowheader" className={styles.optionName}>{name}</th>
+      <td className={styles.optionCell} role="cell">
         <span className={styles.status} data-status={status}>
           {STATUS_LABEL[status] ?? status}
         </span>
       </td>
-      <td className={styles.optionCell}>{why ?? children}</td>
+      <td className={styles.optionCell} role="cell">{why ?? children}</td>
     </tr>
   );
 }

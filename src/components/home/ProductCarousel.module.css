@@ -132,12 +132,14 @@
   width: 8px;
   height: 8px;
   border-radius: var(--radius-full);
-  background: var(--border-strong);
+  /* --text-muted, not --border-strong: the inactive dot is the only visual
+     for its button and needs 3:1 against the page (WCAG 1.4.11). */
+  background: var(--text-muted);
   transition: background var(--transition-fast), transform var(--transition-fast);
 }
 
 .dot:hover::after {
-  background: var(--text-muted);
+  background: var(--text);
 }
 
 .dotActive::after {

@@ -9,7 +9,7 @@ import { UnderTheHood } from "./UnderTheHood";
 import { Decision } from "./Decision";
 import { Artifact } from "./Artifact";
 import { Artifacts, ArtifactLink } from "./Artifacts";
-import { MdxLink, MdxPre, MdxImg } from "./primitives";
+import { MdxLink, MdxPre, MdxImg, MdxTable } from "./primitives";
 
 export {
   Figure,
@@ -50,4 +50,5 @@ export const mdxComponents: MDXComponents = {
   a: MdxLink,
   pre: MdxPre,
   img: MdxImg,
+  table: MdxTable,
 };

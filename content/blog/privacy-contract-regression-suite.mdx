@@ -5,8 +5,9 @@ date: "2026-08-16"
 updatedDate: null
 category: "Product"
 tags: ["privacy", "security", "supabase", "rls", "product-management", "testing"]
-readingTime: "6 min read"
-excerpt: "Privacy policies are promises. Promises don't have test coverage. Building Better-Half, I turned every sharing rule into a database-enforced policy with 575 live checks — and the suite caught leaks a UI review never would have."
+related: ["designing-self-hosted-experimentation-platform", "seventeen-checks-before-you-call-a-site-done"]
+excerpt: "Privacy policies are promises with no test coverage. On Better-Half I turned every sharing rule into a database policy and 575 checks that caught two leaks."
+seoTitle: "A Privacy Contract as a Regression Suite"
 socialImage: null
 ---
 
@@ -28,13 +29,13 @@ The design rule generalises: **a privacy promise is only as strong as the lowest
 
 ## The contract becomes a matrix
 
-Here's the part that turned out to matter most. Because every promise mapped to a policy, every promise became *checkable*. The RLS matrix started at 95 checks in milestone zero and grew with every feature — 148, 178, 224, 244, 452 — landing at 575 checks that run live against the hosted database in rolled-back transactions.
+Here's the part that turned out to matter most. Because every promise mapped to a policy, every promise became *checkable*. The RLS matrix started at 95 checks in milestone zero and grew with every feature — 148, 178, 224, 244, 452 — landing at 575 checks that run against a hosted test database in rolled-back transactions.
 
 Each check is a concrete question with a binary answer. Can the owner read her own row? Can the partner read it when the category is shared? When it's private? Can a member of a *different* couple read it? Can an anonymous session? Can a helper function be used as a back door? The matrix runs the full grid for every table, every milestone, and refuses vacuous passes — a check that can't fail is a check that isn't testing anything.
 
 ## The suite caught what review couldn't
 
-Two leaks made it into code and never made it to production, and both were found by the matrix rather than by reading the diff.
+Two leaks made it into code, and both were found by the matrix rather than by reading the diff.
 
 The weekly meal planner keyed her suggestions on cycle phase — which meant a partner who could read the meal plan could *infer* her phase even with that sharing dial closed. The training planner had the same shape: plans derived from check-in details leaked the details through the derivation. No screen showed the private data. No endpoint returned it. The *feature output* was the leak.
 

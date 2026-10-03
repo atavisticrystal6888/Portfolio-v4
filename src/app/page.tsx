@@ -1,23 +1,24 @@
 import Image from "next/image";
+import Link from "next/link";
 import dhruvImage from "@/assets/Dhruv_Image.jpg";
 import { generatePageMetadata, generateWebSiteJsonLd } from "@/lib/metadata";
-import { getAllProjects, getAllBlogPosts, getAllTestimonials } from "@/lib/content";
+import { getAllProjects, getAllBlogPosts } from "@/lib/content";
 import { SectionLabel } from "@/components/ui/SectionLabel";
 import { Button } from "@/components/ui/Button";
 import { HeroSection } from "@/components/home/HeroSection";
 import { SelectedWork } from "@/components/home/SelectedWork";
 import { MetricsGrid } from "@/components/home/MetricsGrid";
-import { TestimonialCarousel } from "@/components/home/TestimonialCarousel";
 import { BlogTeaser } from "@/components/home/BlogTeaser";
 import { Suggestions } from "@/components/home/Suggestions";
 import { JsonLd } from "@/components/ui/JsonLd";
 import { CONTACT_EMAIL_HREF } from "@/lib/site";
+import { toBlogSummary } from "@/lib/blog-summary";
 import styles from "./home.module.css";
 
 export const metadata = generatePageMetadata({
   title: "Dhruv Singhal — Product Manager & Builder",
   description:
-    "Portfolio of Dhruv Singhal — Product Manager & Builder. D2C e-commerce growth, enterprise AI workflows, AI diagnostics, and operational analytics.",
+    "Dhruv Singhal, Product Manager & Builder. Case studies on AI evaluation, product scope, D2C retention and ride-sharing, each with its evidence and its limits.",
 });
 
 /* The two posts that show PM judgment rather than tell it. Order matters:
@@ -30,7 +31,6 @@ const THINKING_SLUGS = [
 export default function Home() {
   const allProjects = getAllProjects();
   const posts = getAllBlogPosts();
-  const testimonials = getAllTestimonials();
   const webSiteJsonLd = generateWebSiteJsonLd();
 
   const thinkingPosts = THINKING_SLUGS.map((slug) =>
@@ -55,7 +55,12 @@ export default function Home() {
         <div className={styles.inner}>
           <header className={`${styles.sectionHeader} ${styles.sectionHeaderTight}`}>
             <SectionLabel index="01">Selected work</SectionLabel>
-            <h2 className={styles.sectionTitle}>Five products, built end to end</h2>
+            <h2 className={styles.sectionTitle}>Four stories, one PM decision each</h2>
+            <p className={styles.sectionLede}>
+              AI trust and evaluation &middot; focused scope &middot; D2C
+              retention definitions and privacy &middot; rider-to-rider matching
+              and fare fairness.
+            </p>
           </header>
           <SelectedWork projects={allProjects} />
         </div>
@@ -70,8 +75,12 @@ export default function Home() {
       >
         <div className={styles.inner}>
           <header className={styles.sectionHeader}>
-            <SectionLabel index="02">Impact</SectionLabel>
-            <h2 className={styles.sectionTitle}>Measured outcomes</h2>
+            <SectionLabel index="02">Evidence</SectionLabel>
+            <h2 className={styles.sectionTitle}>What the evidence supports</h2>
+            <p className={styles.sectionLede}>
+              Each number says where it stops. Case-study and article counts
+              are coverage, not outcomes.
+            </p>
           </header>
           <MetricsGrid />
         </div>
@@ -90,31 +99,18 @@ export default function Home() {
               <SectionLabel index="03">Method</SectionLabel>
               <h2 className={styles.sectionTitle}>How I think</h2>
             </header>
-            <BlogTeaser posts={thinkingPosts} />
+            <BlogTeaser posts={thinkingPosts} totalCount={posts.length} />
           </div>
         </section>
       )}
 
-      {/* Testimonials */}
-      {testimonials.length > 0 && (
-        <section
-          id="references"
-          aria-label="Testimonials"
-          data-section="testimonials"
-          className={styles.section}
-        >
-          <div className={styles.inner}>
-            <header className={styles.sectionHeader}>
-              <SectionLabel index="04">Testimonials</SectionLabel>
-              <h2 className={styles.sectionTitle}>References</h2>
-            </header>
-            <TestimonialCarousel testimonials={testimonials} />
-          </div>
-        </section>
-      )}
+      {/* References are not rendered: the two quotes in
+          content/testimonials.json have no source in the claim ledger, so
+          they stay off the page until the owner confirms they are verbatim
+          and approved. TestimonialCarousel and the data file are kept. */}
 
       {/* Suggestions — owns its section chrome so it can render nothing */}
-      <Suggestions projects={allProjects} posts={posts} />
+      <Suggestions projects={allProjects} posts={posts.map(toBlogSummary)} />
 
       {/* Contact CTA. The portrait lives here rather than in the hero: a face
           is the strongest signal that a person made this, and it does the most
@@ -134,10 +130,12 @@ export default function Home() {
             placeholder="blur"
           />
           <div className={styles.ctaCopy}>
+            <SectionLabel index="05">Contact</SectionLabel>
             <h2 className={styles.ctaTitle}>Still reading?</h2>
             <p className={styles.ctaLede}>
               Then we should probably talk. Email is the fastest way to reach
-              me; LinkedIn works too.
+              me; LinkedIn works too. More on how I work is on the{" "}
+              <Link href="/about">about page</Link>.
             </p>
             <div className={styles.ctaButtons}>
               <Button href={CONTACT_EMAIL_HREF} external>Email me</Button>

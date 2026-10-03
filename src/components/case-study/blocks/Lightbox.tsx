@@ -10,6 +10,7 @@ import {
   useState,
   type ReactNode,
 } from "react";
+import { createPortal } from "react-dom";
 import styles from "../MdxContent.module.css";
 
 export interface LightboxItem {
@@ -42,6 +43,8 @@ export function LightboxProvider({ children }: { children: ReactNode }) {
   const [lightbox, setLightbox] = useState<LightboxState | null>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const openerRef = useRef<HTMLElement | null>(null);
+  const backdropRef = useRef<HTMLDivElement>(null);
+  const dialogRef = useRef<HTMLDivElement>(null);
 
   const open = useCallback((items: LightboxItem[], index: number) => {
     if (items.length === 0) return;
@@ -61,12 +64,30 @@ export function LightboxProvider({ children }: { children: ReactNode }) {
     });
   }, []);
 
+  const isOpen = lightbox !== null;
+
+  // Modal behaviour, set up once per open (not per image step): the rest of
+  // the page goes inert and aria-hidden, scroll locks, focus moves to Close,
+  // and Tab / Shift+Tab cycle inside the dialog. Closing undoes all of it
+  // before focus returns to the opener.
   useEffect(() => {
-    if (!lightbox) {
+    if (!isOpen) {
       // Return focus to whatever opened the dialog.
       openerRef.current?.focus?.();
       openerRef.current = null;
       return;
+    }
+
+    const backdrop = backdropRef.current;
+    const silenced: { el: HTMLElement; hadAriaHidden: string | null }[] = [];
+    if (backdrop) {
+      for (const child of Array.from(document.body.children)) {
+        if (!(child instanceof HTMLElement) || child === backdrop || child.contains(backdrop)) continue;
+        if (child.tagName === "SCRIPT" || child.inert) continue;
+        silenced.push({ el: child, hadAriaHidden: child.getAttribute("aria-hidden") });
+        child.inert = true;
+        child.setAttribute("aria-hidden", "true");
+      }
     }
 
     const previousOverflow = document.body.style.overflow;
@@ -83,6 +104,24 @@ export function LightboxProvider({ children }: { children: ReactNode }) {
       } else if (event.key === "ArrowRight") {
         event.preventDefault();
         move(1);
+      } else if (event.key === "Tab") {
+        const dialog = dialogRef.current;
+        if (!dialog) return;
+        const focusables = Array.from(
+          dialog.querySelectorAll<HTMLElement>("button:not([disabled]), [href], [tabindex]:not([tabindex='-1'])")
+        );
+        const first = focusables[0];
+        const last = focusables[focusables.length - 1];
+        if (!first || !last) return;
+        const active = document.activeElement;
+        const inside = active instanceof Node && dialog.contains(active);
+        if (event.shiftKey && (active === first || !inside)) {
+          event.preventDefault();
+          last.focus();
+        } else if (!event.shiftKey && (active === last || !inside)) {
+          event.preventDefault();
+          first.focus();
+        }
       }
     };
 
@@ -90,8 +129,13 @@ export function LightboxProvider({ children }: { children: ReactNode }) {
     return () => {
       document.body.style.overflow = previousOverflow;
       window.removeEventListener("keydown", handleKeyDown);
+      for (const { el, hadAriaHidden } of silenced) {
+        el.inert = false;
+        if (hadAriaHidden === null) el.removeAttribute("aria-hidden");
+        else el.setAttribute("aria-hidden", hadAriaHidden);
+      }
     };
-  }, [lightbox, move]);
+  }, [isOpen, move]);
 
   const api = useMemo<LightboxApi>(() => ({ open }), [open]);
   const activeItem = lightbox?.items[lightbox.index] ?? null;
@@ -100,14 +144,19 @@ export function LightboxProvider({ children }: { children: ReactNode }) {
     <LightboxContext.Provider value={api}>
       {children}
 
-      {lightbox && activeItem && (
+      {lightbox &&
+        activeItem &&
+        createPortal(
         <div
+          ref={backdropRef}
           className={styles.lightboxBackdrop}
+          data-testid="lightbox"
           onClick={(event) => {
             if (event.target === event.currentTarget) close();
           }}
         >
           <div
+            ref={dialogRef}
             className={styles.lightboxDialog}
             role="dialog"
             aria-modal="true"
@@ -167,8 +216,9 @@ export function LightboxProvider({ children }: { children: ReactNode }) {
               )}
             </div>
           </div>
-        </div>
-      )}
+        </div>,
+          document.body
+        )}
     </LightboxContext.Provider>
   );
 }

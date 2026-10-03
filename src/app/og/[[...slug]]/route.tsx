@@ -1,19 +1,88 @@
 import { ImageResponse } from "next/og";
 import { NextRequest } from "next/server";
+import {
+  getAllBlogSlugs,
+  getAllCaseStudySlugs,
+  getBlogPostBySlug,
+  getCaseStudyBySlug,
+} from "@/lib/content";
 import { SITE_DOMAIN } from "@/lib/site";
 
-export const runtime = "edge";
+/** Index and utility pages that have their own card (`/og/<page>`). */
+const PAGE_CARDS = [
+  "about",
+  "projects",
+  "ai-pm",
+  "blog",
+  "contact",
+  "now",
+  "lab",
+  "uses",
+  "bookshelf",
+  "changelog",
+] as const;
+
+/**
+ * Every card is prerendered at build from the public routes only: the site
+ * root, the index/utility pages, and the case-study and article slugs that
+ * actually exist. With `dynamicParams = false`, any other path (a withdrawn
+ * or private slug, a typo, a mixed-case variant) is a 404 instead of a 200
+ * image that echoes the requested slug back as a title.
+ */
+export function generateStaticParams(): { slug: string[] }[] {
+  return [
+    { slug: [] },
+    ...PAGE_CARDS.map((page) => ({ slug: [page] })),
+    ...getAllCaseStudySlugs().map((s) => ({ slug: ["projects", s] })),
+    ...getAllBlogSlugs().map((s) => ({ slug: ["blog", s] })),
+  ];
+}
+
+export const dynamicParams = false;
+export const dynamic = "force-static";
+
+function notFoundResponse() {
+  return new Response("Not found", {
+    status: 404,
+    headers: { "Content-Type": "text/plain; charset=utf-8" },
+  });
+}
 
 export async function GET(
   _request: NextRequest,
   { params }: { params: Promise<{ slug?: string[] }> }
 ) {
   const { slug } = await params;
-  const path = slug?.join("/") || "";
+  const segments = slug ?? [];
+  const path = segments.join("/");
 
   const title = "Dhruv Singhal";
   let subtitle = "Product Manager & Builder";
   let kicker = "Portfolio";
+
+  // Defence in depth behind dynamicParams: only known public routes get a card.
+  if (segments.length === 1 && !(PAGE_CARDS as readonly string[]).includes(path)) {
+    return notFoundResponse();
+  }
+  if (segments.length === 2) {
+    const [section, item] = segments;
+    if (section === "projects") {
+      const caseStudy = getCaseStudyBySlug(item!);
+      if (!caseStudy) return notFoundResponse();
+      kicker = "Case Study";
+      subtitle = caseStudy.title;
+    } else if (section === "blog") {
+      const post = getBlogPostBySlug(item!);
+      if (!post) return notFoundResponse();
+      kicker = "Article";
+      subtitle = post.title;
+    } else {
+      return notFoundResponse();
+    }
+  }
+  if (segments.length > 2) {
+    return notFoundResponse();
+  }
 
   if (path === "about") {
     kicker = "About";
@@ -45,16 +114,6 @@ export async function GET(
   } else if (path === "changelog") {
     kicker = "Changelog";
     subtitle = "Build Log of This Portfolio";
-  } else if (path.startsWith("projects/")) {
-    kicker = "Case Study";
-    subtitle = decodeURIComponent(path.replace("projects/", ""))
-      .replace(/-/g, " ")
-      .replace(/\b\w/g, (char) => char.toUpperCase());
-  } else if (path.startsWith("blog/")) {
-    kicker = "Article";
-    subtitle = decodeURIComponent(path.replace("blog/", ""))
-      .replace(/-/g, " ")
-      .replace(/\b\w/g, (char) => char.toUpperCase());
   }
 
   const accent = "#5ba4b5";

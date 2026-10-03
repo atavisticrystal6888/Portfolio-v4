@@ -1,5 +1,8 @@
 import { notFound } from "next/navigation";
-import { generatePageMetadata, generateBreadcrumbJsonLd } from "@/lib/metadata";
+import { generatePageMetadata, generateAuthorPerson } from "@/lib/metadata";
+import { absoluteUrl } from "@/lib/site";
+import { selectStripMetrics } from "@/components/case-study/MetricChart";
+import { Breadcrumbs, type Crumb } from "@/components/ui/Breadcrumbs";
 import {
   getAllCaseStudySlugs,
   getCaseStudyBySlug,
@@ -8,6 +11,7 @@ import {
 import { ProductMasthead } from "@/components/case-study/ProductMasthead";
 import { CaseStudyHero } from "@/components/case-study/CaseStudyHero";
 import { ChapterRail } from "@/components/case-study/ChapterRail";
+import { ChapterMenu } from "@/components/case-study/ChapterMenu";
 import { MetricChart } from "@/components/case-study/MetricChart";
 import { MdxContent } from "@/components/case-study/MdxContent";
 import { CaseStudyNav } from "@/components/case-study/CaseStudyNav";
@@ -19,6 +23,9 @@ interface CaseStudyPageProps {
   params: Promise<{ slug: string }>;
 }
 
+/** Only the ten known slugs render; anything else (including mixed case) 404s. */
+export const dynamicParams = false;
+
 export async function generateStaticParams() {
   return getAllCaseStudySlugs().map((slug) => ({ slug }));
 }
@@ -29,8 +36,10 @@ export async function generateMetadata({ params }: CaseStudyPageProps) {
   if (!caseStudy) return {};
 
   return generatePageMetadata({
-    title: caseStudy.title,
-    description: caseStudy.tldr,
+    title: caseStudy.seoTitle ?? caseStudy.title,
+    // A written 120-160 character description; the TL;DR is only a fallback
+    // because truncating it cuts the sentence before its point.
+    description: caseStudy.metaDescription ?? caseStudy.tldr,
     path: `/projects/${slug}`,
   });
 }
@@ -45,39 +54,73 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
 
   const allProjects = getAllProjects();
   const currentProject = allProjects.find((p) => p.slug === slug);
+  const productNameOf = (target: string) => {
+    const project = allProjects.find((p) => p.slug === target);
+    return project?.productName ?? project?.name;
+  };
 
-  const breadcrumbJsonLd = generateBreadcrumbJsonLd([
-    { name: "Home", url: "/" },
-    { name: "Projects", url: "/projects" },
-    { name: caseStudy.title, url: `/projects/${slug}` },
-  ]);
+  // The visible trail and the page's only BreadcrumbList JSON-LD both come
+  // from <Breadcrumbs> inside the masthead.
+  const breadcrumbs: Crumb[] = [
+    { name: "Home", href: "/" },
+    { name: "Projects", href: "/projects" },
+    {
+      name: currentProject?.productName ?? currentProject?.name ?? caseStudy.title,
+      href: `/projects/${slug}`,
+    },
+  ];
 
+  // Co-builders are credited in the structured data too; a solo study lists
+  // only the author.
+  const coCreators = caseStudy.coCreators ?? currentProject?.coCreators ?? [];
   const creativeWorkJsonLd = {
     "@context": "https://schema.org",
     "@type": "CreativeWork",
     name: caseStudy.title,
-    description: caseStudy.tldr,
-    author: { "@type": "Person", name: "Dhruv Singhal" },
+    description: caseStudy.metaDescription ?? caseStudy.tldr,
+    url: absoluteUrl(`/projects/${slug}`),
+    image: absoluteUrl(`/og/projects/${slug}`),
+    ...(currentProject?.lastVerified && { dateModified: currentProject.lastVerified }),
+    author: generateAuthorPerson(),
+    ...(coCreators.length > 0 && {
+      contributor: coCreators.map((c) => ({
+        "@type": "Person",
+        name: c.name,
+        url: c.url,
+      })),
+    }),
   };
+
+  const stripMetrics = selectStripMetrics(caseStudy.metrics ?? []);
 
   return (
     <div className={styles.page}>
-      <JsonLd id="case-study-breadcrumb-jsonld" data={breadcrumbJsonLd} />
       <JsonLd id="case-study-creative-work-jsonld" data={creativeWorkJsonLd} />
 
       {/* Product identity: name, tagline, audience, status, try/source. */}
       {currentProject && (
-        <ProductMasthead project={currentProject} title={caseStudy.title} />
+        <ProductMasthead
+          project={currentProject}
+          title={caseStudy.title}
+          heroNote={caseStudy.heroNote}
+          alternative={caseStudy.alternative}
+          tradeoff={caseStudy.tradeoff}
+          breadcrumbs={breadcrumbs}
+        />
       )}
+      {!currentProject && <Breadcrumbs items={breadcrumbs} />}
 
       {/* Header: subtitle, spec table, framed shot (the h1 when there is no masthead) */}
       <CaseStudyHero
         caseStudy={caseStudy}
-        imageUrl={currentProject?.imageUrl}
+        imageUrl={currentProject?.heroImageUrl ?? currentProject?.imageUrl}
+        zoomSrc={currentProject?.imageUrl ?? undefined}
         imageAlt={currentProject?.imageAlt}
         liveUrl={currentProject?.liveUrl}
         accent={currentProject?.accent}
         demoVideo={currentProject?.demoVideo}
+        imageCaption={currentProject?.imageCaption}
+        team={currentProject?.team}
         belowMasthead={Boolean(currentProject)}
       />
 
@@ -87,15 +130,19 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
         <p className={styles.tldrText}>{caseStudy.tldr}</p>
       </section>
 
-      {/* Metrics */}
-      <section className={styles.metricsSection} aria-label="Key metrics">
-        <MetricChart metrics={caseStudy.metrics} />
-      </section>
+      {/* Metrics: no empty ruled section when a study has no tile worth showing. */}
+      {stripMetrics.length > 0 && (
+        <section className={styles.metricsSection} aria-label="Key metrics">
+          <MetricChart metrics={caseStudy.metrics} />
+        </section>
+      )}
 
-      {/* Body: sticky chapter rail beside the article on wide screens. The rail
-          reads the article's h2s from the DOM after mount. */}
+      {/* Body: sticky chapter rail beside the article on wide screens; below
+          1200px a "Chapters" disclosure sits at the top of the article
+          instead. Both read the article's h2s from the DOM after mount. */}
       <div className={styles.body}>
         <ChapterRail className={styles.rail} />
+        <ChapterMenu className={styles.menu} />
         <article aria-label="Case study content" className={styles.article}>
           <MdxContent source={caseStudy.content} slug={slug} />
         </article>
@@ -109,7 +156,12 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
       />
 
       {/* Navigation */}
-      <CaseStudyNav prevSlug={caseStudy.prevSlug} nextSlug={caseStudy.nextSlug} />
+      <CaseStudyNav
+        prevSlug={caseStudy.prevSlug}
+        nextSlug={caseStudy.nextSlug}
+        prevName={productNameOf(caseStudy.prevSlug)}
+        nextName={productNameOf(caseStudy.nextSlug)}
+      />
     </div>
   );
 }

@@ -3,7 +3,6 @@
 import { useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { AnimatePresence, motion } from 'framer-motion';
 import styles from './MobileNav.module.css';
 import { cn } from '@/lib/utils';
 
@@ -13,7 +12,7 @@ const NAV_LINKS = [
   { href: '/projects', label: 'Projects' },
   { href: '/ai-pm', label: 'AI PM' },
   { href: '/blog', label: 'Blog' },
-  { href: '/lab', label: 'Lab' },
+  // Lab is demoted to the footer "More" group, same as the desktop bar.
   { href: '/contact', label: 'Contact' },
   { href: '/now', label: 'Now' },
 ];
@@ -42,16 +41,20 @@ export function MobileNav({ open, onClose }: MobileNavProps) {
         'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])'
       );
       if (focusable.length === 0) return;
-      const first = focusable[0]!;
-      const last = focusable[focusable.length - 1]!;
-      const active = document.activeElement;
-      if (e.shiftKey && (active === first || !drawerRef.current.contains(active))) {
-        e.preventDefault();
-        last.focus();
-      } else if (!e.shiftKey && active === last) {
-        e.preventDefault();
-        first.focus();
-      }
+      // Move focus ourselves on every Tab rather than only at the edges:
+      // Safari and WebKit skip links on plain Tab by default, so the browser's
+      // own next stop from inside the drawer can be outside it.
+      const items = Array.from(focusable);
+      const index = items.indexOf(document.activeElement as HTMLElement);
+      const step = e.shiftKey ? -1 : 1;
+      const next =
+        index === -1
+          ? e.shiftKey
+            ? items[items.length - 1]
+            : items[0]
+          : items[(index + step + items.length) % items.length];
+      e.preventDefault();
+      next?.focus();
     };
     document.addEventListener('keydown', handleKey);
     return () => document.removeEventListener('keydown', handleKey);
@@ -89,47 +92,39 @@ export function MobileNav({ open, onClose }: MobileNavProps) {
     return pathname.startsWith(href);
   };
 
+  // Entrance animations are CSS keyframes (MobileNav.module.css): overlay
+  // fade, drawer slide-in, staggered links via --i. There is no exit
+  // animation: closing unmounts the dialog at once, so it never lingers in the
+  // accessibility tree or the tab order. framer-motion was removed from here to
+  // keep it out of the shared first-load bundle (perf audit P3).
+  if (!open) return null;
+
   return (
-    <AnimatePresence>
-      {open && (
-        <motion.div
-          className={styles.overlay}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.2 }}
-          ref={drawerRef}
-          role="dialog"
-          aria-modal="true"
-          aria-label="Mobile navigation"
-        >
-          <motion.nav
-            className={styles.nav}
-            initial={{ x: '100%' }}
-            animate={{ x: 0 }}
-            exit={{ x: '100%' }}
-            transition={{ type: 'tween', duration: 0.3, ease: 'easeInOut' }}
+    <div
+      className={styles.overlay}
+      ref={drawerRef}
+      role="dialog"
+      aria-modal="true"
+      aria-label="Mobile navigation"
+    >
+      <nav className={styles.nav}>
+        {NAV_LINKS.map(({ href, label }, i) => (
+          <div
+            key={href}
+            className={styles.item}
+            style={{ "--i": i } as React.CSSProperties}
           >
-            {NAV_LINKS.map(({ href, label }, i) => (
-              <motion.div
-                key={href}
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.05 * i, duration: 0.2 }}
-              >
-                <Link
-                  href={href}
-                  className={cn(styles.link, isActive(href) && styles.active)}
-                  aria-current={isActive(href) ? "page" : undefined}
-                  onClick={onClose}
-                >
-                  {label}
-                </Link>
-              </motion.div>
-            ))}
-          </motion.nav>
-        </motion.div>
-      )}
-    </AnimatePresence>
+            <Link
+              href={href}
+              className={cn(styles.link, isActive(href) && styles.active)}
+              aria-current={isActive(href) ? "page" : undefined}
+              onClick={onClose}
+            >
+              {label}
+            </Link>
+          </div>
+        ))}
+      </nav>
+    </div>
   );
 }

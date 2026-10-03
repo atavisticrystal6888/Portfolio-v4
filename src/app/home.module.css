@@ -40,6 +40,15 @@
   color: var(--text-strong);
 }
 
+.sectionLede {
+  margin-top: var(--space-3);
+  font-size: var(--text-base);
+  color: var(--text-muted);
+  line-height: var(--leading-body);
+  max-width: 60ch;
+  text-wrap: pretty;
+}
+
 .ctaSection {
   width: 100%;
   border-top: var(--rule-strong);

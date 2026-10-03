@@ -9,10 +9,13 @@ import styles from "./LabMatrix.module.css";
 
 const ALL = "All";
 
+/* Easy < Medium < Hard < Expert. Easy and Medium used to share a weight, so
+   the "sorted by difficulty" heading was false: Easy ideas sat between
+   Medium ones. */
+const DIFFICULTY_WEIGHT: Record<string, number> = { Easy: 0, Medium: 1, Hard: 2, Expert: 3 };
+
 function difficultyWeight(d: string): number {
-  if (d === "Expert") return 3;
-  if (d === "Hard") return 2;
-  return 1;
+  return DIFFICULTY_WEIGHT[d] ?? 1;
 }
 
 interface LabMatrixProps {
@@ -55,7 +58,7 @@ export function LabMatrix({ ideas }: LabMatrixProps) {
           {active === ALL ? "All ideas" : `${active} ideas`}
         </SectionLabel>
         <h2 className={cn(page.sectionTitle, styles.tightHeading)}>
-          The matrix — sorted by difficulty
+          The matrix, sorted by difficulty (hardest first)
         </h2>
 
         {/* A chip row, not a grid of count tiles. With twelve categories for
@@ -98,7 +101,9 @@ export function LabMatrix({ ideas }: LabMatrixProps) {
                   sit inline after the title and wrapped mid-name on long ones. */}
               <h3 className={styles.cardHead}>
                 <span className={styles.cardName}>{idea.name}</span>
-                <span className={page.badge}>{idea.difficulty}</span>
+                <span className={page.badge} data-testid="lab-difficulty">
+                  {idea.difficulty}
+                </span>
               </h3>
               <p>{idea.problem}</p>
               {/* One quiet line, in sentence case. The all-caps mono rail used

@@ -1,4 +1,9 @@
-import type { AnchorHTMLAttributes, HTMLAttributes, ImgHTMLAttributes } from "react";
+import type {
+  AnchorHTMLAttributes,
+  HTMLAttributes,
+  ImgHTMLAttributes,
+  TableHTMLAttributes,
+} from "react";
 import styles from "./blocks.module.css";
 import { ZoomImage } from "./ZoomImage";
 
@@ -17,8 +22,22 @@ export function MdxLink({ href = "", children, ...rest }: AnchorHTMLAttributes<H
   );
 }
 
+/** Code can scroll sideways, so it is focusable and needs a name to be announced by. */
 export function MdxPre(props: HTMLAttributes<HTMLPreElement>) {
-  return <pre tabIndex={0} {...props} />;
+  return <pre tabIndex={0} role="group" aria-label="Code sample" {...props} />;
+}
+
+/**
+ * Same focusable horizontal scroll region the blog renderer wraps tables in
+ * (`[data-table-scroll]`, styled in MdxContent.module.css), so a wide table
+ * scrolls sideways instead of overflowing a 320px viewport.
+ */
+export function MdxTable(props: TableHTMLAttributes<HTMLTableElement>) {
+  return (
+    <div data-table-scroll="" tabIndex={0} role="group" aria-label="Table, scrolls sideways">
+      <table {...props} />
+    </div>
+  );
 }
 
 export function MdxImg({ src, alt = "", title }: ImgHTMLAttributes<HTMLImageElement>) {

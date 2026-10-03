@@ -19,6 +19,7 @@ interface FramedShotProps {
    * a grid of cards stays level.
    */
   variant?: "hero" | "small";
+  /** Likely LCP image: load eagerly with fetchPriority="high". */
   priority?: boolean;
   sizes?: string;
   className?: string;
@@ -66,7 +67,12 @@ export function FramedShot({
               height={1000}
               sizes={sizes}
               className={styles.media}
-              priority={priority}
+              // Next 16 deprecates `priority`. Several FramedShots can be the
+              // LCP image depending on viewport (projects grid, case-study
+              // hero), so per the Image docs: eager + high fetch priority,
+              // no <head> preload.
+              loading={priority ? "eager" : undefined}
+              fetchPriority={priority ? "high" : undefined}
             />
           )}
         </div>

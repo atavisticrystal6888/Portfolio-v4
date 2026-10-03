@@ -12,32 +12,32 @@ interface TimelineItem {
 const EXPERIENCE: TimelineItem[] = [
   {
     company: "The Sleep Company",
-    role: "Product Manager Intern, Growth",
+    role: "Product Intern, Growth",
     type: "Internship",
-    period: "Jul 2026 – Present",
-    description: "Driving growth product initiatives for a D2C sleep brand: vendor evaluation across BSPs, CRMs, payment aggregators, OMS, and WMS; AI-powered operational agents and a centralized knowledge repository; Shopify Master Catalogue standardization and PDP user-flow mapping.",
-    current: true,
+    // Dated, not "Present": the internship ends 9 Oct 2026.
+    period: "Jul 2026 – Oct 2026",
+    description: "Growth intern on pre-launch product work for a D2C sleep brand. Internal systems and plans stay internal.",
   },
   {
     company: "Wipro",
     role: "AI Product Intern, Wipro TOPS",
     type: "Internship",
     period: "Feb – Jul 2026",
-    description: "Scoped Auriga ReX, an AI-powered enterprise workflow platform, plus Crew Mobile and Non-Crew Records workflows across 12+ aviation scenarios — surfacing edge cases early and moving specs into active sprint development.",
+    description: "Scoped an internal AI-powered enterprise workflow platform, plus workflows for an internal crew mobile micro-app and an internal records platform for non-crew staff, across 12+ aviation scenarios (self-reported); surfaced edge cases early and moved specs into active sprint development.",
   },
   {
     company: "Read Riches",
     role: "Founder's Office",
     type: "Consulting",
     period: "2024 – 2025",
-    description: "Ran content-led growth experiments, managed a 4-person research and content team, and contributed to a 4x retention improvement through better publishing cadence and feedback loops.",
+    description: "Ran content-led growth experiments, managed a 4-person research and content team, and contributed to a 4x retention improvement (self-reported) through better publishing cadence and feedback loops.",
   },
   {
     company: "Omniful.ai",
     role: "Business Analyst Intern",
     type: "Internship",
     period: "2024",
-    description: "Defined prospect scoring using firmographic and behavioral signals, scaled qualified prospects from about 10 per day to 200+ per day, and supported 10 client acquisitions.",
+    description: "Defined prospect scoring using firmographic and behavioral signals, scaled qualified prospects from about 10 per day to 200+ per day, and supported 10 client acquisitions (self-reported).",
   },
 ];
 

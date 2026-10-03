@@ -1,14 +1,16 @@
 ---
 slug: "seventeen-checks-before-you-call-a-site-done"
 title: "Seventeen Checks Before You Call a Site Done"
-date: "2026-08-29"
-updatedDate: null
+date: "2026-09-03"
+updatedDate: "2026-10-02"
 category: "Product"
 tags: ["portfolio", "qa", "testing", "product-management", "web-performance"]
-readingTime: "6 min read"
+related: ["building-portfolio-as-product", "figma-to-live-parity-audit"]
 excerpt: "A seventeen-item launch checklist looked like a week of work. Ten items were already done, and the four worst defects were never on the list at all."
 socialImage: null
 ---
+
+*Dated note: this post describes the site at its v5 release (merged 22 Aug 2026; see the [changelog](/changelog)), audited on 29 Aug 2026: home Lighthouse performance 65; Playwright 590 passed, 10 skipped. The fixes and image numbers it reports landed on 3 Sep 2026, the day it was published. The 3D hero scene was removed on 22 Aug 2026. Current numbers live in the [portfolio case study](/projects/portfolio-site).*
 
 ## The list arrives, and the urge to tick
 
@@ -30,13 +32,13 @@ Being honest about those ten matters. An already-done item is not a wasted pass;
 
 Then the interesting part. The worst things the audit found were mostly not the things the list predicted.
 
-The site's `favicon.ico` was the stock framework triangle, untouched since the very first commit. The branded mark rendered everywhere else: the SVG icon, the Apple touch icon, the social images. Only the one file that shows up in a browser tab and a bookmark bar was generic. Checklist item three read "favicon", and it would have passed.
+The site's `favicon.ico` was the stock framework triangle, untouched since the very first commit. The branded mark rendered everywhere else: the SVG icon, the Apple touch icon, the social images. Only the one file that shows up in a browser tab and a bookmark bar was generic. Checklist item three read "favicon", and it would have passed. The branded favicon replaced it on 3 Sep 2026.
 
-The contact API returned success when its mail key was missing. In production, with no key configured, a visitor would fill in the form, see a confirmation, and the message would go nowhere. Nothing logged an error. Nothing failed a test. "Add success messages" was item fifteen, and the site had one. It was lying. That route now answers with an honest failure and a direct email fallback.
+The contact API returned success when its mail key was missing. In production, with no key configured, a visitor would fill in the form, see a confirmation, and the message would go nowhere. Nothing logged an error. Nothing failed a test. "Add success messages" was item fifteen, and the site had one. It was lying. That route was fixed on 3 Sep 2026 and now answers with an honest failure and a direct email fallback.
 
-The contact tiles copied to the clipboard on click, cancelling the link's default behaviour. On a desktop that is a convenience. On a phone it means tapping a phone number copies it instead of dialling it, which is precisely what someone reaching for "call" does not want. The anchors now navigate, and copying moved to a separate 44px button inside the tile but outside the link.
+The contact tiles copied to the clipboard on click, cancelling the link's default behaviour. On a desktop that is a convenience. On a phone it means tapping a phone number copies it instead of dialling it, which is precisely what someone reaching for "call" does not want. The anchors were fixed on 3 Sep 2026 and now navigate, and copying moved to a separate 44px button inside the tile but outside the link.
 
-And a comparison table inside a case study scrolls horizontally without being focusable, so a keyboard user saw a clipped table with no way to scroll it. That one is invisible to any check that does not model a person without a mouse.
+And a comparison table inside a case study scrolled horizontally without being focusable, so a keyboard user saw a clipped table with no way to scroll it. It was made focusable on 3 Sep 2026. That one is invisible to any check that does not model a person without a mouse.
 
 Four defects. Not one of them is a checklist item. All four are things a real visitor hits inside a minute.
 
@@ -50,7 +52,7 @@ Four defects. Not one of them is a checklist item. All four are things a real vi
 | Lighthouse, home | 65 performance, 100 accessibility, 100 best practices, 100 SEO |
 | Lighthouse, contact | 75 performance, 100 accessibility, 100 best practices, 100 SEO |
 
-The performance score is the one I refuse to dress up. The home page sits at 65 on throttled mobile because the 3D hero ships a heavy rendering and animation bundle, and no amount of image squeezing moves it. Lifting that number means changing what the hero is, which is a decision about what the first screen is for, not a polish task. I would rather publish a 65 with the reason attached than a 95 with the hero quietly deleted.
+The performance score is the one I refuse to dress up. The home page sat at 65 on throttled mobile, and no amount of image squeezing moved it. My read at the time blamed the 3D hero, but the record does not support that: the hero's scene mount had been removed on 22 Aug 2026, a week before this run, while the three.js scenes still shipped on /lab and the case-study pages. I did not isolate the cause of the 65. Lifting it starts with measuring what the home page actually loads, not with a story about it. I would rather publish a 65 with that admission than a 95 with a guessed reason attached.
 
 ## What emulation cannot tell you
 

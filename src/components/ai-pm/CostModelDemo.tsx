@@ -9,7 +9,7 @@ import styles from "./CostModelDemo.module.css";
  */
 const PRICES = {
   visionPerCall: 0.0035, // Gemini 1.5 Pro vision call w/ ~1MP image
-  retrievalPerCall: 0.005, // Exa AI API grounded query
+  retrievalPerCall: 0.005, // web research API grounded query
   embedPerCall: 0.0001, // text-embedding-3-small for cache lookup
   workerPerCall: 0.0000005, // Cloudflare Workers per-request
 };
@@ -59,7 +59,7 @@ export function CostModelDemo() {
       <div className={styles.controls}>
         <label className={styles.control}>
           <span className={styles.controlLabel}>
-            Requests / user / month
+            Requests per user per month
             <strong>{requestsPerUser}</strong>
           </span>
           <input
@@ -70,6 +70,7 @@ export function CostModelDemo() {
             value={requestsPerUser}
             onChange={(e) => setRequestsPerUser(parseInt(e.target.value, 10))}
             aria-label="Requests per user per month"
+            aria-valuetext={`${requestsPerUser} requests per user per month`}
           />
         </label>
 
@@ -84,7 +85,8 @@ export function CostModelDemo() {
             step={1}
             value={batchSize}
             onChange={(e) => setBatchSize(parseInt(e.target.value, 10))}
-            aria-label="Vision batch size"
+            aria-label="Batch size"
+            aria-valuetext={batchSize === 1 ? "1, no batching" : `${batchSize} images per vision call`}
           />
         </label>
 
@@ -100,6 +102,7 @@ export function CostModelDemo() {
             value={cacheHitRate}
             onChange={(e) => setCacheHitRate(parseFloat(e.target.value))}
             aria-label="Cache hit rate"
+            aria-valuetext={`${Math.round(cacheHitRate * 100)}%`}
           />
         </label>
 
@@ -114,7 +117,8 @@ export function CostModelDemo() {
             step={500}
             value={users}
             onChange={(e) => setUsers(parseInt(e.target.value, 10))}
-            aria-label="Active monthly users"
+            aria-label="Active users"
+            aria-valuetext={`${users.toLocaleString()} active users per month`}
           />
         </label>
       </div>
@@ -158,7 +162,7 @@ export function CostModelDemo() {
             </span>
           </li>
           <li>
-            <span className={styles.bdLabel}>Retrieval (Exa AI API)</span>
+            <span className={styles.bdLabel}>Retrieval (web research API)</span>
             <span className={styles.bdValue}>
               {formatUsd(PRICES.retrievalPerCall, 5)}
             </span>
@@ -179,10 +183,11 @@ export function CostModelDemo() {
       </div>
 
       <p className={styles.note}>
-        The Aarchid envelope is <strong>$0.25 / active user / month</strong>.
-        Vision is the dominant cost — batching it across multiple images
-        (gallery upload, time-lapse) and caching repeat diagnoses by perceptual
-        hash are the two levers that keep us under budget at scale.
+        The Aarchid target envelope is <strong>$0.25 / active user / month</strong>,
+        an estimate rather than a measured bill. Vision is the dominant cost;
+        batching it across images and caching repeat diagnoses by perceptual
+        hash are the two levers that would keep the estimate in budget if
+        usage grows.
       </p>
     </div>
   );

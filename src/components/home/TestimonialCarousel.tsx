@@ -3,7 +3,6 @@
 import { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
 import type { Testimonial } from "@/types/testimonial";
-import { MetricCounter } from "@/components/ui/MetricCounter";
 import { cn } from "@/lib/utils";
 import styles from "./TestimonialCarousel.module.css";
 
@@ -13,7 +12,6 @@ interface TestimonialCarouselProps {
 
 export function TestimonialCarousel({ testimonials }: TestimonialCarouselProps) {
   const [active, setActive] = useState(0);
-  const [paused, setPaused] = useState(false);
 
   const next = useCallback(() => {
     setActive((prev) => (prev + 1) % testimonials.length);
@@ -22,12 +20,6 @@ export function TestimonialCarousel({ testimonials }: TestimonialCarouselProps) 
   const prev = useCallback(() => {
     setActive((p) => (p - 1 + testimonials.length) % testimonials.length);
   }, [testimonials.length]);
-
-  useEffect(() => {
-    if (paused) return;
-    const id = setInterval(next, 8000);
-    return () => clearInterval(id);
-  }, [paused, next]);
 
   // Keyboard navigation
   useEffect(() => {
@@ -53,10 +45,6 @@ export function TestimonialCarousel({ testimonials }: TestimonialCarouselProps) 
       role="region"
       aria-roledescription="carousel"
       aria-label="Testimonials"
-      onMouseEnter={() => setPaused(true)}
-      onMouseLeave={() => setPaused(false)}
-      onFocus={() => setPaused(true)}
-      onBlur={() => setPaused(false)}
     >
       <figure className={styles.card}>
         <blockquote className={styles.quote}>&ldquo;{t.quote}&rdquo;</blockquote>
@@ -65,7 +53,15 @@ export function TestimonialCarousel({ testimonials }: TestimonialCarouselProps) 
             <div className={styles.avatar}>
               {t.avatar ? (
                 // eslint-disable-next-line @next/next/no-img-element
-                <img src={t.avatar} alt="" aria-hidden="true" />
+                <img
+                  src={t.avatar}
+                  alt=""
+                  aria-hidden="true"
+                  width={44}
+                  height={44}
+                  loading="lazy"
+                  decoding="async"
+                />
               ) : (
                 t.name.split(" ").map((n) => n[0]).join("")
               )}
@@ -75,9 +71,6 @@ export function TestimonialCarousel({ testimonials }: TestimonialCarouselProps) 
               <span>{t.title}, {t.company}</span>
               <span className={styles.relationship}>{t.relationship}</span>
             </div>
-          </div>
-          <div className={styles.metric}>
-            <MetricCounter value={t.outcomeMetric.value} label={t.outcomeMetric.label} />
           </div>
         </figcaption>
         {t.projectSlug && (

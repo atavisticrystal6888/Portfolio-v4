@@ -49,15 +49,30 @@
 }
 
 .tags {
+  display: flex;
+  flex-wrap: wrap;
+  list-style: none;
+  margin: var(--space-3) 0 0;
+  padding: 0 0 var(--space-6);
   font-family: var(--font-mono);
   font-size: var(--text-xs);
   text-transform: uppercase;
   letter-spacing: var(--tracking-label);
   color: var(--text-muted);
   line-height: 1.7;
-  margin-top: var(--space-3);
-  padding-bottom: var(--space-6);
   border-bottom: var(--hairline);
+}
+
+/* Each tag keeps its own separator, so a wrapped line never starts with a
+   stranded "·". */
+.tag {
+  white-space: nowrap;
+}
+
+.tag + .tag::before {
+  content: "\00b7";
+  margin: 0 0.6em;
+  color: var(--border-strong);
 }
 
 /* width:100% matters: .page is a column flex container, and `margin: 0 auto`
@@ -75,4 +90,87 @@
   margin: var(--space-10) auto 0;
   padding: 0 var(--space-6);
   width: 100%;
+}
+
+/* The breadcrumb replaced the old top "Back to Blog" link: its "Blog" step is
+   the way back, so on touch screens its targets get the full 44px. */
+.crumbs {
+  margin-bottom: var(--space-5);
+}
+
+@media (max-width: 767px) {
+  .crumbs a {
+    min-height: 44px;
+  }
+
+  /* The h1 right below repeats the title in full; on a phone the current
+     crumb keeps one line instead of three. Only the visual box is clipped,
+     so the accessible name is still the whole title. */
+  .crumbs [aria-current="page"] {
+    display: block;
+    max-width: calc(100vw - 2 * var(--space-6));
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
+
+.authorSection {
+  max-width: var(--container-md);
+  margin: var(--space-10) auto 0;
+  padding: 0 var(--space-6);
+  width: 100%;
+}
+
+/* Tables with four or more columns keep a readable cell width and scroll inside their focusable
+   wrapper instead of crushing every cell to a word or two at 390px. */
+.article :global([data-table-scroll]) table:has(th:nth-child(4)) {
+  min-width: 34rem;
+}
+
+/* Body: the "On this page" list sits in the left gutter beside the 760px
+   article from 1200px, mirroring the case-study chapter rail. Below that the
+   list is the disclosure above the article and this is a plain block. */
+.body {
+  width: 100%;
+}
+
+.article {
+  min-width: 0;
+}
+
+.article h2,
+.article h3 {
+  scroll-margin-top: calc(var(--nav-height) + var(--space-6));
+}
+
+.article h2:focus,
+.article h3:focus {
+  outline: none;
+}
+
+.article h2:focus-visible,
+.article h3:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+}
+
+@media (min-width: 1200px) {
+  .body {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, var(--container-md)) minmax(0, 1fr);
+    column-gap: var(--space-8);
+    align-items: start;
+  }
+
+  .toc {
+    grid-column: 1;
+    justify-self: end;
+  }
+
+  /* Prose capped near 68 characters a line; the 760px column ran 74 to 98. */
+  .article {
+    grid-column: 2;
+    max-width: 68ch;
+  }
 }

@@ -2,29 +2,32 @@
 slug: "shipping-llm-products-eval-harness"
 title: "Shipping LLM Products Starts With the Eval Harness, Not the Prompt"
 date: "2026-04-14"
-updatedDate: null
+updatedDate: "2026-10-03"
 category: "AI"
 tags: ["ai-pm", "llm", "evaluation", "product-management", "shipping"]
-readingTime: "8 min read"
+related: ["the-prd-is-dead-long-live-the-eval-set", "choosing-a-product-without-ai"]
 excerpt: "A prompt is an artefact. An eval harness is a product. Here's how I scope LLM features so the output doesn't surprise users — or me."
+seoTitle: "LLM Products Start With the Eval Harness"
 socialImage: null
 ---
 
-## The mistake I see everywhere
+## A common mistake
 
-A team decides to "add AI". Someone writes a prompt. The demo works on three carefully chosen inputs. The PR ships to 10% of users. Two weeks later, the complaints arrive: the model confabulated a source, gave contradictory advice, and broke gracefully exactly zero of the times it should have.
+Picture this: a team decides to "add AI". Someone writes a prompt. The demo works on three carefully chosen inputs. The PR ships to 10% of users. Two weeks later, the complaints arrive: the model confabulated a source, gave contradictory advice, and broke gracefully exactly zero of the times it should have.
 
 The bug isn't the prompt. The bug is that there was never an eval.
 
 ## A prompt is an artefact. An eval harness is a product.
 
-On [Aarchid](/projects/aarchid) — the AI botanical diagnosis platform I co-created with [Dilpreet Grover](https://github.com/dfordp) — the order was deliberately inverted. Before a single production prompt was written, we had:
+On [Aarchid](/projects/aarchid) — the AI botanical diagnosis platform I co-created with [Dilpreet Grover](https://github.com/dfordp) — the team ran an offline eval on a golden set of about 200 hand-labelled samples (as reported by the team). I am withholding the result until the eval artefact or my co-builder's confirmation is available.
 
-1. **A golden set** of 60 plant photos with hand-labelled ground truth: species, condition, severity, recommended action.
-2. **A rubric** with four dimensions: diagnostic accuracy, citation fidelity, severity calibration, and latency.
-3. **A scoring pipeline** that ran the full vision → research → synthesis chain against the golden set and emitted a single comparable score.
+The order I recommend, and the one this post argues for, is to have three things before a single production prompt is written:
 
-Only then did we start iterating on prompts. Every change — model version, system prompt, retrieval strategy, temperature — ran through the harness. We shipped when the score crossed the threshold, not when the demo looked good.
+1. **A golden set** of hand-labelled inputs with ground truth. For a plant-diagnosis product: species, condition, severity, recommended action.
+2. **A rubric** with a few separate dimensions. Aarchid's has four: diagnostic accuracy, citation fidelity, severity calibration, and latency.
+3. **A scoring pipeline** that runs the full chain (for Aarchid, vision → research → synthesis) against the golden set and emits a comparable score.
+
+Only then iterate on prompts. Every change — model version, system prompt, retrieval strategy, temperature — runs through the harness, and each release is judged by the score, not by how good the demo looks.
 
 ## What "good" looks like for an LLM feature PRD
 
@@ -38,32 +41,25 @@ What must the output always contain? What must it never contain? On Aarchid:
 - Never: species-identification claims below a confidence floor, recommendations without a source URL, hedging language that obscures severity.
 
 ### 2. Golden set
-A small (50–200), diverse, hand-labelled dataset. Grow it from real failure modes. Revisit it every release.
+A small (50–200), diverse, hand-labelled dataset. Add a case each time you find a failure the set misses. Revisit it every release.
 
 ### 3. Rubric
 3–6 axes, each scored 0–5 or 0–1. Resist the urge to collapse it into one number too early — the axes teach you _where_ you're weak.
 
 ### 4. Guardrails
-What happens when the model falls off a cliff? Retry, degrade, escalate, or refuse. Aarchid refuses if Gemini returns low confidence on species ID — better silence than a confident wrong answer.
+What happens when the model falls off a cliff? Retry, degrade, escalate, or refuse. Aarchid's spec says to decline when the vision model's confidence on species ID is low — better silence than a confident wrong answer. That is a design rule in the spec; how often it fires in the field is not measured.
 
 ### 5. Cost envelope
 Per-request maths, including retries and retrieval calls. If you can't afford your feature at P95 usage, you don't have a feature.
 
 ## The eval loop in practice
 
-```
-┌─────────────┐      ┌──────────────┐      ┌─────────────┐
-│ Golden set  │ ───▶ │  Pipeline    │ ───▶ │   Rubric    │
-│ (60 photos) │      │ (vision+RAG) │      │ (4 axes)    │
-└─────────────┘      └──────────────┘      └─────────────┘
-                                                 │
-                      ┌──────────────────────────┘
-                      ▼
-              ┌────────────────┐
-              │  Score + diff  │
-              │  vs. baseline  │
-              └────────────────┘
-```
+The loop has four steps:
+
+1. **Golden set** goes in.
+2. **Pipeline** runs: vision plus retrieval.
+3. **Rubric** scores each output on four axes.
+4. **Score and diff** against the baseline, then back to step 1 on the next change.
 
 Every prompt change, every model upgrade, every retrieval tweak runs the loop. Regressions are caught before a user sees them. Improvements are measurable.
 
@@ -71,15 +67,15 @@ This is not novel. Traditional ML teams have done this forever. The mistake is t
 
 ## Three lessons from Aarchid
 
-**1. Build the harness before the feature.** It feels slow. It isn't. Every other decision gets faster.
+**1. Build the harness before the feature.** That is the recommended order, not a claim about the order Aarchid followed. It feels slow. It isn't. Every other decision gets faster.
 
-**2. Grow the golden set from production failures.** The first 60 photos were easy wins. The next 30 were real-world edge cases that broke v1 — and are now permanent regression checks.
+**2. Grow the golden set on purpose.** Aarchid's set is about 200 samples, none from production traffic (as reported by the team). Each case you add should cover something the earlier set missed and become a permanent regression check.
 
-**3. Cost is a first-class axis.** We hit 92% diagnosis accuracy around the same time we hit the $0.25/user/mo envelope. Neither was an accident.
+**3. Cost is a first-class axis.** Track it next to accuracy, not after it. Aarchid's cost target was about $0.25 per active user per month, an estimate rather than a measured bill. The offline accuracy result is withheld, as above, and field accuracy is not measured.
 
 ## What to put on the PR-FAQ
 
-When I'm advising teams on their first LLM feature, I ask for three things before I'll sign off on a spec:
+When I scope an LLM feature, I ask for three things before I'll call the spec ready:
 
 - Show me the golden set.
 - Show me the rubric.

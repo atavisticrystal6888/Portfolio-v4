@@ -1,6 +1,7 @@
 import type { BlogArticle } from "@/types/blog";
 import { ListRow, ListRows } from "@/components/ui/ListRow";
 import { formatDate } from "@/lib/utils";
+import { pickRelatedPosts } from "@/lib/content";
 import styles from "./RelatedArticles.module.css";
 
 interface RelatedArticlesProps {
@@ -9,21 +10,15 @@ interface RelatedArticlesProps {
 }
 
 export function RelatedArticles({ current, allPosts }: RelatedArticlesProps) {
-  const related = allPosts
-    .filter((p) => p.slug !== current.slug)
-    .map((p) => {
-      const tagOverlap = p.tags.filter((t) => current.tags.includes(t)).length;
-      const catMatch = p.category === current.category ? 2 : 0;
-      return { post: p, score: tagOverlap + catMatch };
-    })
-    .sort((a, b) => b.score - a.score)
-    .slice(0, 2);
+  const related = pickRelatedPosts(current, allPosts).map((post) => ({ post }));
 
   if (related.length === 0) return null;
 
   return (
-    <section className={styles.wrapper} aria-label="Related articles">
-      <h2 className={styles.heading}>Related reading</h2>
+    <section className={styles.wrapper} aria-labelledby="related-reading-heading">
+      <h2 id="related-reading-heading" className={styles.heading}>
+        Related reading
+      </h2>
       <ListRows>
         {related.map(({ post }) => (
           <ListRow

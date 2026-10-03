@@ -7,10 +7,6 @@
     "quote": "Dhruv brought structure to messy aviation workflows quickly. He turned SME inputs into clear product specs, surfaced edge cases before handoff, and consistently made cross-functional conversations easier for engineering and QA.",
     "avatar": "/images/avatars/subrat-gaur.svg",
     "projectSlug": null,
-    "outcomeMetric": {
-      "value": "12+",
-      "label": "Workflow Scenarios Scoped"
-    },
     "relationship": "Manager at Wipro"
   },
   {
@@ -21,10 +17,6 @@
     "quote": "Dhruv treated growth like a Product problem. He built the operating rhythm for experiments, helped manage the research and content team, and kept decisions grounded in user behavior instead of guesswork.",
     "avatar": "/images/avatars/pranay-aggarwal.svg",
     "projectSlug": null,
-    "outcomeMetric": {
-      "value": "4x",
-      "label": "Retention Improvement"
-    },
     "relationship": "Founder at Read Riches"
   }
 ]

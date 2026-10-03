@@ -11,9 +11,27 @@
 
 @media (min-width: 760px) {
   .row {
-    grid-template-columns: 11rem minmax(0, 1fr) 12rem;
+    grid-template-columns: 13.5rem minmax(0, 1fr) 12rem;
     column-gap: var(--space-8);
     align-items: start;
+  }
+}
+
+/* Left rail: category, then the status and evidence chips. Beside the body
+   from 760px; a single wrapped line above the name on phones. */
+.rail {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2) var(--space-3);
+  min-width: 0;
+}
+
+@media (min-width: 760px) {
+  .rail {
+    flex-direction: column;
+    align-items: flex-start;
+    padding-top: 0.35rem;
   }
 }
 
@@ -23,15 +41,17 @@
   text-transform: uppercase;
   letter-spacing: var(--tracking-label);
   color: var(--text-muted);
-  display: flex;
-  gap: var(--space-2);
-  align-items: baseline;
-  flex-wrap: wrap;
-  padding-top: 0.35rem;
 }
 
-.sep {
-  color: var(--border-strong);
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  max-width: 100%;
+}
+
+.ownership {
+  max-width: 64ch;
 }
 
 .body {
@@ -140,4 +160,12 @@
   color: var(--text-muted);
   line-height: 1.45;
   text-wrap: balance;
+}
+
+/* The rail column is narrow; a long status may break onto a second line
+   rather than spill into the body column. */
+@media (min-width: 760px) {
+  .chips > * {
+    white-space: normal;
+  }
 }

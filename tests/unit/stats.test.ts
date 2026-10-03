@@ -1,12 +1,14 @@
 import { describe, it, expect } from "vitest";
-import { getHomeMetrics } from "@/lib/stats";
+import {
+  getHomeMetrics,
+  COVERAGE_CASE_STUDIES,
+  COVERAGE_ARTICLES,
+} from "@/lib/stats";
 
 describe("getHomeMetrics", () => {
   const metrics = getHomeMetrics();
-
-  it("returns at least four metrics", () => {
-    expect(metrics.length).toBeGreaterThanOrEqual(4);
-  });
+  const coverage = [COVERAGE_CASE_STUDIES, COVERAGE_ARTICLES];
+  const evidence = metrics.filter((m) => !coverage.includes(m.label));
 
   it("every metric has a non-empty value and label", () => {
     for (const m of metrics) {
@@ -17,24 +19,24 @@ describe("getHomeMetrics", () => {
     }
   });
 
-  it("the last two are derived counts (Case Studies, Articles Published)", () => {
+  it("shows one evidence tile per featured flagship, four in all", () => {
+    expect(evidence).toHaveLength(4);
+  });
+
+  it("the Aarchid tile shows no eval result figure (owner decision, 3 Oct 2026)", () => {
+    // The result is withheld until the eval artefact or the co-builder's
+    // confirmation is available: no percentage in the value or the label.
+    expect(evidence[0]!.value).not.toMatch(/\d+\s*%/);
+    expect(evidence[0]!.label).not.toMatch(/\b92\b/);
+  });
+
+  it("no feature-count tile stands in for an outcome", () => {
+    for (const m of evidence) expect(m.value).not.toMatch(/^43\+$/);
+  });
+
+  it("coverage counts come last and are numeric", () => {
     const labels = metrics.map((m) => m.label);
-    expect(labels).toContain("Case Studies");
-    expect(labels).toContain("Articles Published");
-  });
-
-  it("derived count values are numeric strings", () => {
-    const caseStudies = metrics.find((m) => m.label === "Case Studies")!;
-    const articles = metrics.find((m) => m.label === "Articles Published")!;
-    expect(caseStudies.value).toMatch(/^\d+$/);
-    expect(articles.value).toMatch(/^\d+$/);
-  });
-
-  it("featured outcomes appear before derived counts", () => {
-    const csIndex = metrics.findIndex((m) => m.label === "Case Studies");
-    // Featured outcomes are inserted at the front.
-    expect(csIndex).toBeGreaterThanOrEqual(0);
-    // At least one outcome metric precedes the count tiles.
-    expect(csIndex).toBeGreaterThan(0);
+    expect(labels.slice(-2)).toEqual(coverage);
+    for (const m of metrics.slice(-2)) expect(m.value).toMatch(/^\d+$/);
   });
 });

@@ -1,0 +1,140 @@
+---
+slug: "cohort-retention-studio"
+title: "Cohort & Retention Studio"
+subtitle: "Cohort and retention analysis for direct-to-consumer brands that runs in the browser tab: drop an orders CSV, read retention, repeat rate and first-product LTV, and the raw rows never leave the tab. Solo side project, ready for a facilitated local pilot; hosted pilot not verified."
+role: "Solo builder · product and engineering"
+duration: "2 Sep 2026 to 19 Sep 2026 (test run dated 19 Sep 2026)"
+stack: ["Next.js 16", "TypeScript", "Web Workers", "d3-scale", "CSS Modules", "Clerk", "Neon Postgres", "PGlite", "Vitest", "Playwright"]
+tldr: "D2C operators know revenue to the rupee but not whether customers come back, and the answer usually sits in a pivot table few people build correctly. Cohort & Retention Studio reads the orders CSV a brand already exports and computes every metric in a Web Worker in the browser, so raw order rows never reach a server. As of 19 Sep 2026 it is ready for a facilitated local pilot; hosted pilot not verified, and nobody outside the build has used it yet."
+myPart: "All of it, as a solo side project: problem framing, PRD, metric definitions, the privacy boundary, the pilot design and the build, done with AI coding agents working under my direction. I confirmed the eight foundational product decisions on 19 Sep 2026."
+metrics:
+  - label: "Vitest tests passing (19 Sep 2026)"
+    value: 925
+    displayValue: "925"
+    chartType: "bar"
+    kind: "build"
+  - label: "Engine tests (subset of the 925)"
+    value: 448
+    displayValue: "448"
+    chartType: "bar"
+    kind: "build"
+  - label: "Playwright e2e passing"
+    value: 57
+    displayValue: "57"
+    chartType: "bar"
+    kind: "build"
+prevSlug: "desktasks"
+nextSlug: "sawari"
+heroNote: "No screenshot: the app has never been deployed, and no capture from a local run has been published yet."
+metaDescription: "Cohort & Retention Studio turns a D2C orders CSV into cohort retention curves in the browser, so order rows never reach a server. Ready for a local pilot."
+alternative: "a Shopify or WooCommerce connector, or server-side processing."
+tradeoff: "the operator exports the orders CSV, and a cumulative one for each Growth Review."
+---
+
+## Problem
+
+A growth person or founder at a direct-to-consumer brand knows revenue and ad spend to the rupee. They do not know whether customers come back, how fast, or which first purchase creates a repeat buyer. Those decisions get made on instinct, because the answer lives in a pivot table almost nobody builds correctly.
+
+The tools that answer this are mostly Shopify apps, installed and authorised against the shop. Shopify's own analytics include cohort reports, but only inside Shopify. A brand on another platform, or one that will not authorise a third party against its shop, is not served.
+
+The gap I chose was narrow and checkable: take the orders file a brand on any platform already exports, install nothing, keep the raw rows in the browser tab, show the definition beside every number, and read rupees first.
+
+My research was desk research: a competitor check across retention analytics and a read of D2C operator tooling in India. I did not interview operators before building. The "no app at all" wedge is written in the PRD as positioning to be tested with operators, not a finding.
+
+## Users
+
+The intended user is a founder or growth owner at an INR-only D2C brand who personally pulls the orders export. The PRD aims India first, at brands on WooCommerce, Amazon seller, Dukaan or Shopify Basic. In the build, Shopify orders is the only verified platform preset; the others were deferred until a real export file settles their header formats.
+
+There are no real users yet. The README says it plainly: no user has used the product yet.
+
+The next step is a planned pilot with five operators, referred to only as P1 to P5: facilitated, local, INR-only, two review cycles, and at least two operators not on Shopify. Nobody has been recruited or run through it yet.
+
+## Decision
+
+<Decision>
+
+The call everything else follows from is in the decision log as **Compute location: Browser, in a Web Worker**, with the reason "The privacy promise is the product's trust argument". Parsing and every metric run in a worker in the user's tab. Only aggregates can be saved, and only after the user signs in and presses Save.
+
+</Decision>
+
+That choice ruled out the incumbents' connector model, so the product became "a file in, answers out". The cost moved to the user: they export a CSV and, for a Growth Review, a cumulative one from their first sale.
+
+The second decision shaped what comes after the build. On 19 Sep 2026 I scoped the next step as a **five-operator, two-cycle, facilitated, INR-only local pilot**, recorded as "a learning phase, never validation proof". The primary signal is an operator completing a second valid Growth Review with a recorded action outcome, not usage or sign-ups.
+
+## Trade-offs
+
+Three constraints fixed the scope: raw rows never leave the browser, no AI anywhere in the product, and free-tier hosting only. Each is backed by a test or a written rule, not intent alone.
+
+<Options>
+  <Option name="Browser-only compute in a Web Worker" status="chosen" why="The privacy promise is the product's trust argument; the decision log sizes it at 100k rows." />
+  <Option name="Shopify or WooCommerce connector" status="rejected" why="OAuth plus multi-tenant storage; the incumbents' model; fails a solo one-shot." />
+  <Option name="Server-side processing" status="rejected" why="Breaks the privacy promise." />
+  <Option name="Any AI feature" status="rejected" why="Product rule: every number is arithmetic." />
+  <Option name="Zero-value orders excluded by default, with a toggle" status="chosen" why="Replacement orders inflate repeat rate." />
+  <Option name="Censored cells stored as null and rendered blank" status="chosen" why="Showing zero is the most common cohort-analysis error." />
+  <Option name="Email reminder for a due review" status="rejected" why="A stored address, a schedule and a sender are a new egress item and a new identifier." />
+  <Option name="Weekly cohorts" status="deferred" why="Revisit when a real user asks." />
+  <Option name="CAC upload and payback curve" status="deferred" why="Revisit when the retention view is used by ten people." />
+  <Option name="Host-conditioned performance protocol as a release gate" status="rejected" why="Retired on 19 Sep 2026; the 100k-row perf run stays as an optional diagnostic, so there is no current performance measurement to quote." />
+</Options>
+
+Definitions were where I spent the most judgment, because a retention number is only as good as what it counts. A cohort is marked immature when it has under three months of data behind it. Rows in the first-product view need a minimum n of 30, because below that the percentages are noise. A Growth Review comparison is blocked unless both snapshots share series, currency, timezone, settings and history start, both cohorts are old enough to read in full, and each has at least thirty customers. A month still filling reads "Awaiting data", never a zero.
+
+The Studio also labels every file's money as INR and converts nothing. I left that alone only because pilot recruitment is INR-only; the decision log says it must be fixed before any non-INR user.
+
+## What shipped
+
+A user meets it in this order.
+
+**Load.** "Try with sample data" runs a bundled Shopify-shaped export, or the user drops their own orders file. Before choosing a file, a "What your file needs" disclosure lists the required fields and says nothing is uploaded.
+
+**Map.** The Map step shows which preset matched, lets the user correct the column mapping, and shows a data-health strip of what was excluded and why. Import failures show a cause, one next action and "Nothing was uploaded", never the raw error text, which can carry file content.
+
+**Read.** Six readings sit on the rail: cohort retention curves, repeat rate, time to second order, LTV by first product, discount and payment splits, and a free-shipping what-if.
+
+**Save and share.** Signing in and pressing Save stores the aggregates, never rows, headers or cell values. Product names become "Product 1" upwards. A share link is a read-only, noindex page of the same stored object.
+
+**Growth Reviews.** An owner compares a baseline cohort with a later one at the same age, records one action before the later cohort exists, and reads the outcome when the next cumulative export is saved. A review awaiting data shows a dated next action, and the reviews list marks each one Scheduled, Due today or Overdue.
+
+Locally this runs anonymously, or with a mock sign-in that exercises the whole signed-in path with no account. The hosted setup is written down but has never been exercised.
+
+<UnderTheHood title="Architecture and implementation">
+
+### The privacy boundary
+
+Only four kinds of request leave the browser: the saved aggregates, the structured fields of a saved Growth Review, fixed-name bucketed analytics events if a deployment enables them, and whatever Clerk needs to sign the user in. The worker has no `fetch`, and a test scans the built worker chunk to prove it. Saved payloads are schema-validated and scanned for forbidden keys on the server.
+
+</UnderTheHood>
+
+## Validation
+
+Validation so far is tests and local runs only. The gate run of record is 19 Sep 2026 on branch `feat/launch-readiness`:
+
+- **Typecheck and lint:** zero errors, zero warnings.
+- **Vitest:** 42 files, 925 tests passed.
+- **Engine suite re-run after the production build:** 17 files, 448 tests passed. This is a subset of the 925, re-run so the worker-egress scan reads the fresh chunk.
+- **Playwright e2e:** 57 passed on the first attempt, including a privacy spec that records every request and asserts no fixture identifier left the browser.
+- **Accessibility:** axe reported zero violations on every route at 1280 and 390 px.
+
+The verification record states its own limit: it is evidence about one tree on one machine, not user validation, not production readiness, and not a performance measurement. The gates ran on Node 24, while the README asks for Node 22.
+
+## Limits and next
+
+**Status: ready for a facilitated local pilot; hosted pilot not verified.** None of these has been exercised on a hosted deployment yet:
+
+- production sign-in
+- the hosted database
+- deployment and its smoke test
+- share links: reading one signed out, and revoking it
+- a network-tab privacy check with a real CSV
+- analytics and the feedback form
+
+The last item may stay absent for a facilitated local pilot; it is absent, not verified.
+
+The pilot's decision rules are written before it runs. Stop and fix if fewer than 2 of the first 3 sessions reach a reading unaided, or if any identifier is seen leaving the browser. Continue to cycle 2 when at least 4 of 5 reach a reading and at least 3 of 5 save a review with a return date they can state. After cycle 2: 3 or more of 5 completing the primary signal keeps investment in the review loop, 2 of 5 means interviewing non-returners before building anything, and 1 or none means the recurring review is not the product.
+
+Other known gaps: the 50 MB file-size warning in the original decisions was never built (only the 200 MB refusal exists), money handling is INR-only, and there is no licence file.
+
+## Credits
+
+Solo side project; all 73 commits are mine. I built it with AI coding agents, and the repo's handover files record what each session did. Open-sourcing the engine is deferred until after the pilot, so there is no public repo link here.

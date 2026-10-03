@@ -15,8 +15,19 @@ vi.mock("react", async (importOriginal) => {
     useEffect: (fn: () => void) => {
       fn();
     },
+    // No renderer, so no hook dispatcher: a plain ref object and a
+    // synchronous transition are enough for the boundary's retry and focus.
+    useRef: <T,>(initial: T) => ({ current: initial }),
+    startTransition: (fn: () => void) => fn(),
   };
 });
+
+// The boundary refetches the segment before reset() (a server-render failure
+// would otherwise re-throw the same cached error).
+const refresh = vi.fn();
+vi.mock("next/navigation", () => ({
+  useRouter: () => ({ refresh }),
+}));
 
 const { EmptyState } = await import("@/components/ui/EmptyState");
 const ErrorBoundaryPage = (await import("@/app/error")).default;
@@ -88,11 +99,13 @@ describe("app/error.tsx", () => {
     expect(console.error).toHaveBeenCalledWith(error);
   });
 
-  it("calls reset when 'Try again' is clicked", () => {
+  it("refreshes the route and calls reset when 'Try again' is clicked", () => {
+    refresh.mockClear();
     const { tree, reset } = render();
     const tryAgain = findOne(tree, (el) => el.props.children === "Try again");
     expect(reset).not.toHaveBeenCalled();
     (tryAgain.props.onClick as () => void)();
+    expect(refresh).toHaveBeenCalledTimes(1);
     expect(reset).toHaveBeenCalledTimes(1);
   });
 

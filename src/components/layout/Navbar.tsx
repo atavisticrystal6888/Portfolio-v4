@@ -7,17 +7,19 @@ import { usePathname } from 'next/navigation';
 import styles from './Navbar.module.css';
 import { cn } from '@/lib/utils';
 import { ThemeToggle } from '@/components/interactive/ThemeToggle';
-import { MusicToggle } from '@/components/interactive/MusicToggle';
 import { MobileNav } from './MobileNav';
 import dhruvImage from '@/assets/Dhruv_Image.jpg';
 
+// No "Home" text link on desktop: the brand link goes to "/" and its
+// accessible name ends in "Home", so a second Home stop only lengthened the
+// Tab path to the page. The mobile drawer (MobileNav) keeps its own Home link.
 const NAV_LINKS = [
-  { href: '/', label: 'Home' },
   { href: '/about', label: 'About' },
   { href: '/projects', label: 'Projects' },
   { href: '/ai-pm', label: 'AI PM' },
   { href: '/blog', label: 'Blog' },
-  { href: '/lab', label: 'Lab' },
+  // Lab (unbuilt ideas) lives in the footer's "More" group and the command
+  // palette: the primary nav is for built, tested work.
   { href: '/contact', label: 'Contact' },
 ];
 
@@ -52,7 +54,12 @@ export function Navbar() {
         aria-label="Main navigation"
       >
         <div className={styles.inner}>
-          <Link href="/" className={styles.logo} aria-label="Dhruv Singhal — Home">
+          <Link
+            href="/"
+            className={styles.logo}
+            aria-label="Dhruv Singhal — Home"
+            aria-current={pathname === '/' ? 'page' : undefined}
+          >
             <span className={styles.mark} aria-hidden="true">
               <Image
                 src={dhruvImage}
@@ -79,7 +86,6 @@ export function Navbar() {
           </ul>
 
           <div className={styles.actions}>
-            <MusicToggle />
             <ThemeToggle />
 
             <button

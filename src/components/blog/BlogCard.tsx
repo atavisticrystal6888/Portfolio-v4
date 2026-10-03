@@ -1,9 +1,9 @@
 import { ListRow } from "@/components/ui/ListRow";
 import { formatDate } from "@/lib/utils";
-import type { BlogArticle } from "@/types/blog";
+import type { BlogSummary } from "@/lib/blog-summary";
 
 interface BlogCardProps {
-  post: BlogArticle;
+  post: BlogSummary;
 }
 
 /**

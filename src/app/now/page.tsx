@@ -1,121 +1,148 @@
-import { generatePageMetadata, generateBreadcrumbJsonLd } from "@/lib/metadata";
-import { JsonLd } from "@/components/ui/JsonLd";
+import Link from "next/link";
+import { generatePageMetadata } from "@/lib/metadata";
 import { SectionLabel } from "@/components/ui/SectionLabel";
-import styles from "./now.module.css";
+import { PageHeader } from "@/components/ui/PageHeader";
+import { WhereNext } from "@/components/ui/WhereNext";
+import styles from "@/styles/content-page.module.css";
 
 export const metadata = generatePageMetadata({
   title: "Now",
   description:
-    "What Dhruv Singhal is doing now — current work, learning, reading, and building.",
+    "What Dhruv Singhal is focused on right now: side projects in progress, his most recent product internship, what he is learning and the books on his desk.",
   path: "/now",
 });
 
 export default function NowPage() {
-  const breadcrumbJsonLd = generateBreadcrumbJsonLd([
-    { name: "Home", url: "/" },
-    { name: "Now", url: "/now" },
-  ]);
-
   return (
     <div className={styles.page}>
-      <JsonLd id="now-breadcrumb-jsonld" data={breadcrumbJsonLd} />
+      <PageHeader
+        breadcrumbs={[
+          { name: "Home", href: "/" },
+          { name: "Now", href: "/now" },
+        ]}
+        title="What I'm Doing Now"
+        meta={
+          <>
+            Last updated: <time dateTime="2026-10-02">2 October 2026</time>
+          </>
+        }
+      />
 
-      <h1 className={styles.title}>What I&apos;m Doing Now</h1>
-      <p className={styles.updated}>
-        Last updated: <time dateTime="2026-08">August 2026</time>
-      </p>
+      <section className={styles.section}>
+        <div className={styles.inner}>
+          <SectionLabel>Work</SectionLabel>
+          <h2 className={styles.sectionTitle}>Most Recent Role</h2>
+          <ul className={styles.list}>
+            <li>
+              <strong>The Sleep Company</strong> (Jul–Oct 2026): most recently a
+              product intern on the growth team, on pre-launch work. The
+              internal detail stays internal.
+            </li>
+          </ul>
+        </div>
+      </section>
 
-      <div className={styles.section}>
-        <SectionLabel>Working On</SectionLabel>
-        <h2 className={styles.sectionTitle}>Current Roles</h2>
-        <ul className={styles.list}>
-          <li>
-            <strong>The Sleep Company</strong> — Product Manager Intern,
-            Growth: vendor evaluation, AI-powered operational agents, and
-            Shopify catalog operations for a D2C sleep brand.
-          </li>
-        </ul>
-      </div>
+      <section className={styles.section}>
+        <div className={styles.inner}>
+          <SectionLabel>Learning</SectionLabel>
+          <h2 className={styles.sectionTitle}>Growing In</h2>
+          <ul className={styles.list}>
+            <li>LLM evaluation harnesses (golden sets, shadow traffic, A/B)</li>
+            <li>Edge-runtime cost modelling for multimodal pipelines</li>
+            <li>Going deeper on system design for the products I build</li>
+          </ul>
+        </div>
+      </section>
 
-      <div className={styles.section}>
-        <SectionLabel>Learning</SectionLabel>
-        <h2 className={styles.sectionTitle}>Growing In</h2>
-        <ul className={styles.list}>
-          <li>LLM evaluation harnesses (golden sets, shadow traffic, A/B)</li>
-          <li>Edge-runtime cost modelling for multimodal pipelines</li>
-          <li>Going deeper on system design — reading DDIA cover-to-cover</li>
-        </ul>
-      </div>
+      <section className={styles.section}>
+        <div className={styles.inner}>
+          <SectionLabel>Reading</SectionLabel>
+          <h2 className={styles.sectionTitle}>On My Shelf</h2>
+          <ul className={styles.list}>
+            {/* Same two books as "On my desk right now" on /bookshelf. */}
+            <li><em>Inspired</em> — Marty Cagan</li>
+            <li><em>Thinking in Systems</em> — Donella Meadows</li>
+            <li>Lenny&apos;s Newsletter, Latent Space, Stratechery</li>
+          </ul>
+        </div>
+      </section>
 
-      <div className={styles.section}>
-        <SectionLabel>Reading</SectionLabel>
-        <h2 className={styles.sectionTitle}>On My Shelf</h2>
-        <ul className={styles.list}>
-          <li><em>Inspired</em> — Marty Cagan</li>
-          <li><em>Designing Data-Intensive Applications</em> — Martin Kleppmann</li>
-          <li><em>Thinking in Systems</em> — Donella Meadows</li>
-          <li>Lenny&apos;s Newsletter, Latent Space, Stratechery</li>
-        </ul>
-      </div>
+      <section className={styles.section}>
+        <div className={styles.inner}>
+          <SectionLabel>Building</SectionLabel>
+          <h2 className={styles.sectionTitle}>Side Projects</h2>
+          <ul className={styles.list}>
+            <li>
+              <strong>
+                <Link href="/projects/cohort-retention-studio">Cohort &amp; Retention Studio</Link>
+              </strong>: browser-only
+              cohort and retention analysis for D2C order exports. Ready for a
+              facilitated local pilot; the hosted product is not verified yet.
+            </li>
+            <li>
+              <strong>
+                <Link href="/projects/sawari">Sawari</Link>
+              </strong>: rider-to-rider auto-rickshaw sharing with a
+              kilometre-weighted fare split; drivers are not users. Built on Elixir,
+              Phoenix LiveView and Ash. Locally
+              built with 897 tests passing; not deployed.
+            </li>
+            <li>
+              <strong>
+                <Link href="/projects/desktasks">DeskTasks</Link>
+              </strong>: the desktop task widget. The hosted
+              v1.3.x line (Supabase sync) is frozen; the v2.0.0-alpha line with
+              local hub sync is where the work is.
+            </li>
+            <li>
+              <strong>
+                <Link href="/projects/aarchid">Aarchid</Link>
+              </strong>, co-built with{" "}
+              <a href="https://github.com/dfordp" target="_blank" rel="noopener noreferrer">
+                Dilpreet Grover
+              </a>
+: multimodal plant diagnosis. Self-reported: the team ran an
+              offline eval on a golden set; the result is withheld until the
+              eval artefact or the co-builder&apos;s confirmation is available.
+            </li>
+            <li>
+              <strong>
+                <Link href="/projects/portfolio-site">This site</Link>
+              </strong>: a trust pass on every claim, plus standalone product
+              pages and illustrative AI PM demos.
+            </li>
+          </ul>
+        </div>
+      </section>
 
-      <div className={styles.section}>
-        <SectionLabel>Building</SectionLabel>
-        <h2 className={styles.sectionTitle}>Side Projects</h2>
-        <ul className={styles.list}>
-          <li>
-            <strong>KiteEdge</strong> — self-hosted portfolio analytics for
-            Zerodha Kite: 43+ indicators, Monte Carlo VaR, a NIFTY 500
-            screener, and a FIFO trade journal across 13 services.
-          </li>
-          <li>
-            <strong>ExperimentHub</strong> — a self-hosted A/B testing
-            platform with a deterministic Rust assignment core and
-            sequential statistics.
-          </li>
-          <li>
-            <strong>DeskTasks</strong> — a local-first desktop task widget
-            pinned behind every window, shipped for Windows + macOS.
-          </li>
-          <li>
-            <strong>Aarchid</strong> with{" "}
-            <a href="https://github.com/dfordp" target="_blank" rel="noopener noreferrer">
-              Dilpreet Grover
-            </a>{" "}
-            — multimodal plant-diagnosis app, edge stack, 92% accuracy on golden set.
-          </li>
-          <li>
-            <strong>This site</strong> — ongoing portfolio iteration in
-            Next.js 16 + React 19, with interactive AI PM demos and one
-            wireframe-globe scene shared across the hero, the Lab, and the
-            case-study headers.
-          </li>
-        </ul>
-      </div>
+      <section className={styles.section}>
+        <div className={styles.inner}>
+          <SectionLabel>Looking For</SectionLabel>
+          <h2 className={styles.sectionTitle}>Next Step</h2>
+          <p className={styles.prose}>
+            {/* Explicit space: JSX drops a leading one when the text node
+                wraps onto the next line. */}
+            Full-time <strong>Product Manager / APM</strong>{" "}
+            roles. Bias toward AI-native products, D2C e-commerce, and
+            teams where product, data, and engineering aren&apos;t separate jobs.{" "}
+            <Link href="/contact">Get in touch</Link>.
+          </p>
 
-      <div className={styles.section}>
-        <SectionLabel>Looking For</SectionLabel>
-        <h2 className={styles.sectionTitle}>Next Step</h2>
-        <p style={{ color: "var(--text-body)", lineHeight: 1.7 }}>
-          {/* Explicit space: JSX drops a leading one when the text node
-              wraps onto the next line. */}
-          Full-time <strong>Product Manager / APM</strong>{" "}
-          roles starting mid-2026. Bias toward AI-native products, D2C e-commerce, and
-          teams where product, data, and engineering aren&apos;t separate jobs.{" "}
-          <a href="/contact">Get in touch</a>.
-        </p>
-      </div>
+          <p className={styles.note}>
+            This is a{" "}
+            <a
+              href="https://nownownow.com/about"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              /now page
+            </a>
+            , inspired by Derek Sivers.
+          </p>
+        </div>
+      </section>
 
-      <p className={styles.note}>
-        This is a{" "}
-        <a
-          href="https://nownownow.com/about"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          /now page
-        </a>
-        , inspired by Derek Sivers.
-      </p>
+      <WhereNext />
     </div>
   );
 }

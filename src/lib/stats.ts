@@ -6,6 +6,10 @@ import { getAllBlogPosts, getAllCaseStudies, getAllProjects } from "./content";
  *
  * Single source of truth: content in `/content/**`.
  */
+/** Coverage counts: how much is written up, not an outcome. */
+export const COVERAGE_CASE_STUDIES = "Case studies · coverage";
+export const COVERAGE_ARTICLES = "Articles · coverage";
+
 export interface HomeMetric {
   value: string;
   label: string;
@@ -14,25 +18,25 @@ export interface HomeMetric {
 /**
  * Compute the headline metrics shown on the home page.
  *
- * Currently blends real outcomes from the projects (e.g. "92% accuracy",
- * "~15% churn reduction") with derived counts (pages, articles). This keeps
- * the grid honest: if you ship a new case study or article, the numbers
- * update on the next build.
+ * One tile per featured flagship, each stating what the evidence supports and
+ * where it stops (offline eval, gate run, test counts), followed by coverage
+ * counts derived from content (case studies, articles).
  */
 export function getHomeMetrics(): HomeMetric[] {
   const projects = getAllProjects();
   const caseStudies = getAllCaseStudies();
   const posts = getAllBlogPosts();
 
-  // Surface the two strongest quantitative outcomes (featured first, Aarchid is a known win).
-  const featuredOutcomes = projects
-    .filter((p) => p.featured)
-    .slice(0, 2)
+  // One evidence tile per featured flagship, in editorial order. The label
+  // carries the limit (offline eval, gate date, not deployed) with the number.
+  const evidence = projects
+    .filter((p) => p.featured && p.tier === "flagship")
+    .sort((a, b) => a.order - b.order)
     .map<HomeMetric>((p) => ({ value: p.metricValue, label: p.metricLabel }));
 
   return [
-    ...featuredOutcomes,
-    { value: `${caseStudies.length}`, label: "Case Studies" },
-    { value: `${posts.length}`, label: "Articles Published" },
+    ...evidence,
+    { value: `${caseStudies.length}`, label: COVERAGE_CASE_STUDIES },
+    { value: `${posts.length}`, label: COVERAGE_ARTICLES },
   ];
 }

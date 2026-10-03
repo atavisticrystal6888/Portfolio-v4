@@ -2,7 +2,7 @@ import Link from 'next/link';
 import styles from './Footer.module.css';
 import { BackToTop } from './BackToTop';
 import { CONTACT_EMAIL_HREF } from '@/lib/site';
-import { LATEST_RELEASE } from '@/lib/changelog';
+import { getSiteLastUpdated } from '@/lib/last-updated';
 
 /**
  * Eleven links in a single column ran past the fold on mobile and read as a
@@ -15,17 +15,18 @@ const LINK_GROUPS = [
       { href: '/projects', label: 'Projects' },
       { href: '/ai-pm', label: 'AI PM' },
       { href: '/blog', label: 'Blog' },
-      { href: '/lab', label: 'Lab' },
     ],
   },
   {
     heading: 'More',
+    // Lab sits here, not under Work: it is a backlog of unbuilt ideas.
     links: [
       { href: '/about', label: 'About' },
       { href: '/now', label: 'Now' },
       { href: '/uses', label: 'Uses' },
       { href: '/bookshelf', label: 'Bookshelf' },
       { href: '/changelog', label: 'Changelog' },
+      { href: '/lab', label: 'Lab' },
     ],
   },
 ];
@@ -37,6 +38,7 @@ const SOCIAL_LINKS = [
 ];
 
 export function Footer() {
+  const lastUpdated = getSiteLastUpdated();
   return (
     <footer className={styles.footer} role="contentinfo">
       <div className={styles.inner}>
@@ -45,9 +47,10 @@ export function Footer() {
             Dhruv Singhal
           </Link>
           <p className={styles.tagline}>Product Manager &amp; Builder</p>
-          {/* The real date of the last release, not a hardcoded one. */}
+          {/* The newest dated change in the published content, not a
+              hardcoded date (see src/lib/last-updated.ts). */}
           <p className={styles.updated}>
-            Last updated {LATEST_RELEASE.date}
+            Last updated <time dateTime={lastUpdated.iso}>{lastUpdated.label}</time>
             {' · '}
             <Link href="/changelog" className={styles.updatedLink}>
               changelog

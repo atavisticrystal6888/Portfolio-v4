@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState, type FormEvent } from "react";
+import { useEffect, useRef, useState, type FormEvent } from "react";
 import { Button } from "@/components/ui/Button";
 import { CONTACT_EMAIL, CONTACT_EMAIL_HREF } from "@/lib/site";
 import styles from "./ContactForm.module.css";
@@ -33,6 +33,13 @@ export function ContactForm() {
   // Uncontrolled on purpose: a bot that writes straight to the DOM node never
   // fires React's change event, so a controlled value would read empty.
   const honeypotRef = useRef<HTMLInputElement>(null);
+  // The submit button is disabled while sending, which drops focus to <body>.
+  // Once the request settles, focus moves to the result message instead.
+  const statusRef = useRef<HTMLParagraphElement>(null);
+
+  useEffect(() => {
+    if (status === "success" || status === "error") statusRef.current?.focus();
+  }, [status]);
 
   const validate = (): FormErrors => {
     const errs: FormErrors = {};
@@ -98,7 +105,7 @@ export function ContactForm() {
       <div className={styles.field}>
         <label htmlFor="name" className={styles.label}>Name <span className={styles.required}>*</span></label>
         <input
-          id="name" type="text" className={styles.input}
+          id="name" name="name" type="text" autoComplete="name" className={styles.input}
           value={data.name} onChange={(e) => setData({ ...data, name: e.target.value })}
           aria-invalid={!!errors.name} aria-describedby={errors.name ? "name-error" : undefined}
         />
@@ -108,7 +115,7 @@ export function ContactForm() {
       <div className={styles.field}>
         <label htmlFor="email" className={styles.label}>Email <span className={styles.required}>*</span></label>
         <input
-          id="email" type="email" className={styles.input}
+          id="email" name="email" type="email" autoComplete="email" className={styles.input}
           value={data.email} onChange={(e) => setData({ ...data, email: e.target.value })}
           aria-invalid={!!errors.email} aria-describedby={errors.email ? "email-error" : undefined}
         />
@@ -134,10 +141,14 @@ export function ContactForm() {
 
       <div className={styles.field}>
         <label htmlFor="message" className={styles.label}>Message <span className={styles.required}>*</span></label>
+        {/* The 20-character minimum is stated up front, not only after a
+            failed submit. */}
+        <span id="msg-hint" className={styles.hint}>At least 20 characters.</span>
         <textarea
           id="message" className={styles.textarea} rows={5}
           value={data.message} onChange={(e) => setData({ ...data, message: e.target.value })}
-          aria-invalid={!!errors.message} aria-describedby={errors.message ? "msg-error" : undefined}
+          aria-invalid={!!errors.message}
+          aria-describedby={errors.message ? "msg-hint msg-error" : "msg-hint"}
         />
         {errors.message && <span id="msg-error" role="alert" className={styles.error}>{errors.message}</span>}
       </div>
@@ -146,9 +157,25 @@ export function ContactForm() {
         {status === "sending" ? "Sending..." : "Send Message"}
       </Button>
 
-      {status === "success" && <p role="status" className={styles.success}>Message sent successfully! I&apos;ll get back to you soon.</p>}
+      {status === "success" && (
+        <p
+          ref={statusRef}
+          role="status"
+          tabIndex={-1}
+          className={styles.success}
+          data-testid="contact-status"
+        >
+          Message sent successfully! I&apos;ll get back to you soon.
+        </p>
+      )}
       {status === "error" && (
-        <p role="alert" className={styles.errorMsg}>
+        <p
+          ref={statusRef}
+          role="alert"
+          tabIndex={-1}
+          className={styles.errorMsg}
+          data-testid="contact-status"
+        >
           {/* The server's own wording when it has one - "temporarily offline"
               and "too many requests" need different next steps - and the
               address itself either way, so the fallback is one click. */}

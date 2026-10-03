@@ -7,13 +7,13 @@ import { formatCategoryLabel } from "@/lib/utils";
 import { ListRow, ListRows } from "@/components/ui/ListRow";
 import { SectionLabel } from "@/components/ui/SectionLabel";
 import type { Project } from "@/types/project";
-import type { BlogArticle } from "@/types/blog";
+import type { BlogSummary } from "@/lib/blog-summary";
 import { shownOnHome } from "./selection";
 import styles from "./Suggestions.module.css";
 
 interface SuggestionsProps {
   projects: Project[];
-  posts: BlogArticle[];
+  posts: BlogSummary[];
 }
 
 export function Suggestions({ projects, posts }: SuggestionsProps) {
@@ -37,13 +37,14 @@ export function Suggestions({ projects, posts }: SuggestionsProps) {
 
   return (
     <section
-      aria-label="Recommended for you"
+      id="next"
+      aria-label="Where to go next"
       data-section="suggestions"
       className={styles.section}
     >
       <div className={styles.inner}>
         <header className={styles.header}>
-          <SectionLabel index="05">Recommended for you</SectionLabel>
+          <SectionLabel index="04">Where next</SectionLabel>
           <h2 className={styles.heading}>Where to go next</h2>
         </header>
         <ListRows>

@@ -64,6 +64,15 @@
   margin-bottom: var(--space-2);
 }
 
+/* The two column labels are h2s for heading navigation, styled exactly as
+   the plain section labels they replaced. */
+.labelHeading {
+  font: inherit;
+  letter-spacing: normal;
+  text-transform: none;
+  color: inherit;
+}
+
 .location {
   color: var(--text-muted);
   font-family: var(--font-mono);

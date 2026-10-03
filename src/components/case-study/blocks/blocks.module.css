@@ -54,6 +54,13 @@
   border-radius: inherit;
 }
 
+/* width/height attributes give the lazy image its box before it loads;
+   height:auto keeps the attribute ratio instead of a fixed pixel height. */
+.zoom img {
+  max-width: 100%;
+  height: auto;
+}
+
 .zoom:focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 3px;
@@ -305,6 +312,46 @@
 .options .optionsHead:nth-child(2) { width: 1%; white-space: nowrap; }
 .options .optionsHead:nth-child(3) { width: 52%; }
 
+/* Phones: each option becomes a stacked card (name, status, why) so the
+   rationale is readable without scrolling sideways. At 320 the three-column
+   table left the WHY column about 25px of visible text. */
+@media (max-width: 479.98px) {
+  .options,
+  .options tbody,
+  .options .optionRow,
+  .options .optionName,
+  .options .optionCell {
+    display: block;
+    width: auto;
+  }
+
+  .options thead {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+  }
+
+  .optionsCaption {
+    display: block;
+  }
+
+  .options .optionRow {
+    margin-bottom: var(--space-3);
+    padding: var(--space-3) 0;
+    border: var(--hairline);
+    border-radius: var(--radius-md);
+  }
+
+  .options .optionName,
+  .options .optionCell {
+    padding: var(--space-1) var(--space-3);
+    border-bottom: 0;
+  }
+}
+
 .status {
   display: inline-block;
   padding: 2px 10px;
@@ -329,10 +376,11 @@
   border-color: currentColor;
 }
 
+/* The word carries the status; no strike-through, which made REJECTED the
+   faintest text in the table. */
 .status[data-status="rejected"] {
   color: var(--text-muted);
-  text-decoration: line-through;
-  text-decoration-thickness: 1px;
+  border-color: currentColor;
 }
 
 /* ---- Timeline ---------------------------------------------------------- */

@@ -2,11 +2,12 @@
 slug: "why-pms-should-code"
 title: "Why PMs Should Code (And When to Stop)"
 date: "2026-03-28"
-updatedDate: null
+updatedDate: "2026-10-02"
 category: "Career"
 tags: ["product-management", "coding", "technical-fluency", "career-advice"]
-readingTime: "6 min read"
-excerpt: "I have been the PM who could not see why a “simple” feature took three sprints, and the PM who accidentally rewrote an engineer’s PR. Where the useful middle sits."
+related: ["one-year-of-pm-internships", "building-portfolio-as-product"]
+excerpt: "There are two ways for a PM to get technical fluency wrong: not seeing why a “simple” feature takes three sprints, and reaching so far into the code that you rewrite an engineer’s PR. Where the useful middle sits."
+metaDescription: "Two ways PMs get technical fluency wrong: not seeing why a simple feature takes three sprints, and rewriting an engineer's PR. Where the useful middle sits."
 socialImage: null
 ---
 
@@ -14,7 +15,7 @@ socialImage: null
 
 Every few months, the PM Twitter discourse erupts: "Should PMs code?" It generates heat but rarely light. The real question isn't binary. It's about finding the **right level** of technical fluency for your role, your team, and your product.
 
-I've been on both sides. I've been the PM who didn't understand why a "simple" feature took three sprints. And I've been the PM who accidentally rewrote an engineer's PR because I got too deep into the implementation. Neither extreme works.
+There are two ways to get this wrong: not understanding why a "simple" feature takes three sprints, and reaching so far into the code that you end up rewriting an engineer's PR. Neither extreme works.
 
 ## The Case For Coding
 
@@ -24,33 +25,27 @@ Technical fluency gives PMs three superpowers:
 
 When you understand that "just add a dropdown" means schema changes, migration scripts, API versioning, and frontend state management, you make better product decisions. You stop proposing architecturally expensive features for marginal user value.
 
-At Omniful, I saved two sprint cycles by prototyping a solution that showed the engineering team a simpler approach. That wouldn't have happened without understanding how the data layer worked.
+A rough prototype that shows the engineering team a simpler approach, before anyone commits to the expensive one, is one of the cheapest things a PM can offer. You can only build that prototype if you understand how the data layer works.
 
 ### 2. Building Prototypes That Prove Value
 
 The fastest way to validate an idea is to build a rough version. Not a pixel-perfect mockup — a working prototype that real users can interact with. SQL queries against production data, quick Python scripts to model outcomes, simple HTML prototypes to test flows.
 
 ```python
-# Quick churn prediction to validate feature priority
+# Rough funnel check to test a feature-priority hunch
+# (illustrative: runs on a made-up sample export, not real product data)
 import pandas as pd
 
-users = pd.read_sql("""
-    SELECT user_id, 
-           datediff(day, last_login, current_date) as days_inactive,
-           total_sessions_30d,
-           feature_adoption_score
-    FROM user_metrics 
-    WHERE signup_date > '2025-01-01'
-""", conn)
+events = pd.read_csv("sample_checkout_events.csv")
+# columns: session_id, step  (cart, address, payment, confirmed)
 
-at_risk = users[
-    (users.days_inactive > 14) & 
-    (users.feature_adoption_score < 0.3)
-]
-print(f"At-risk users: {len(at_risk)} ({len(at_risk)/len(users)*100:.1f}%)")
+steps = ["cart", "address", "payment", "confirmed"]
+reached = [events[events.step == s].session_id.nunique() for s in steps]
+for prev, cur, a, b in zip(steps, steps[1:], reached, reached[1:]):
+    print(f"{prev} -> {cur}: {b / a:.0%} continue")
 ```
 
-That took 15 minutes. The insight — that 23% of new users were at risk — reprioritized our entire Q2 roadmap.
+A script like this takes minutes, not a sprint. The output is only as good as the data behind it, so treat the number as a question to bring to the team, not a verdict. The point is that a PM can get to that question without waiting in an analyst's queue.
 
 ### 3. Speaking the Same Language
 
@@ -70,7 +65,7 @@ Here's where most "PMs should code" advice falls apart: it doesn't tell you when
 
 ## The Sweet Spot
 
-After a year of navigating this as an intern who also ships his own code, here's my practical framework:
+As an intern who also ships his own code, here's my practical framework:
 
 - **SQL — Yes, always.** Every PM should be able to query their own product data. Waiting for an analyst to pull numbers creates a bottleneck that slows every decision.
 - **Scripting (Python/JS) — Useful, not required.** Great for quick analyses, prototypes, and automation. Don't aim for production quality — aim for "convincing enough to make a decision."
@@ -80,7 +75,9 @@ After a year of navigating this as an intern who also ships his own code, here's
 
 ## Practical Advice by PM Level
 
-**Junior/APM:** Learn SQL deeply. Read your product's codebase for 30 minutes a week. Build something small (a personal site, a data dashboard). The goal is empathy for the engineering process.
+What I would suggest at each level, from watching PMs at each stage rather than being one:
+
+**Junior/APM:** Learn SQL deeply. Read your product's codebase for 30 minutes a week. Build something small ([a personal site](/blog/building-portfolio-as-product), a data dashboard). The goal is empathy for the engineering process.
 
 **Mid-level PM:** Use scripting to validate assumptions. Write design docs that include technical context. Participate in design reviews. Your technical fluency should speed up decisions, not slow down engineering.
 
@@ -90,6 +87,6 @@ After a year of navigating this as an intern who also ships his own code, here's
 
 The PM-coding question has a boring answer: it depends. But "it depends" isn't useful, so here's the concrete version: **invest in technical fluency up to the point where it improves your product decisions, and not a line of code beyond that.**
 
-For me, that means SQL fluency, Python for analysis, enough JavaScript to build prototypes, and enough system design knowledge to have informed architecture discussions. Your mileage will vary — but the principle holds.
+For me, that means SQL fluency, Python for analysis, enough JavaScript to build prototypes, and enough system design knowledge to have informed architecture discussions. Your mileage will vary — but the principle holds. The most recent example is [Cohort & Retention Studio](/projects/cohort-retention-studio), a browser tool I built to answer a retention question I kept asking; it is ready for a local pilot and has no users yet.
 
-The best PMs I know aren't the ones who can code the most. They're the ones who know exactly how much coding makes them better at their actual job.
+The PMs I have learned most from aren't the ones who can code the most. They're the ones who know exactly how much coding makes them better at their actual job.

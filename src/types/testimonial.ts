@@ -11,6 +11,7 @@ export interface Testimonial {
   quote: string;
   avatar: string | null;
   projectSlug: string | null;
-  outcomeMetric: TestimonialMetric;
+  /** Not rendered: a metric beside a quote reads as the referee's claim. */
+  outcomeMetric?: TestimonialMetric;
   relationship: string;
 }

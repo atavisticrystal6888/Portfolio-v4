@@ -6,9 +6,11 @@ import styles from "./BlogTeaser.module.css";
 
 interface BlogTeaserProps {
   posts: BlogArticle[];
+  /** The total library count can exceed the curated posts shown on home. */
+  totalCount: number;
 }
 
-export function BlogTeaser({ posts }: BlogTeaserProps) {
+export function BlogTeaser({ posts, totalCount }: BlogTeaserProps) {
   return (
     <>
       <ListRows>
@@ -29,10 +31,12 @@ export function BlogTeaser({ posts }: BlogTeaserProps) {
           />
         ))}
       </ListRows>
-      {posts.length > 3 && (
+      {totalCount > 0 && (
         <div className={styles.viewAll}>
           <Link href="/blog" className={styles.viewAllLink}>
-            All {posts.length} articles &rarr;
+            {/* One string, not JSX text: the compiler drops the space after
+                the expression when the text node wraps to the next line. */}
+            {`All ${totalCount} articles →`}
           </Link>
         </div>
       )}

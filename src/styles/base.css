@@ -19,12 +19,60 @@
   font-style: normal;
 }
 
+/* Latin subset of JetBrains Mono Regular: 18 KB instead of the 92 KB full
+   file (kept in public/fonts/ as the subsetting source). Covers Basic Latin,
+   Latin-1, general punctuation, arrows, the math signs and box drawing used in
+   labels and code blocks, plus the Greek letters used in stats copy. Anything
+   outside unicode-range never triggers this file and falls back per character
+   to the next family in --font-mono. Code ligatures (calt) were dropped in the
+   subset: literal characters in code samples, 14 KB less to download.
+   Rebuild: tmp/pm-candidate-20261002/perf/ (pyftsubset, see the perf audit). */
 @font-face {
   font-family: 'JetBrains Mono';
-  src: url('/fonts/jetbrains-mono.woff2') format('woff2');
+  src: url('/fonts/jetbrains-mono-latin.woff2') format('woff2');
   font-weight: 400 700;
   font-display: swap;
   font-style: normal;
+  unicode-range: U+0020-007E, U+00A0-00FF, U+0131, U+0152-0153, U+02C6, U+02DA,
+    U+02DC, U+0394, U+03B1-03B2, U+03B4, U+03BC, U+03C3, U+2000-206F, U+20AC,
+    U+20B9, U+2122, U+2190-2199, U+2212, U+2215, U+2248, U+2260, U+2264-2265,
+    U+2500-257F, U+FFFD;
+}
+
+/* Metric-matched fallbacks (checklist item 16, CLS). While a web font is
+   still loading, text renders in a local system font scaled and spaced to the
+   web font's metrics, so the swap does not reflow lines. Values come from
+   tmp/pm-candidate-20261002/perf/fallback-metrics.py: size-adjust from the
+   average advance width of real site copy, the overrides from each web font's
+   typo ascender/descender/line gap divided by size-adjust. Where the local
+   font is missing (most Android), the face is skipped and the stack's next
+   family applies, exactly as before. */
+@font-face {
+  font-family: 'Manrope Fallback';
+  src: local('Arial'), local('ArialMT');
+  size-adjust: 103.48%;
+  ascent-override: 103.02%;
+  descent-override: 28.99%;
+  line-gap-override: 0%;
+}
+
+/* Tuned to Fraunces at the 600 weight the hero and headings use. */
+@font-face {
+  font-family: 'Fraunces Fallback';
+  src: local('Georgia');
+  size-adjust: 108.76%;
+  ascent-override: 89.92%;
+  descent-override: 23.45%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: 'JetBrains Mono Fallback';
+  src: local('Courier New'), local('CourierNewPSMT');
+  size-adjust: 99.98%;
+  ascent-override: 102.02%;
+  descent-override: 30%;
+  line-gap-override: 0%;
 }
 
 /* Reset */
@@ -168,6 +216,14 @@ section {
 ::-webkit-scrollbar-track { background: var(--bg); }
 ::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 3px; }
 ::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
+
+/* Placeholder text follows the muted token (>= 4.5:1 on --surface and
+   --surface-raised in both themes, see scripts/audit-contrast.mjs) instead
+   of the browser's default grey. */
+::placeholder {
+  color: var(--text-muted);
+  opacity: 1;
+}
 
 /* Selection */
 ::selection {

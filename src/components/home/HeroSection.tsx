@@ -7,9 +7,9 @@ import styles from "./HeroSection.module.css";
    the SectionLabel indices below or the index lies. */
 const CONTENTS = [
   { index: "01", label: "Selected work", href: "#work" },
-  { index: "02", label: "Measured outcomes", href: "#outcomes" },
+  { index: "02", label: "What the evidence supports", href: "#outcomes" },
   { index: "03", label: "How I think", href: "#thinking" },
-  { index: "04", label: "References", href: "#references" },
+  { index: "04", label: "Where to go next", href: "#next" },
   { index: "05", label: "Contact", href: "#contact" },
 ];
 
@@ -27,10 +27,11 @@ export function HeroSection() {
             Dhruv Singhal &middot; Product Manager &amp; Builder
           </p>
           <h1 className={styles.thesis}>
-            I scope, spec, and ship the V1 myself.
+            I own the problem, the spec, the trade-offs and the evidence.
+            Where I also built it, I say so.
           </h1>
           <p className={styles.status}>
-            Currently: Product Manager Intern, Growth &middot; The Sleep Company
+            Product Intern, Growth &middot; The Sleep Company (Jul–Oct 2026)
           </p>
           <p className={styles.statement}>
             E-commerce and AI products &mdash; stakeholder input, user research,
@@ -42,6 +43,10 @@ export function HeroSection() {
               Email me
             </Button>
           </div>
+          <p className={styles.guide} data-testid="hero-guide">
+            Four case studies below. Each states the decision, the trade-off, what was
+            tested, and what is still unproven.
+          </p>
         </div>
 
         <nav className={styles.contents} aria-label="Page contents">

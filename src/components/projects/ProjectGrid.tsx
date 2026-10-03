@@ -17,9 +17,17 @@ const LAYOUT_KEY = "project-layout";
 // initialiser: the initialiser runs during hydration, so a stored non-default
 // made the first client render disagree with the server's.
 const listeners = new Set<() => void>();
+// Used only when localStorage throws (blocked storage), so the toggle still
+// works for the session instead of crashing into the error boundary.
+let memoryLayout: LayoutMode | null = null;
 
 function readLayout(): LayoutMode {
-  const saved = localStorage.getItem(LAYOUT_KEY);
+  let saved: string | null = null;
+  try {
+    saved = localStorage.getItem(LAYOUT_KEY);
+  } catch {
+    return memoryLayout ?? "rows";
+  }
   // "masonry" is the pre-revamp value for the dense view.
   return saved === "dense" || saved === "masonry" ? "dense" : "rows";
 }
@@ -38,7 +46,12 @@ function subscribe(onChange: () => void) {
 }
 
 function writeLayout(mode: LayoutMode) {
-  localStorage.setItem(LAYOUT_KEY, mode);
+  try {
+    localStorage.setItem(LAYOUT_KEY, mode);
+  } catch {
+    // Not persisted; the choice still applies until the next reload.
+    memoryLayout = mode;
+  }
   listeners.forEach((l) => l());
 }
 
@@ -83,6 +96,7 @@ export function ProjectGrid({ projects }: ProjectGridProps) {
             className={cn(styles.layoutBtn, !dense && styles.layoutActive)}
             onClick={() => writeLayout("rows")}
             aria-pressed={!dense}
+            aria-label="Row view"
             title="Row view"
           >
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
@@ -95,6 +109,7 @@ export function ProjectGrid({ projects }: ProjectGridProps) {
             className={cn(styles.layoutBtn, dense && styles.layoutActive)}
             onClick={() => writeLayout("dense")}
             aria-pressed={dense}
+            aria-label="Dense view"
             title="Dense view"
           >
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
@@ -115,7 +130,7 @@ export function ProjectGrid({ projects }: ProjectGridProps) {
               <ProductCard
                 key={p.slug}
                 project={p}
-                priority={i < 2}
+                priority={i === 0}
                 sizes={
                   dense
                     ? "(max-width: 960px) 100vw, 360px"

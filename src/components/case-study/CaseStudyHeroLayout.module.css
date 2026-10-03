@@ -1,0 +1,11 @@
+/* Imageless case studies (Cohort, Sawari, Hackmate): the lede and spec block
+   share the masthead's container so the left edge does not jump inwards at
+   1440. Doubled class beats the single-class .inner rule regardless of
+   stylesheet order. */
+.alignWithMasthead.alignWithMasthead {
+  max-width: var(--container-max);
+}
+
+.alignWithMasthead.alignWithMasthead > * {
+  max-width: 62rem;
+}

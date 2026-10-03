@@ -1,8 +1,8 @@
 import Link from "next/link";
-import { generatePageMetadata, generateBreadcrumbJsonLd } from "@/lib/metadata";
+import { generatePageMetadata } from "@/lib/metadata";
 import { SectionLabel } from "@/components/ui/SectionLabel";
 import { PageHeader } from "@/components/ui/PageHeader";
-import { JsonLd } from "@/components/ui/JsonLd";
+import { WhereNext } from "@/components/ui/WhereNext";
 import { EvalHarnessDemo } from "@/components/ai-pm/EvalHarnessDemo";
 import { CostModelDemo } from "@/components/ai-pm/CostModelDemo";
 import { getAllBlogPosts } from "@/lib/content";
@@ -11,30 +11,40 @@ import styles from "./ai-pm.module.css";
 export const metadata = generatePageMetadata({
   title: "AI PM",
   description:
-    "Playbooks, experiments, and shipped work at the intersection of product management and AI. Evaluation frameworks, cost modelling, and the Aarchid case study.",
+    "Playbooks, experiments and worked examples at the intersection of product management and AI: evaluation, cost modelling and the Aarchid case study.",
   path: "/ai-pm",
 });
 
+/* Each playbook card opens the place where that playbook is actually
+   written up: an essay, a case-study chapter, or the demo on this page. */
 const PLAYBOOKS = [
   {
     title: "Scoping an LLM feature",
     body: "How to write a PRD when the model is the product. Success criteria, eval harness, guardrails, and cost envelope — before a single prompt is written.",
     meta: "Framework",
+    href: "/blog/shipping-llm-products-eval-harness",
+    cta: "Read the essay",
   },
   {
     title: "Eval-driven development",
-    body: "Treat your golden set like a test suite. Offline evals → shadow traffic → A/B. How we validated 92% diagnosis accuracy on Aarchid.",
+    body: "Treat your golden set like a test suite. Offline evals first. How an offline golden-set eval is run, and what its number cannot prove.",
     meta: "Method",
+    href: "/projects/aarchid#validation",
+    cta: "Aarchid: validation",
   },
   {
     title: "Cost modelling at the edge",
-    body: "Per-request math for multi-model pipelines (vision + retrieval + research). Caching, batching, and the $0.25/user/mo envelope.",
+    body: "Per-request math for multi-model pipelines (vision + retrieval + research). Caching, batching, and the $0.25/user/mo target envelope, an estimate.",
     meta: "Economics",
+    href: "#cost-model",
+    cta: "Try the cost model",
   },
   {
     title: "Citations or it didn't happen",
     body: "Why user trust collapses without grounded sources, and the architectural pattern for research-augmented LLM responses.",
     meta: "Trust",
+    href: "/projects/aarchid#decision",
+    cta: "Aarchid: the decision",
   },
 ];
 
@@ -44,22 +54,19 @@ export default function AIPMPage() {
     p.tags?.some((t) => /ai|llm|ml|pm/i.test(t))
   );
 
-  const breadcrumbJsonLd = generateBreadcrumbJsonLd([
-    { name: "Home", url: "/" },
-    { name: "AI PM", url: "/ai-pm" },
-  ]);
-
   return (
     <div className={styles.page}>
-      <JsonLd id="ai-pm-breadcrumb-jsonld" data={breadcrumbJsonLd} />
-
       <PageHeader
+        breadcrumbs={[
+          { name: "Home", href: "/" },
+          { name: "AI PM", href: "/ai-pm" },
+        ]}
         title="AI PM — where product thinking meets the model"
         subtitle={
           <>
             I build LLM products the way a PM ships any other product: with a
             crisp problem, an eval rubric, a cost envelope, and a way to roll
-            back. This page collects the playbooks, artefacts, and shipped work
+            back. This page collects the playbooks, artefacts, and built work
             behind that stance — most of it learned building{" "}
             <Link href="/projects/aarchid">Aarchid</Link> with{" "}
             <a
@@ -82,11 +89,18 @@ export default function AIPMPage() {
           </header>
           <div className={styles.cardGrid}>
             {PLAYBOOKS.map((p) => (
-              <div key={p.title} className={styles.card}>
+              <Link
+                key={p.title}
+                href={p.href}
+                className={`${styles.card} ${styles.cardLink}`}
+                data-testid="playbook-card"
+              >
                 <h3>{p.title}</h3>
                 <p>{p.body}</p>
-                <span className={styles.meta}>{p.meta}</span>
-              </div>
+                <span className={styles.meta}>
+                  {p.meta} · {p.cta} <span aria-hidden="true">&rarr;</span>
+                </span>
+              </Link>
             ))}
           </div>
         </div>
@@ -105,7 +119,7 @@ export default function AIPMPage() {
               An eval harness, in your browser
             </h2>
             <p className={styles.sectionLede}>
-              Six plant-diagnosis cases. Two model versions. One confidence
+              Six illustrative, fixed plant-diagnosis cases. Two model versions. One confidence
               gate. Toggle the controls and watch the same golden set re-score
               in real time — this is how I validate an LLM feature before it
               ships.
@@ -118,7 +132,8 @@ export default function AIPMPage() {
       </section>
 
       <section
-        className={styles.section}
+        id="cost-model"
+        className={`${styles.section} ${styles.anchored}`}
         aria-label="Cost modelling, in real time"
       >
         <div className={styles.inner}>
@@ -126,10 +141,12 @@ export default function AIPMPage() {
             <SectionLabel index="03">Live Demo</SectionLabel>
             <h2 className={styles.sectionTitle}>Cost modelling, in real time</h2>
             <p className={styles.sectionLede}>
-              Same harness mindset, applied to economics. Move the sliders to
+              Illustrative model with fixed example inputs: unit prices are
+              list-price estimates, not a contract or a bill. Same harness
+              mindset, applied to economics. Move the sliders to
               see how batch size, cache hit rate, and request volume reshape
               the per-user-per-month bill — and whether you stay inside the
-              $0.25 envelope.
+              $0.25 target envelope (an estimate, not a measured bill).
             </p>
           </header>
           <div className={styles.demo}>
@@ -142,15 +159,17 @@ export default function AIPMPage() {
         <div className={styles.inner}>
           <header className={styles.sectionHeader}>
             <SectionLabel index="04">Case Study</SectionLabel>
-            <h2 className={styles.sectionTitle}>Aarchid — shipped proof</h2>
+            <h2 className={styles.sectionTitle}>Aarchid — the worked example</h2>
           </header>
           <div className={`${styles.card} ${styles.cardWide}`}>
-            <h3>AI Botanical Intelligence · 92% diagnosis accuracy</h3>
+            <h3>AI Botanical Intelligence · offline eval, result withheld</h3>
             <p>
-              Co-created with Dilpreet Grover. Multimodal vision (Gemini 1.5
-              Pro) grounded by research-augmented reasoning (Exa AI API),
-              running on Cloudflare Workers. Sub-10s P95, $0.25 per active user
-              per month at scale.
+              Co-built with Dilpreet Grover. Multimodal vision (Gemini 1.5
+              Pro) grounded by research-augmented reasoning (a web research API),
+              running on Cloudflare Workers. Self-reported: the team ran an
+              offline eval on a golden set (about 200 samples, as reported by
+              the team); the result is withheld until the eval artefact or the
+              co-builder&apos;s confirmation is available.
             </p>
             <span className={styles.meta}>
               <Link href="/projects/aarchid">Read the case study →</Link>
@@ -196,14 +215,13 @@ export default function AIPMPage() {
               questions, eval-harness design, and model economics cheatsheets.
             </li>
             <li>
-              <strong>Second Aarchid-scale build</strong> — applying the same
-              Edge Stack pattern to a different problem domain.
+              <strong>A second edge-stack build</strong> — applying the same
+              pattern to a different problem domain.
             </li>
             <li>
-              <strong>Essay series: &ldquo;The PRD is dead, long live the eval
-              set&rdquo;</strong> — opener published,{" "}
-              <Link href="/blog/the-prd-is-dead-long-live-the-eval-set">read
-              part one</Link>.
+              <strong>More on eval sets as specs</strong> — a follow-up to{" "}
+              <Link href="/blog/the-prd-is-dead-long-live-the-eval-set">The
+              PRD Is Dead, Long Live the Eval Set</Link>.
             </li>
           </ul>
         </div>
@@ -217,6 +235,8 @@ export default function AIPMPage() {
           </p>
         </div>
       </section>
+
+      <WhereNext />
     </div>
   );
 }
