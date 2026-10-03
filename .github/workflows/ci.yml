@@ -45,6 +45,10 @@ jobs:
           path: |
             .next
             !.next/cache
+          # upload-artifact >= 4.4 skips dot-directories by default, which
+          # uploaded nothing and failed every download-artifact step below.
+          include-hidden-files: true
+          if-no-files-found: error
           retention-days: 1
 
   e2e:
