@@ -13,3 +13,31 @@ tsconfig.tsbuildinfo
 # Local agent tooling (skills, hooks, settings) - machine-local, not part of
 # the app. Also ignored by eslint.config.mjs.
 .claude/
+
+graphify-out/
+
+# private case-study drafts, publish only after clearance
+content/private-drafts/
+
+# withdrawn or withheld entries: kept locally, never published (claim gates 2026-10-02)
+content/withdrawn/
+
+# local working output (audit scans, rendered HTML, candidate resume PDFs)
+tmp/
+
+# working notes that name excluded or internal work; keep out of the public repo
+handoff-claude-final-pm-portfolio.md
+plan-portfolio-v7-roster.md
+Portfolio/
+docs/superpowers/plans/2026-09-30-pm-portfolio-candidate.md
+
+# Repo cleanup 2026-10-03 (claim gates, decision 1). Kept locally, never published:
+# audit records and outreach drafts name withheld claims and excluded internal work;
+# resume sources carry superseded claims and old employer platform names.
+docs/audits/
+docs/outreach/
+content/resume/
+research-pm-one-shot-products-2026-09.md
+# speckit prompts that hand off to non-existent employer-named agents
+.agent/speckit.tests.agent.md
+.github/speckit.tests.agent.md
