@@ -17,9 +17,42 @@ Set these in **Vercel Project Settings → Environment Variables** for the
 |----------|----------|---------|
 | `GITHUB_TOKEN` | No (graceful fallback) | GitHub GraphQL auth for pinned repos + contributions. Without it, the GitHub sections show cached/empty state. |
 | `GITHUB_USERNAME` | No (graceful fallback) | Target GitHub user for the integration. |
-| `RESEND_API_KEY` | No (graceful fallback) | Enables the `/api/contact` route to deliver email via Resend. Without it, submissions are logged server-side and return `200 OK`. |
+| `RESEND_API_KEY` | No (graceful fallback) | Enables the `/api/contact` route to deliver email via Resend. Without it, submissions are logged server-side and the route returns `200 OK` in development and `503` in production builds. |
 | `CONTACT_EMAIL` | No | Destination address for contact form email. Defaults in code. |
 | `NEXT_PUBLIC_SITE_URL` | **Yes** | Used for canonical URLs, OG image URLs, and sitemap. Set to the production domain (e.g. `https://dhruvsinghal.com`). |
+| `EXPERIMENTHUB_API_URL` | No (dormant when unset) | Origin of the ExperimentHub API (e.g. `https://hub.example.com`). With `EXPERIMENTHUB_API_KEY`, enables the home-page CTA experiment and makes `/` dynamically rendered. |
+| `EXPERIMENTHUB_API_KEY` | No (dormant when unset) | Tenant SDK key (`eh_live_…`). Server-only; never exposed to the browser. |
+
+## Experiments (ExperimentHub)
+
+The home-page hero CTA can run as an A/B test through
+[ExperimentHub](https://github.com/atavisticrystal6888/A-B-Testing-Platform)
+using its JavaScript SDK (vendored as `vendor/experiment-hub-sdk-<version>.tgz`).
+It is **dormant until both `EXPERIMENTHUB_API_URL` and `EXPERIMENTHUB_API_KEY`
+are set**: no cookie, no requests, `/` stays static. With both set:
+
+- the proxy gives each browser an anonymous `eh_uid` cookie (HttpOnly, SameSite=Lax, 1 year, no PII);
+- `/` is rendered per request and asks the platform which variant to show (300 ms budget, then control);
+- CTA clicks beacon to `/api/experiments/track` on this origin; genuine contact submissions count as `contact_submitted`;
+- every failure is fail-open: the platform being down never changes what the site shows.
+
+One-time platform setup (creates the metrics and the `portfolio-hero-cta` experiment, idempotent):
+
+```bash
+EXPERIMENTHUB_API_URL=http://127.0.0.1:4000 node scripts/experiment-hub-setup.mjs
+```
+
+Refreshing the vendored SDK after a platform release:
+
+```bash
+(cd ../A-B-Testing-Platform/sdk/javascript && npm run build && npm pack)   # → experiment-hub-sdk-<v>.tgz
+cp ../A-B-Testing-Platform/sdk/javascript/experiment-hub-sdk-<v>.tgz vendor/
+npm install ./vendor/experiment-hub-sdk-<v>.tgz --save
+```
+
+**Verified locally (2026-10-07):** against ExperimentHub at `127.0.0.1:4000` - cookie minted, variant served and sticky across repeat requests and matching the platform's assignment (`enrolled: true`), CTA beacon returned 204, contact submit returned `ok` in a non-production run; with the variables unset the site served control, set no cookie, and `/` built static. The platform's results/analysis endpoints did not yet show the `hero_cta_click` / `contact_submitted` events at the time of the check. Set both variables at **build time** as well as runtime: a build made without them prerenders `/` statically and ignores them later. A production build with no `RESEND_API_KEY` answers `/api/contact` with 503 by design.
+
+**Before enabling in production:** the track route has no rate limit yet (reuse the contact route's IP limiter), and contact conversions will assign visitors who never saw the hero; address both before setting the env vars.
 
 ## First-time Deployment
 

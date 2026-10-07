@@ -17,11 +17,11 @@ async function loadRoute(env: Record<string, string>) {
   }
   const { NextRequest } = await import("next/server");
   const mod = await import("@/app/api/contact/route");
-  const post = (body: unknown, ip: string) =>
+  const post = (body: unknown, ip: string, extraHeaders: Record<string, string> = {}) =>
     mod.POST(
       new NextRequest("http://localhost:3000/api/contact", {
         method: "POST",
-        headers: { "content-type": "application/json", "x-forwarded-for": ip },
+        headers: { "content-type": "application/json", "x-forwarded-for": ip, ...extraHeaders },
         body: JSON.stringify(body),
       })
     );
@@ -465,5 +465,93 @@ describe("Person JSON-LD", () => {
   it("publishes the E.164 telephone", () => {
     expect(generatePersonJsonLd().telephone).toBe(CONTACT_PHONE);
     expect(CONTACT_PHONE_HREF).toBe(`tel:${CONTACT_PHONE}`);
+  });
+});
+
+describe("POST /api/contact experiment tracking", { timeout: 30_000 }, () => {
+  const UUID = "0d3f1c2e-5b6a-4c7d-8e9f-0a1b2c3d4e5f";
+  const assignment = {
+    experiment_key: "portfolio-hero-cta",
+    experiment_id: "11111111-1111-4111-8111-111111111111",
+    variant_key: "control",
+    variant_id: "22222222-2222-4222-8222-222222222222",
+    variant_name: "See the work",
+    is_control: true,
+    enrolled: true,
+    assigned_at: "2026-10-07T00:00:00Z",
+  };
+
+  function stubFetch() {
+    const calls: Array<{ url: string; body: unknown }> = [];
+    const queue = [
+      { status: 200, body: assignment },
+      { status: 202, body: { status: "accepted", event_id: "e", received_at: "t" } },
+    ];
+    vi.stubGlobal("fetch", async (input: RequestInfo | URL, init?: RequestInit) => {
+      calls.push({ url: String(input), body: init?.body ? JSON.parse(String(init.body)) : undefined });
+      const next = queue.shift() ?? { status: 200, body: {} };
+      return new Response(JSON.stringify(next.body), {
+        status: next.status,
+        headers: { "content-type": "application/json" },
+      });
+    });
+    return calls;
+  }
+
+  beforeEach(() => {
+    vi.stubEnv("EXPERIMENTHUB_API_URL", "http://hub.test");
+    vi.stubEnv("EXPERIMENTHUB_API_KEY", "eh_live_test");
+    vi.stubEnv("RESEND_API_KEY", ""); // console fallback = genuine success without email
+    vi.spyOn(console, "log").mockImplementation(() => {});
+    vi.spyOn(console, "warn").mockImplementation(() => {});
+  });
+
+  afterEach(() => {
+    vi.unstubAllEnvs();
+    vi.unstubAllGlobals();
+    vi.restoreAllMocks();
+  });
+
+  it("tracks contact_submitted once on a genuine success", async () => {
+    const calls = stubFetch();
+    const post = await loadRoute({ NODE_ENV: "development" });
+    const res = await post(VALID, "198.51.100.50", { cookie: `eh_uid=${UUID}` });
+    expect(res.status).toBe(200);
+    expect(calls.map((c) => c.url)).toEqual(["http://hub.test/v1/assign", "http://hub.test/v1/events"]);
+    expect(calls[1]?.body).toMatchObject({
+      user_id: UUID,
+      event_name: "contact_submitted",
+      idempotency_key: `${UUID}:portfolio-hero-cta:contact_submitted`,
+    });
+  });
+
+  it("never tracks a honeypot submission", async () => {
+    const calls = stubFetch();
+    const post = await loadRoute({ NODE_ENV: "development" });
+    const res = await post({ ...VALID, website: "http://spam.example" }, "198.51.100.51", {
+      cookie: `eh_uid=${UUID}`,
+    });
+    expect(res.status).toBe(200);
+    expect(calls).toHaveLength(0);
+  });
+
+  it("does not track without a uid cookie", async () => {
+    const calls = stubFetch();
+    const post = await loadRoute({ NODE_ENV: "development" });
+    await post(VALID, "198.51.100.52");
+    expect(calls).toHaveLength(0);
+  });
+
+  it("keeps the success response when tracking fails", async () => {
+    let fetchCalls = 0;
+    vi.stubGlobal("fetch", async () => {
+      fetchCalls += 1;
+      throw new TypeError("fetch failed");
+    });
+    const post = await loadRoute({ NODE_ENV: "development" });
+    const res = await post(VALID, "198.51.100.53", { cookie: `eh_uid=${UUID}` });
+    expect(fetchCalls).toBeGreaterThanOrEqual(1);
+    expect(res.status).toBe(200);
+    expect(await res.json()).toMatchObject({ ok: true });
   });
 });

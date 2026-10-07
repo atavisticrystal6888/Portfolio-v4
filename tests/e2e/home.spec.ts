@@ -69,4 +69,11 @@ test.describe("Home page", () => {
     await expect(archiveLink).toHaveText(`All ${total} articles →`);
     await expect(archiveLink).toHaveAttribute("href", "/blog");
   });
+
+  test("hero CTA renders control copy and sets no experiment cookie when disabled", async ({ page }) => {
+    await page.goto("/");
+    const cookies = await page.context().cookies();
+    expect(cookies.some((c) => c.name === "eh_uid")).toBe(false);
+    await expect(page.getByRole("link", { name: "See the work" })).toBeVisible();
+  });
 });

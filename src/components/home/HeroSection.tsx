@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/Button";
 import { AVAILABILITY, CONTACT_EMAIL_HREF } from "@/lib/site";
+import { HeroCtaLink } from "./HeroCtaLink";
+import { heroCtaCopy } from "@/lib/experiments/hero";
 import styles from "./HeroSection.module.css";
 
 /* The contents mirror the section order on the page; the numbers must match
@@ -18,7 +20,15 @@ const CONTENTS = [
  * and a contents index in the right column doing real navigation. The name
  * lives in the byline (and the navbar) — the claim leads.
  */
-export function HeroSection() {
+interface HeroSectionProps {
+  /** Variant key from ExperimentHub; unknown or absent renders control copy. */
+  ctaVariant?: string;
+  /** True only for enrolled visitors: swaps in the click-tracking link. */
+  tracked?: boolean;
+}
+
+export function HeroSection({ ctaVariant, tracked = false }: HeroSectionProps) {
+  const ctaCopy = heroCtaCopy(ctaVariant);
   return (
     <section className={styles.hero} aria-label="Introduction">
       <div className={styles.inner}>
@@ -38,7 +48,11 @@ export function HeroSection() {
             and product specs turned into decisions teams can build.
           </p>
           <div className={styles.ctas}>
-            <Button href="#work">See the work</Button>
+            {tracked ? (
+              <HeroCtaLink href="#work">{ctaCopy}</HeroCtaLink>
+            ) : (
+              <Button href="#work">{ctaCopy}</Button>
+            )}
             <Button href={CONTACT_EMAIL_HREF} variant="secondary" external>
               Email me
             </Button>

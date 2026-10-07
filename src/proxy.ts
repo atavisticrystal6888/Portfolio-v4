@@ -2,6 +2,33 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import { SITE_HOST, SITE_URL, WWW_SITE_HOST } from "@/lib/site";
 
+import { isExperimentsEnabled } from "@/lib/experiments/config";
+import { UID_COOKIE, UID_HEADER, isValidUid, newUid, uidCookieOptions } from "@/lib/experiments/identity";
+
+// Read at request time (tests stub it).
+function experimentsEnabled(): boolean {
+  return isExperimentsEnabled();
+}
+
+/**
+ * Give every visitor an anonymous id for experiment stickiness. The header is
+ * always overwritten so a client cannot choose its own id; the cookie is only
+ * (re)set when missing or malformed.
+ */
+function withExperimentIdentity(request: NextRequest): NextResponse {
+  const existing = request.cookies.get(UID_COOKIE)?.value;
+  const uid = isValidUid(existing) ? existing : newUid();
+
+  const requestHeaders = new Headers(request.headers);
+  requestHeaders.set(UID_HEADER, uid);
+  const response = NextResponse.next({ request: { headers: requestHeaders } });
+
+  if (uid !== existing) {
+    response.cookies.set(UID_COOKIE, uid, uidCookieOptions(request.nextUrl.protocol === "https:"));
+  }
+  return response;
+}
+
 export function proxy(request: NextRequest) {
   const requestHost =
     request.headers.get("x-forwarded-host") || request.headers.get("host");
@@ -14,7 +41,7 @@ export function proxy(request: NextRequest) {
     return NextResponse.redirect(redirectUrl, 308);
   }
 
-  const response = NextResponse.next();
+  const response = experimentsEnabled() ? withExperimentIdentity(request) : NextResponse.next();
 
   // Security headers
   response.headers.set("X-Content-Type-Options", "nosniff");

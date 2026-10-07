@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { Resend } from "resend";
+import { trackContactSubmission } from "@/lib/experiments/contact";
 import { CONTACT_EMAIL } from "@/lib/site";
 
 const resend = process.env.RESEND_API_KEY
@@ -278,6 +279,7 @@ export async function POST(request: NextRequest) {
       console.log("📧 Contact form submission (Resend not configured):", sanitized);
     }
 
+    await trackContactSubmission(request);
     return NextResponse.json(SUCCESS_BODY);
   } catch {
     return NextResponse.json({ error: "Invalid request" }, { status: 400 });

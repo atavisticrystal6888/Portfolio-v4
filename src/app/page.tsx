@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { headers } from "next/headers";
 import Link from "next/link";
 import dhruvImage from "@/assets/Dhruv_Image.jpg";
 import { generatePageMetadata, generateWebSiteJsonLd } from "@/lib/metadata";
@@ -13,6 +14,10 @@ import { Suggestions } from "@/components/home/Suggestions";
 import { JsonLd } from "@/components/ui/JsonLd";
 import { CONTACT_EMAIL_HREF } from "@/lib/site";
 import { toBlogSummary } from "@/lib/blog-summary";
+import { assignOrControl, type ExperimentAssignment } from "@/lib/experiments/client";
+import { isExperimentsEnabled } from "@/lib/experiments/config";
+import { HERO_CTA_EXPERIMENT } from "@/lib/experiments/hero";
+import { UID_HEADER, isValidUid } from "@/lib/experiments/identity";
 import styles from "./home.module.css";
 
 export const metadata = generatePageMetadata({
@@ -28,7 +33,19 @@ const THINKING_SLUGS = [
   "why-pms-should-code",
 ];
 
-export default function Home() {
+/**
+ * Only when experiments are enabled does this page read request headers --
+ * which is what turns it from static to dynamic. Disabled keeps `/` static.
+ */
+async function heroAssignment(): Promise<ExperimentAssignment | null> {
+  if (!isExperimentsEnabled()) return null;
+  const uid = (await headers()).get(UID_HEADER);
+  if (!isValidUid(uid)) return null;
+  return assignOrControl(uid, HERO_CTA_EXPERIMENT);
+}
+
+export default async function Home() {
+  const hero = await heroAssignment();
   const allProjects = getAllProjects();
   const posts = getAllBlogPosts();
   const webSiteJsonLd = generateWebSiteJsonLd();
@@ -43,7 +60,7 @@ export default function Home() {
       <JsonLd id="home-website-jsonld" data={webSiteJsonLd} />
 
       {/* Hero — title block + contents index; no scene behind it. */}
-      <HeroSection />
+      <HeroSection ctaVariant={hero?.variantKey} tracked={hero?.enrolled ?? false} />
 
       {/* Selected work — the work leads; biography lives on /about. */}
       <section
