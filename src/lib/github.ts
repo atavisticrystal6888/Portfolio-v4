@@ -87,20 +87,6 @@ const REPO_SLUG_MAP: Record<string, string> = {
   "task-manager": "desktasks",
 };
 
-function calculateStreak(
-  weeks: GitHubProfile["contributionCalendar"]["weeks"]
-): number {
-  const days = weeks.flatMap((w) => w.contributionDays).reverse();
-  let streak = 0;
-  // Skip today if no contributions yet
-  const startIdx = days[0]?.contributionCount === 0 ? 1 : 0;
-  for (let i = startIdx; i < days.length; i++) {
-    if ((days[i]?.contributionCount ?? 0) > 0) streak++;
-    else break;
-  }
-  return streak;
-}
-
 function calculateTopLanguages(
   repos: Array<{ primaryLanguage: { name: string } | null }>
 ): { name: string; percentage: number }[] {
@@ -131,7 +117,6 @@ function getFallbackProfile(username: string): GitHubProfile {
     contributionCalendar: { totalContributions: 0, weeks: [] },
     totalContributions: 0,
     topLanguages: [],
-    currentStreak: 0,
     totalPublicRepos: 0,
     fetchedAt: new Date().toISOString(),
   };
@@ -199,7 +184,6 @@ export async function getGitHubProfile(): Promise<GitHubProfile> {
       contributionCalendar: calendar,
       totalContributions: calendar.totalContributions,
       topLanguages: calculateTopLanguages(repoNodes),
-      currentStreak: calculateStreak(calendar.weeks),
       totalPublicRepos: user.repositories?.totalCount ?? 0,
       fetchedAt: new Date().toISOString(),
     };

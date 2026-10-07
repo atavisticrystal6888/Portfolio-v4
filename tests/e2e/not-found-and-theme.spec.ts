@@ -34,6 +34,20 @@ test.describe("Theme before hydration", () => {
     await expect(page.locator("html")).toHaveAttribute("data-theme", "light");
     await expect(page.locator("html")).toHaveAttribute("data-palette", "amber");
   });
+
+  test("a stored dark theme sets the theme-color meta before hydration", async ({ page, context }) => {
+    await context.addInitScript(() =>
+      localStorage.setItem("ds-portfolio-theme", JSON.stringify({ mode: "dark", palette: "teal" }))
+    );
+    await page.goto("/", { waitUntil: "domcontentloaded" });
+    await context.route("**/_next/static/chunks/**", (route) => route.abort());
+    await page.goto("/about", { waitUntil: "domcontentloaded" });
+
+    await expect(page.locator("html")).toHaveAttribute("data-theme", "dark");
+    const themeColor = page.locator('meta[name="theme-color"]');
+    await expect(themeColor).toHaveCount(1);
+    await expect(themeColor).toHaveAttribute("content", "#0d1322");
+  });
 });
 
 test.describe("In-body content links", () => {

@@ -25,10 +25,6 @@ export function GitHubStats({ profile }: GitHubStatsProps) {
           </span>
           <span className={styles.label}>Contributions</span>
         </Surface>
-        <Surface className={styles.card}>
-          <span className={styles.value}>{profile.currentStreak}</span>
-          <span className={styles.label}>Day Streak</span>
-        </Surface>
       </div>
 
       {profile.topLanguages.length > 0 && (

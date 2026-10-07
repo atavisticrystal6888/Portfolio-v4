@@ -37,6 +37,18 @@
   margin-bottom: var(--space-2);
 }
 
+/* Case-study measure: running text stops at about 65 characters (~620px),
+   where the 712px column ran 67-90 at 1440. Only the top-level text is
+   capped, so tables, code, figures and the MDX blocks keep the full column,
+   and the chapter rail (outside this element) is untouched. Scoped to case
+   studies; the blog borrows .prose and keeps its own measure. */
+.prose[data-case-study] > p,
+.prose[data-case-study] > ul,
+.prose[data-case-study] > ol,
+.prose[data-case-study] > blockquote {
+  max-width: 65ch;
+}
+
 .prose blockquote {
   border-left: 3px solid var(--accent);
   padding-left: var(--space-4);

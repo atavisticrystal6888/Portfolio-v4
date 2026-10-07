@@ -16,6 +16,13 @@ test.describe("Theme toggle and palette persistence", () => {
       await toggle.click();
       expect(await page.locator("html").getAttribute("data-theme")).not.toBe(initialTheme);
     }).toPass({ timeout: 15_000 });
+
+    // Browser chrome follows the rendered theme, not the OS preference: one
+    // theme-color meta, carrying the active mode's background.
+    const mode = await page.locator("html").getAttribute("data-theme");
+    const themeColor = page.locator('meta[name="theme-color"]');
+    await expect(themeColor).toHaveCount(1);
+    await expect(themeColor).toHaveAttribute("content", mode === "dark" ? "#0d1322" : "#f6f5f1");
   });
 
   test("theme persists across page navigation", async ({ page }) => {

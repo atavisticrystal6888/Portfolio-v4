@@ -77,10 +77,6 @@ export function GitHubActivity({ profile }: GitHubActivityProps) {
             <span>Contributions (past year)</span>
           </div>
           <div className={styles.stat}>
-            <strong>{profile.currentStreak}</strong>
-            <span>Day Streak</span>
-          </div>
-          <div className={styles.stat}>
             <strong>{profile.totalPublicRepos}</strong>
             <span>Public Repos</span>
           </div>

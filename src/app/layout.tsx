@@ -11,6 +11,7 @@ import { ScrollProgress } from "@/components/ui/ScrollProgress";
 import { JsonLd } from "@/components/ui/JsonLd";
 import { generatePersonJsonLd } from "@/lib/metadata";
 import { absoluteUrl, SITE_DESCRIPTION, SITE_NAME, SITE_TITLE, SITE_URL } from "@/lib/site";
+import { THEME_COLOR } from "@/lib/theme-color";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 
@@ -87,13 +88,13 @@ export const metadata: Metadata = {
 // Declared explicitly rather than leaning on Next's default so the contract is
 // visible in the repo. No maximumScale / userScalable: pinch-zoom stays
 // available, which a chunk of readers rely on.
+// No themeColor here on purpose: a prefers-color-scheme pair turned phone
+// chrome navy above a cream page for dark-OS visitors (the site renders light
+// until the toggle is used). The inline script below owns the single
+// theme-color meta instead, so it always matches the rendered theme.
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  themeColor: [
-    { media: "(prefers-color-scheme: dark)", color: "#0d1322" },
-    { media: "(prefers-color-scheme: light)", color: "#f6f5f1" },
-  ],
 };
 
 const personJsonLd = generatePersonJsonLd();
@@ -137,15 +138,19 @@ export default function RootLayout({
           title="Dhruv Singhal — Blog RSS"
           href="/rss.xml"
         />
-        {/* theme-color now ships from the `viewport` export above. */}
         {/* Applies a STORED theme before first paint, so a returning visitor
             who chose dark (or another palette) never sees the default flash
             by until React hydrates. No stored choice means the working-paper
             light identity, deliberately ignoring the OS preference - keep
-            that and the storage key in sync with src/hooks/useTheme.ts. */}
+            that and the storage key in sync with src/hooks/useTheme.ts.
+            It also writes the one <meta name="theme-color"> for the mode it
+            applied. The meta is created here rather than rendered by React:
+            React hydrates a <meta> by matching its content attribute, so a
+            React-rendered meta whose content this script changed would be
+            re-inserted beside it, leaving two. */}
         <script
           dangerouslySetInnerHTML={{
-            __html: `(function(){try{var s=localStorage.getItem('ds-portfolio-theme');var c=s?JSON.parse(s):null;var m=c&&c.mode?c.mode:'light';var p=c&&c.palette?c.palette:'teal';var e=document.documentElement;e.setAttribute('data-theme',m);e.setAttribute('data-palette',p);}catch(e){}})();`,
+            __html: `(function(){var m='light',p='teal',d=document;try{var s=localStorage.getItem('ds-portfolio-theme');var c=s?JSON.parse(s):null;if(c&&c.mode)m=c.mode;if(c&&c.palette)p=c.palette;}catch(e){}var e=d.documentElement;e.setAttribute('data-theme',m);e.setAttribute('data-palette',p);var t=d.querySelector('meta[name="theme-color"]');if(!t){t=d.createElement('meta');t.setAttribute('name','theme-color');d.head.appendChild(t);}t.setAttribute('content',m==='dark'?'${THEME_COLOR.dark}':'${THEME_COLOR.light}');})();`,
           }}
         />
         <JsonLd id="site-person-jsonld" data={personJsonLd} />

@@ -23,7 +23,6 @@ export interface GitHubProfile {
   };
   totalContributions: number;
   topLanguages: { name: string; percentage: number }[];
-  currentStreak: number;
   totalPublicRepos: number;
   fetchedAt: string;
 }

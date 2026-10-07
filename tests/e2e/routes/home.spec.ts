@@ -56,18 +56,34 @@ test.describe("Home (/)", () => {
     await expect(slides.nth(3).getByTestId("status-pill")).toContainText(/not deployed/i);
   });
 
-  test("imageless flagship plates carry the PM decision, not an empty-slot note", async ({ page }) => {
+  test("imageless flagship plates are neutral: monogram only, the decision lives in the card body", async ({ page }) => {
     const carousel = page.getByRole("group", { name: "Flagship products", exact: true });
     const plates = carousel.getByTestId("card-plate");
     const imageless = ROSTER.filter((p) => p.tier === "flagship" && !p.imageUrl);
     expect(imageless.length, "imageless flagships").toBeGreaterThan(0);
     await expect(plates).toHaveCount(imageless.length);
-    for (let i = 0; i < imageless.length; i++) {
-      const entry = imageless[i]!;
-      const plate = plates.filter({ hasText: entry.productName ?? entry.slug });
-      await expect(plate, entry.slug).toHaveCount(1);
-      await expect(plate).toContainText(entry.decision!);
+    for (const entry of imageless) {
+      const name = entry.productName ?? entry.slug;
+      const slide = carousel
+        .locator('[aria-roledescription="slide"]')
+        .filter({ has: page.locator("h3", { hasText: name }) });
+      await expect(slide, entry.slug).toHaveCount(1);
+      const plate = slide.getByTestId("card-plate");
+      await expect(plate, `${entry.slug} plate`).toHaveCount(1);
+      // Nothing on the plate repeats the card body: no title, no decision.
+      await expect(plate.getByTestId("card-plate-monogram")).toHaveText(
+        name.trim().charAt(0).toUpperCase()
+      );
+      await expect(plate).not.toContainText(name);
+      await expect(plate).not.toContainText(entry.decision!);
       await expect(plate).not.toContainText(/screenshot not published/i);
+      // The decision is a visible line in the body, not an sr-only copy.
+      const decision = slide.getByTestId("card-decision");
+      await expect(decision).toContainText(entry.decision!);
+      expect(
+        await decision.evaluate((el) => getComputedStyle(el).position),
+        `${entry.slug} decision is in flow`
+      ).not.toBe("absolute");
     }
     await expect(carousel).not.toContainText(/screenshot not published/i);
   });
@@ -193,7 +209,7 @@ test.describe("Home (/)", () => {
     await expect(rows.filter({ hasText: /three other contributors/i })).toHaveCount(1);
   });
 
-  test("the PM decision on image cards is shown in full, not clamped", async ({ page }) => {
+  test("the PM decision on every flagship card is shown in full, not clamped", async ({ page }) => {
     const decisions = page
       .getByRole("group", { name: "Flagship products", exact: true })
       .getByTestId("card-decision");
@@ -201,8 +217,6 @@ test.describe("Home (/)", () => {
     expect(n).toBeGreaterThan(0);
     for (let i = 0; i < n; i++) {
       const clipped = await decisions.nth(i).evaluate((el) => {
-        // sr-only copies (imageless plates) are visually hidden, not clipped text.
-        if (getComputedStyle(el).position === "absolute") return false;
         return el.scrollHeight > el.clientHeight + 1;
       });
       expect(clipped, `decision ${i}`).toBe(false);

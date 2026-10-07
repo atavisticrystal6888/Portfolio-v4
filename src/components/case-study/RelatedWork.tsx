@@ -10,7 +10,7 @@ interface RelatedWorkProps {
 
 /**
  * Three related products. Same category scores highest, then flagships, then
- * anything with a screenshot. Imageless products get the card's title plate,
+ * anything with a screenshot. Imageless products get the card's neutral plate,
  * so the row stays three even cards. Card-only entries with no case-study page are never offered.
  */
 export function pickRelated(

@@ -590,6 +590,14 @@
   line-height: 1.5;
 }
 
+/* A chip with a note usually wraps to two lines, and a 100px pill radius on a
+   two-line box reads as a lopsided capsule. Those chips take the small card
+   radius instead, with a tighter gap between the wrapped lines. */
+.artifactChip:has(.artifactNote) {
+  border-radius: var(--radius-sm);
+  row-gap: var(--space-1);
+}
+
 .artifactChip:hover,
 .artifactChip:focus-visible {
   border-color: var(--accent);

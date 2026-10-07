@@ -1,7 +1,8 @@
 "use client";
 
-import { useSyncExternalStore, useCallback } from "react";
-import type { PaletteName, ThemeConfig } from "@/types/theme";
+import { useSyncExternalStore, useCallback, useEffect } from "react";
+import type { PaletteName, ThemeConfig, ThemeMode } from "@/types/theme";
+import { THEME_COLOR } from "@/lib/theme-color";
 
 const STORAGE_KEY = "ds-portfolio-theme";
 
@@ -24,10 +25,25 @@ function getInitialConfig(): ThemeConfig {
   return DEFAULT_CONFIG;
 }
 
+/* Browser chrome follows the rendered theme. The inline script in
+   src/app/layout.tsx creates this meta before first paint; it is recreated
+   here if anything removed it since (a client re-render of <head> after a
+   hydration error drops nodes React did not render). */
+function syncThemeColor(mode: ThemeMode) {
+  let meta = document.querySelector<HTMLMetaElement>('meta[name="theme-color"]');
+  if (!meta) {
+    meta = document.createElement("meta");
+    meta.setAttribute("name", "theme-color");
+    document.head.appendChild(meta);
+  }
+  meta.setAttribute("content", THEME_COLOR[mode] ?? THEME_COLOR.light);
+}
+
 function applyTheme(config: ThemeConfig) {
   const html = document.documentElement;
   html.setAttribute("data-theme", config.mode);
   html.setAttribute("data-palette", config.palette);
+  syncThemeColor(config.mode);
 }
 
 // Module-level external store
@@ -69,6 +85,12 @@ function setThemeConfig(next: ThemeConfig) {
 
 export function useTheme() {
   const config = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
+
+  // Re-assert after mount and on every mode change, so the meta survives
+  // anything that rebuilt <head> after the inline script ran.
+  useEffect(() => {
+    syncThemeColor(config.mode);
+  }, [config.mode]);
 
   const toggleMode = useCallback(() => {
     setThemeConfig({

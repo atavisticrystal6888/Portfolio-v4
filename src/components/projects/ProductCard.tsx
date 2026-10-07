@@ -50,18 +50,16 @@ export function ProductCard({
       className={styles.shot}
     />
   ) : (
-    // No screenshot: a set title plate on the product's tinted ground, the
+    // No screenshot yet: a neutral plate on the product's tinted ground, the
     // same shape as a framed shot so a grid of mixed cards stays aligned.
-    // The plate carries the PM decision, so the first product view shows the
-    // call rather than an empty image slot.
+    // It carries only the accent bar and the product's monogram. The name
+    // and the decision live in the card body; repeating them here made the
+    // imageless cards read as unfinished beside the ones with captures.
     <div className={styles.plate} data-testid="card-plate">
       <span className={styles.plateMark} />
-      <span className={styles.plateName}>{name}</span>
-      {project.decision && (
-        <span className={styles.plateDecision}>
-          <span className={styles.plateDecisionKey}>Decision</span> {project.decision}
-        </span>
-      )}
+      <span className={styles.plateMonogram} data-testid="card-plate-monogram">
+        {name.trim().charAt(0).toUpperCase()}
+      </span>
     </div>
   );
 
@@ -91,14 +89,10 @@ export function ProductCard({
 
         {project.tagline && <p className={styles.tagline}>{project.tagline}</p>}
 
-        {/* With a screenshot the decision is the card's secondary line. On a
-            plate it is already shown in the (aria-hidden) media, so it is
-            repeated here for assistive tech only. */}
+        {/* The decision is the card's secondary line on every card; the
+            imageless plate deliberately does not repeat it. */}
         {project.decision && (
-          <p
-            className={project.imageUrl ? styles.decision : styles.srOnly}
-            data-testid="card-decision"
-          >
+          <p className={styles.decision} data-testid="card-decision">
             <span className={styles.decisionKey}>Decision:</span> {project.decision}
           </p>
         )}
