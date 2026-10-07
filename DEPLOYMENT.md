@@ -23,6 +23,33 @@ Set these in **Vercel Project Settings → Environment Variables** for the
 | `EXPERIMENTHUB_API_URL` | No (dormant when unset) | Origin of the ExperimentHub API (e.g. `https://hub.example.com`). With `EXPERIMENTHUB_API_KEY`, enables the home-page CTA experiment and makes `/` dynamically rendered. |
 | `EXPERIMENTHUB_API_KEY` | No (dormant when unset) | Tenant SDK key (`eh_live_…`). Server-only; never exposed to the browser. |
 
+## Experiments (ExperimentHub)
+
+The home-page hero CTA can run as an A/B test through
+[ExperimentHub](https://github.com/atavisticrystal6888/A-B-Testing-Platform)
+using its JavaScript SDK (vendored as `vendor/experiment-hub-sdk-<version>.tgz`).
+It is **dormant until both `EXPERIMENTHUB_API_URL` and `EXPERIMENTHUB_API_KEY`
+are set**: no cookie, no requests, `/` stays static. With both set:
+
+- the proxy gives each browser an anonymous `eh_uid` cookie (HttpOnly, SameSite=Lax, 1 year, no PII);
+- `/` is rendered per request and asks the platform which variant to show (300 ms budget, then control);
+- CTA clicks beacon to `/api/experiments/track` on this origin; genuine contact submissions count as `contact_submitted`;
+- every failure is fail-open: the platform being down never changes what the site shows.
+
+One-time platform setup (creates the metrics and the `portfolio-hero-cta` experiment, idempotent):
+
+```bash
+EXPERIMENTHUB_API_URL=http://127.0.0.1:4000 node scripts/experiment-hub-setup.mjs
+```
+
+Refreshing the vendored SDK after a platform release:
+
+```bash
+(cd ../A-B-Testing-Platform/sdk/javascript && npm run build && npm pack)   # → experiment-hub-sdk-<v>.tgz
+cp ../A-B-Testing-Platform/sdk/javascript/experiment-hub-sdk-<v>.tgz vendor/
+npm install ./vendor/experiment-hub-sdk-<v>.tgz --save
+```
+
 ## First-time Deployment
 
 1. Import the repository in Vercel (`vercel.com/new`).
