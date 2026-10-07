@@ -1,115 +1,170 @@
-import { describe, it, expect, afterAll } from "vitest";
+import { describe, it, expect, afterAll, vi } from "vitest";
 import fs from "fs";
 import os from "os";
 import path from "path";
 import { spawnSync } from "child_process";
-import allowlist from "../../content/approved-case-studies.json";
 import sitemap from "@/app/sitemap";
 import { getAllCaseStudySlugs } from "@/lib/content";
-import { ROUTES, WITHDRAWN_ROUTES } from "../e2e/route-manifest";
+import {
+  WITHDRAWN_ROUTES,
+  caseStudyPublicationFailures,
+  listCaseStudyMdxSlugs,
+  manifestCaseStudyFailures,
+  readApprovedCaseStudies,
+} from "../../scripts/lib/case-study-allowlist.mjs";
 
-/*
- * content/approved-case-studies.json is the publication boundary: any .mdx in
- * content/case-studies/ becomes a public route and a sitemap entry, so every
- * one must be on the reviewed allowlist (and the allowlist must not go stale).
- */
+// content/approved-case-studies.json is the publication boundary; the rules live in
+// scripts/lib/case-study-allowlist.mjs, enforced by the build (src/lib/content.ts), CI and the manifest.
 const ROOT = process.cwd();
 const GUARD = path.join(ROOT, "scripts", "check-case-study-allowlist.mjs");
+const MANIFEST = path.join(ROOT, "tests", "e2e", "route-manifest.ts");
 const SYNTHETIC = "zz-synthetic-unapproved";
-const approved: string[] = allowlist.approved;
-const approvedSet = new Set(approved);
-const slugOf = (p: string) => p.replace(/^\/projects\//, "");
 
-describe("approved case-study allowlist", () => {
-  it("is a non-empty, sorted list of unique kebab-case slugs", () => {
-    expect(approved.length).toBeGreaterThan(0);
-    for (const s of approved) expect(s).toMatch(/^[a-z0-9]+(-[a-z0-9]+)*$/);
-    expect(approvedSet.size).toBe(approved.length);
-    expect(approved).toEqual([...approved].sort());
+const fixtures: string[] = [];
+afterAll(() => {
+  for (const d of fixtures) fs.rmSync(d, { recursive: true, force: true });
+});
+
+/** A temp root holding `files` (relative path -> contents). */
+function fixture(files: Record<string, string>): string {
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), "cs-allowlist-"));
+  fixtures.push(dir);
+  for (const [rel, body] of Object.entries(files)) {
+    fs.mkdirSync(path.dirname(path.join(dir, rel)), { recursive: true });
+    fs.writeFileSync(path.join(dir, rel), body);
+  }
+  return dir;
+}
+const allowlistFile = (value: unknown) => ({ "content/approved-case-studies.json": JSON.stringify(value) });
+
+describe("caseStudyPublicationFailures (synthetic arrays)", () => {
+  const withdrawnRoutes = ["/projects/gone"];
+
+  it("names an unapproved .mdx", () => {
+    const f = caseStudyPublicationFailures({ approved: ["a"], mdxSlugs: ["a", SYNTHETIC], withdrawnRoutes });
+    expect(f).toHaveLength(1);
+    expect(f[0]).toContain(`unapproved publication: ${SYNTHETIC}`);
   });
 
-  it("equals the set of published case-study files", () => {
-    expect(new Set(getAllCaseStudySlugs())).toEqual(approvedSet);
+  it("flags a stale approved entry with no .mdx", () => {
+    const f = caseStudyPublicationFailures({ approved: ["a", "b"], mdxSlugs: ["a"], withdrawnRoutes });
+    expect(f).toEqual([expect.stringContaining("approved slug b has no content/case-studies/b.mdx")]);
   });
 
-  it("every case-study route in the generated manifest is approved, and none is missing", () => {
-    const manifest = ROUTES.filter((r) => r.kind === "case-study").map((r) => slugOf(r.path));
-    for (const s of manifest) expect(approvedSet.has(s), s).toBe(true);
-    expect(new Set(manifest)).toEqual(approvedSet);
+  it("flags a withdrawn slug that is approved", () => {
+    const f = caseStudyPublicationFailures({ approved: ["a", "gone"], mdxSlugs: ["a", "gone"], withdrawnRoutes });
+    expect(f.some((m) => m.includes("withdrawn route /projects/gone is approved"))).toBe(true);
   });
 
-  it("every /projects/ URL in the sitemap is approved", () => {
-    const urls = sitemap()
-      .map((e) => new URL(e.url).pathname)
-      .filter((p) => p.startsWith("/projects/"));
-    expect(urls.length).toBe(approved.length);
-    for (const p of urls) expect(approvedSet.has(slugOf(p)), p).toBe(true);
+  it("flags a withdrawn slug that has an .mdx", () => {
+    const f = caseStudyPublicationFailures({ approved: ["a"], mdxSlugs: ["a", "gone"], withdrawnRoutes });
+    expect(f.some((m) => m.includes("withdrawn route /projects/gone has content/case-studies/gone.mdx"))).toBe(true);
   });
 
-  it("no withdrawn route is approved", () => {
-    for (const w of WITHDRAWN_ROUTES) expect(approvedSet.has(slugOf(w)), w).toBe(false);
+  it("returns [] for clean input", () => {
+    expect(caseStudyPublicationFailures({ approved: ["a", "b"], mdxSlugs: ["a", "b"], withdrawnRoutes })).toEqual([]);
   });
 });
 
-describe("check-case-study-allowlist.mjs (synthetic fixtures)", () => {
-  const fixtures: string[] = [];
+describe("readApprovedCaseStudies (fixtures)", () => {
+  it("throws on a misspelled `approved` key instead of reading an empty list", () => {
+    const root = fixture(allowlistFile({ approve: ["a"] }));
+    expect(() => readApprovedCaseStudies(root)).toThrow(/^content\/approved-case-studies\.json.*`approved`/);
+  });
 
-  function fixture(opts: { extraMdx?: boolean; injectManifest?: boolean }): string {
-    const dir = fs.mkdtempSync(path.join(os.tmpdir(), "cs-allowlist-"));
-    fixtures.push(dir);
-    const copy = (rel: string, transform?: (s: string) => string) => {
-      const dest = path.join(dir, rel);
-      fs.mkdirSync(path.dirname(dest), { recursive: true });
-      const src = fs.readFileSync(path.join(ROOT, rel), "utf8");
-      fs.writeFileSync(dest, transform ? transform(src) : src);
-    };
-    copy("content/approved-case-studies.json");
-    copy("scripts/route-manifest.mjs");
-    copy("tests/e2e/route-manifest.ts", (src) =>
-      opts.injectManifest
-        ? src.replace(
-            "export const ROUTES: RouteEntry[] = [",
-            `export const ROUTES: RouteEntry[] = [\n  {\n    "path": "/projects/${SYNTHETIC}",\n    "kind": "case-study",\n    "expectStatus": 200\n  },`
-          )
-        : src
-    );
-    for (const f of fs.readdirSync(path.join(ROOT, "content/case-studies"))) {
-      if (f.endsWith(".mdx")) copy(`content/case-studies/${f}`);
+  it("throws on an unsorted list", () => {
+    expect(() => readApprovedCaseStudies(fixture(allowlistFile({ approved: ["b", "a"] })))).toThrow(/not sorted/);
+  });
+
+  it("throws on a non-kebab-case entry", () => {
+    expect(() => readApprovedCaseStudies(fixture(allowlistFile({ approved: ["Bad_Slug"] })))).toThrow(/kebab-case.*Bad_Slug/);
+  });
+
+  it("returns a valid list", () => {
+    expect(readApprovedCaseStudies(fixture(allowlistFile({ approved: ["a", "b-c"] })))).toEqual(["a", "b-c"]);
+  });
+});
+
+describe("the real repo", () => {
+  const approved = readApprovedCaseStudies(ROOT);
+
+  it("has no publication failures", () => {
+    const mdxSlugs = listCaseStudyMdxSlugs(ROOT);
+    expect(caseStudyPublicationFailures({ approved, mdxSlugs, withdrawnRoutes: WITHDRAWN_ROUTES })).toEqual([]);
+  });
+
+  it("getAllCaseStudySlugs() equals the approved list", () => {
+    expect(getAllCaseStudySlugs()).toEqual(approved);
+  });
+
+  it("every /projects/ URL in the sitemap is approved", () => {
+    const slugs = sitemap()
+      .map((e) => new URL(e.url).pathname)
+      .filter((p) => p.startsWith("/projects/"))
+      .map((p) => p.replace(/^\/projects\//, ""));
+    expect([...slugs].sort()).toEqual(approved);
+  });
+
+  it("the generated route manifest agrees with the allowlist", () => {
+    expect(manifestCaseStudyFailures(fs.readFileSync(MANIFEST, "utf8"), approved)).toEqual([]);
+  });
+});
+
+describe("build-time gate (src/lib/content.ts)", () => {
+  it("getAllCaseStudySlugs() throws on an unapproved .mdx, so next build fails", async () => {
+    const base = { ...allowlistFile({ approved: ["alpha"] }), "content/case-studies/alpha.mdx": "---\ntitle: Alpha\n---\n" };
+    const clean = fixture(base);
+    const dirty = fixture({ ...base, [`content/case-studies/${SYNTHETIC}.mdx`]: "---\ntitle: Synthetic\n---\n" });
+    const cwd = vi.spyOn(process, "cwd");
+    try {
+      cwd.mockReturnValue(clean);
+      vi.resetModules();
+      expect((await import("@/lib/content")).getAllCaseStudySlugs()).toEqual(["alpha"]);
+
+      cwd.mockReturnValue(dirty);
+      vi.resetModules();
+      const content = await import("@/lib/content");
+      expect(() => content.getAllCaseStudySlugs()).toThrow(/zz-synthetic-unapproved/);
+    } finally {
+      cwd.mockRestore();
+      vi.resetModules();
     }
-    if (opts.extraMdx) {
-      fs.copyFileSync(
-        path.join(dir, "content/case-studies/aarchid.mdx"),
-        path.join(dir, `content/case-studies/${SYNTHETIC}.mdx`)
+  });
+});
+
+describe("check-case-study-allowlist.mjs CLI", () => {
+  function repoCopy(withSynthetic: boolean): string {
+    const read = (rel: string) => fs.readFileSync(path.join(ROOT, rel), "utf8");
+    const files: Record<string, string> = { "content/approved-case-studies.json": read("content/approved-case-studies.json") };
+    for (const slug of listCaseStudyMdxSlugs(ROOT)) {
+      files[`content/case-studies/${slug}.mdx`] = read(`content/case-studies/${slug}.mdx`);
+    }
+    const manifest = read("tests/e2e/route-manifest.ts");
+    files["tests/e2e/route-manifest.ts"] = manifest;
+    if (withSynthetic) {
+      files[`content/case-studies/${SYNTHETIC}.mdx`] = read("content/case-studies/aarchid.mdx");
+      files["tests/e2e/route-manifest.ts"] = manifest.replace(
+        "export const ROUTES: RouteEntry[] = [",
+        `export const ROUTES: RouteEntry[] = [\n  {\n    "path": "/projects/${SYNTHETIC}",\n    "kind": "case-study",\n    "expectStatus": 200\n  },`
       );
     }
-    return dir;
+    return fixture(files);
   }
-
   const run = (dir: string) => {
     const r = spawnSync(process.execPath, [GUARD, "--root", dir], { encoding: "utf8" });
     return { status: r.status, out: `${r.stdout}${r.stderr}` };
   };
 
-  afterAll(() => {
-    for (const d of fixtures) fs.rmSync(d, { recursive: true, force: true });
-  });
-
   it("passes on an unchanged copy of the repo (control)", () => {
-    const r = run(fixture({}));
-    expect(r.out).toMatch(/^OK: \d+ approved case studies/m);
+    const r = run(repoCopy(false));
+    expect(r.out).toMatch(/^OK: \d+ approved case studies, \d+ withdrawn routes/m);
     expect(r.status).toBe(0);
   });
 
-  it("fails when an unapproved case-study .mdx is added", () => {
-    const r = run(fixture({ extraMdx: true }));
+  it("fails on an unapproved .mdx even when the manifest was regenerated to include it", () => {
+    const r = run(repoCopy(true));
     expect(r.status).toBe(1);
-    expect(r.out).toContain(SYNTHETIC);
-  });
-
-  it("still fails when the manifest was regenerated to include it", () => {
-    const r = run(fixture({ extraMdx: true, injectManifest: true }));
-    expect(r.status).toBe(1);
-    expect(r.out).toContain(`content/case-studies/${SYNTHETIC}.mdx is not in`);
-    expect(r.out).toContain(`unapproved case study /projects/${SYNTHETIC}`);
+    expect(r.out).toContain(`FAIL: content/case-studies/${SYNTHETIC}.mdx is not in`);
+    expect(r.out).toContain(`lists unapproved case study /projects/${SYNTHETIC}`);
   });
 });

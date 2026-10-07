@@ -60,6 +60,7 @@ beforeEach(() => {
     const p = String(filePath);
     if (p.includes("projects.json")) return PROJECTS_JSON;
     if (p.includes("testimonials.json")) return TESTIMONIALS_JSON;
+    if (p.includes("approved-case-studies.json")) return JSON.stringify({ approved: ["test"] });
     if (p.endsWith(".mdx")) {
       return `---\nslug: test\ntitle: Test\n---\n# Content`;
     }
@@ -101,11 +102,10 @@ describe("getAllCaseStudySlugs", () => {
     expect(slugs).toEqual(["test"]);
   });
 
-  it("returns empty array if directory missing", async () => {
+  it("throws (failing the build) if the directory is missing but a slug is approved", async () => {
     vi.mocked(fs).existsSync.mockReturnValue(false);
     const { getAllCaseStudySlugs } = await import("@/lib/content");
-    const slugs = getAllCaseStudySlugs();
-    expect(slugs).toEqual([]);
+    expect(() => getAllCaseStudySlugs()).toThrow(/stale allowlist entry/);
   });
 });
 
@@ -118,7 +118,7 @@ describe("getCaseStudyBySlug", () => {
   });
 
   it("returns null for missing file", async () => {
-    vi.mocked(fs).existsSync.mockReturnValue(false);
+    vi.mocked(fs).existsSync.mockImplementation((p) => !String(p).endsWith("missing.mdx"));
     const { getCaseStudyBySlug } = await import("@/lib/content");
     expect(getCaseStudyBySlug("missing")).toBeNull();
   });

@@ -1,5 +1,5 @@
 {
-  "$schema_note": "Approved PUBLIC case-study slugs. Editing this file is a publication decision: a case study ships only if its slug is here AND content/case-studies/<slug>.mdx exists. Do not add private-draft names, hashes, or notes about withheld work. Withdrawn routes live in scripts/route-manifest.mjs (WITHDRAWN). Checked by scripts/check-case-study-allowlist.mjs (CI), tests/unit/case-study-allowlist.test.ts and tests/e2e/routes/withdrawn.spec.ts.",
+  "$schema_note": "Approved PUBLIC case-study slugs. Editing this file is a publication decision: a case study ships only if its slug is here AND content/case-studies/<slug>.mdx exists. Do not add private-draft names, hashes, or notes about withheld work. Rules and withdrawn routes (WITHDRAWN_ROUTES) live in one library, scripts/lib/case-study-allowlist.mjs. Enforced at build time by src/lib/content.ts (getAllCaseStudySlugs fails next build on any unapproved .mdx), in CI by scripts/check-case-study-allowlist.mjs, and by scripts/route-manifest.mjs, which refuses to write on a failure.",
   "approved": [
     "aarchid",
     "better-half",

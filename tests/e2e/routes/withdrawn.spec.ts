@@ -33,7 +33,8 @@ test.describe("Withdrawn routes", () => {
   });
 
   test("sitemap.xml lists only approved case studies", async ({ request }) => {
-    // content/approved-case-studies.json is the publication boundary.
+    // content/approved-case-studies.json is the publication boundary; the rules live in
+    // scripts/lib/case-study-allowlist.mjs (not imported here, to keep the Playwright loader plain).
     const res = await request.get("/sitemap.xml");
     expect(res.status()).toBe(200);
     const body = await res.text();

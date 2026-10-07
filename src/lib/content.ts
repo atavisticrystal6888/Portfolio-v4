@@ -6,6 +6,7 @@ import type { CaseStudyFrontmatter, CaseStudy } from "@/types/project";
 import type { BlogArticleFrontmatter, BlogArticle } from "@/types/blog";
 import type { Testimonial } from "@/types/testimonial";
 import type { LabIdea } from "@/types/lab";
+import { assertApprovedCaseStudies } from "../../scripts/lib/case-study-allowlist.mjs";
 
 const contentDir = path.join(process.cwd(), "content");
 
@@ -21,13 +22,16 @@ export function getProjectBySlug(slug: string): Project | undefined {
   return getAllProjects().find((p) => p.slug === slug);
 }
 
+/**
+ * The published case-study slugs. This is the build-time publication gate:
+ * it throws unless every content/case-studies/*.mdx is in
+ * content/approved-case-studies.json (and vice versa, with no withdrawn route
+ * approved or present), so generateStaticParams, sitemap.ts and the OG route
+ * make `next build` fail on an unapproved draft. On success the approved list
+ * equals the sorted .mdx set. Rules: scripts/lib/case-study-allowlist.mjs.
+ */
 export function getAllCaseStudySlugs(): string[] {
-  const dir = path.join(contentDir, "case-studies");
-  if (!fs.existsSync(dir)) return [];
-  return fs
-    .readdirSync(dir)
-    .filter((f) => f.endsWith(".mdx"))
-    .map((f) => f.replace(/\.mdx$/, ""));
+  return assertApprovedCaseStudies(process.cwd());
 }
 
 export function getCaseStudyBySlug(slug: string): CaseStudy | null {
