@@ -5,7 +5,7 @@ import { SITE_HOST, SITE_URL, WWW_SITE_HOST } from "@/lib/site";
 import { isExperimentsEnabled } from "@/lib/experiments/config";
 import { UID_COOKIE, UID_HEADER, isValidUid, newUid, uidCookieOptions } from "@/lib/experiments/identity";
 
-// Read at request time: the Edge runtime exposes process.env, and tests stub it.
+// Read at request time (tests stub it).
 function experimentsEnabled(): boolean {
   return isExperimentsEnabled();
 }

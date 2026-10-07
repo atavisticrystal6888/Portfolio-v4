@@ -17,7 +17,7 @@ Set these in **Vercel Project Settings → Environment Variables** for the
 |----------|----------|---------|
 | `GITHUB_TOKEN` | No (graceful fallback) | GitHub GraphQL auth for pinned repos + contributions. Without it, the GitHub sections show cached/empty state. |
 | `GITHUB_USERNAME` | No (graceful fallback) | Target GitHub user for the integration. |
-| `RESEND_API_KEY` | No (graceful fallback) | Enables the `/api/contact` route to deliver email via Resend. Without it, submissions are logged server-side and return `200 OK`. |
+| `RESEND_API_KEY` | No (graceful fallback) | Enables the `/api/contact` route to deliver email via Resend. Without it, submissions are logged server-side and the route returns `200 OK` in development and `503` in production builds. |
 | `CONTACT_EMAIL` | No | Destination address for contact form email. Defaults in code. |
 | `NEXT_PUBLIC_SITE_URL` | **Yes** | Used for canonical URLs, OG image URLs, and sitemap. Set to the production domain (e.g. `https://dhruvsinghal.com`). |
 | `EXPERIMENTHUB_API_URL` | No (dormant when unset) | Origin of the ExperimentHub API (e.g. `https://hub.example.com`). With `EXPERIMENTHUB_API_KEY`, enables the home-page CTA experiment and makes `/` dynamically rendered. |
@@ -51,6 +51,8 @@ npm install ./vendor/experiment-hub-sdk-<v>.tgz --save
 ```
 
 **Verified locally (2026-10-07):** against ExperimentHub at `127.0.0.1:4000` - cookie minted, variant served and sticky across repeat requests and matching the platform's assignment (`enrolled: true`), CTA beacon returned 204, contact submit returned `ok` in a non-production run; with the variables unset the site served control, set no cookie, and `/` built static. The platform's results/analysis endpoints did not yet show the `hero_cta_click` / `contact_submitted` events at the time of the check. Set both variables at **build time** as well as runtime: a build made without them prerenders `/` statically and ignores them later. A production build with no `RESEND_API_KEY` answers `/api/contact` with 503 by design.
+
+**Before enabling in production:** the track route has no rate limit yet (reuse the contact route's IP limiter), and contact conversions will assign visitors who never saw the hero; address both before setting the env vars.
 
 ## First-time Deployment
 
