@@ -80,25 +80,29 @@ export default function ContactPage() {
       {/* Form + direct channels, one spread */}
       <section className={styles.section} aria-label="Ways to reach me">
         <div className={styles.inner}>
+          {/* Direct channels first in the DOM, so on a phone the Email card
+              comes before a long form, and reading, Tab and numbering order
+              all agree. From 960px the grid pins the form back into the left
+              column (see contact.module.css). */}
           <div className={styles.reachGrid}>
-            <div className={styles.formColumn}>
-              {/* h2 so heading navigation reaches the form; it looks like
-                  the other section labels. */}
-              <h2 className={`${styles.sectionHeader} ${styles.labelHeading}`}>
-                <SectionLabel index="01">Write to me</SectionLabel>
-              </h2>
-              <ContactForm />
-            </div>
             {/* A plain group, not an <aside>: these links are the other half
                 of the contact spread, not tangential content, and a
                 complementary landmark nested in this region failed axe's
                 landmark-complementary-is-top-level. */}
             <div className={styles.aside} role="group" aria-label="Direct contact links">
               <h2 className={`${styles.asideHeader} ${styles.labelHeading}`}>
-                <SectionLabel index="02">Or reach out directly</SectionLabel>
+                <SectionLabel index="01">Or reach out directly</SectionLabel>
               </h2>
               <DirectLinks />
               <p className={styles.location}>Based in India · IST (UTC+5:30)</p>
+            </div>
+            <div className={styles.formColumn}>
+              {/* h2 so heading navigation reaches the form; it looks like
+                  the other section labels. */}
+              <h2 className={`${styles.sectionHeader} ${styles.labelHeading}`}>
+                <SectionLabel index="02">Write to me</SectionLabel>
+              </h2>
+              <ContactForm />
             </div>
           </div>
         </div>

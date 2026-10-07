@@ -11,17 +11,18 @@
      page ground the tint is invisible anyway. */
   background: var(--nav-bg, var(--glass-bg));
   /* 0.85/0.88 let scrolled copy ghost through behind the links. Without a
-     backdrop filter nothing softens what shows through, so the fallback is
-     near-opaque: 96% of the page ground (it follows theme and palette). */
-  background: color-mix(in srgb, var(--bg) 96%, transparent);
+     backdrop filter nothing would soften what shows through, so the
+     fallback is the page ground itself, fully opaque (it follows theme and
+     palette). */
+  background: var(--bg);
   transition: border-color var(--transition-base);
 }
 
-/* Where the blur exists, 90% of the ground over a blurred, slightly
-   saturated backdrop: scrolled copy reads as colour, never as letters. */
+/* Where the blur exists, 95% of the ground over a blurred, slightly
+   saturated backdrop: scrolled copy reads as a faint wash, never as letters. */
 @supports ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
   .nav {
-    background: color-mix(in srgb, var(--bg) 90%, transparent);
+    background: color-mix(in srgb, var(--bg) 95%, transparent);
     backdrop-filter: blur(12px) saturate(1.2);
     -webkit-backdrop-filter: blur(12px) saturate(1.2);
   }

@@ -19,25 +19,29 @@ async function interceptContact(page: Page, status: number, body: object) {
 }
 
 test.describe("Contact form", () => {
+  // Lookups are scoped to the form: the direct-contact links now come first
+  // in the DOM, and their "Copy email address" button also matches /email/i.
   test("contact page renders the form", async ({ page }) => {
     await page.goto("/contact");
-    await expect(page.getByLabel(/name/i).first()).toBeVisible();
-    await expect(page.getByLabel(/email/i).first()).toBeVisible();
-    await expect(page.getByLabel(/message/i).first()).toBeVisible();
+    const form = page.locator("form");
+    await expect(form.getByLabel(/name/i).first()).toBeVisible();
+    await expect(form.getByLabel(/email/i).first()).toBeVisible();
+    await expect(form.getByLabel(/message/i).first()).toBeVisible();
   });
 
   test("shows validation errors for invalid email", async ({ page }) => {
     // Intercepted: even if client validation regressed, nothing reaches the server.
     const calls = await interceptContact(page, 503, { error: "intercepted" });
     await page.goto("/contact");
+    const form = page.locator("form");
 
-    await page.getByLabel(/name/i).first().fill("Test User");
-    await page.getByLabel(/email/i).first().fill("not-an-email");
-    const subject = page.getByLabel(/subject/i).first();
+    await form.getByLabel(/name/i).first().fill("Test User");
+    await form.getByLabel(/email/i).first().fill("not-an-email");
+    const subject = form.getByLabel(/subject/i).first();
     if (await subject.isVisible().catch(() => false)) {
       await subject.selectOption({ label: "Other" });
     }
-    await page
+    await form
       .getByLabel(/message/i)
       .first()
       .fill("This is a valid message with more than twenty characters.");
@@ -46,7 +50,7 @@ test.describe("Contact form", () => {
     await submit.click();
 
     // Browser native validation OR inline error should prevent submission
-    const emailInput = page.getByLabel(/email/i).first();
+    const emailInput = form.getByLabel(/email/i).first();
     const validity = await emailInput.evaluate(
       (el: HTMLInputElement) => el.validity.valid
     );

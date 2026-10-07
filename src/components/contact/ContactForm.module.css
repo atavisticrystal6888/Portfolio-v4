@@ -75,9 +75,10 @@
 
 /* Error result: a tinted panel, not bare red text, so a failed send reads
    as a state of the form rather than a stray line under the button. The tint
-   is 8% of the theme's own --error over --bg, which keeps the --error text
-   at 4.85:1 on the light ground (#bb2c2c) and 6.10:1 on the dark (#f87171);
-   the accent link sits above 7:1 on both. */
+   is 6% of the theme's own --error over --bg, which keeps the --error text
+   at 5.01:1 on the light ground (#bb2c2c) and 6.26:1 on the dark (#f87171).
+   The accent link clears 4.5:1 on every palette: lowest is light emerald at
+   4.59:1 (8% left it at 4.45:1); the default accent is 7.30 / 7.25. */
 .errorMsg {
   display: grid;
   grid-template-columns: auto minmax(0, 1fr);
@@ -86,7 +87,7 @@
   padding: 12px;
   font-size: 0.9rem;
   color: var(--error);
-  background: color-mix(in srgb, var(--error) 8%, var(--bg));
+  background: color-mix(in srgb, var(--error) 6%, var(--bg));
   border: 1px solid color-mix(in srgb, var(--error) 35%, var(--bg));
   border-radius: var(--radius-editorial);
 }
