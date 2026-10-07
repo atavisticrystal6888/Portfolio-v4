@@ -56,6 +56,22 @@ describe("POST /api/experiments/track", () => {
     expect((await post(JSON.stringify({}), `eh_uid=${UUID}`)).status).toBe(400);
   });
 
+  it("rejects prototype-chain keys and non-string events", async () => {
+    const calls = stubFetch();
+    for (const body of [{ event: "constructor" }, { event: "toString" }, { event: 1 }]) {
+      expect((await post(JSON.stringify(body), `eh_uid=${UUID}`)).status).toBe(400);
+    }
+    expect((await post('{"event":"__proto__"}', `eh_uid=${UUID}`)).status).toBe(400);
+    expect(calls).toHaveLength(0);
+  });
+
+  it("does not send an event for an un-enrolled visitor", async () => {
+    const calls = stubFetch({ status: 200, body: { ...assignment, enrolled: false } });
+    const res = await post(JSON.stringify({ event: "hero_cta_click" }), `eh_uid=${UUID}`);
+    expect(res.status).toBe(204);
+    expect(calls.map((c) => c.url)).toEqual(["http://hub.test/v1/assign"]);
+  });
+
   it("rejects oversized bodies", async () => {
     stubFetch();
     const res = await post(JSON.stringify({ event: "hero_cta_click", pad: "x".repeat(300) }), `eh_uid=${UUID}`);
@@ -77,7 +93,7 @@ describe("POST /api/experiments/track", () => {
     expect(calls).toHaveLength(0);
   });
 
-  it("tracks an enrolled visitor's click once per uid and still answers 204", async () => {
+  it("tracks an enrolled visitor's click, sends the idempotency key, and still answers 204", async () => {
     const calls = stubFetch({ status: 200, body: assignment }, { status: 202, body: { status: "accepted", event_id: "e", received_at: "t" } });
     const res = await post(JSON.stringify({ event: "hero_cta_click" }), `eh_uid=${UUID}`);
     expect(res.status).toBe(204);

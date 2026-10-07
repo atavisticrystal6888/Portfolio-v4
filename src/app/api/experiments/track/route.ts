@@ -29,8 +29,8 @@ export async function POST(request: NextRequest) {
     return badRequest();
   }
   if (typeof eventName !== "string") return badRequest();
-  const event = EVENTS[eventName];
-  if (!event) return badRequest();
+  if (!Object.hasOwn(EVENTS, eventName)) return badRequest();
+  const event = EVENTS[eventName]!;
 
   // From here on the answer is always 204: the beacon must not become an
   // oracle for whether experiments are on or whether this visitor is enrolled.
