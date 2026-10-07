@@ -20,6 +20,8 @@ Set these in **Vercel Project Settings → Environment Variables** for the
 | `RESEND_API_KEY` | No (graceful fallback) | Enables the `/api/contact` route to deliver email via Resend. Without it, submissions are logged server-side and return `200 OK`. |
 | `CONTACT_EMAIL` | No | Destination address for contact form email. Defaults in code. |
 | `NEXT_PUBLIC_SITE_URL` | **Yes** | Used for canonical URLs, OG image URLs, and sitemap. Set to the production domain (e.g. `https://dhruvsinghal.com`). |
+| `EXPERIMENTHUB_API_URL` | No (dormant when unset) | Origin of the ExperimentHub API (e.g. `https://hub.example.com`). With `EXPERIMENTHUB_API_KEY`, enables the home-page CTA experiment and makes `/` dynamically rendered. |
+| `EXPERIMENTHUB_API_KEY` | No (dormant when unset) | Tenant SDK key (`eh_live_…`). Server-only; never exposed to the browser. |
 
 ## First-time Deployment
 
