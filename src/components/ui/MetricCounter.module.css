@@ -15,6 +15,19 @@
   line-height: var(--leading-tight);
   letter-spacing: var(--tracking-tight);
   font-variant-numeric: lining-nums tabular-nums;
+  /* The value never breaks inside a word, whatever its container allows
+     (MetricStrip cells set overflow-wrap: anywhere for long labels). It
+     may still wrap at a space ("Analytics only"). */
+  overflow-wrap: normal;
+  word-break: normal;
+  hyphens: manual;
+  text-transform: none;
+}
+
+/* A word in the value slot ("Sourced", "Continue"): a step smaller than a
+   numeral so the whole word fits a two-up cell at 320px. */
+.word {
+  font-size: clamp(var(--text-lg), 3.2vw, var(--text-3xl));
 }
 
 .label {
@@ -26,6 +39,19 @@
   color: var(--text-muted);
   line-height: 1.45;
   text-wrap: balance;
+}
+
+/* A caption longer than four words, in body voice: sentence case, no
+   tracking, same muted colour as the label. */
+.prose {
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: normal;
+  color: var(--text-muted);
+  line-height: 1.5;
+  text-wrap: pretty;
 }
 
 /* Secondary placement: the readout supports a title rather than leading. */

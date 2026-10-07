@@ -6,7 +6,14 @@ import { FAQAccordion } from "@/components/contact/FAQAccordion";
 import { FAQ_ITEMS } from "@/components/contact/faq";
 import { DirectLinks } from "@/components/contact/DirectLinks";
 import { JsonLd } from "@/components/ui/JsonLd";
-import { absoluteUrl, CONTACT_EMAIL, CONTACT_PHONE, SITE_NAME, SITE_URL } from "@/lib/site";
+import {
+  absoluteUrl,
+  AVAILABILITY,
+  CONTACT_EMAIL,
+  CONTACT_PHONE,
+  SITE_NAME,
+  SITE_URL,
+} from "@/lib/site";
 import styles from "./contact.module.css";
 
 export const metadata = generatePageMetadata({
@@ -67,7 +74,7 @@ export default function ContactPage() {
         ]}
         title="Where to find me"
         subtitle="Hiring for a Product, APM, or AI product role is the fastest reason to write. A question about one of these builds, or a correction, works too."
-        meta="Looking for full-time PM / APM roles"
+        meta={AVAILABILITY}
       />
 
       {/* Form + direct channels, one spread */}

@@ -7,7 +7,11 @@ import { getAllBlogPosts, getAllCaseStudies, getAllProjects } from "./content";
  * Single source of truth: content in `/content/**`.
  */
 /** Coverage counts: how much is written up, not an outcome. */
-export const COVERAGE_CASE_STUDIES = "Case studies · coverage";
+/* The case-study count names how many are flagships, so "10" in the grid
+   and "Four case studies below" in the hero do not read as a contradiction.
+   The 4 is the number of featured flagship tiles above it (asserted in
+   tests/unit/stats.test.ts). */
+export const COVERAGE_CASE_STUDIES = "Case studies (4 flagship) · coverage";
 export const COVERAGE_ARTICLES = "Articles · coverage";
 
 export interface HomeMetric {

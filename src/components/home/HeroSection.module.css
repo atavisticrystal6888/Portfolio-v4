@@ -68,6 +68,30 @@
   margin-top: var(--space-1);
 }
 
+/* Availability signal beside the CTAs: one quiet line, vertically centred
+   on the 44px buttons. On phones it wraps to its own row under them (about
+   36px), which keeps the guide line inside the first 320x700 screen. */
+.availability {
+  align-self: center;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--text);
+  line-height: var(--leading-snug);
+}
+
+/* A small accent dot marks it as a status, not a link. Decorative. */
+.availability::before {
+  content: "";
+  flex: none;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
 /* One plain line under the CTAs: what every case study below contains. */
 .guide {
   max-width: 60ch;

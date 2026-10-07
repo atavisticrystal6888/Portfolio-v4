@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/Button";
-import { CONTACT_EMAIL_HREF } from "@/lib/site";
+import { AVAILABILITY, CONTACT_EMAIL_HREF } from "@/lib/site";
 import styles from "./HeroSection.module.css";
 
 /* The contents mirror the section order on the page; the numbers must match
@@ -42,6 +42,11 @@ export function HeroSection() {
             <Button href={CONTACT_EMAIL_HREF} variant="secondary" external>
               Email me
             </Button>
+            {/* Availability, worded exactly as on /contact. Sits in the CTA
+                row at desktop widths and wraps under the buttons on phones. */}
+            <p className={styles.availability} data-testid="hero-availability">
+              {AVAILABILITY}
+            </p>
           </div>
           <p className={styles.guide} data-testid="hero-guide">
             Four case studies below. Each states the decision, the trade-off, what was

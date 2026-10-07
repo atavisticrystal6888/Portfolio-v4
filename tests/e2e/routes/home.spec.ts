@@ -84,6 +84,51 @@ test.describe("Home (/)", () => {
     );
   });
 
+  test("hero carries the availability line, worded exactly as on /contact", async ({ page }) => {
+    const line = "Looking for full-time PM / APM roles";
+    const hero = page.getByRole("region", { name: "Introduction" });
+    await expect(hero.getByTestId("hero-availability")).toHaveText(line);
+    // No location or remote claim rides along with it.
+    await expect(hero.getByTestId("hero-availability")).not.toContainText(/remote|relocat|based in/i);
+    await page.goto("/contact", { waitUntil: "networkidle" });
+    await expect(page.getByText(line, { exact: true }).first()).toBeVisible();
+  });
+
+  test("evidence grid labels the case-study count with its flagships", async ({ page }) => {
+    const grid = page.getByTestId("metric-grid");
+    await expect(grid.getByTestId("metric-caption").filter({ hasText: /case studies/i })).toHaveText(
+      "Case studies (4 flagship) · coverage"
+    );
+  });
+
+  test("Also built rows show the metric as a serif value with its caption beneath", async ({ page }) => {
+    const rows = page.getByRole("listitem").filter({ has: page.getByTestId("also-built-ownership") });
+    const n = await rows.count();
+    expect(n).toBeGreaterThan(0);
+    for (let i = 0; i < n; i++) {
+      const value = rows.nth(i).getByTestId("metric-value");
+      const caption = rows.nth(i).getByTestId("metric-caption");
+      await expect(value, `row ${i} value`).toHaveCount(1);
+      await expect(caption, `row ${i} caption`).toHaveCount(1);
+      const read = await value.evaluate((el) => {
+        const cs = getComputedStyle(el);
+        return {
+          serif: /Fraunces/.test(cs.fontFamily),
+          size: parseFloat(cs.fontSize),
+          oneLine: el.getBoundingClientRect().height < parseFloat(cs.lineHeight) * 1.5,
+        };
+      });
+      const captionSize = await caption.evaluate((el) => parseFloat(getComputedStyle(el).fontSize));
+      expect(read.serif, `row ${i} serif value`).toBe(true);
+      expect(read.size, `row ${i} value larger than caption`).toBeGreaterThan(captionSize);
+      expect(read.oneLine, `row ${i} value on one line`).toBe(true);
+      // Caption beneath the value, not beside it.
+      const vBox = (await value.boundingBox())!;
+      const cBox = (await caption.boundingBox())!;
+      expect(cBox.y, `row ${i} caption below value`).toBeGreaterThanOrEqual(vBox.y + vBox.height - 1);
+    }
+  });
+
   test("carousel next/previous changes the active slide", async ({ page }) => {
     const carousel = page.getByRole("group", { name: "Flagship products", exact: true });
     const status = carousel.getByRole("status");
@@ -169,5 +214,55 @@ for (const viewport of [
     const box = await page.getByTestId("hero-guide").boundingBox();
     expect(box, "guide line box").not.toBeNull();
     expect(box!.y + box!.height, "guide line bottom").toBeLessThanOrEqual(viewport.height);
+  });
+}
+
+/* Evidence grid: three columns from 1024px (a 3x2 grid), two from 480px, one
+   below. Values never break inside a word or spill out of their cell; a
+   caption of more than four words is sentence case, a short one stays caps. */
+for (const viewport of [
+  { width: 1440, height: 900, cols: 3 },
+  { width: 1024, height: 768, cols: 3 },
+  { width: 768, height: 1024, cols: 2 },
+  { width: 320, height: 700, cols: 1 },
+]) {
+  test(`evidence grid at ${viewport.width}px: ${viewport.cols} column(s), whole-word values`, async ({ page }) => {
+    await page.setViewportSize({ width: viewport.width, height: viewport.height });
+    await page.goto("/", { waitUntil: "networkidle" });
+    const grid = page.getByTestId("metric-grid");
+    await grid.scrollIntoViewIfNeeded();
+
+    // offsetLeft ignores the reveal transform, so columns count reliably.
+    const columns = await grid.evaluate(
+      (el) => new Set(Array.from(el.children, (c) => (c as HTMLElement).offsetLeft)).size
+    );
+    expect(columns).toBe(viewport.cols);
+
+    const values = await grid.getByTestId("metric-value").evaluateAll((els) =>
+      els.map((el) => {
+        const cs = getComputedStyle(el);
+        return {
+          text: el.textContent ?? "",
+          oneLine: el.getBoundingClientRect().height < parseFloat(cs.lineHeight) * 1.5,
+          fits: el.scrollWidth <= el.clientWidth + 1,
+        };
+      })
+    );
+    expect(values.length).toBeGreaterThan(0);
+    for (const v of values) {
+      expect(v.oneLine, `"${v.text}" on one line`).toBe(true);
+      expect(v.fits, `"${v.text}" inside its cell`).toBe(true);
+    }
+
+    const captions = await grid.getByTestId("metric-caption").evaluateAll((els) =>
+      els.map((el) => ({
+        text: el.textContent ?? "",
+        transform: getComputedStyle(el).textTransform,
+      }))
+    );
+    for (const c of captions) {
+      const words = c.text.split(/\s+/).filter((w) => /[A-Za-z0-9]/.test(w)).length;
+      expect(c.transform, c.text).toBe(words > 4 ? "none" : "uppercase");
+    }
   });
 }

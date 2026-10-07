@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { Project } from "@/types/project";
 import { ListRow, ListRows } from "@/components/ui/ListRow";
 import { EvidenceChip, StatusPill } from "@/components/case-study/ProjectFacts";
+import { MetricCounter } from "@/components/ui/MetricCounter";
 import { ProductCarousel } from "./ProductCarousel";
 import { splitSelectedWork } from "./selection";
 import styles from "./SelectedWork.module.css";
@@ -47,11 +48,15 @@ export function SelectedWork({ projects }: SelectedWorkProps) {
                     </span>
                   )
                 }
+                /* Same readout as the carousel and the evidence grid: serif
+                   value, caption beneath. As two bare mono spans the value
+                   was the caption's size and "2" read as a stray digit. */
                 rail={
-                  <>
-                    <span>{project.metricValue}</span>
-                    <span>{project.metricLabel}</span>
-                  </>
+                  <MetricCounter
+                    value={project.metricValue}
+                    label={project.metricLabel}
+                    size="sm"
+                  />
                 }
               />
             ))}

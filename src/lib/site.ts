@@ -24,6 +24,12 @@ export const PERSON_DESCRIPTION =
 	"About one year of product experience across internships, most recently product intern (growth) at The Sleep Company, Jul–Oct 2026. Writes about AI evaluation, retention and product scope.";
 /** The page that describes the person: the target of every author link. */
 export const ABOUT_PATH = "/about";
+/**
+ * What he is looking for, in one line. Shown on /contact (page header meta)
+ * and beside the hero CTAs on home; one constant so the two never drift.
+ * No location or remote claim.
+ */
+export const AVAILABILITY = "Looking for full-time PM / APM roles";
 export const CONTACT_EMAIL = "dhruvsinghal6888@gmail.com";
 export const CONTACT_EMAIL_HREF = `mailto:${CONTACT_EMAIL}`;
 /** E.164 — what gets copied to the clipboard and published in schema.org. */

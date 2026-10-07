@@ -4,6 +4,7 @@ import {
   COVERAGE_CASE_STUDIES,
   COVERAGE_ARTICLES,
 } from "@/lib/stats";
+import { isProseCaption } from "@/lib/utils";
 
 describe("getHomeMetrics", () => {
   const metrics = getHomeMetrics();
@@ -38,5 +39,28 @@ describe("getHomeMetrics", () => {
     const labels = metrics.map((m) => m.label);
     expect(labels.slice(-2)).toEqual(coverage);
     for (const m of metrics.slice(-2)) expect(m.value).toMatch(/^\d+$/);
+  });
+
+  it("the case-study count names the flagship count the grid shows", () => {
+    // The hero says "Four case studies below"; the coverage label must agree
+    // with the number of flagship evidence tiles, or the two read as a clash.
+    const flagships = Number(COVERAGE_CASE_STUDIES.match(/\((\d+) flagship\)/)?.[1]);
+    expect(flagships).toBe(evidence.length);
+  });
+});
+
+describe("isProseCaption (evidence grid captions)", () => {
+  it("keeps labels of one to four words as mono field labels", () => {
+    expect(isProseCaption(COVERAGE_ARTICLES)).toBe(false);
+    expect(isProseCaption("Practice questions (repo README)")).toBe(false);
+  });
+
+  it("sets longer captions as sentence-case body text", () => {
+    expect(isProseCaption("Tests passing · local build, not deployed")).toBe(true);
+    expect(isProseCaption(COVERAGE_CASE_STUDIES)).toBe(true);
+  });
+
+  it("does not count separators as words", () => {
+    expect(isProseCaption("Failures · gate · run · today")).toBe(false);
   });
 });

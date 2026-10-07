@@ -44,3 +44,74 @@
     padding-left: 0;
   }
 }
+
+/* Grid layout (home evidence grid). Six readouts in one row left each cell
+   about 160px at 1440, so "Sourced" broke mid-word and every caption ran to
+   four to eight lines of capitals. One column on narrow phones, two from
+   480px, three (a 3x2 grid) from 1024px. The ranges do not overlap, so each
+   breakpoint sets its own rules and none needs undoing. */
+.grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  border-top: var(--hairline);
+  border-bottom: var(--hairline);
+}
+
+.cell {
+  min-width: 0;
+  padding-block: var(--space-5);
+  /* Long caption words wrap only when a word cannot fit; the value itself
+     never breaks inside a word (MetricCounter). */
+  overflow-wrap: break-word;
+}
+
+@media (max-width: 479.98px) {
+  .cell + .cell {
+    border-top: var(--hairline);
+  }
+}
+
+@media (min-width: 480px) and (max-width: 1023.98px) {
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .cell {
+    padding: var(--space-6) var(--space-5);
+  }
+
+  /* Left column hangs on the container edge, as the row strip does. */
+  .cell:nth-child(2n + 1) {
+    padding-left: 0;
+  }
+
+  .cell:nth-child(2n) {
+    border-left: var(--hairline);
+  }
+
+  .cell:nth-child(n + 3) {
+    border-top: var(--hairline);
+  }
+}
+
+@media (min-width: 1024px) {
+  .grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .cell {
+    padding: var(--space-6);
+  }
+
+  .cell:nth-child(3n + 1) {
+    padding-left: 0;
+  }
+
+  .cell:not(:nth-child(3n + 1)) {
+    border-left: var(--hairline);
+  }
+
+  .cell:nth-child(n + 4) {
+    border-top: var(--hairline);
+  }
+}

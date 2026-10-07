@@ -65,3 +65,12 @@ export function formatCategoryLabel(category: string): string {
       return category;
   }
 }
+
+/**
+ * A metric caption longer than four words reads as a sentence, so it is set
+ * as sentence-case body text; four words or fewer stay a mono field label.
+ * Separators such as "·" are not words.
+ */
+export function isProseCaption(label: string): boolean {
+  return label.split(/\s+/).filter((w) => /[A-Za-z0-9]/.test(w)).length > 4;
+}
