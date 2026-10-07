@@ -543,11 +543,14 @@ describe("POST /api/contact experiment tracking", { timeout: 30_000 }, () => {
   });
 
   it("keeps the success response when tracking fails", async () => {
+    let fetchCalls = 0;
     vi.stubGlobal("fetch", async () => {
+      fetchCalls += 1;
       throw new TypeError("fetch failed");
     });
     const post = await loadRoute({ NODE_ENV: "development" });
     const res = await post(VALID, "198.51.100.53", { cookie: `eh_uid=${UUID}` });
+    expect(fetchCalls).toBeGreaterThanOrEqual(1);
     expect(res.status).toBe(200);
     expect(await res.json()).toMatchObject({ ok: true });
   });

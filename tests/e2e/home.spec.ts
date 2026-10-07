@@ -71,8 +71,9 @@ test.describe("Home page", () => {
   });
 
   test("hero CTA renders control copy and sets no experiment cookie when disabled", async ({ page }) => {
-    const response = await page.goto("/");
-    expect(response?.headers()["set-cookie"] ?? "").not.toContain("eh_uid");
+    await page.goto("/");
+    const cookies = await page.context().cookies();
+    expect(cookies.some((c) => c.name === "eh_uid")).toBe(false);
     await expect(page.getByRole("link", { name: "See the work" })).toBeVisible();
   });
 });
