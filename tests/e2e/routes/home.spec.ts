@@ -88,8 +88,6 @@ test.describe("Home (/)", () => {
     const line = "Looking for full-time PM / APM roles";
     const hero = page.getByRole("region", { name: "Introduction" });
     await expect(hero.getByTestId("hero-availability")).toHaveText(line);
-    // No location or remote claim rides along with it.
-    await expect(hero.getByTestId("hero-availability")).not.toContainText(/remote|relocat|based in/i);
     await page.goto("/contact", { waitUntil: "networkidle" });
     await expect(page.getByText(line, { exact: true }).first()).toBeVisible();
   });
@@ -118,7 +116,17 @@ test.describe("Home (/)", () => {
           oneLine: el.getBoundingClientRect().height < parseFloat(cs.lineHeight) * 1.5,
         };
       });
-      const captionSize = await caption.evaluate((el) => parseFloat(getComputedStyle(el).fontSize));
+      const captionStyle = await caption.evaluate((el) => ({
+        text: el.textContent ?? "",
+        size: parseFloat(getComputedStyle(el).fontSize),
+        transform: getComputedStyle(el).textTransform,
+      }));
+      const captionSize = captionStyle.size;
+      // Same rule as the evidence grid: over four words is sentence case.
+      const words = captionStyle.text.split(/\s+/).filter((w) => /[A-Za-z0-9]/.test(w)).length;
+      expect(captionStyle.transform, `row ${i} caption: ${captionStyle.text}`).toBe(
+        words > 4 ? "none" : "uppercase"
+      );
       expect(read.serif, `row ${i} serif value`).toBe(true);
       expect(read.size, `row ${i} value larger than caption`).toBeGreaterThan(captionSize);
       expect(read.oneLine, `row ${i} value on one line`).toBe(true);

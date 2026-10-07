@@ -50,12 +50,15 @@ export function SelectedWork({ projects }: SelectedWorkProps) {
                 }
                 /* Same readout as the carousel and the evidence grid: serif
                    value, caption beneath. As two bare mono spans the value
-                   was the caption's size and "2" read as a stray digit. */
+                   was the caption's size and "2" read as a stray digit.
+                   Captions over four words wrap in the 200px rail, so they
+                   are set as sentence-case body text, as in the grid. */
                 rail={
                   <MetricCounter
                     value={project.metricValue}
                     label={project.metricLabel}
                     size="sm"
+                    caption="auto"
                   />
                 }
               />
