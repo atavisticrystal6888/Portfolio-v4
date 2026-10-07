@@ -40,7 +40,13 @@
   margin: var(--space-2) 0 0;
 }
 
+/* Inline-block with 3px of block padding takes the tap target from 18px to
+   past 24px (WCAG 2.5.8); the matching negative margin keeps the line box,
+   and so the footer line, exactly as tall as before. */
 .updatedLink {
+  display: inline-block;
+  padding-block: 3px;
+  margin-block: -3px;
   color: var(--text-muted);
   text-decoration: underline;
   text-underline-offset: 3px;
@@ -105,6 +111,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: var(--space-4);
   padding-top: var(--space-6);
   border-top: 1px solid var(--border);
 }
@@ -125,6 +132,11 @@
   padding: 8px 16px;
   cursor: pointer;
   min-height: 44px;
+  /* One line at 390px: the label wrapped under its arrow there. No shrink
+     either: base.css's 44px min-width would otherwise let flex squeeze the
+     button narrower than its unwrapped label. */
+  white-space: nowrap;
+  flex-shrink: 0;
   transition: color var(--transition-fast), border-color var(--transition-fast);
 }
 

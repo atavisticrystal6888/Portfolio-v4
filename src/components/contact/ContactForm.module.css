@@ -26,7 +26,9 @@
 .input, .select, .textarea {
   padding: 12px 16px;
   font-family: var(--font-body);
-  font-size: 0.9rem;
+  /* 16px, not 0.9rem: iOS Safari zooms the page into any field under 16px
+     on focus, and 14.4px read small against the 16px body copy anyway. */
+  font-size: 1rem;
   color: var(--text);
   background: var(--surface);
   /* Resting edge must reach 3:1 against the page (WCAG 1.4.11); the
@@ -71,9 +73,74 @@
   border-radius: var(--radius-editorial);
 }
 
+/* Error result: a tinted panel, not bare red text, so a failed send reads
+   as a state of the form rather than a stray line under the button. The tint
+   is 8% of the theme's own --error over --bg, which keeps the --error text
+   at 4.85:1 on the light ground (#bb2c2c) and 6.10:1 on the dark (#f87171);
+   the accent link sits above 7:1 on both. */
 .errorMsg {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  column-gap: var(--space-3);
+  align-items: start;
+  padding: 12px;
   font-size: 0.9rem;
   color: var(--error);
+  background: color-mix(in srgb, var(--error) 8%, var(--bg));
+  border: 1px solid color-mix(in srgb, var(--error) 35%, var(--bg));
+  border-radius: var(--radius-editorial);
+}
+
+/* Centred on the first line of the message (0.9rem at 1.65 is ~24px). */
+.errorIcon {
+  margin-top: 3px;
+}
+
+.errorBody {
+  min-width: 0;
+}
+
+.errorText {
+  display: block;
+}
+
+/* The mailto link and its Copy email companion share one row, wrapping
+   under each other only when the column is too narrow for both. */
+.errorActions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-1) var(--space-3);
+  margin-top: var(--space-2);
+}
+
+.errorActions a {
+  overflow-wrap: anywhere;
+}
+
+/* Secondary, like the Copy buttons on the direct-contact tiles: 44px tall
+   (base.css), no fill of its own until hover. The edge is --text-muted, not
+   --border-control: the control border dips under 3:1 on the tinted panel. */
+.copyEmail {
+  display: inline-flex;
+  align-items: center;
+  padding: 0 var(--space-3);
+  background: transparent;
+  border: 1px solid var(--text-muted);
+  border-radius: var(--radius-sm);
+  color: var(--text);
+  font-family: inherit;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: color var(--transition-fast), border-color var(--transition-fast),
+    background var(--transition-fast);
+}
+
+.copyEmail:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+  background: var(--surface);
 }
 
 /* The column layout stretched the submit button to the full form width;
@@ -100,5 +167,8 @@
 .errorMsg:focus {
   outline: 2px solid var(--accent);
   outline-offset: 3px;
+}
+
+.success:focus {
   border-radius: 2px;
 }

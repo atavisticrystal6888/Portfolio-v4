@@ -111,7 +111,12 @@ test.describe("Contact (/contact)", () => {
     await expect(result).toHaveAttribute("role", "alert");
     await expect(result).toContainText(SEND_FAILED);
     await expect(result.getByRole("link")).toHaveAttribute("href", /^mailto:/);
-    // Focus lands on the result message instead of dropping to <body>.
+    // A Copy email button sits beside the mailto link, for a visitor whose
+    // mail client is not the default. Presence only: CI never touches the
+    // real clipboard.
+    await expect(result.getByRole("button", { name: "Copy email" })).toBeVisible();
+    // Focus lands on the result message instead of dropping to <body>, and
+    // the panel's button does not take it.
     await expect(result).toBeFocused();
     await expect(page.getByLabel(/^Name/)).toHaveValue("Route Test");
     await expect(page.getByLabel(/^Email/)).toHaveValue("route-test@example.com");

@@ -36,10 +36,31 @@ export function ContactForm() {
   // The submit button is disabled while sending, which drops focus to <body>.
   // Once the request settles, focus moves to the result message instead.
   const statusRef = useRef<HTMLParagraphElement>(null);
+  // "Copied" confirmation on the error panel's Copy email button.
+  const [copied, setCopied] = useState(false);
 
   useEffect(() => {
     if (status === "success" || status === "error") statusRef.current?.focus();
   }, [status]);
+
+  useEffect(() => {
+    if (!copied) return;
+    const timer = setTimeout(() => setCopied(false), 2000);
+    return () => clearTimeout(timer);
+  }, [copied]);
+
+  // Silent when the Clipboard API is missing or refused: the mailto link
+  // beside the button is still the one-click fallback, so there is nothing
+  // to tell the visitor.
+  const copyEmail = async () => {
+    try {
+      if (!navigator.clipboard?.writeText) return;
+      await navigator.clipboard.writeText(CONTACT_EMAIL);
+      setCopied(true);
+    } catch {
+      /* clipboard refused - the mailto link still works */
+    }
+  };
 
   const validate = (): FormErrors => {
     const errs: FormErrors = {};
@@ -172,15 +193,36 @@ export function ContactForm() {
         <p
           ref={statusRef}
           role="alert"
+          // Not atomic: the alert is read in full when it appears, and a later
+          // "Copied" should be read on its own, not as a repeat of the error.
+          aria-atomic="false"
           tabIndex={-1}
           className={styles.errorMsg}
           data-testid="contact-status"
         >
-          {/* The server's own wording when it has one - "temporarily offline"
-              and "too many requests" need different next steps - and the
-              address itself either way, so the fallback is one click. */}
-          {serverError ?? "Something went wrong. Please email me directly."}{" "}
-          <a href={CONTACT_EMAIL_HREF}>{CONTACT_EMAIL}</a>
+          <svg
+            className={styles.errorIcon} width="18" height="18" viewBox="0 0 24 24"
+            fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"
+            strokeLinejoin="round" aria-hidden="true" focusable="false"
+          >
+            <circle cx="12" cy="12" r="10" />
+            <path d="M12 8v4 M12 16h.01" />
+          </svg>
+          <span className={styles.errorBody}>
+            {/* The server's own wording when it has one - "temporarily offline"
+                and "too many requests" need different next steps - and the
+                address itself either way, so the fallback is one click (or a
+                copy, for a visitor whose mail client is not the default). */}
+            <span className={styles.errorText}>
+              {serverError ?? "Something went wrong. Please email me directly."}
+            </span>{" "}
+            <span className={styles.errorActions}>
+              <a href={CONTACT_EMAIL_HREF}>{CONTACT_EMAIL}</a>
+              <button type="button" className={styles.copyEmail} onClick={copyEmail}>
+                {copied ? "Copied" : "Copy email"}
+              </button>
+            </span>
+          </span>
         </p>
       )}
     </form>

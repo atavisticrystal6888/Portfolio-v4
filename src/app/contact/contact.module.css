@@ -60,6 +60,16 @@
   gap: var(--space-5);
 }
 
+/* Phones: the direct channels, Email first, sit above the form. On a phone
+   the mail app is usually the quicker route, and below the form the email
+   card was a long scroll away. Visual order only, via the grid: the DOM and
+   so the Tab order stay form first, which is what wider screens show. */
+@media (max-width: 767px) {
+  .aside {
+    order: -1;
+  }
+}
+
 .asideHeader {
   margin-bottom: var(--space-2);
 }
