@@ -48,15 +48,12 @@ untouched except for the mechanical MDX migration.
 ## Frontmatter additions
 ```yaml
 metrics:
-  - label: Diagnosis accuracy
-    value: 92
-    displayValue: "92%"
-    kind: product
   - label: Test files
     value: 127
     displayValue: "127"
     kind: build
 ```
+Aarchid's offline-evaluation result (accuracy, sample size, unit cost) is withheld pending the evaluation artefact or confirmation from co-builder Dilpreet Grover; do not add it to frontmatter or copy until the owner clears it.
 Keep every existing frontmatter field. Do not change slug, prevSlug, nextSlug.
 
 ## Component quick reference (props)

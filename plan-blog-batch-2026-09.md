@@ -15,7 +15,7 @@ Eight posts (2026-02-28 to 2026-08-16), 644–1,122 words, categories Product ×
 
 | # | Slug | Category | Date | Grounding | Why |
 |---|---|---|---|---|---|
-| B1 | the-prd-is-dead-long-live-the-eval-set | AI | 2026-09-03 | Aarchid case study (60-photo eval set, 4-dimension rubric, 92 % accuracy, $0.25/user/mo); existing eval-harness post | Delivers the promised series opener; second post for /ai-pm |
+| B1 | the-prd-is-dead-long-live-the-eval-set | AI | 2026-09-03 | Aarchid case study (eval set and 4-dimension rubric; the result figure and unit cost are withheld pending the evaluation artefact or co-builder confirmation); existing eval-harness post | Delivers the promised series opener; second post for /ai-pm |
 | B2 | choosing-a-product-without-ai | AI | 2026-09-02 | research-pm-one-shot-products-2026-09.md (ranked shortlist, no-AI re-evaluation, Cohort & Retention Studio chosen) | Prioritisation judgment, contrarian AI take, tags qualify for /ai-pm |
 | B3 | figma-to-live-parity-audit | Product | 2026-09-01 | Anonymised design-parity tracker (~45 items, 8 screens, columns ID/Screen/Action/Where/Differs from design/Priority/Source/Owner/Status, P1–P3, two sources: design team vs. code check) | PM craft: turning "it looks off" into a ranked, ownable tracker |
 | B4 | cohorts-before-dashboards | Data | 2026-08-31 | D:\Dhruv-Personal\Side-Projects\cohort-retention-studio (README/spec, read-only); existing data-driven and metrics posts | First Data post; ties to the current build |

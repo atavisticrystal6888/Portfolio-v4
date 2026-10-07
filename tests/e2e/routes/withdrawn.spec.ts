@@ -1,5 +1,6 @@
 import { test, expect } from "@playwright/test";
 import { ROUTES, WITHDRAWN_ROUTES } from "../route-manifest";
+import allowlist from "../../../content/approved-case-studies.json";
 
 /*
  * Withdrawn work (/projects/churn-analysis) must 404 and must not be linked
@@ -29,6 +30,18 @@ test.describe("Withdrawn routes", () => {
         expect(body, `${feed} mentions ${slug}`).not.toContain(slug);
       }
     }
+  });
+
+  test("sitemap.xml lists only approved case studies", async ({ request }) => {
+    // content/approved-case-studies.json is the publication boundary.
+    const res = await request.get("/sitemap.xml");
+    expect(res.status()).toBe(200);
+    const body = await res.text();
+    const approved = new Set<string>(allowlist.approved);
+    const slugs = [...body.matchAll(/\/projects\/([^<"'\s/?#]+)/g)].map((m) => m[1] ?? "");
+    expect(slugs.length).toBeGreaterThan(0);
+    const unapproved = slugs.filter((s) => !approved.has(s));
+    expect(unapproved, `unapproved case studies in sitemap.xml: ${unapproved.join(", ")}`).toEqual([]);
   });
 
   test("absent from every rendered page in the manifest", async ({ request }) => {

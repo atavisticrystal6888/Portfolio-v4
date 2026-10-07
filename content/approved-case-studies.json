@@ -1,0 +1,15 @@
+{
+  "$schema_note": "Approved PUBLIC case-study slugs. Editing this file is a publication decision: a case study ships only if its slug is here AND content/case-studies/<slug>.mdx exists. Do not add private-draft names, hashes, or notes about withheld work. Withdrawn routes live in scripts/route-manifest.mjs (WITHDRAWN). Checked by scripts/check-case-study-allowlist.mjs (CI), tests/unit/case-study-allowlist.test.ts and tests/e2e/routes/withdrawn.spec.ts.",
+  "approved": [
+    "aarchid",
+    "better-half",
+    "cohort-retention-studio",
+    "desktasks",
+    "experiment-hub",
+    "hackmate",
+    "kite-edge",
+    "portfolio-site",
+    "sawari",
+    "tcs-nqt-prep-hub"
+  ]
+}

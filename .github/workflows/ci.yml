@@ -24,6 +24,8 @@ jobs:
           node-version: 20
           cache: npm
       - run: npm ci
+      - name: Case-study publication guard
+        run: npm run guard:case-studies
       - run: npm run lint
       - run: npm test
 

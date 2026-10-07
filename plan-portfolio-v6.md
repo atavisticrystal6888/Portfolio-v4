@@ -30,9 +30,10 @@ manual read of the Aarchid, Churn, Projects and ExperimentHub pages.
    what was cut, how it was validated, what happened after launch. That
    material exists in fragments but is buried under stack detail.
 2. **Metrics are build facts, not product outcomes.** 50+ endpoints, 127 test
-   files, 1,940 tests, 575 RLS checks, 8 workers. Only Aarchid (92% on a 200
-   sample golden set, P95 < 10s, $0.25/user) reads as a product outcome. The
-   prior research (research-pm-portfolios-2026-08.html) flagged exactly this:
+   files, 1,940 tests, 575 RLS checks, 8 workers. Only Aarchid's
+   offline-evaluation result reads as a product outcome (the figure, sample
+   size and unit cost are withheld pending the evaluation artefact or
+   co-builder Dilpreet Grover's confirmation). The prior research (research-pm-portfolios-2026-08.html) flagged exactly this:
    causal impact, never activity counts.
 3. **No product identity per page.** No wordmark, no product accent colour, no
    one-line "what it is / who it is for", no status (live / private beta /

@@ -10,6 +10,88 @@ const resend = process.env.RESEND_API_KEY
 // indistinguishable from the client.
 const SUCCESS_BODY = { ok: true, success: true, message: "Message received successfully" };
 
+// Mirrors `RESEND_ERROR_CODE_KEY` in resend 6.10.0 (dist/index.d.cts). A name
+// outside this set is logged as "unrecognized" rather than echoed.
+const RESEND_ERROR_NAMES = new Set<string>([
+  "invalid_idempotency_key",
+  "validation_error",
+  "missing_api_key",
+  "restricted_api_key",
+  "invalid_api_key",
+  "not_found",
+  "method_not_allowed",
+  "invalid_idempotent_request",
+  "concurrent_idempotent_requests",
+  "invalid_attachment",
+  "invalid_from_address",
+  "invalid_access",
+  "invalid_parameter",
+  "invalid_region",
+  "missing_required_field",
+  "monthly_quota_exceeded",
+  "daily_quota_exceeded",
+  "rate_limit_exceeded",
+  "security_error",
+  "application_error",
+  "internal_server_error",
+]);
+
+type SendErrorSummary = {
+  source: "resend" | "thrown" | "unknown";
+  name: string;
+  statusCode: number | null;
+  requestId: string | null;
+};
+
+const THROWN_NAME = /^[A-Za-z][A-Za-z0-9]{0,39}$/;
+// Underscore allowed (e.g. "req_..."); no "@", ".", "/" or whitespace, so an
+// email address or path cannot pass.
+const REQUEST_ID = /^[A-Za-z0-9_-]{1,64}$/;
+
+/**
+ * The send-failure log is a bounded contract: a category, an allow-listed
+ * error name, a numeric HTTP status and a validated request id - nothing
+ * else. Resend hands back the provider's JSON body verbatim on a non-OK
+ * response (free-text `message`, possibly echoing the recipient or extra
+ * fields), and a thrown error carries `message`/`cause`/`stack`. None of those
+ * are read, so Vercel logs can never carry the sender's name, email or message
+ * or any provider free text.
+ */
+function summarizeSendError(
+  err: unknown,
+  headers?: Record<string, string> | null
+): SendErrorSummary {
+  let source: SendErrorSummary["source"] = "unknown";
+  let name = "unrecognized";
+  let statusCode: number | null = null;
+
+  if (err instanceof Error) {
+    source = "thrown";
+    const raw: unknown = err.name;
+    if (typeof raw === "string" && THROWN_NAME.test(raw)) name = raw;
+  } else if (
+    typeof err === "object" &&
+    err !== null &&
+    typeof (err as { name?: unknown }).name === "string"
+  ) {
+    source = "resend";
+    const raw = (err as { name: string }).name;
+    if (RESEND_ERROR_NAMES.has(raw)) name = raw;
+  }
+
+  if (source !== "unknown") {
+    const code: unknown = (err as { statusCode?: unknown }).statusCode;
+    if (typeof code === "number" && Number.isInteger(code) && code >= 100 && code <= 599) {
+      statusCode = code;
+    }
+  }
+
+  const id: unknown = headers?.["x-request-id"];
+  const requestId = typeof id === "string" && REQUEST_ID.test(id) ? id : null;
+
+  return { source, name, statusCode, requestId };
+}
+
 // Rate limiting: simple in-memory store (resets on server restart)
 const rateLimitMap = new Map<string, { count: number; resetAt: number }>();
 
@@ -104,8 +186,10 @@ export async function POST(request: NextRequest) {
       // send (bad key, unverified sender, sandbox recipient limit) must be read
       // from the result. Either way the sender is told it did not go through.
       let sendError: unknown = null;
+      // Response headers only exist when Resend answered; a throw leaves null.
+      let sendHeaders: Record<string, string> | null = null;
       try {
-        const { error } = await resend.emails.send({
+        const { error, headers } = await resend.emails.send({
           from: fromEmail,
           to: toEmail,
           subject: `[Portfolio] ${sanitized.subject}`,
@@ -113,11 +197,15 @@ export async function POST(request: NextRequest) {
           text: `Name: ${sanitized.name}\nEmail: ${sanitized.email}\n\n${sanitized.message}`,
         });
         sendError = error;
+        sendHeaders = headers ?? null;
       } catch (err) {
         sendError = err;
       }
       if (sendError) {
-        console.error("Contact form: Resend did not accept the message:", sendError);
+        console.error(
+          "Contact form: Resend did not accept the message",
+          summarizeSendError(sendError, sendHeaders)
+        );
         return NextResponse.json(
           { error: "The message could not be sent — please email me directly." },
           { status: 502 }

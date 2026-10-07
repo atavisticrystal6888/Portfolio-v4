@@ -155,6 +155,176 @@ describe("POST /api/contact", { timeout: 30_000 }, () => {
       expect((await res.json()).error).toBe(SEND_FAILED);
       err.mockRestore();
     });
+
+    describe("send-failure logging is bounded", () => {
+      // Synthetic probe values: if any of these reach console.error, a send
+      // failure would have copied visitor or provider text into Vercel logs.
+      const PROBE = {
+        name: "Leak Probe",
+        email: "leak-probe@example.test",
+        subject: "job",
+        message: "Probe body SENSITIVE-PAYLOAD-7f3a, comfortably over twenty characters.",
+      };
+      const FORBIDDEN = [
+        "Leak Probe",
+        "leak-probe@example.test",
+        "SENSITIVE",
+        "PAYLOAD-7f3a",
+        "Probe body",
+        "You can only send",
+        "owner@example.test",
+        "cause",
+        "stack",
+        "at sendMail",
+        "/srv/app",
+        "etc/passwd",
+        "<script>",
+      ];
+      const SUMMARY_KEYS = ["name", "requestId", "source", "statusCode"];
+
+      async function failAndCapture(ip: string, sendError: unknown) {
+        const err = vi.spyOn(console, "error").mockImplementation(() => {});
+        try {
+          const post = await loadRoute({ NODE_ENV: "production", RESEND_API_KEY: "re_test" });
+          const res = await post(PROBE, ip);
+          expect(res.status).toBe(502);
+          const body = await res.json();
+          expect(body.error).toBe(SEND_FAILED);
+          expect(body.success).toBeUndefined();
+
+          const calls = err.mock.calls;
+          expect(calls).toHaveLength(1);
+          const args = calls[0] ?? [];
+          expect(args).toHaveLength(2);
+          const [label, summary] = args as [unknown, Record<string, unknown>];
+          expect(typeof label).toBe("string");
+          expect(summary).not.toBeNull();
+          expect(typeof summary).toBe("object");
+          expect(summary).not.toBe(sendError);
+          expect(Object.keys(summary).sort()).toEqual(SUMMARY_KEYS);
+          for (const value of Object.values(summary)) {
+            expect(value === null || typeof value === "string" || typeof value === "number").toBe(true);
+          }
+          const logged = JSON.stringify(calls) + " " + args.map((a) => String(a)).join(" ");
+          for (const needle of FORBIDDEN) {
+            expect(logged.includes(needle), `log must not contain ${JSON.stringify(needle)}`).toBe(false);
+          }
+          return summary;
+        } finally {
+          err.mockRestore();
+        }
+      }
+
+      it("logs only the allow-listed name, numeric status and request id of a returned error", async () => {
+        const error = {
+          name: "validation_error",
+          statusCode: 403,
+          message: "You can only send to leak-probe@example.test (SENSITIVE-PROVIDER-TEXT)",
+          email: "leak-probe@example.test",
+          request: { to: "owner@example.test" },
+        };
+        send.mockResolvedValue({ data: null, error, headers: { "x-request-id": "req_abc-123" } });
+        const summary = await failAndCapture("198.51.100.20", error);
+        expect(summary).toEqual({
+          source: "resend",
+          name: "validation_error",
+          statusCode: 403,
+          requestId: "req_abc-123",
+        });
+        // The payload really reached the provider call, so the clean log is
+        // the route's doing, not an empty request.
+        expect(send).toHaveBeenCalledTimes(1);
+        const sent = send.mock.calls[0]?.[0] as { replyTo?: string; text?: string } | undefined;
+        expect(sent?.replyTo).toBe("leak-probe@example.test");
+        expect(sent?.text).toContain("PAYLOAD-7f3a");
+      });
+
+      it("collapses an unknown name, out-of-range status and malformed request id", async () => {
+        const error = {
+          name: "totally_made_up",
+          statusCode: 99999,
+          message: "Recipient leak-probe@example.test rejected SENSITIVE-PROVIDER-TEXT",
+        };
+        send.mockResolvedValue({
+          data: null,
+          error,
+          headers: { "x-request-id": "../etc/passwd <script>" },
+        });
+        expect(await failAndCapture("198.51.100.21", error)).toEqual({
+          source: "resend",
+          name: "unrecognized",
+          statusCode: null,
+          requestId: null,
+        });
+      });
+
+      it("drops a non-numeric status code", async () => {
+        const error = {
+          name: "application_error",
+          statusCode: "403",
+          message: "Upstream said leak-probe@example.test SENSITIVE-PROVIDER-TEXT",
+        };
+        send.mockResolvedValue({ data: null, error, headers: null });
+        expect(await failAndCapture("198.51.100.22", error)).toEqual({
+          source: "resend",
+          name: "application_error",
+          statusCode: null,
+          requestId: null,
+        });
+      });
+
+      it("logs a thrown error by class name only, never message, cause or stack", async () => {
+        const thrown = new TypeError("fetch failed: leak-probe@example.test SENSITIVE-THROWN");
+        Object.assign(thrown, {
+          cause: { message: "SENSITIVE-CAUSE", email: "leak-probe@example.test" },
+        });
+        thrown.stack = "TypeError: fetch failed SENSITIVE-STACK\n    at sendMail (/srv/app/route.ts:1:1)";
+        send.mockRejectedValue(thrown);
+        expect(await failAndCapture("198.51.100.23", thrown)).toEqual({
+          source: "thrown",
+          name: "TypeError",
+          statusCode: null,
+          requestId: null,
+        });
+      });
+
+      it("logs a thrown non-Error as unknown", async () => {
+        const rejection = "SENSITIVE-STRING-REJECTION leak-probe@example.test";
+        send.mockRejectedValue(rejection);
+        expect(await failAndCapture("198.51.100.24", rejection)).toEqual({
+          source: "unknown",
+          name: "unrecognized",
+          statusCode: null,
+          requestId: null,
+        });
+      });
+
+      it("does not echo a thrown error whose name was overwritten with free text", async () => {
+        const thrown = new Error("SENSITIVE-NAMED leak-probe@example.test");
+        thrown.name = "Evil name with spaces leak-probe@example.test";
+        send.mockRejectedValue(thrown);
+        expect(await failAndCapture("198.51.100.25", thrown)).toEqual({
+          source: "thrown",
+          name: "unrecognized",
+          statusCode: null,
+          requestId: null,
+        });
+      });
+
+      it("still 502s and logs a null status for an error without statusCode or headers", async () => {
+        const error = {
+          name: "validation_error",
+          message: "You can only send testing emails to your own address",
+        };
+        send.mockResolvedValue({ data: null, error });
+        expect(await failAndCapture("198.51.100.26", error)).toEqual({
+          source: "resend",
+          name: "validation_error",
+          statusCode: null,
+          requestId: null,
+        });
+      });
+    });
   });
 });
 

@@ -97,6 +97,33 @@ test.describe("Contact (/contact)", () => {
     await expect(page.getByTestId("contact-status")).toBeFocused();
   });
 
+  test("502 from the server shows its wording, the mailto fallback and keeps the fields", async ({ page }) => {
+    // The route answers 502 when Resend rejects or the send throws. The
+    // visitor must get the server's exact wording, a one-click address and
+    // their typed message back - never a false success or a cleared form.
+    await page.unroute("**/api/contact");
+    const SEND_FAILED = "The message could not be sent — please email me directly.";
+    const calls = await interceptContact(page, 502, { error: SEND_FAILED });
+    await fillValid(page);
+    await page.getByRole("button", { name: "Send Message" }).click();
+    const result = page.getByTestId("contact-status");
+    await expect(result).toBeVisible();
+    await expect(result).toHaveAttribute("role", "alert");
+    await expect(result).toContainText(SEND_FAILED);
+    await expect(result.getByRole("link")).toHaveAttribute("href", /^mailto:/);
+    // Focus lands on the result message instead of dropping to <body>.
+    await expect(result).toBeFocused();
+    await expect(page.getByLabel(/^Name/)).toHaveValue("Route Test");
+    await expect(page.getByLabel(/^Email/)).toHaveValue("route-test@example.com");
+    await expect(page.getByLabel(/^Subject/)).toHaveValue("other");
+    await expect(page.getByLabel(/^Message/)).toHaveValue("An intercepted test message long enough to validate.");
+    await expect(page.getByRole("status").filter({ hasText: /sent successfully/i })).toHaveCount(0);
+    // Exactly one submission, answered by the interceptor: nothing reached
+    // the real route, so no mail can have been sent.
+    expect(calls).toHaveLength(1);
+    expect(JSON.parse(calls[0]!)).toMatchObject({ name: "Route Test", email: "route-test@example.com" });
+  });
+
   test("200 from the server shows success and clears the form", async ({ page }) => {
     await page.unroute("**/api/contact");
     const calls = await interceptContact(page, 200, { ok: true });

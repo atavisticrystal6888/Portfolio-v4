@@ -14,7 +14,7 @@ data only, no personal or financial data, PNG. Videos: 20–40 s, muted, webm
 - [ ] Mobile frame of the diagnosis result (`mobile-diagnosis.png`).
 - [ ] Waitlist / signup count and date it was read, or "not measured".
 - [ ] One user quote (attributable or anonymised) with context.
-- [ ] Eval sheet (the 200-sample golden set summary) as CSV or PDF for the
+- [ ] Eval sheet (golden-set summary; withheld until co-builder sign-off) as CSV or PDF for the
       artifacts row (v5 WS-C).
 - [ ] Two lines: what you decided NOT to build in v1 and why.
 

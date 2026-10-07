@@ -13,6 +13,7 @@
     "images:optimize": "node scripts/optimize-images.mjs",
     "favicon:generate": "node scripts/generate-favicon.mjs",
     "routes:manifest": "node scripts/route-manifest.mjs",
+    "guard:case-studies": "node scripts/check-case-study-allowlist.mjs",
     "audit:contrast": "node scripts/audit-contrast.mjs",
     "audit:links": "node scripts/check-links.mjs",
     "audit:screenshots": "node scripts/capture-screenshots.mjs"

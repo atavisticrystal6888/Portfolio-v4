@@ -9,7 +9,10 @@
  *   - one path that must render the 404 page
  *
  * Writes tests/e2e/route-manifest.ts and docs/audits/2026-09-30-route-manifest.md.
- * Fails (exit 1) if a withdrawn slug reappears in the manifest.
+ * Fails (exit 1) if a withdrawn slug reappears in the manifest, or if a
+ * case-study .mdx is not in content/approved-case-studies.json (regenerating
+ * the manifest must never bless an accidental publication). Nothing is
+ * written on failure.
  */
 import fs from "node:fs";
 import path from "node:path";
@@ -57,6 +60,22 @@ routes.push({ path: NOT_FOUND_PATH, kind: "not-found", expectStatus: 404, source
 const leaked = routes.filter((r) => WITHDRAWN.includes(r.path));
 if (leaked.length) {
   console.error(`Withdrawn route(s) present in manifest: ${leaked.map((r) => r.path).join(", ")}`);
+  process.exit(1);
+}
+
+const approvedPath = path.join(ROOT, "content", "approved-case-studies.json");
+let approved;
+try {
+  approved = new Set(JSON.parse(fs.readFileSync(approvedPath, "utf8")).approved ?? []);
+} catch (err) {
+  console.error(`FAIL: cannot read content/approved-case-studies.json: ${err.message}`);
+  process.exit(1);
+}
+const unapproved = mdxSlugs("case-studies").filter((s) => !approved.has(s));
+if (unapproved.length) {
+  for (const s of unapproved) {
+    console.error(`FAIL: content/case-studies/${s}.mdx is not in content/approved-case-studies.json; approve it there (a publication decision) or remove it. Manifest not written.`);
+  }
   process.exit(1);
 }
 
