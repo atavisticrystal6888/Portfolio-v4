@@ -179,8 +179,13 @@ describe("POST /api/contact", { timeout: 30_000 }, () => {
         "/srv/app",
         "etc/passwd",
         "<script>",
+        "testing emails",
+        "is not verified",
+        "fetch failed",
+        "Unable to fetch",
+        "Something odd",
       ];
-      const SUMMARY_KEYS = ["name", "requestId", "source", "statusCode"];
+      const SUMMARY_KEYS = ["name", "reason", "requestId", "source", "statusCode"];
 
       async function failAndCapture(ip: string, sendError: unknown) {
         const err = vi.spyOn(console, "error").mockImplementation(() => {});
@@ -230,6 +235,7 @@ describe("POST /api/contact", { timeout: 30_000 }, () => {
           name: "validation_error",
           statusCode: 403,
           requestId: "req_abc-123",
+          reason: "other",
         });
         // The payload really reached the provider call, so the clean log is
         // the route's doing, not an empty request.
@@ -255,6 +261,7 @@ describe("POST /api/contact", { timeout: 30_000 }, () => {
           name: "unrecognized",
           statusCode: null,
           requestId: null,
+          reason: "other",
         });
       });
 
@@ -270,6 +277,7 @@ describe("POST /api/contact", { timeout: 30_000 }, () => {
           name: "application_error",
           statusCode: null,
           requestId: null,
+          reason: "other",
         });
       });
 
@@ -285,6 +293,7 @@ describe("POST /api/contact", { timeout: 30_000 }, () => {
           name: "TypeError",
           statusCode: null,
           requestId: null,
+          reason: "network_unreachable",
         });
       });
 
@@ -296,6 +305,7 @@ describe("POST /api/contact", { timeout: 30_000 }, () => {
           name: "unrecognized",
           statusCode: null,
           requestId: null,
+          reason: "other",
         });
       });
 
@@ -308,6 +318,7 @@ describe("POST /api/contact", { timeout: 30_000 }, () => {
           name: "unrecognized",
           statusCode: null,
           requestId: null,
+          reason: "other",
         });
       });
 
@@ -322,6 +333,103 @@ describe("POST /api/contact", { timeout: 30_000 }, () => {
           name: "validation_error",
           statusCode: null,
           requestId: null,
+          reason: "sandbox_recipient_only",
+        });
+      });
+
+      it("labels the sandbox recipient limit without logging the provider text", async () => {
+        const error = {
+          name: "validation_error",
+          statusCode: 403,
+          message:
+            "You can only send testing emails to your own email address (leak-probe@example.test). SENSITIVE-PROVIDER-TEXT",
+        };
+        send.mockResolvedValue({ data: null, error, headers: { "x-request-id": "req_sandbox1" } });
+        expect(await failAndCapture("198.51.100.27", error)).toEqual({
+          source: "resend",
+          name: "validation_error",
+          statusCode: 403,
+          requestId: "req_sandbox1",
+          reason: "sandbox_recipient_only",
+        });
+      });
+
+      it("labels an unverified sending domain", async () => {
+        const error = {
+          name: "validation_error",
+          statusCode: 403,
+          message:
+            "The leak-probe.example.test domain is not verified. Please add leak-probe@example.test SENSITIVE-PROVIDER-TEXT",
+        };
+        send.mockResolvedValue({ data: null, error, headers: null });
+        expect(await failAndCapture("198.51.100.28", error)).toEqual({
+          source: "resend",
+          name: "validation_error",
+          statusCode: 403,
+          requestId: null,
+          reason: "domain_not_verified",
+        });
+      });
+
+      it("labels a thrown fetch failure as network_unreachable", async () => {
+        const thrown = new TypeError("fetch failed");
+        send.mockRejectedValue(thrown);
+        expect(await failAndCapture("198.51.100.29", thrown)).toEqual({
+          source: "thrown",
+          name: "TypeError",
+          statusCode: null,
+          requestId: null,
+          reason: "network_unreachable",
+        });
+      });
+
+      it("labels the SDK's normalised network failure as network_unreachable", async () => {
+        // resend 6.10.0's shape when fetch itself fails: no status, no headers.
+        const error = {
+          name: "application_error",
+          statusCode: null,
+          message: "Unable to fetch data. The request could not be resolved.",
+        };
+        send.mockResolvedValue({ data: null, error, headers: null });
+        expect(await failAndCapture("198.51.100.30", error)).toEqual({
+          source: "resend",
+          name: "application_error",
+          statusCode: null,
+          requestId: null,
+          reason: "network_unreachable",
+        });
+      });
+
+      it("labels an unknown provider message as other", async () => {
+        const error = {
+          name: "validation_error",
+          statusCode: 422,
+          message: "Something odd happened for leak-probe@example.test SENSITIVE-PROVIDER-TEXT",
+        };
+        send.mockResolvedValue({ data: null, error, headers: null });
+        expect(await failAndCapture("198.51.100.31", error)).toEqual({
+          source: "resend",
+          name: "validation_error",
+          statusCode: 422,
+          requestId: null,
+          reason: "other",
+        });
+      });
+
+      it("maps an unambiguous name before the message patterns", async () => {
+        // The message alone would read as domain_not_verified; the name decides.
+        const error = {
+          name: "rate_limit_exceeded",
+          statusCode: 429,
+          message: "The leak-probe.example.test domain is not verified SENSITIVE-PROVIDER-TEXT",
+        };
+        send.mockResolvedValue({ data: null, error, headers: null });
+        expect(await failAndCapture("198.51.100.32", error)).toEqual({
+          source: "resend",
+          name: "rate_limit_exceeded",
+          statusCode: 429,
+          requestId: null,
+          reason: "rate_limited",
         });
       });
     });

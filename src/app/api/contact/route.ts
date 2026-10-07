@@ -36,11 +36,25 @@ const RESEND_ERROR_NAMES = new Set<string>([
   "internal_server_error",
 ]);
 
+type SendFailureReason =
+  | "sandbox_recipient_only"
+  | "domain_not_verified"
+  | "api_key_invalid"
+  | "api_key_missing"
+  | "from_address_invalid"
+  | "rate_limited"
+  | "quota_exceeded"
+  | "network_unreachable"
+  | "timeout"
+  | "provider_internal"
+  | "other";
+
 type SendErrorSummary = {
   source: "resend" | "thrown" | "unknown";
   name: string;
   statusCode: number | null;
   requestId: string | null;
+  reason: SendFailureReason;
 };
 
 const THROWN_NAME = /^[A-Za-z][A-Za-z0-9]{0,39}$/;
@@ -48,14 +62,63 @@ const THROWN_NAME = /^[A-Za-z][A-Za-z0-9]{0,39}$/;
 // email address or path cannot pass.
 const REQUEST_ID = /^[A-Za-z0-9_-]{1,64}$/;
 
+// Allow-listed error names that pin down the cause on their own. Consulted
+// before the message patterns, so a specific code wins over loose wording.
+// A Map, not an object literal, so a thrown name such as "constructor" cannot
+// resolve to an inherited Object.prototype member.
+const REASON_BY_NAME: ReadonlyMap<string, SendFailureReason> = new Map<string, SendFailureReason>([
+  ["rate_limit_exceeded", "rate_limited"],
+  ["monthly_quota_exceeded", "quota_exceeded"],
+  ["daily_quota_exceeded", "quota_exceeded"],
+  ["invalid_api_key", "api_key_invalid"],
+  ["missing_api_key", "api_key_missing"],
+  ["invalid_from_address", "from_address_invalid"],
+  ["internal_server_error", "provider_internal"],
+]);
+
+// Ordered: the first matching pattern decides. Several causes (sandbox
+// recipient limit, unverified domain, bad `from`) share `validation_error`,
+// so the provider's wording is the only thing that tells them apart.
+const REASON_PATTERNS: ReadonlyArray<readonly [RegExp, SendFailureReason]> = [
+  [/only send testing emails/i, "sandbox_recipient_only"],
+  [/domain is not verified/i, "domain_not_verified"],
+  [/api key is invalid|invalid api key/i, "api_key_invalid"],
+  [/missing api key/i, "api_key_missing"],
+  [/`from`|from address|from field/i, "from_address_invalid"],
+  [/too many requests|rate limit/i, "rate_limited"],
+  [/quota/i, "quota_exceeded"],
+  [/unable to fetch|fetch failed|econnrefused|enotfound|network/i, "network_unreachable"],
+  [/abort|timed? ?out/i, "timeout"],
+  [/internal server error/i, "provider_internal"],
+];
+
+/**
+ * Maps a failed send to one fixed label. The message is tested against the
+ * fixed patterns above (at most its first 500 characters) and then dropped:
+ * it is never stored, returned or logged, only the label it selects.
+ */
+function classifyReason(err: unknown, name: string): SendFailureReason {
+  const byName = REASON_BY_NAME.get(name);
+  if (byName) return byName;
+  if (typeof err !== "object" || err === null) return "other";
+  const message: unknown = (err as { message?: unknown }).message;
+  if (typeof message !== "string") return "other";
+  const probe = message.slice(0, 500);
+  for (const [pattern, reason] of REASON_PATTERNS) {
+    if (pattern.test(probe)) return reason;
+  }
+  return "other";
+}
+
 /**
  * The send-failure log is a bounded contract: a category, an allow-listed
- * error name, a numeric HTTP status and a validated request id - nothing
- * else. Resend hands back the provider's JSON body verbatim on a non-OK
- * response (free-text `message`, possibly echoing the recipient or extra
- * fields), and a thrown error carries `message`/`cause`/`stack`. None of those
- * are read, so Vercel logs can never carry the sender's name, email or message
- * or any provider free text.
+ * error name, a numeric HTTP status, a validated request id and a fixed-label
+ * reason - nothing else. Resend hands back the provider's JSON body verbatim
+ * on a non-OK response (free-text `message`, possibly echoing the recipient or
+ * extra fields), and a thrown error carries `message`/`cause`/`stack`. `cause`
+ * and `stack` are never read; `message` is consulted only through the fixed
+ * patterns in `classifyReason` and never copied out, so Vercel logs can never
+ * carry the sender's name, email or message or any provider free text.
  */
 function summarizeSendError(
   err: unknown,
@@ -89,7 +152,7 @@ function summarizeSendError(
   const id: unknown = headers?.["x-request-id"];
   const requestId = typeof id === "string" && REQUEST_ID.test(id) ? id : null;
 
-  return { source, name, statusCode, requestId };
+  return { source, name, statusCode, requestId, reason: classifyReason(err, name) };
 }
 
 // Rate limiting: simple in-memory store (resets on server restart)
