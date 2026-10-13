@@ -16,7 +16,7 @@ import styles from "./about.module.css";
 import section from "@/styles/section.module.css";
 import ledger from "@/components/about/ledger.module.css";
 import { SLEEP_COMPANY_TENURE } from "@/lib/site";
-import { formatDate } from "@/lib/utils";
+import { formatDate, formatDateRange } from "@/lib/utils";
 
 export const metadata = generatePageMetadata({
   title: "About",
@@ -130,7 +130,7 @@ export default async function AboutPage() {
               <span className={styles.eduTitle}>
                 B.Tech Electronics &amp; Computer Engineering
               </span>
-              <span className={styles.eduSub}>J.C. Bose University, 2022&ndash;2026</span>
+              <span className={styles.eduSub}>J.C. Bose University, {formatDateRange("2022", "2026")}</span>
             </dd>
           </dl>
         </div>

@@ -45,3 +45,10 @@ describe("formatTagLabel", () => {
     expect(formatTagLabel("product-management")).toBe("product management");
   });
 });
+
+describe("changelog copy", () => {
+  it("writes ranges with 'to', never an en or em dash", async () => {
+    const { RELEASES } = await import("@/lib/changelog");
+    expect(JSON.stringify(RELEASES)).not.toMatch(/[\u2013\u2014]/);
+  });
+});

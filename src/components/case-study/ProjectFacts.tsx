@@ -88,7 +88,8 @@ export function EvidenceChip({ tier, className }: EvidenceChipProps) {
       title={`${EVIDENCE_LABEL[tier]}: ${EVIDENCE_LEGEND[tier]}`}
     >
       <Ladder tier={tier} />
-      <span className={styles.evidenceKey}>Evidence:</span> {EVIDENCE_LABEL[tier]}
+      <span className={styles.evidenceKey}>Evidence:</span>{" "}
+      <span className={styles.evidenceValue}>{EVIDENCE_LABEL[tier]}</span>
     </span>
   );
 }

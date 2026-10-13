@@ -125,8 +125,7 @@
   color: var(--text-muted);
   text-transform: uppercase;
   letter-spacing: var(--tracking-label);
-  /* Three cells across at 320px: a long tracked word ("CONFIDENCE") may
-     break rather than push its cell past the viewport. */
+  /* Safety net only: the grid below 600px is sized so whole words fit. */
   overflow-wrap: anywhere;
 }
 
@@ -252,8 +251,20 @@
   .statRow {
     grid-template-columns: 1fr 1fr;
   }
+  /* The accuracy label ("illustrative set") is the longest; give it the
+     full row so no word breaks, and pair confidence with latency below. */
+  .statRow > .stat:first-child {
+    grid-column: 1 / -1;
+  }
   .controls {
     flex-direction: column;
     align-items: stretch;
+  }
+}
+
+/* Below 360px half a row is narrower than "CONFIDENCE": stack the cells. */
+@media (max-width: 359.98px) {
+  .statRow {
+    grid-template-columns: minmax(0, 1fr);
   }
 }

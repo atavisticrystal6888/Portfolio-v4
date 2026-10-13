@@ -272,7 +272,8 @@ export function CommandPaletteClient({ caseStudies, posts }: CommandPaletteClien
             value={query}
             onChange={(e) => {
               setQuery(e.target.value);
-              setActiveIndex(-1);
+              // A typed query highlights its top match, so Enter opens it.
+              setActiveIndex(e.target.value.trim() ? 0 : -1);
             }}
           />
           <kbd className={styles.kbd}>Esc</kbd>

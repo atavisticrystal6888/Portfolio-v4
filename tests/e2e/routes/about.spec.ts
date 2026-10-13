@@ -21,6 +21,8 @@ test.describe("About (/about)", () => {
     // Dated tenure, never "Present" (the internship ends 9 Oct 2026).
     await expect(page.getByRole("region", { name: "Experience" })).toContainText("Jul to Oct 2026");
     await expect(page.getByRole("region", { name: "Experience" })).not.toContainText("Present");
+    // Year ranges follow the site rule ("2022 to 2026"), never a dash.
+    expect(text).toMatch(/J\.C\. Bose University, 2022 to 2026/i);
     expect(text).not.toMatch(/Product Manager Intern/);
     // Internal Wipro platform names stay off the page (owner gate).
     expect(text).not.toMatch(/Auriga|Crew Mobile|Non-Crew Records/);

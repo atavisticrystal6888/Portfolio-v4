@@ -137,7 +137,10 @@ async function measureTargets(
  */
 const CONTROL_CHECKS: { label: string; route: string; selector: string; min: number; width?: number }[] = [
   { label: "project filter chips", route: "/projects", selector: '[role="group"][aria-label="Filter projects"] button', min: 5 },
-  { label: "project view switch", route: "/projects", selector: '[role="group"][aria-label="Layout view"] button', min: 2, width: 960 },
+  // 976, not 960: WebKit with classic scrollbars (Windows) matches media
+  // queries against the width minus its scrollbar, so 960 sits just under
+  // the (min-width: 960px) switch breakpoint there.
+  { label: "project view switch", route: "/projects", selector: '[role="group"][aria-label="Layout view"] button', min: 2, width: 976 },
   { label: "blog category chips", route: "/blog", selector: '[role="group"][aria-label="Filter articles by category"] button', min: 5 },
   { label: "FAQ buttons", route: "/contact", selector: "button[aria-controls^='faq-answer-']", min: 4 },
   {

@@ -251,10 +251,12 @@ for (const viewport of [
 
 /* Evidence grid: three columns from 1024px (a 3x2 grid), two from 480px, one
    below. Values never break inside a word or spill out of their cell; a
-   caption of more than four words is sentence case, a short one stays caps. */
+   caption of more than four words is sentence case, a short one stays caps.
+   The 3-column check runs at 1040, not 1024: WebKit with classic scrollbars
+   (Windows) matches media queries against the width minus its scrollbar. */
 for (const viewport of [
   { width: 1440, height: 900, cols: 3 },
-  { width: 1024, height: 768, cols: 3 },
+  { width: 1040, height: 768, cols: 3 },
   { width: 768, height: 1024, cols: 2 },
   { width: 320, height: 700, cols: 1 },
 ]) {

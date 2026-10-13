@@ -61,6 +61,22 @@ test.describe("Shared chrome", () => {
     await expect(logo).toBeFocused();
   });
 
+  test("command palette: a typed query plus Enter opens the top match", async ({ page, isMobile }) => {
+    test.skip(isMobile, "keyboard shortcut journey runs on desktop projects");
+    await page.goto("/", { waitUntil: "networkidle" });
+    const dialog = page.getByRole("dialog", { name: "Command palette" });
+    await expect(async () => {
+      await page.keyboard.press("ControlOrMeta+k");
+      await expect(dialog).toBeVisible({ timeout: 1000 });
+    }).toPass({ timeout: 10_000 });
+    const input = dialog.getByLabel("Search commands");
+    await expect(input).toBeFocused();
+    await input.fill("uses");
+    await expect(dialog.locator("[data-palette-item]").first()).toContainText(/uses/i);
+    await page.keyboard.press("Enter");
+    await expect(page).toHaveURL(/\/uses$/);
+  });
+
   test("command palette lists exactly the published articles, from content", async ({ page }) => {
     await page.goto("/blog", { waitUntil: "networkidle" });
     const indexTitles = (

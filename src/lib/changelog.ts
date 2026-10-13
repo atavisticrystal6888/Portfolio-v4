@@ -107,7 +107,7 @@ export const RELEASES: Release[] = [
     badge: "shipped",
     body: "Moved v1 → v3, legacy HTMLs, and the portfolio-next experiment into /archive. Promoted v4 to the single source of truth and split it into its own repository.",
     highlights: [
-      "Split into its own repository; the archive keeps the full history of v1–v3",
+      "Split into its own repository; the archive keeps the full history of v1 to v3",
     ],
   },
   {

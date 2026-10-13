@@ -129,3 +129,33 @@ test.describe("AI PM (/ai-pm)", () => {
     await expect(page).toHaveURL(/\/projects\/aarchid$/);
   });
 });
+
+/* Eval harness stat strip on phones: every label word fits whole in its cell
+   (no "ILLUSTR-ATIVE" or "CONFIDE-NCE" breaks), and nothing overflows. */
+for (const width of [320, 390]) {
+  test(`eval harness stat labels keep whole words at ${width}px`, async ({ page }) => {
+    await page.setViewportSize({ width, height: 800 });
+    await page.goto("/ai-pm", { waitUntil: "networkidle" });
+    const labels = page.locator('[class*="statLabel"]');
+    expect(await labels.count()).toBeGreaterThan(0);
+    const broken = await labels.evaluateAll((els) =>
+      els.flatMap((el) => {
+        const probe = document.createElement("span");
+        probe.className = el.className;
+        probe.style.cssText = "position:absolute;visibility:hidden;white-space:nowrap";
+        document.body.appendChild(probe);
+        const out = (el.textContent ?? "")
+          .trim()
+          .split(/\s+/)
+          .filter((word) => {
+            probe.textContent = word;
+            return probe.getBoundingClientRect().width > el.clientWidth + 0.5;
+          });
+        probe.remove();
+        return out;
+      })
+    );
+    expect(broken, "label words wider than their cell").toEqual([]);
+    expect(await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth)).toBeLessThanOrEqual(0);
+  });
+}

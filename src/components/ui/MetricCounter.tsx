@@ -1,6 +1,6 @@
 "use client";
 
-import { cn, isProseCaption } from "@/lib/utils";
+import { bindSeparators, cn, isProseCaption } from "@/lib/utils";
 import styles from "./MetricCounter.module.css";
 
 interface MetricCounterProps {
@@ -35,7 +35,7 @@ export function MetricCounter({
         {value}
       </span>
       <span className={prose ? styles.prose : styles.label} data-testid="metric-caption">
-        {label}
+        {bindSeparators(label)}
       </span>
     </div>
   );

@@ -4,7 +4,7 @@ import {
   COVERAGE_CASE_STUDIES,
   COVERAGE_ARTICLES,
 } from "@/lib/stats";
-import { isProseCaption } from "@/lib/utils";
+import { bindSeparators, isProseCaption } from "@/lib/utils";
 
 describe("getHomeMetrics", () => {
   const metrics = getHomeMetrics();
@@ -62,5 +62,22 @@ describe("isProseCaption (evidence grid captions)", () => {
 
   it("does not count separators as words", () => {
     expect(isProseCaption("Failures · gate · run · today")).toBe(false);
+  });
+});
+
+describe("bindSeparators (metric captions)", () => {
+  it("keeps each middot on the line of the word before it", () => {
+    expect(bindSeparators("A source link required \u00b7 offline eval withheld")).toBe(
+      "A source link required\u00a0\u00b7 offline eval withheld",
+    );
+    expect(bindSeparators("Articles \u00b7 coverage \u00b7 local")).toBe(
+      "Articles\u00a0\u00b7 coverage\u00a0\u00b7 local",
+    );
+  });
+
+  it("leaves text without a spaced separator alone", () => {
+    expect(bindSeparators("Practice questions (repo README)")).toBe(
+      "Practice questions (repo README)",
+    );
   });
 });

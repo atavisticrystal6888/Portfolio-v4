@@ -143,3 +143,11 @@ export function formatCategoryLabel(category: string): string {
 export function isProseCaption(label: string): boolean {
   return label.split(/\s+/).filter((w) => /[A-Za-z0-9]/.test(w)).length > 4;
 }
+
+/**
+ * Binds each " · " separator to the word before it with a no-break space, so
+ * a wrapped caption ends a line with the dot instead of starting one with it.
+ */
+export function bindSeparators(text: string): string {
+  return text.replace(/ \u00b7 /g, "\u00a0\u00b7 ");
+}
