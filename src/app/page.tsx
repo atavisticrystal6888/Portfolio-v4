@@ -89,7 +89,7 @@ export default async function Home() {
         id="outcomes"
         aria-label="Key metrics"
         data-section="metrics"
-        className={`${section.section} ${section.deferred}`}
+        className={section.section}
       >
         <div className={section.inner}>
           <header className={section.header}>
@@ -110,7 +110,7 @@ export default async function Home() {
           id="thinking"
           aria-label="Writing"
           data-section="blog-teaser"
-          className={`${section.section} ${section.deferred}`}
+          className={section.section}
         >
           <div className={section.inner}>
             <header className={section.header}>
@@ -137,7 +137,7 @@ export default async function Home() {
         id="contact"
         aria-label="Contact"
         data-section="contact-cta"
-        className={`${section.section} ${section.deferred}`}
+        className={section.section}
       >
         <div className={`${section.inner} ${styles.ctaInner}`}>
           <Image

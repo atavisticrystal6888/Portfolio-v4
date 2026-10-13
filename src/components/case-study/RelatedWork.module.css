@@ -42,17 +42,9 @@
   min-width: 0;
 }
 
-/* Related products close a case study, several screens down: skip their
-   layout and paint until they scroll near (section.module.css .deferred).
-   The case-study article itself is NOT deferred: MdxContent renders a
+/* Related products are deliberately NOT deferred (no content-visibility):
+   the previous/next navigation sits directly under them, and in WebKit the
+   deferred cards rendered after a scroll-into-view, moving the nav so the
+   click landed elsewhere (prev/next e2e failed on webkit and mobile-safari).
+   The case-study article is not deferred either: MdxContent renders a
    position: fixed lightbox inside it, which containment would clip. */
-.cardItem {
-  content-visibility: auto;
-  contain-intrinsic-size: auto 460px;
-}
-
-@media print {
-  .cardItem {
-    content-visibility: visible;
-  }
-}

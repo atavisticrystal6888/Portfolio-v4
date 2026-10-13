@@ -1,5 +1,4 @@
 import type { Metadata, Viewport } from "next";
-import { preload } from "react-dom";
 import "./globals.css";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
@@ -99,27 +98,18 @@ export const viewport: Viewport = {
 
 const personJsonLd = generatePersonJsonLd();
 
-// The three self-hosted faces in src/styles/base.css are all used above the
-// fold on every route (Manrope body copy, Fraunces h1, JetBrains Mono eyebrow
-// / badge / tag labels), so all three are preloaded, once each. React dedupes
-// preload() by href and emits a single <link rel="preload"> at the top of
-// <head>. Keep the hrefs in sync with the @font-face src URLs or the preload
-// is wasted (and Chrome warns that it went unused).
-const FONT_PRELOADS = [
-  "/fonts/manrope-variable.woff2",
-  "/fonts/fraunces-variable.woff2",
-  "/fonts/jetbrains-mono-latin.woff2",
-];
+// Fonts are not preloaded. The three self-hosted faces in src/styles/base.css
+// are discovered from CSS and swap in over per-weight, metric-fitted local
+// fallbacks (Arial, Georgia, Courier New), so text paints at once and the swap
+// does not move layout. Preloading them cost about 0.4 s of real-paint LCP on
+// Slow 4G: the 80 KB of fonts competed with the render-blocking stylesheets.
+// See docs/audits/2026-10-13-lcp-debug.md, "Font fallback fit".
 
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  for (const href of FONT_PRELOADS) {
-    preload(href, { as: "font", type: "font/woff2", crossOrigin: "anonymous" });
-  }
-
   return (
     <html
       lang="en"
@@ -129,9 +119,6 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <head>
-        {/* Font preloads come from the preload() calls above, not <link>
-            tags: React 19 hoisted the old JSX tags AND kept them in place,
-            so every page shipped each font preload twice. */}
         <link
           rel="alternate"
           type="application/rss+xml"

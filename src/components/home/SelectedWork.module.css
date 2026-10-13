@@ -24,19 +24,9 @@
   border-top: var(--hairline);
 }
 
-/* The "More work" rows sit under the flagship rail, below the first screen
-   on a phone: skip their layout and paint until they scroll near. Same
-   reasoning as section.module.css .deferred. */
-.rows > * {
-  content-visibility: auto;
-  contain-intrinsic-size: auto 400px;
-}
-
-@media print {
-  .rows > * {
-    content-visibility: visible;
-  }
-}
+/* The rows are not deferred (no content-visibility): the "View all projects"
+   link follows them, and WebKit moved it when deferred rows rendered on
+   scroll, so the click missed. See src/styles/section.module.css. */
 
 .viewAll {
   margin-top: var(--space-5);

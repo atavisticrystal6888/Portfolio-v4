@@ -39,38 +39,122 @@
     U+2500-257F, U+FFFD;
 }
 
-/* Metric-matched fallbacks (checklist item 16, CLS). While a web font is
-   still loading, text renders in a local system font scaled and spaced to the
-   web font's metrics, so the swap does not reflow lines. Values come from
-   tmp/pm-candidate-20261002/perf/fallback-metrics.py: size-adjust from the
-   average advance width of real site copy, the overrides from each web font's
-   typo ascender/descender/line gap divided by size-adjust. Where the local
-   font is missing (most Android), the face is skipped and the stack's next
-   family applies, exactly as before. */
+/* Metric-matched fallbacks (checklist item 16, CLS). The web fonts are not
+   preloaded (see layout.tsx), so on a slow connection the first paint uses
+   these local faces and the web font swaps in afterwards. Each face is scaled
+   and spaced to the web font so the swap does not reflow lines.
+
+   One face per weight the site uses, because the web fonts' width changes
+   with weight and Arial/Georgia only have a regular and a bold cut. Without a
+   font-weight range, a 600/700 request would get a synthesised bold of the
+   regular cut, which is a different width again.
+
+   - size-adjust: total advance width of the site's own text at that weight in
+     the web font, divided by the same text in the local font (measured in
+     Chromium on /, /projects, /projects/sawari, /blog/why-pms-should-code,
+     /about and /blog; cross-checked with fontkit, see the audit doc).
+   - ascent/descent/line-gap-override: the web font's hhea ascender, descender
+     and line gap (equal to its typo metrics, USE_TYPO_METRICS is set) over
+     unitsPerEm, divided by size-adjust. Same method as next/font's
+     adjustFontFallback.
+   - local() candidates are metric clones of the fitted font only: Helvetica,
+     Arimo and Liberation Sans match Arial; Roboto is within 0.2% of Arial in
+     average width (Capsize metrics), so Android regular text is covered too.
+     Gelasio matches Georgia. Cousine, Liberation Mono and Noto Sans Mono are
+     0.6 em monospace like Courier New. Where none is installed, the face is
+     skipped and the stack's next family applies, as before.
+   Fit: docs/audits/2026-10-13-lcp-debug.md, "Font fallback fit". */
 @font-face {
   font-family: 'Manrope Fallback';
-  src: local('Arial'), local('ArialMT');
-  size-adjust: 103.48%;
-  ascent-override: 103.02%;
-  descent-override: 28.99%;
+  src: local('Arial'), local('ArialMT'), local('Helvetica'), local('Arimo'),
+    local('Liberation Sans'), local('Roboto'), local('Roboto-Regular');
+  font-weight: 100 449;
+  size-adjust: 102.84%;
+  ascent-override: 103.66%;
+  descent-override: 29.17%;
   line-gap-override: 0%;
 }
 
-/* Tuned to Fraunces at the 600 weight the hero and headings use. */
+@font-face {
+  font-family: 'Manrope Fallback';
+  src: local('Arial'), local('ArialMT'), local('Helvetica'), local('Arimo'),
+    local('Liberation Sans'), local('Roboto'), local('Roboto-Regular');
+  font-weight: 450 549;
+  size-adjust: 105.19%;
+  ascent-override: 101.34%;
+  descent-override: 28.52%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: 'Manrope Fallback';
+  src: local('Arial Bold'), local('Arial-BoldMT'), local('Helvetica Bold'),
+    local('Helvetica-Bold'), local('Arimo Bold'), local('Arimo-Bold'),
+    local('Liberation Sans Bold'), local('LiberationSans-Bold');
+  font-weight: 550 649;
+  size-adjust: 98.94%;
+  ascent-override: 107.74%;
+  descent-override: 30.32%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: 'Manrope Fallback';
+  src: local('Arial Bold'), local('Arial-BoldMT'), local('Helvetica Bold'),
+    local('Helvetica-Bold'), local('Arimo Bold'), local('Arimo-Bold'),
+    local('Liberation Sans Bold'), local('LiberationSans-Bold');
+  font-weight: 650 900;
+  size-adjust: 100.94%;
+  ascent-override: 105.61%;
+  descent-override: 29.72%;
+  line-gap-override: 0%;
+}
+
 @font-face {
   font-family: 'Fraunces Fallback';
-  src: local('Georgia');
-  size-adjust: 108.76%;
-  ascent-override: 89.92%;
-  descent-override: 23.45%;
+  src: local('Georgia'), local('Gelasio');
+  font-weight: 100 549;
+  size-adjust: 105.49%;
+  ascent-override: 92.71%;
+  descent-override: 24.17%;
   line-gap-override: 0%;
 }
 
 @font-face {
+  font-family: 'Fraunces Fallback';
+  src: local('Georgia Bold'), local('Georgia-Bold'), local('Gelasio Bold'),
+    local('Gelasio-Bold');
+  font-weight: 550 649;
+  size-adjust: 93.96%;
+  ascent-override: 104.09%;
+  descent-override: 27.14%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: 'Fraunces Fallback';
+  src: local('Georgia Bold'), local('Georgia-Bold'), local('Gelasio Bold'),
+    local('Gelasio-Bold');
+  font-weight: 650 900;
+  size-adjust: 96.82%;
+  ascent-override: 101.01%;
+  descent-override: 26.34%;
+  line-gap-override: 0%;
+}
+
+/* The web face is one Regular cut declared as 400-700, so labels at 500-600
+   render Regular. The fallback declares the same range so it is not
+   synthetically emboldened either. Both fonts advance 0.6 em per glyph; the
+   computed 99.98% rendered Courier New 0.2 px short on the 41-character home
+   eyebrow at 412 px, which then fit on one line where JetBrains Mono wraps,
+   so the size is left at 100%. */
+@font-face {
   font-family: 'JetBrains Mono Fallback';
-  src: local('Courier New'), local('CourierNewPSMT');
-  size-adjust: 99.98%;
-  ascent-override: 102.02%;
+  src: local('Courier New'), local('CourierNewPSMT'), local('Cousine'),
+    local('Liberation Mono'), local('Noto Sans Mono');
+  font-weight: 400 700;
+  size-adjust: 100%;
+  ascent-override: 102%;
   descent-override: 30%;
   line-gap-override: 0%;
 }
