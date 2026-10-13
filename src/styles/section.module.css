@@ -61,3 +61,23 @@
 .measure {
   max-width: var(--measure-prose);
 }
+
+/* Opt-in for bands that start below the first screen. The browser skips
+   their style, layout and paint until they come near the viewport, so the
+   first frame lays out the hero instead of the whole page. On the home page
+   the below-the-fold bands were about three quarters of the first layout
+   (docs/audits/2026-10-13-lcp-debug.md). The `auto` keyword remembers the
+   real height once a band has rendered; 800px is only the first estimate.
+   Do not put this on a band that is on screen at load, or on one that holds
+   a position: fixed descendant (a lightbox, a sticky rail): containment
+   would re-anchor and clip it. */
+.deferred {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 800px;
+}
+
+@media print {
+  .deferred {
+    content-visibility: visible;
+  }
+}

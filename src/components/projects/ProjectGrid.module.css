@@ -126,3 +126,24 @@
 .controls + .rows {
   margin-top: var(--space-9);
 }
+
+/* Only the first flagship card is on the first screen (it is the LCP image
+   on a phone). Every later card and every compact row skips layout and paint
+   until it scrolls near; see section.module.css .deferred for the reasoning
+   and the limits. The first card is never deferred. */
+.featured > :nth-child(n + 2) {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 610px;
+}
+
+.rows > * {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 400px;
+}
+
+@media print {
+  .featured > :nth-child(n + 2),
+  .rows > * {
+    content-visibility: visible;
+  }
+}

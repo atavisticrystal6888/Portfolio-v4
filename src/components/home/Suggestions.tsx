@@ -41,7 +41,7 @@ export function Suggestions({ projects, posts }: SuggestionsProps) {
       id="next"
       aria-label="Where to go next"
       data-section="suggestions"
-      className={section.section}
+      className={`${section.section} ${section.deferred}`}
     >
       <div className={section.inner}>
         <header className={section.header}>

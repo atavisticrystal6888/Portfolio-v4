@@ -247,8 +247,10 @@
 }
 
 @media (min-width: 900px) {
+  /* Top-aligned on purpose: centring the plate against the text column made
+     it move when the display font swapped in (an intermittent 0.05 CLS). */
   .withPlate {
-    align-items: center;
+    align-items: flex-start;
   }
 
   .withPlate > .identity {
