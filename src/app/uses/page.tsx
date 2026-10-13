@@ -42,7 +42,7 @@ const GROUPS = [
     items: [
       { name: "VS Code + GitHub Copilot", detail: "Agent mode for scaffolding; inline for refactors" },
       { name: "Claude + ChatGPT", detail: "Longer reasoning loops and architectural sparring" },
-      { name: "JetBrains Mono", detail: "Editor font — ligatures on" },
+      { name: "JetBrains Mono", detail: "Editor font, ligatures on" },
       { name: "Night Owl and Vercel themes", detail: "Editor colour themes, rotated" },
     ],
   },
@@ -51,7 +51,7 @@ const GROUPS = [
     title: "What I build on",
     items: [
       { name: "Work laptop", detail: "Day-to-day work machine" },
-      { name: "Lenovo ThinkPad (personal)", detail: "Side-project machine — Linux for experiments" },
+      { name: "Lenovo ThinkPad (personal)", detail: "Side-project machine, Linux for experiments" },
       { name: "Samsung 27\" 1440p", detail: "Primary external monitor; VS Code + browser split" },
       { name: "Logitech MX Master 3S", detail: "Scroll wheel worth every rupee" },
     ],

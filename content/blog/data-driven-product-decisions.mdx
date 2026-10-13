@@ -25,7 +25,7 @@ I saw versions of this in the teams I worked with as an intern, and it is one of
 
 ## Signals vs. Noise
 
-The core problem isn't the dashboards themselves — it's that most dashboards track **vanity metrics** instead of **decision metrics**.
+The core problem isn't the dashboards themselves. It's that most dashboards track **vanity metrics** instead of **decision metrics**.
 
 Vanity metrics tell you what happened. Decision metrics tell you what to do next. The numbers in these pairs are illustrative, not from a real product.
 
@@ -43,10 +43,10 @@ Before looking at any data, start with this template:
 
 1. **What decision needs to be made?** (e.g., "Should we invest in improving onboarding or in making cancellation less likely?")
 2. **What data would change the answer?** (e.g., "If onboarding completion correlates with retention above R=0.7, we invest in onboarding.")
-3. **Where does that data live?** (e.g., "Product analytics — events table joined with retention cohorts.")
+3. **Where does that data live?** (e.g., "Product analytics: events table joined with retention cohorts.")
 4. **What's the threshold for action?** (e.g., "If correlation > 0.7: onboarding. If < 0.4: cancellation. Between: run an experiment.")
 
-Notice how the dashboard isn't even in the picture yet. You've already defined what matters. If you build a dashboard after this, it'll be a focused, actionable one — not a vanity metrics gallery. It is the same scope-first habit as [my structured thinking framework](/blog/structured-thinking-framework), applied to data.
+Notice how the dashboard isn't even in the picture yet. You've already defined what matters. If you build a dashboard after this, it'll be a focused, actionable one, not a vanity metrics gallery. It is the same scope-first habit as [my structured thinking framework](/blog/structured-thinking-framework), applied to data.
 
 > **The best data products answer specific questions.** The worst ones answer "what happened" without connecting to "what should we do."
 
@@ -54,7 +54,7 @@ Notice how the dashboard isn't even in the picture yet. You've already defined w
 
 Here's the part that makes data purists uncomfortable: sometimes the data is incomplete, noisy, or too slow. And in those moments, **informed intuition beats perfect data.**
 
-Data-driven doesn't mean data-dependent. The PMs I have learned most from treat data as one input alongside user conversations, market context, engineering constraints, and yes — gut instinct built from experience.
+Data-driven doesn't mean data-dependent. The PMs I have learned most from treat data as one input alongside user conversations, market context, engineering constraints, and yes, gut instinct built from experience.
 
 Take an illustrative scenario, not a project I ran: a team deciding whether to build a mobile-first warehouse interface. The data it has, usage logs from the desktop app, cannot say anything about mobile demand because the mobile option does not exist yet. So the team would have to rely on:
 
@@ -71,11 +71,11 @@ If you're a PM trying to build a genuinely data-driven culture (not just a dashb
 - **Kill at least one dashboard.** Seriously. If a dashboard hasn't driven a decision in the last 30 days, it's noise. Remove it to sharpen focus.
 - **Every metric needs an owner and a threshold.** If "DAU drops below X" doesn't trigger a specific action, it shouldn't be on the main dashboard.
 - **Teach your team to ask "so what?"** After every metric review, the next sentence should be "therefore, we should..." If no one can finish that sentence, the metric isn't actionable.
-- **Budget time for ad-hoc analysis.** The most valuable data work isn't on dashboards — it's answering specific questions with SQL, notebooks, and quick models.
+- **Budget time for ad-hoc analysis.** The most valuable data work isn't on dashboards. It's answering specific questions with SQL, notebooks, and quick models.
 - **Celebrate decisions, not dashboards.** In team retrospectives, highlight moments where data changed a decision. That reinforces the culture you actually want.
 
 ## The Bottom Line
 
 "Data-driven" is a culture, not an infrastructure. You can have the best analytics stack in the world and still make gut-driven decisions if the team doesn't connect data to actions. And you can be deeply data-informed with a single SQL editor and a clear decision framework.
 
-Invest in the framework first. The dashboards — if they're still needed — will follow. When you do build one, start with [a cohort retention curve](/blog/cohorts-before-dashboards), and keep it to [three metrics, each wired to a decision](/blog/metrics-that-matter-for-pms).
+Invest in the framework first. The dashboards, if they're still needed, will follow. When you do build one, start with [a cohort retention curve](/blog/cohorts-before-dashboards), and keep it to [three metrics, each wired to a decision](/blog/metrics-that-matter-for-pms).

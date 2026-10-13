@@ -7,7 +7,7 @@
  * a serif face, tightly tracked, in the teal accent (#5ba4b5).
  *
  * Legacy .ico is still what browsers ask for at /favicon.ico, and Next only
- * copies the file through — so it has to be a real multi-image ICO. We render
+ * copies the file through, so it has to be a real multi-image ICO. We render
  * 16/32/48 px PNGs with sharp and pack them ourselves: an ICONDIR header, one
  * 16-byte ICONDIRENTRY per size, then the PNG payloads. PNG-compressed entries
  * are valid ICO (Vista+) and every browser in use reads them.

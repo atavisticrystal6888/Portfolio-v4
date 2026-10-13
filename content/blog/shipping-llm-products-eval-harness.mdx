@@ -6,7 +6,7 @@ updatedDate: "2026-10-03"
 category: "AI"
 tags: ["ai-pm", "llm", "evaluation", "product-management", "shipping"]
 related: ["the-prd-is-dead-long-live-the-eval-set", "choosing-a-product-without-ai"]
-excerpt: "A prompt is an artefact. An eval harness is a product. Here's how I scope LLM features so the output doesn't surprise users — or me."
+excerpt: "A prompt is an artefact. An eval harness is a product. Here's how I scope LLM features so the output doesn't surprise users, or me."
 seoTitle: "LLM Products Start With the Eval Harness"
 socialImage: null
 ---
@@ -19,7 +19,7 @@ The bug isn't the prompt. The bug is that there was never an eval.
 
 ## A prompt is an artefact. An eval harness is a product.
 
-On [Aarchid](/projects/aarchid) — the AI botanical diagnosis platform I co-created with [Dilpreet Grover](https://github.com/dfordp) — the team ran an offline eval on a golden set of about 200 hand-labelled samples (as reported by the team). I am withholding the result until the eval artefact or my co-builder's confirmation is available.
+On [Aarchid](/projects/aarchid), the AI botanical diagnosis platform I co-created with [Dilpreet Grover](https://github.com/dfordp), the team ran an offline eval on a golden set of about 200 hand-labelled samples (as reported by the team). I am withholding the result until the eval artefact or my co-builder's confirmation is available.
 
 The order I recommend, and the one this post argues for, is to have three things before a single production prompt is written:
 
@@ -27,7 +27,7 @@ The order I recommend, and the one this post argues for, is to have three things
 2. **A rubric** with a few separate dimensions. Aarchid's has four: diagnostic accuracy, citation fidelity, severity calibration, and latency.
 3. **A scoring pipeline** that runs the full chain (for Aarchid, vision → research → synthesis) against the golden set and emits a comparable score.
 
-Only then iterate on prompts. Every change — model version, system prompt, retrieval strategy, temperature — runs through the harness, and each release is judged by the score, not by how good the demo looks.
+Only then iterate on prompts. Every change (model version, system prompt, retrieval strategy, temperature) runs through the harness, and each release is judged by the score, not by how good the demo looks.
 
 ## What "good" looks like for an LLM feature PRD
 
@@ -44,10 +44,10 @@ What must the output always contain? What must it never contain? On Aarchid:
 A small (50–200), diverse, hand-labelled dataset. Add a case each time you find a failure the set misses. Revisit it every release.
 
 ### 3. Rubric
-3–6 axes, each scored 0–5 or 0–1. Resist the urge to collapse it into one number too early — the axes teach you _where_ you're weak.
+3–6 axes, each scored 0–5 or 0–1. Resist the urge to collapse it into one number too early: the axes teach you _where_ you're weak.
 
 ### 4. Guardrails
-What happens when the model falls off a cliff? Retry, degrade, escalate, or refuse. Aarchid's spec says to decline when the vision model's confidence on species ID is low — better silence than a confident wrong answer. That is a design rule in the spec; how often it fires in the field is not measured.
+What happens when the model falls off a cliff? Retry, degrade, escalate, or refuse. Aarchid's spec says to decline when the vision model's confidence on species ID is low: better silence than a confident wrong answer. That is a design rule in the spec; how often it fires in the field is not measured.
 
 ### 5. Cost envelope
 Per-request maths, including retries and retrieval calls. If you can't afford your feature at P95 usage, you don't have a feature.
@@ -81,10 +81,10 @@ When I scope an LLM feature, I ask for three things before I'll call the spec re
 - Show me the rubric.
 - Show me the cost-per-request maths with retries included.
 
-If those three don't exist, we don't have a feature — we have a demo that will embarrass us at scale.
+If those three don't exist, we don't have a feature. We have a demo that will embarrass us at scale.
 
 ## The short version
 
 Ship the eval harness. Then ship the feature.
 
-More of this thinking lives on my [AI PM page](/ai-pm). If you're wrestling with scoping your first LLM feature, [get in touch](/contact) — I like these conversations.
+More of this thinking lives on my [AI PM page](/ai-pm). If you're wrestling with scoping your first LLM feature, [get in touch](/contact). I like these conversations.

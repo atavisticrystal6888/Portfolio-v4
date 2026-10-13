@@ -77,7 +77,7 @@ describe("POST /api/contact", { timeout: 30_000 }, () => {
     expect(res.status).toBe(503);
     const body = await res.json();
     expect(body.error).toBe(
-      "The contact form is temporarily offline — please email me directly."
+      "The contact form is temporarily offline. Please email me directly."
     );
     expect(body.success).toBeUndefined();
   });
@@ -121,7 +121,7 @@ describe("POST /api/contact", { timeout: 30_000 }, () => {
     afterEach(() => {
       vi.doUnmock("resend");
     });
-    const SEND_FAILED = "The message could not be sent — please email me directly.";
+    const SEND_FAILED = "The message could not be sent. Please email me directly.";
 
     it("answers 200 only after Resend accepts the message", async () => {
       send.mockResolvedValue({ data: { id: "email_123" }, error: null });

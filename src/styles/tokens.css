@@ -103,7 +103,7 @@
 
 /* Night blueprint: a deep Prussian-ink ground instead of neutral black,
    paper-white ink, and the signal blue lifted for AA contrast. Hairlines
-   are deliberately more visible than the old 6% white — rules are part of
+   are deliberately more visible than the old 6% white: rules are part of
    the dossier grammar and must read as printed, not implied. */
 [data-theme="dark"] {
   --bg: #0d1322;

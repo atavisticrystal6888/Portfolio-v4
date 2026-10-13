@@ -135,7 +135,7 @@ export default function RootLayout({
         <link
           rel="alternate"
           type="application/rss+xml"
-          title="Dhruv Singhal — Blog RSS"
+          title="Dhruv Singhal | Blog RSS"
           href="/rss.xml"
         />
         {/* Applies a STORED theme before first paint, so a returning visitor

@@ -17,7 +17,7 @@ const ROUTES = [
 // eyes on the value that actually reaches the browser tab.
 // Keep in sync with SITE_NAME / SITE_TITLE in src/lib/site.ts.
 const SITE_NAME = "Dhruv Singhal";
-const SITE_TITLE = "Dhruv Singhal — Product Manager & Builder";
+const SITE_TITLE = "Dhruv Singhal | Product Manager & Builder";
 const TITLE_SUFFIX = ` | ${SITE_NAME}`;
 
 /** Google truncates past ~160; under 50 is too thin to be worth indexing. */

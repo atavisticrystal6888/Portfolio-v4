@@ -69,7 +69,7 @@ export interface Project {
    * Drives the tinted ground behind framed screenshots.
    */
   accent?: string | null;
-  /** Where the accent came from — a product screenshot or the site default. */
+  /** Where the accent came from: a product screenshot or the site default. */
   accentSource?: "screenshot" | "default";
   /** Wordmark image path, or null to set the product name in type. */
   wordmark?: string | null;
@@ -126,7 +126,7 @@ export interface CaseStudyFrontmatter {
   duration: string;
   stack: string[];
   tldr: string;
-  /** One line of exact ownership — what was mine on this project. */
+  /** One line of exact ownership: what was mine on this project. */
   myPart?: string;
   metrics: CaseStudyMetric[];
   /** Collaborators rendered in the case-study hero */

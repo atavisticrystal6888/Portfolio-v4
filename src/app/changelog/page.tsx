@@ -15,8 +15,8 @@ export const metadata = generatePageMetadata({
 // Phase 3 used to sit at the top of this list while v4.3 · Phase 3 sat in the
 // timeline above marked Shipped. The page was arguing with itself.
 const UPCOMING = [
-  "Phase 4 — Proof: measured on 30 Sep 2026 with a local Lighthouse run on the home page and an axe scan across 36 routes. Still open: real-device and screen-reader passes",
-  "Phase 5 — Hardening: OG review, sitemap integrity, deploy preview automation",
+  "Phase 4, Proof: measured on 30 Sep 2026 with a local Lighthouse run on the home page and an axe scan across 36 routes. Still open: real-device and screen-reader passes",
+  "Phase 5, Hardening: OG review, sitemap integrity, deploy preview automation",
 ];
 
 function badgeLabel(b?: Release["badge"]): string {
@@ -35,7 +35,7 @@ export default function ChangelogPage() {
           { name: "Changelog", href: "/changelog" },
         ]}
         title="Changelog"
-        subtitle="Every PM should eat their own dog food. This is the release log for this portfolio — what shipped, when, and why. Each release is treated like a real product increment."
+        subtitle="Every PM should eat their own dog food. This is the release log for this portfolio: what shipped, when, and why. Each release is treated like a real product increment."
       />
 
       <section className={styles.section}>
@@ -54,7 +54,7 @@ export default function ChangelogPage() {
                   )}
                 </span>
                 <h3 className={styles.timelineTitle}>
-                  {r.version} — {r.title}
+                  {r.version}: {r.title}
                 </h3>
                 <p className={styles.timelineBody}>{r.body}</p>
                 <ul className={`${styles.list} ${styles.timelineList}`}>

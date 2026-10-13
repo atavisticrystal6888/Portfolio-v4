@@ -4,7 +4,7 @@ import type { ReactElement, ReactNode } from "react";
 // The repo has no jsdom/happy-dom and vitest.config.ts pins `environment:
 // "node"`, so React Testing Library cannot mount anything here. These tests
 // invoke the components as plain functions and assert on the returned element
-// tree instead — enough to cover the copy, the roles and the click handlers
+// tree instead, enough to cover the copy, the roles and the click handlers
 // without adding a dependency.
 vi.mock("react", async (importOriginal) => {
   const actual = await importOriginal<typeof import("react")>();

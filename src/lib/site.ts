@@ -4,7 +4,7 @@ export const SITE_URL = (
 	process.env.NEXT_PUBLIC_SITE_URL || DEFAULT_SITE_URL
 ).replace(/\/$/, "");
 export const SITE_NAME = "Dhruv Singhal";
-export const SITE_TITLE = "Dhruv Singhal — Product Manager & Builder";
+export const SITE_TITLE = "Dhruv Singhal | Product Manager & Builder";
 /** Default meta description, WebSite and manifest description (claim gate F4; 120-160 chars). */
 export const SITE_DESCRIPTION =
 	"Portfolio of Dhruv Singhal, Product Manager & Builder: AI evaluation, product scope, D2C retention and ride-sharing design, each with its evidence and limits.";
@@ -32,7 +32,7 @@ export const ABOUT_PATH = "/about";
 export const AVAILABILITY = "Looking for full-time PM / APM roles";
 export const CONTACT_EMAIL = "dhruvsinghal6888@gmail.com";
 export const CONTACT_EMAIL_HREF = `mailto:${CONTACT_EMAIL}`;
-/** E.164 — what gets copied to the clipboard and published in schema.org. */
+/** E.164: what gets copied to the clipboard and published in schema.org. */
 export const CONTACT_PHONE = "+917015131885";
 /** Grouped for humans; the display form never goes into an href. */
 export const CONTACT_PHONE_DISPLAY = "+91 70151 31885";

@@ -68,7 +68,7 @@ No change depended on another. If I stopped after 10 items, the site was still b
 
 **Why Next.js?** Static HTML worked but didn't scale. At the time of the move (v3), with 4 case studies, 4 blog articles, and 14 pages, any content change meant touching multiple files. Next.js gives me component reuse, MDX for content, and SSG for performance.
 
-**Why not a CMS?** I write in VS Code. Adding Sanity or Contentful would add a build step, a dependency, and a failure mode — all for content I update monthly. MDX files in `/content/` work perfectly.
+**Why not a CMS?** I write in VS Code. Adding Sanity or Contentful would add a build step, a dependency, and a failure mode, all for content I update monthly. MDX files in `/content/` work perfectly.
 
 **Why CSS Modules over Tailwind?** Personal preference. I think in components and want co-located styles. Tailwind's utility classes make diffs harder to review and increase cognitive load for style debugging.
 
@@ -85,4 +85,4 @@ v5, merged on 22 Aug 2026, was the first version I'd have called "complete" at t
 
 The next failure mode arrived quickly: the case studies read like reports. v6, in September 2026, rebuilt them as product pages, and the build is written up in the [portfolio case study](/projects/portfolio-site). The next iteration will be driven by the next failure mode I discover.
 
-And if that failure mode is "nobody found my site" — then the next version will be about distribution, not design.
+And if that failure mode is "nobody found my site", then the next version will be about distribution, not design.

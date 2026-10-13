@@ -1,7 +1,7 @@
 [
   {
     "slug": "aarchid",
-    "name": "Aarchid — AI Botanical Intelligence",
+    "name": "Aarchid: AI Botanical Intelligence",
     "productName": "Aarchid",
     "tagline": "Photograph a sick plant, get a diagnosis you can act on.",
     "decision": "Require a source link on every recommendation, and judge prompt changes against a fixed golden set, not by feel.",
@@ -49,7 +49,7 @@
   },
   {
     "slug": "desktasks",
-    "name": "DeskTasks — Desktop Task Widget",
+    "name": "DeskTasks: Desktop Task Widget",
     "productName": "DeskTasks",
     "tagline": "Your task list, pinned behind every window on the desktop.",
     "decision": "Pin the widget behind every window, not on top of them, and refuse attention: accountless, local-first, no dock icon.",
@@ -157,7 +157,7 @@
   },
   {
     "slug": "experiment-hub",
-    "name": "ExperimentHub — A/B Testing Platform",
+    "name": "ExperimentHub: A/B Testing Platform",
     "productName": "ExperimentHub",
     "tagline": "Self-hosted A/B testing with deterministic variant assignment.",
     "decision": "Let the statistics engine say no: return a sequential verdict such as keep running, not a bare p-value.",
@@ -197,7 +197,7 @@
   },
   {
     "slug": "kite-edge",
-    "name": "KiteEdge — Personal Analytics Desk",
+    "name": "KiteEdge: Personal Analytics Desk",
     "productName": "KiteEdge",
     "tagline": "A personal portfolio-analytics desk for one Zerodha account.",
     "decision": "Analytics only: the tool reads the Kite account and never writes to it, so there is no order placement.",
@@ -275,7 +275,7 @@
   },
   {
     "slug": "hackmate",
-    "name": "Hackmate — Co-Founder Matchmaking Platform",
+    "name": "Hackmate: Co-Founder Matchmaking Platform",
     "productName": "Hackmate",
     "tagline": "Find the co-founder you'd actually build with.",
     "decision": "Optimise for speed to first match: keep onboarding and profile setup light so a new user reaches profiles quickly.",
@@ -310,7 +310,7 @@
   },
   {
     "slug": "better-half",
-    "name": "Better-Half — Cycle-Aware Companion",
+    "name": "Better-Half: Cycle-Aware Companion",
     "productName": "Better-Half",
     "tagline": "Cycle-aware daily guidance for long-distance couples.",
     "decision": "Enforce consent in the database, not the interface: every sharing choice maps to a row-level security policy.",
@@ -348,7 +348,7 @@
   },
   {
     "slug": "portfolio-site",
-    "name": "This Portfolio — Meta Case Study",
+    "name": "This Portfolio: Meta Case Study",
     "productName": "This Portfolio",
     "tagline": "A portfolio treated as a product, decision trail included.",
     "decision": "Treat case studies as content, not pages: one MDX file per study, so adding or correcting one is a one-file change.",
@@ -383,7 +383,7 @@
   },
   {
     "slug": "weekly-retro",
-    "name": "Weekly Retro — Relationship Performance Review",
+    "name": "Weekly Retro: Relationship Performance Review",
     "productName": "Weekly Retro",
     "tagline": "Corporate performance-review theatre, applied to a relationship, on purpose.",
     "audience": "Couples",

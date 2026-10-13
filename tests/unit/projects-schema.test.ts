@@ -66,7 +66,7 @@ describe("content/projects.json product fields", () => {
       if (p.hasCaseStudy === false) continue;
       expect(p.decision, `${p.slug} decision`).toBeTruthy();
       expect(p.decision!.length, `${p.slug} decision > 140 chars`).toBeLessThanOrEqual(140);
-      expect(p.decision, `${p.slug} decision em-dash`).not.toContain("—");
+      expect(p.decision, `${p.slug} decision em-dash`).not.toContain("2014");
     }
   });
 

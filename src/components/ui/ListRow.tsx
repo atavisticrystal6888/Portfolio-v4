@@ -14,7 +14,7 @@ export function ListRows({ children }: ListRowsProps) {
 interface ListRowProps {
   href: string;
   title: string;
-  /** Mono rail content — date, category, reading time. */
+  /** Mono rail content: date, category, reading time. */
   rail: ReactNode;
   dek?: ReactNode;
   /** Rendered under the dek, e.g. an outcome readout. */

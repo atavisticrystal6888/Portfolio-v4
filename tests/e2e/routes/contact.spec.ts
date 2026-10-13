@@ -102,7 +102,7 @@ test.describe("Contact (/contact)", () => {
     // visitor must get the server's exact wording, a one-click address and
     // their typed message back - never a false success or a cleared form.
     await page.unroute("**/api/contact");
-    const SEND_FAILED = "The message could not be sent — please email me directly.";
+    const SEND_FAILED = "The message could not be sent. Please email me directly.";
     const calls = await interceptContact(page, 502, { error: SEND_FAILED });
     await fillValid(page);
     await page.getByRole("button", { name: "Send Message" }).click();

@@ -1,4 +1,4 @@
-/* Ruled ledger — hairline-separated rows, no boxes and no icons. */
+/* Ruled ledger: hairline-separated rows, no boxes and no icons. */
 .list {
   list-style: none;
   margin: 0;

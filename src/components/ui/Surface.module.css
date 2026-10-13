@@ -1,6 +1,6 @@
 /* Editorial surface: flat, hairline-ruled, no blur.
    Blur still belongs on Navbar / Modal / Toast / CommandPalette, which
-   genuinely float over scrolling content — those keep --glass-bg. */
+   genuinely float over scrolling content. Those keep --glass-bg. */
 .card {
   background: var(--surface);
   border: var(--hairline);

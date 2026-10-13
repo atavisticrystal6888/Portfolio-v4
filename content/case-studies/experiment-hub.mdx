@@ -1,13 +1,13 @@
 ---
 slug: "experiment-hub"
-title: "ExperimentHub — Self-Hosted A/B Testing Platform"
+title: "ExperimentHub: Self-Hosted A/B Testing Platform"
 subtitle: "Self-hosted, multi-tenant A/B testing for teams whose users' data cannot leave their infrastructure. Deterministic assignment, buffered ingestion, and a statistics engine that can say keep running. Solo build."
 role: "Solo Builder · Product & Architecture"
 duration: "Mar 2026 – Aug 2026 (last commit 22 Aug 2026)"
 stack: ["Elixir", "Phoenix", "Rust", "Python", "FastAPI", "React", "TypeScript", "Kafka"]
 myPart: "Everything: product definition, architecture and the code. Solo build."
 tldr: "Teams with strict data-residency needs can't ship their users' behaviour to SaaS experimentation vendors. I built ExperimentHub solo: self-hosted, multi-tenant A/B testing where the same user always lands in the same variant, ingestion never slows the product being measured, and the statistics engine can say keep running when a naive p-value says ship. Evidence so far comes from a synthetic demo tenant, not production use."
-seoTitle: "ExperimentHub — Self-Hosted A/B Testing"
+seoTitle: "ExperimentHub: Self-Hosted A/B Testing"
 metaDescription: "ExperimentHub is a self-hosted, multi-tenant A/B testing platform built solo: sticky assignment, non-blocking ingestion, peeking-aware stats. Demo data only."
 alternative: "a plain t-test endpoint that calls a winner at p < 0.05."
 tradeoff: "early looks need a higher bar, so a significant p-value can still mean keep running."
@@ -159,7 +159,7 @@ sequential monitoring · obrien_fleming α-spending
   nominal α spent        0.0206
   boundary |z| >         2.316
   observed z             2.127
-  verdict                CONTINUE — boundary not crossed
+  verdict                CONTINUE (boundary not crossed)
 
 recommendation  insufficient_data: Only 5500 of 7678 required samples collected. Continue running.
 overall_status  insufficient_data · computed in 6 ms
@@ -173,7 +173,7 @@ Assignment is verifiable by construction: the bucket math is small enough to re-
 
 ## Limits and next
 
-- **First real tenant, not yet live.** This site's home-page call-to-action is wired to run as an experiment through the platform's [JavaScript SDK](https://github.com/atavisticrystal6888/A-B-Testing-Platform/tree/main/sdk/javascript) — server-side assignment, an anonymous first-party cookie for stickiness, click and contact-form conversions — and stays dormant until the platform has a hosted instance. The first real results will replace the seed numbers above. Adoption, assignment latency under load and ingestion throughput are still not measured.
+- **First real tenant, not yet live.** This site's home-page call-to-action is wired to run as an experiment through the platform's [JavaScript SDK](https://github.com/atavisticrystal6888/A-B-Testing-Platform/tree/main/sdk/javascript), using server-side assignment, an anonymous first-party cookie for stickiness, and click and contact-form conversions. It stays dormant until the platform has a hosted instance. The first real results will replace the seed numbers above. Adoption, assignment latency under load and ingestion throughput are still not measured.
 - **Deferred on purpose:** feature-flag creation UI, Bayesian analysis exposure and CUPED; the results cache is still in-memory.
 - **Licence: not yet chosen.** The repository has no licence file, so the code is public to read but not licensed for reuse.
 - **Next bet:** work the deferred list in the order a PM would feel it: results cache out of memory, then the feature-flag creation UI, then Bayesian exposure.

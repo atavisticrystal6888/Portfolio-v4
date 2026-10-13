@@ -13,7 +13,7 @@ interface CaseStudyHeroProps {
   /** Project screenshot, when the project has one. */
   imageUrl?: string | null;
   imageAlt?: string;
-  /** Deployed URL from projects.json — rendered as a spec row, not a footnote. */
+  /** Deployed URL from projects.json, rendered as a spec row, not a footnote. */
   liveUrl?: string | null;
   /** Product accent (hex) for the framed shot's ground. */
   accent?: string | null;

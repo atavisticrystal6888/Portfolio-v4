@@ -12,7 +12,7 @@ import { MetricsGrid } from "@/components/home/MetricsGrid";
 import { BlogTeaser } from "@/components/home/BlogTeaser";
 import { Suggestions } from "@/components/home/Suggestions";
 import { JsonLd } from "@/components/ui/JsonLd";
-import { CONTACT_EMAIL_HREF } from "@/lib/site";
+import { CONTACT_EMAIL_HREF, SITE_TITLE } from "@/lib/site";
 import { toBlogSummary } from "@/lib/blog-summary";
 import { assignOrControl, type ExperimentAssignment } from "@/lib/experiments/client";
 import { isExperimentsEnabled } from "@/lib/experiments/config";
@@ -21,7 +21,7 @@ import { UID_HEADER, isValidUid } from "@/lib/experiments/identity";
 import styles from "./home.module.css";
 
 export const metadata = generatePageMetadata({
-  title: "Dhruv Singhal — Product Manager & Builder",
+  title: SITE_TITLE,
   description:
     "Dhruv Singhal, Product Manager & Builder. Case studies on AI evaluation, product scope, D2C retention and ride-sharing, each with its evidence and its limits.",
 });
@@ -59,10 +59,10 @@ export default async function Home() {
       {/* Person is emitted once site-wide from the root layout. */}
       <JsonLd id="home-website-jsonld" data={webSiteJsonLd} />
 
-      {/* Hero — title block + contents index; no scene behind it. */}
+      {/* Hero: title block + contents index; no scene behind it. */}
       <HeroSection ctaVariant={hero?.variantKey} tracked={hero?.enrolled ?? false} />
 
-      {/* Selected work — the work leads; biography lives on /about. */}
+      {/* Selected work: the work leads; biography lives on /about. */}
       <section
         id="work"
         aria-label="Selected work"
@@ -83,7 +83,7 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* Metrics — the one orchestrated reveal on the page, inside MetricsGrid */}
+      {/* Metrics: the one orchestrated reveal on the page, inside MetricsGrid */}
       <section
         id="outcomes"
         aria-label="Key metrics"
@@ -126,7 +126,7 @@ export default async function Home() {
           they stay off the page until the owner confirms they are verbatim
           and approved. TestimonialCarousel and the data file are kept. */}
 
-      {/* Suggestions — owns its section chrome so it can render nothing */}
+      {/* Suggestions: owns its section chrome so it can render nothing */}
       <Suggestions projects={allProjects} posts={posts.map(toBlogSummary)} />
 
       {/* Contact CTA. The portrait lives here rather than in the hero: a face

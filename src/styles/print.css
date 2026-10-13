@@ -65,7 +65,7 @@
 }
 
 /* Scroll-reveal wrappers hold opacity 0 until an IntersectionObserver fires,
-   which never happens during print layout — force everything visible. */
+   which never happens during print layout: force everything visible. */
 [class*="reveal"] {
   opacity: 1 !important;
   transform: none !important;

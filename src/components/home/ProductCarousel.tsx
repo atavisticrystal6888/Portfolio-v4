@@ -30,8 +30,8 @@ interface ProductCarouselProps {
 
 /**
  * Horizontal scroll-snap rail of product cards (WAI-ARIA carousel pattern,
- * no auto-rotation). The browser owns the scrolling — wheel, trackpad, touch
- * and the scrollbar all work with JavaScript off — and hydration adds the
+ * no auto-rotation). The browser owns the scrolling: wheel, trackpad, touch
+ * and the scrollbar all work with JavaScript off. Hydration adds the
  * prev/next buttons, dot indicators, arrow keys and slide announcements.
  * The next card always peeks in from the right edge so the rail never looks
  * like a static row of two.

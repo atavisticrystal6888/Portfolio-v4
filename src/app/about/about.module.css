@@ -19,7 +19,7 @@
   width: 100%;
 }
 
-/* Same container as .inner so every section header shares one left edge —
+/* Same container as .inner so every section header shares one left edge:
    a centred narrower box made sections 02/04/07 jump ~180px rightward
    relative to their neighbours. Prose keeps its measure via the child cap. */
 .innerNarrow {

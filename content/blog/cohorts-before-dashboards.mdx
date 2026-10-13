@@ -44,7 +44,7 @@ March flattens: eight points given up from M1 to M2, then only two more, settlin
 
 **The slope between M1 and M2.** M0 to M1 is dominated by trial, curiosity, and whatever the campaign promised. M1 to M2 is closer to the truth, because everyone in it already came back once deliberately. When I want one number out of a cohort table, I take this one.
 
-**Cohort over cohort.** Read down a column, not across a row. Is M1 improving from March to May? If the product work is landing, later cohorts should retain better at the same age — and that comparison is only fair at the same age. A six-month-old cohort's M3 against a two-month-old cohort's M1 is not a comparison.
+**Cohort over cohort.** Read down a column, not across a row. Is M1 improving from March to May? If the product work is landing, later cohorts should retain better at the same age, and that comparison is only fair at the same age. A six-month-old cohort's M3 against a two-month-old cohort's M1 is not a comparison.
 
 ## What Starting the Build Taught Me
 
@@ -52,7 +52,7 @@ This week I started building [Cohort & Retention Studio](/projects/cohort-retent
 
 Almost every hard decision in the first days was a definition rather than a calculation. A cohort is customers whose first valid order falls in a given month, which forces you to define a valid order: cancelled, fully refunded, duplicate-id and zero-value replacement orders are out by default, the last because leaving them in quietly inflates repeat rate. Same-day orders count separately, since split shipments are real orders, though that one is a toggle: reasonable people disagree. Month boundaries follow the store's timezone, not the browser's.
 
-The one I did not predict is censoring. If a cohort is only two months old, its month-three cell is not zero — it is unknown. Showing zero there is the most common way a hand-built cohort analysis lies to its owner, so those cells stay blank and cohorts under three months old are labelled immature. The same instinct put every definition one click from its number.
+The one I did not predict is censoring. If a cohort is only two months old, its month-three cell is not zero. It is unknown. Showing zero there is the most common way a hand-built cohort analysis lies to its owner, so those cells stay blank and cohorts under three months old are labelled immature. The same instinct put every definition one click from its number.
 
 ## Three Mistakes
 

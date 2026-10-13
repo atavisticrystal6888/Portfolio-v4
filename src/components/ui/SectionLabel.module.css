@@ -1,5 +1,5 @@
 /* Mono eyebrow. With an index it reads as a dossier section marker
-   ("01 — Impact"); without one it falls back to the accent tick. */
+   ("01", a short rule, "Impact"); without one it falls back to the accent tick. */
 .label {
   display: flex;
   align-items: center;

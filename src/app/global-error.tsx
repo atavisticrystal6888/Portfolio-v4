@@ -77,8 +77,8 @@ export default function GlobalError({ error, reset }: GlobalErrorProps) {
             Something went wrong on this page
           </h1>
           <p className="ge-muted" style={{ marginTop: "1rem", color: "#5c5f66", lineHeight: 1.7 }}>
-            This part of the site failed to load. Trying again usually fixes it —
-            if it doesn&apos;t, the rest of the site still works.
+            This part of the site failed to load. Trying again usually fixes it.
+            If it doesn&apos;t, the rest of the site still works.
           </p>
           {error.digest && (
             <p className="ge-muted" style={{ marginTop: "0.75rem", fontSize: "0.75rem", color: "#5c5f66" }}>

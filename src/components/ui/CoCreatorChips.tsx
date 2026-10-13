@@ -40,7 +40,7 @@ export function CoCreatorChips({
               // the visible text in visible order, handle included - the old
               // "Name (Role)" form dropped the handle and voice control could
               // not match what the user reads.
-              aria-label={`${c.name}${c.handle ? ` ${c.handle}` : ""} · ${c.role} — opens in new tab`}
+              aria-label={`${c.name}${c.handle ? ` ${c.handle}` : ""} · ${c.role}, opens in new tab`}
             >
               <span className={styles.name}>{c.name}</span>
               {c.handle && <span className={styles.handle}>{c.handle}</span>}

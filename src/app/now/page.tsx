@@ -60,8 +60,8 @@ export default function NowPage() {
           <h2 className={styles.sectionTitle}>On My Shelf</h2>
           <ul className={styles.list}>
             {/* Same two books as "On my desk right now" on /bookshelf. */}
-            <li><em>Inspired</em> — Marty Cagan</li>
-            <li><em>Thinking in Systems</em> — Donella Meadows</li>
+            <li><em>Inspired</em>, Marty Cagan</li>
+            <li><em>Thinking in Systems</em>, Donella Meadows</li>
             <li>Lenny&apos;s Newsletter, Latent Space, Stratechery</li>
           </ul>
         </div>

@@ -66,7 +66,7 @@ export const RELEASES: Release[] = [
     badge: "shipped",
     body: "The portfolio caught up with the building. Three new case studies (ExperimentHub and DeskTasks featured, Better-Half in the library) shift the roster's weight toward products that were built and tested (deployment status is on each entry), KiteEdge's study now reflects its August state, and /projects gained a Featured / More split with card-only entries for smaller builds.",
     highlights: [
-      "ExperimentHub — self-hosted A/B testing platform (Rust assignment core, sequential statistics)",
+      "ExperimentHub: self-hosted A/B testing platform (Rust assignment core, sequential statistics)",
       "DeskTasks: desktop task widget, 540+ test assertions (August 2026 count)",
       "Better-Half: private two-user PWA, 575 RLS policy checks (August 2026 count)",
       "KiteEdge refreshed (August 2026 state): 50 endpoints, 13 services, NIFTY 500 screener, trade journal",
@@ -78,11 +78,11 @@ export const RELEASES: Release[] = [
     date: "April 2026",
     title: "Depth pages & AI PM landing",
     badge: "shipped",
-    body: "The specialization layer. Shipped /ai-pm as the single place to route AI-PM conversations, plus /lab, /uses, /bookshelf — the pages that make this feel like a person, not a résumé.",
+    body: "The specialization layer. Shipped /ai-pm as the single place to route AI-PM conversations, plus /lab, /uses, /bookshelf: the pages that make this feel like a person, not a résumé.",
     highlights: [
-      "/ai-pm — playbooks, Aarchid case study link, AI-focused writing index",
+      "/ai-pm: playbooks, Aarchid case study link, AI-focused writing index",
       "/lab: product ideas from the original matrix, now queryable (12 as of September 2026)",
-      "/uses and /bookshelf — the signals behind how I work and think",
+      "/uses and /bookshelf: the signals behind how I work and think",
       "Second AI-PM essay in the writing queue",
     ],
   },
@@ -94,7 +94,7 @@ export const RELEASES: Release[] = [
     body: "Closed the gap between what the site claimed and what's actually true. Every Aarchid surface now credits Dilpreet Grover as co-creator, stacks reflect reality, and the command palette gained the actions a power user expects.",
     highlights: [
       "Aarchid case study rewritten with the real Edge Stack (Gemini + a web research API + Cloudflare Workers)",
-      "Home metrics derive from content — no more hardcoded numbers",
+      "Home metrics derive from content: no more hardcoded numbers",
       "Command palette: copy-email, download-resume, socials, keyword search",
       "Navbar resume download, richer 404, testimonial avatars wired up",
     ],
@@ -114,7 +114,7 @@ export const RELEASES: Release[] = [
     date: "March 2026",
     title: "Next.js experiment",
     badge: "shipped",
-    body: "First Next.js rewrite — validated the App Router + MDX pattern that v4 is built on. Shipped, learned, archived.",
+    body: "First Next.js rewrite: validated the App Router + MDX pattern that v4 is built on. Shipped, learned, archived.",
     highlights: [
       "Proved App Router + MDX for long-form case studies",
       "Surfaced the conditional-loading architecture v2 used",

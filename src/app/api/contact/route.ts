@@ -217,7 +217,7 @@ export async function POST(request: NextRequest) {
     // spend the sender's budget.
     if (!resend && process.env.NODE_ENV === "production") {
       return NextResponse.json(
-        { error: "The contact form is temporarily offline — please email me directly." },
+        { error: "The contact form is temporarily offline. Please email me directly." },
         { status: 503 }
       );
     }
@@ -271,7 +271,7 @@ export async function POST(request: NextRequest) {
           summarizeSendError(sendError, sendHeaders)
         );
         return NextResponse.json(
-          { error: "The message could not be sent — please email me directly." },
+          { error: "The message could not be sent. Please email me directly." },
           { status: 502 }
         );
       }

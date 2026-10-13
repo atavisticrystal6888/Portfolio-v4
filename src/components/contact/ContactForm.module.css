@@ -150,7 +150,7 @@
   align-self: flex-start;
 }
 
-/* Honeypot wrapper. Off-screen rather than display:none — a bot that can see
+/* Honeypot wrapper. Off-screen rather than display:none. A bot that can see
    the field is hidden will leave it alone, and then it catches nothing.
    Negative `left` does not extend scrollWidth in LTR, so this stays clear of
    the horizontal-overflow guarantee. */

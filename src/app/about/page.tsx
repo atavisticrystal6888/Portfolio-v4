@@ -42,7 +42,7 @@ export default async function AboutPage() {
           { name: "About", href: "/about" },
         ]}
         title="Dhruv Singhal"
-        subtitle="Product Manager & Builder — turning ambiguous domain problems into product decisions, specs, and shipped systems."
+        subtitle="Product Manager & Builder: turning ambiguous domain problems into product decisions, specs, and shipped systems."
       />
 
       {/* Bio */}

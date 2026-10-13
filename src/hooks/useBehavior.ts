@@ -16,7 +16,7 @@ const DEFAULT_BEHAVIOR: UserBehavior = {
 
 // Read through useSyncExternalStore rather than a useState initial value.
 // Stored behaviour used to be loaded at module scope, which meant the first
-// client render already had it while the server-rendered HTML did not —
+// client render already had it while the server-rendered HTML did not.
 // Suggestions then hydrated with a different set of recommendations than the
 // markup it was hydrating. useSyncExternalStore renders the server snapshot
 // during hydration and swaps to the client one straight after, so the two

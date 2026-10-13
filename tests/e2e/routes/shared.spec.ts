@@ -45,7 +45,7 @@ test.describe("Shared chrome", () => {
 
   test("command palette opens with Ctrl/Cmd+K and Escape returns focus", async ({ page }) => {
     await page.goto("/", { waitUntil: "networkidle" });
-    const logo = page.getByRole("link", { name: "Dhruv Singhal — Home" });
+    const logo = page.getByRole("link", { name: "Dhruv Singhal, home" });
     await logo.focus();
     await expect(logo).toBeFocused();
     const dialog = page.getByRole("dialog", { name: "Command palette" });

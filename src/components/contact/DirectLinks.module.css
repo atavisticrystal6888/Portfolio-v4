@@ -1,4 +1,4 @@
-/* Column count follows the available width, not the viewport — this grid
+/* Column count follows the available width, not the viewport: this grid
    now also lives in a ~400px sidebar where a viewport query would wrongly
    force two cramped columns. */
 .grid {

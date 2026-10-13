@@ -86,7 +86,7 @@ export default function Error({ error, reset }: ErrorProps) {
           lineHeight: 1.7,
         }}
       >
-        This part of the site failed to load. Trying again usually fixes it — if
+        This part of the site failed to load. Trying again usually fixes it. If
         it doesn&apos;t, the rest of the site still works.
       </p>
 

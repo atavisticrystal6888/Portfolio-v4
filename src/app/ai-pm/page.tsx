@@ -20,7 +20,7 @@ export const metadata = generatePageMetadata({
 const PLAYBOOKS = [
   {
     title: "Scoping an LLM feature",
-    body: "How to write a PRD when the model is the product. Success criteria, eval harness, guardrails, and cost envelope — before a single prompt is written.",
+    body: "How to write a PRD when the model is the product. Success criteria, eval harness, guardrails, and cost envelope. All before a single prompt is written.",
     meta: "Framework",
     href: "/blog/shipping-llm-products-eval-harness",
     cta: "Read the essay",
@@ -61,13 +61,13 @@ export default function AIPMPage() {
           { name: "Home", href: "/" },
           { name: "AI PM", href: "/ai-pm" },
         ]}
-        title="AI PM — where product thinking meets the model"
+        title="AI PM: where product thinking meets the model"
         subtitle={
           <>
             I build LLM products the way a PM ships any other product: with a
             crisp problem, an eval rubric, a cost envelope, and a way to roll
             back. This page collects the playbooks, artefacts, and built work
-            behind that stance — most of it learned building{" "}
+            behind that stance, most of it learned building{" "}
             <Link href="/projects/aarchid">Aarchid</Link> with{" "}
             <a
               href="https://github.com/dfordp"
@@ -121,7 +121,7 @@ export default function AIPMPage() {
             <p className={styles.sectionLede}>
               Six illustrative, fixed plant-diagnosis cases. Two model versions. One confidence
               gate. Toggle the controls and watch the same golden set re-score
-              in real time — this is how I validate an LLM feature before it
+              in real time. This is how I validate an LLM feature before it
               ships.
             </p>
           </header>
@@ -145,7 +145,7 @@ export default function AIPMPage() {
               list-price estimates, not a contract or a bill. Same harness
               mindset, applied to economics. Move the sliders to
               see how batch size, cache hit rate, and request volume reshape
-              the per-user-per-month bill — and whether you stay inside the
+              the per-user-per-month bill, and whether you stay inside the
               $0.25 target envelope (an estimate, not a measured bill).
             </p>
           </header>
@@ -159,7 +159,7 @@ export default function AIPMPage() {
         <div className={styles.inner}>
           <header className={styles.sectionHeader}>
             <SectionLabel index="04">Case Study</SectionLabel>
-            <h2 className={styles.sectionTitle}>Aarchid — the worked example</h2>
+            <h2 className={styles.sectionTitle}>Aarchid: the worked example</h2>
           </header>
           <div className={`${styles.card} ${styles.cardWide}`}>
             <h3>AI Botanical Intelligence · offline eval, result withheld</h3>
@@ -211,15 +211,15 @@ export default function AIPMPage() {
           </header>
           <ul className={styles.list}>
             <li>
-              <strong>AI PM interview prep kit</strong> — deconstructed case
+              <strong>AI PM interview prep kit</strong>: deconstructed case
               questions, eval-harness design, and model economics cheatsheets.
             </li>
             <li>
-              <strong>A second edge-stack build</strong> — applying the same
+              <strong>A second edge-stack build</strong>: applying the same
               pattern to a different problem domain.
             </li>
             <li>
-              <strong>More on eval sets as specs</strong> — a follow-up to{" "}
+              <strong>More on eval sets as specs</strong>: a follow-up to{" "}
               <Link href="/blog/the-prd-is-dead-long-live-the-eval-set">The
               PRD Is Dead, Long Live the Eval Set</Link>.
             </li>

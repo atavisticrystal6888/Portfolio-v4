@@ -18,7 +18,7 @@ const CONTENTS = [
 /**
  * The title block of a working paper: thesis first, author line under it,
  * and a contents index in the right column doing real navigation. The name
- * lives in the byline (and the navbar) — the claim leads.
+ * lives in the byline (and the navbar). The claim leads.
  */
 interface HeroSectionProps {
   /** Variant key from ExperimentHub; unknown or absent renders control copy. */
@@ -44,7 +44,7 @@ export function HeroSection({ ctaVariant, tracked = false }: HeroSectionProps) {
             Product Intern, Growth &middot; The Sleep Company (Jul–Oct 2026)
           </p>
           <p className={styles.statement}>
-            E-commerce and AI products &mdash; stakeholder input, user research,
+            E-commerce and AI products: stakeholder input, user research,
             and product specs turned into decisions teams can build.
           </p>
           <div className={styles.ctas}>
@@ -73,7 +73,7 @@ export function HeroSection({ ctaVariant, tracked = false }: HeroSectionProps) {
           <ol className={styles.contentsList}>
             {CONTENTS.map(({ index, label, href }) => (
               <li key={href}>
-                {/* ToC grammar: label, dotted leader, folio number — the
+                {/* ToC grammar: label, dotted leader, folio number. The
                     leader ends in the number instead of trailing into nothing. */}
                 <Link href={href} className={styles.contentsLink}>
                   <span className={styles.contentsLabel}>{label}</span>

@@ -21,8 +21,8 @@ interface ProductCardProps {
 
 /**
  * The product card: a framed, uncropped screenshot on the product's own
- * tinted ground, then the facts a visitor needs without reading a paragraph —
- * what it is called, what it is, whether it is live, what it achieved, where
+ * tinted ground, then the facts a visitor needs without reading a paragraph.
+ * What it is called, what it is, whether it is live, what it achieved, where
  * to go next. Shared by the home carousel and the /projects featured grid so
  * the two never drift apart.
  */

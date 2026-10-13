@@ -57,7 +57,7 @@ export function Navbar() {
           <Link
             href="/"
             className={styles.logo}
-            aria-label="Dhruv Singhal — Home"
+            aria-label="Dhruv Singhal, home"
             aria-current={pathname === '/' ? 'page' : undefined}
           >
             <span className={styles.mark} aria-hidden="true">

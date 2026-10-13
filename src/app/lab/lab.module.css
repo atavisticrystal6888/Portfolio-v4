@@ -1,4 +1,4 @@
-/* Lab — homepage section grammar. The header mirrors PageHeader but keeps
+/* Lab: homepage section grammar. The header mirrors PageHeader but keeps
    the ambient scene in its right gutter; the matrix takes the full
    container so twelve ideas read as an actual matrix, not a column. */
 
@@ -27,7 +27,7 @@
 }
 
 /* Reserve the scene's column so the lede stops under it, and hold the
-   stage open to the scene's height — a cropped figure reads as a bug. */
+   stage open to the scene's height: a cropped figure reads as a bug. */
 @media (min-width: 900px) {
   .headerInner {
     padding-right: calc(min(34%, 320px) + var(--space-8));

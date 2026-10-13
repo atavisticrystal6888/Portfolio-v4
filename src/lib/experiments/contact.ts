@@ -7,7 +7,7 @@ export const CONTACT_EVENT = "contact_submitted";
 
 /**
  * A genuine contact submission is the business outcome behind the hero
- * experiment. Call only on the real-send success path — never on the
+ * experiment. Call only on the real-send success path, never on the
  * honeypot path, which returns the same body by design.
  */
 export async function trackContactSubmission(source: UidSource): Promise<void> {

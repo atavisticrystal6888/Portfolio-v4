@@ -14,8 +14,8 @@ export { STATUS_LABEL, StatusPill } from "./ProjectFacts";
 interface ProductMastheadProps {
   project: Project;
   /**
-   * Case-study frontmatter title, e.g. "Aarchid — AI Botanical Intelligence".
-   * The part after the dash becomes the second half of the eyebrow so nothing
+   * Case-study frontmatter title, e.g. "Aarchid: AI Botanical Intelligence".
+   * The part after the separator becomes the second half of the eyebrow so nothing
    * from the title is lost when the hero gives up its h1.
    */
   title?: string;
@@ -33,13 +33,18 @@ interface ProductMastheadProps {
 }
 
 /**
- * Splits "Name — Descriptor" (em/en dash or spaced hyphen) into its halves.
- * A title with no dash has no descriptor.
+ * Splits "Name: Descriptor" into its halves at the first separator: a colon
+ * followed by whitespace, or a spaced em dash, en dash or hyphen (older
+ * titles still use the dash form). A title with no separator has no
+ * descriptor.
  */
 export function splitCaseStudyTitle(title: string): { name: string; descriptor: string | null } {
-  const [name = "", ...rest] = title.split(/\s+[\u2014\u2013-]\s+/);
-  const descriptor = rest.join(" ").trim();
-  return { name: name.trim(), descriptor: descriptor.length > 0 ? descriptor : null };
+  const separator = /:\s+|\s+[\u2014\u2013-]\s+/;
+  const match = separator.exec(title);
+  if (!match) return { name: title.trim(), descriptor: null };
+  const name = title.slice(0, match.index).trim();
+  const descriptor = title.slice(match.index + match[0].length).trim();
+  return { name, descriptor: descriptor.length > 0 ? descriptor : null };
 }
 
 /**

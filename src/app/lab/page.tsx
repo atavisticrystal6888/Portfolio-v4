@@ -39,7 +39,7 @@ export default function LabPage() {
             {/* Explicit space: JSX trims the one that would otherwise sit
                 between the count and the next line of copy. */}
             A working matrix of {ideas.length}{" "}
-            product ideas I&apos;ve scoped — each one a hypothetical build that
+            product ideas I&apos;ve scoped, each one a hypothetical build that
             maps a real PM skill to a real technical challenge. Most will stay
             ideas. A few will become projects. All of them are me thinking in
             public about what&apos;s worth making.

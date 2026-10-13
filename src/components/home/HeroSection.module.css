@@ -43,7 +43,7 @@
   text-wrap: balance;
 }
 
-/* Where he actually is — the status line of the author byline. */
+/* Where he actually is: the status line of the author byline. */
 .status {
   font-family: var(--font-mono);
   font-size: var(--text-sm);
@@ -124,7 +124,7 @@
 }
 
 /* The whole row is the link; padding keeps the hit area ≥44px. The dotted
-   leader is the row's only horizontal line — a solid rule beneath it doubled
+   leader is the row's only horizontal line. A solid rule beneath it doubled
    the ruling. */
 .contentsLink {
   display: flex;

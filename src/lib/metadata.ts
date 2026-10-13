@@ -71,8 +71,8 @@ export function contentDate(value: unknown): string | undefined {
  *
  * Blog `excerpt` and case-study `tldr` are authored for humans reading the
  * page, so they can carry inline markdown and run well past what Google will
- * show. This flattens the markup, collapses whitespace, and — only when the
- * text is genuinely over budget — cuts at the last word boundary and closes
+ * show. This flattens the markup, collapses whitespace, and, only when the
+ * text is genuinely over budget, cuts at the last word boundary and closes
  * with a single "…". The ellipsis counts toward `max`, so the return value is
  * never longer than `max`.
  */
@@ -102,7 +102,7 @@ export function truncateDescription(text: string, max = 160): string {
   const cut = lastSpace > max * 0.5 ? budget.slice(0, lastSpace) : budget;
 
   // Never leave dangling punctuation immediately before the ellipsis.
-  return `${cut.replace(/[\s,;:.\-—–]+$/u, "")}…`;
+  return `${cut.replace(/[\s,;:.\-\u2014\u2013]+$/u, "")}…`;
 }
 
 export function generatePageMetadata({
