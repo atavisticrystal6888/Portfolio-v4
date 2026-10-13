@@ -2,6 +2,7 @@ import type { CSSProperties } from "react";
 import Link from "next/link";
 import type { Project } from "@/types/project";
 import { FramedShot } from "@/components/case-study/FramedShot";
+import { ProductPlate } from "@/components/projects/ProductPlate";
 import {
   EvidenceChip,
   OwnershipLine,
@@ -14,14 +15,19 @@ interface ProductCardProps {
   project: Project;
   /** Preload the screenshot when the card is the first thing in view. */
   priority?: boolean;
-  /** `sizes` for the framed screenshot; depends on the grid the card sits in. */
+  /**
+   * `sizes` for the card image; depends on the grid the card sits in. The
+   * default is the home carousel's: one card plus a peek on phones, two plus
+   * a peek from 640px, at most about 480px wide inside the 1072px rail.
+   */
   sizes?: string;
   className?: string;
 }
 
 /**
- * The product card: a framed, uncropped screenshot on the product's own
- * tinted ground, then the facts a visitor needs without reading a paragraph.
+ * The product card: the rendered product plate when there is one, otherwise a
+ * framed, uncropped screenshot on the product's own tinted ground, then the
+ * facts a visitor needs without reading a paragraph.
  * What it is called, what it is, whether it is live, what it achieved, where
  * to go next. Shared by the home carousel and the /projects featured grid so
  * the two never drift apart.
@@ -29,7 +35,7 @@ interface ProductCardProps {
 export function ProductCard({
   project,
   priority = false,
-  sizes = "(max-width: 640px) 85vw, (max-width: 1200px) 46vw, 520px",
+  sizes = "(max-width: 639px) 75vw, (max-width: 1200px) 46vw, 480px",
   className,
 }: ProductCardProps) {
   const hasCaseStudy = project.hasCaseStudy !== false;
@@ -39,7 +45,19 @@ export function ProductCard({
     ? ({ "--product-accent": project.accent } as CSSProperties)
     : undefined;
 
-  const shot = project.imageUrl ? (
+  // Rendered plate first: transparent, so it floats on the card surface with
+  // no frame or tinted ground. Without one, today's framed shot or monogram.
+  const shot = project.plate ? (
+    <ProductPlate
+      plate={project.plate}
+      name={name}
+      // imageAlt describes imageUrl; a plateSource override mounts another shot.
+      alt={project.imageUrl && !project.plateSource ? project.imageAlt : undefined}
+      sizes={sizes}
+      priority={priority}
+      className={styles.shot}
+    />
+  ) : project.imageUrl ? (
     <FramedShot
       src={project.imageUrl}
       alt={project.imageAlt ?? `${name} screenshot`}
@@ -68,14 +86,16 @@ export function ProductCard({
       {hasCaseStudy ? (
           <Link
             href={href}
-            className={styles.media}
+            className={cn(styles.media, project.plate && styles.mediaPlate)}
             tabIndex={-1}
             aria-hidden="true"
           >
             {shot}
           </Link>
         ) : (
-          <div className={styles.media} aria-hidden={project.imageUrl ? undefined : true}>
+          <div
+            className={cn(styles.media, project.plate && styles.mediaPlate)}
+            aria-hidden={project.imageUrl ? undefined : true}>
             {shot}
           </div>
         )}

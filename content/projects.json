@@ -45,7 +45,13 @@
     "lastVerified": "2026-09-30",
     "duration": "Aug 2025 – live, checked 30 Sep 2026",
     "role": "Co-creator · Product + Engineering",
-    "order": 1
+    "order": 1,
+    "plate": {
+      "src": "/images/plates/aarchid.webp",
+      "avif": "/images/plates/aarchid.avif",
+      "width": 1600,
+      "height": 1000
+    }
   },
   {
     "slug": "desktasks",
@@ -84,7 +90,13 @@
     "lastVerified": "2026-09-30",
     "duration": "2026 · v1.3.x frozen Sept 2026, v2.0.0-alpha in progress",
     "role": "Solo builder · Product & Engineering",
-    "order": 2
+    "order": 2,
+    "plate": {
+      "src": "/images/plates/desktasks.webp",
+      "avif": "/images/plates/desktasks.avif",
+      "width": 1600,
+      "height": 1000
+    }
   },
   {
     "slug": "cohort-retention-studio",
@@ -120,7 +132,13 @@
     "lastVerified": "2026-09-30",
     "duration": "Sept 2026 · local pilot ready",
     "role": "Solo builder · Product & Engineering",
-    "order": 3
+    "order": 3,
+    "plate": {
+      "src": "/images/plates/cohort-retention-studio.webp",
+      "avif": "/images/plates/cohort-retention-studio.avif",
+      "width": 1600,
+      "height": 1000
+    }
   },
   {
     "slug": "sawari",
@@ -153,7 +171,13 @@
     "lastVerified": "2026-09-30",
     "duration": "2026 · local build",
     "role": "Solo builder · Product & Engineering",
-    "order": 4
+    "order": 4,
+    "plate": {
+      "src": "/images/plates/sawari.webp",
+      "avif": "/images/plates/sawari.avif",
+      "width": 1600,
+      "height": 1000
+    }
   },
   {
     "slug": "experiment-hub",
@@ -193,7 +217,13 @@
     "lastVerified": "2026-09-30",
     "duration": "2026",
     "role": "Solo builder · Product & Architecture",
-    "order": 5
+    "order": 5,
+    "plate": {
+      "src": "/images/plates/experiment-hub.webp",
+      "avif": "/images/plates/experiment-hub.avif",
+      "width": 1600,
+      "height": 1000
+    }
   },
   {
     "slug": "kite-edge",
@@ -211,6 +241,7 @@
     "category": "technical",
     "description": "A personal analytics desk for my own Zerodha account, running on my own laptop: technical indicators, Monte Carlo VaR, ensemble forecasting, a NIFTY 500 screener and a FIFO trade journal. Private by design; the tests run on synthetic data only.",
     "imageUrl": "/images/projects/kite-edge/quantstats-tearsheet.png",
+    "plateSource": "/images/projects/kite-edge/tearsheet-top.webp",
     "imageAlt": "QuantStats tear sheet from KiteEdge's report module, rendered on seeded synthetic returns, not account data.",
     "imageCaption": "Tear sheet rendered on seeded synthetic returns, not account data.",
     "heroImageUrl": "/images/projects/kite-edge/tearsheet-top.webp",
@@ -234,7 +265,13 @@
     "lastVerified": "2026-09-30",
     "duration": "May 2026 onward",
     "role": "Solo builder · Product & Architecture",
-    "order": 6
+    "order": 6,
+    "plate": {
+      "src": "/images/plates/kite-edge.webp",
+      "avif": "/images/plates/kite-edge.avif",
+      "width": 1600,
+      "height": 1000
+    }
   },
   {
     "slug": "tcs-nqt-prep-hub",
@@ -271,7 +308,13 @@
     "lastVerified": "2026-09-30",
     "duration": "May 2026 – Jun 2026",
     "role": "Web app builder · Product & Engineering",
-    "order": 7
+    "order": 7,
+    "plate": {
+      "src": "/images/plates/tcs-nqt-prep-hub.webp",
+      "avif": "/images/plates/tcs-nqt-prep-hub.avif",
+      "width": 1600,
+      "height": 1000
+    }
   },
   {
     "slug": "hackmate",
@@ -306,7 +349,13 @@
     "lastVerified": "2026-09-30",
     "duration": "2025",
     "role": "Co-Builder · Product",
-    "order": 8
+    "order": 8,
+    "plate": {
+      "src": "/images/plates/hackmate.webp",
+      "avif": "/images/plates/hackmate.avif",
+      "width": 1600,
+      "height": 1000
+    }
   },
   {
     "slug": "better-half",
@@ -344,7 +393,13 @@
     "lastVerified": "2026-09-30",
     "duration": "Aug 2026 · private, two users",
     "role": "Solo builder · Product & Engineering",
-    "order": 9
+    "order": 9,
+    "plate": {
+      "src": "/images/plates/better-half.webp",
+      "avif": "/images/plates/better-half.avif",
+      "width": 1600,
+      "height": 1000
+    }
   },
   {
     "slug": "portfolio-site",
@@ -379,7 +434,13 @@
     "lastVerified": "2026-09-30",
     "duration": "Jan 2026 – Sept 2026",
     "role": "Product & Build",
-    "order": 10
+    "order": 10,
+    "plate": {
+      "src": "/images/plates/portfolio-site.webp",
+      "avif": "/images/plates/portfolio-site.avif",
+      "width": 1600,
+      "height": 1000
+    }
   },
   {
     "slug": "weekly-retro",
@@ -417,6 +478,12 @@
     "lastVerified": "2026-09-30",
     "duration": "Aug 2026",
     "role": "Solo builder · Product satire",
-    "order": 11
+    "order": 11,
+    "plate": {
+      "src": "/images/plates/weekly-retro.webp",
+      "avif": "/images/plates/weekly-retro.avif",
+      "width": 1600,
+      "height": 1000
+    }
   }
 ]

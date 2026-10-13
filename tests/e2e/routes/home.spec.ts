@@ -9,6 +9,7 @@ interface RosterEntry {
   productName?: string;
   decision?: string;
   imageUrl?: string | null;
+  plate?: { src: string };
   tier?: string;
 }
 const ROSTER: RosterEntry[] = JSON.parse(
@@ -57,17 +58,31 @@ test.describe("Home (/)", () => {
     await expect(slides.nth(3).getByTestId("status-pill")).toContainText(/not deployed/i);
   });
 
-  test("imageless flagship plates are neutral: monogram only, the decision lives in the card body", async ({ page }) => {
+  test("rendered product plates lead their cards; imageless flagships without one keep the neutral monogram", async ({ page }) => {
     const carousel = page.getByRole("group", { name: "Flagship products", exact: true });
+    const slideFor = (name: string) =>
+      carousel
+        .locator('[aria-roledescription="slide"]')
+        .filter({ has: page.locator("h3", { hasText: name }) });
+
+    // A flagship with a rendered plate shows it, unframed, in place of the
+    // framed shot or the monogram.
+    const plated = ROSTER.filter((p) => p.tier === "flagship" && p.plate);
+    for (const entry of plated) {
+      const slide = slideFor(entry.productName ?? entry.slug);
+      await expect(slide.getByTestId("product-plate"), `${entry.slug} product plate`).toHaveCount(1);
+      await expect(slide.getByTestId("card-plate"), `${entry.slug} monogram`).toHaveCount(0);
+      const src = (await slide.getByTestId("product-plate").locator("img").getAttribute("src")) ?? "";
+      expect(decodeURIComponent(src), `${entry.slug} plate src`).toContain(`plates/${entry.slug}`);
+    }
+
+    // Until a plate renders, an imageless flagship keeps the monogram plate.
     const plates = carousel.getByTestId("card-plate");
-    const imageless = ROSTER.filter((p) => p.tier === "flagship" && !p.imageUrl);
-    expect(imageless.length, "imageless flagships").toBeGreaterThan(0);
+    const imageless = ROSTER.filter((p) => p.tier === "flagship" && !p.imageUrl && !p.plate);
     await expect(plates).toHaveCount(imageless.length);
     for (const entry of imageless) {
       const name = entry.productName ?? entry.slug;
-      const slide = carousel
-        .locator('[aria-roledescription="slide"]')
-        .filter({ has: page.locator("h3", { hasText: name }) });
+      const slide = slideFor(name);
       await expect(slide, entry.slug).toHaveCount(1);
       const plate = slide.getByTestId("card-plate");
       await expect(plate, `${entry.slug} plate`).toHaveCount(1);

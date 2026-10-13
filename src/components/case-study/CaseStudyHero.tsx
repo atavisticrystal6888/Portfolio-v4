@@ -1,7 +1,8 @@
-import type { CaseStudyFrontmatter } from "@/types/project";
+import type { CaseStudyFrontmatter, ProductPlateImage } from "@/types/project";
 import { CoCreatorChips } from "@/components/ui/CoCreatorChips";
 import { SignatureScene } from "@/components/interactive/SignatureScene";
 import { FramedShot } from "@/components/case-study/FramedShot";
+import { ProductPlate } from "@/components/projects/ProductPlate";
 import { cn } from "@/lib/utils";
 import { HeroZoom } from "./HeroZoom";
 import { LightboxProvider } from "./blocks/Lightbox";
@@ -26,6 +27,19 @@ interface CaseStudyHeroProps {
   /** Team line from projects.json, shown when there are no linked co-creators. */
   team?: string;
   /**
+   * Rendered product plate. Replaces the framed screenshot as the hero media
+   * (a demo loop still wins), and gives imageless studies a hero image.
+   */
+  plate?: ProductPlateImage;
+  /** Product name for the plate's fallback alt text. */
+  productName?: string;
+  /**
+   * Screenshot the plate mounts when it is not `imageUrl`. The plate then
+   * takes the generic alt, since `imageAlt` describes `imageUrl`; the zoom
+   * and the caption stay on the original screenshot.
+   */
+  plateSource?: string;
+  /**
    * True when a ProductMasthead sits above: the header drops its nav clearance
    * and its h1, since the masthead's product name is the page heading and the
    * title's descriptor half lives in the masthead eyebrow.
@@ -39,10 +53,14 @@ interface CaseStudyHeroProps {
  * collapsed disclosure so the first screen stays about the product, not the
  * tools; the headline number lives in the metric strip below the TL;DR.
  *
- * Where the project has a screenshot, it sits beside the facts inside a
- * browser frame on the product's tinted ground, never cropped. Where it does
- * not, the masthead above already carries the title plate, so nothing else
- * competes for the eye; a standalone header (no masthead) keeps the scene.
+ * Where the project has a screenshot and a rendered product plate, the plate
+ * sits beside the facts straight on the page ground and the zoom opens the
+ * original screenshot. An imageless study under a masthead shows its plate
+ * in the masthead instead, so the hero stays text only. Otherwise a
+ * screenshot sits in a browser frame on the product's tinted ground, never
+ * cropped. With neither, the masthead above already carries the title plate,
+ * so nothing else competes for the eye; a standalone header (no masthead)
+ * keeps the scene.
  */
 export function CaseStudyHero({
   caseStudy,
@@ -54,8 +72,16 @@ export function CaseStudyHero({
   imageCaption,
   zoomSrc,
   team,
+  plate,
+  productName,
+  plateSource,
   belowMasthead = false,
 }: CaseStudyHeroProps) {
+  // Imageless studies under a masthead carry the plate there, not here.
+  const showPlate = Boolean(plate) && !demoVideo && (Boolean(imageUrl) || !belowMasthead);
+  const plateAlt = plateSource ? undefined : imageAlt;
+  const hasMedia = Boolean(imageUrl) || showPlate;
+  const plateSizes = "(max-width: 899px) calc(100vw - 48px), 480px";
   const hasTeam = (caseStudy.coCreators?.length ?? 0) > 0;
   const liveHost =
     liveUrl && !belowMasthead ? new URL(liveUrl).host.replace(/^www\./, "") : null;
@@ -67,14 +93,14 @@ export function CaseStudyHero({
       className={cn(styles.hero, belowMasthead && styles.heroBelowMasthead)}
       aria-label="Case study header"
     >
-      {!imageUrl && !belowMasthead && <SignatureScene variant="dossier" />}
+      {!hasMedia && !belowMasthead && <SignatureScene variant="dossier" />}
       <div
         className={cn(
           styles.inner,
-          imageUrl && styles.innerSplit,
+          hasMedia && styles.innerSplit,
           // Imageless studies under a masthead: keep the masthead's left edge
           // instead of indenting into a narrower centred column.
-          !imageUrl && belowMasthead && layout.alignWithMasthead
+          !hasMedia && belowMasthead && layout.alignWithMasthead
         )}
       >
         {!belowMasthead && <h1 className={styles.title}>{caseStudy.title}</h1>}
@@ -143,9 +169,28 @@ export function CaseStudyHero({
           )}
         </div>
 
-        {imageUrl && (
-          <div className={styles.shot}>
-            {demoVideo ? (
+        {hasMedia && (
+          <div className={cn(styles.shot, showPlate && styles.shotPlate)}>
+            {showPlate && plate ? (
+              imageUrl ? (
+                <HeroZoom src={zoomSrc ?? imageUrl} alt={imageAlt ?? ""} caption={imageCaption}>
+                  <ProductPlate
+                    plate={plate}
+                    name={productName ?? caseStudy.title}
+                    alt={plateAlt}
+                    sizes={plateSizes}
+                    priority
+                  />
+                </HeroZoom>
+              ) : (
+                <ProductPlate
+                  plate={plate}
+                  name={productName ?? caseStudy.title}
+                  sizes={plateSizes}
+                  priority
+                />
+              )
+            ) : demoVideo && imageUrl ? (
               <FramedShot
                 src={imageUrl}
                 alt={imageAlt ?? ""}
@@ -155,7 +200,7 @@ export function CaseStudyHero({
                 priority
                 className={styles.shotFrame}
               />
-            ) : (
+            ) : imageUrl ? (
               <HeroZoom src={zoomSrc ?? imageUrl} alt={imageAlt ?? ""} caption={imageCaption}>
                 <FramedShot
                   src={imageUrl}
@@ -166,8 +211,8 @@ export function CaseStudyHero({
                   className={styles.shotFrame}
                 />
               </HeroZoom>
-            )}
-            {imageCaption && (
+            ) : null}
+            {imageUrl && imageCaption && (
               <p className={styles.shotCaption} data-testid="hero-caption">
                 {imageCaption}
               </p>

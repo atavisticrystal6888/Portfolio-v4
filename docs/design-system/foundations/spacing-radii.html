@@ -1,0 +1,384 @@
+<!-- @dsCard group="Spacing" -->
+<!doctype html>
+<html lang="en" data-theme="light" data-palette="teal">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Spacing and radii</title>
+<script>(function(){var m='light',p='teal',d=document;try{var s=localStorage.getItem('ds-portfolio-theme');var c=s?JSON.parse(s):null;if(c&&c.mode)m=c.mode;if(c&&c.palette)p=c.palette;}catch(e){}var e=d.documentElement;e.setAttribute('data-theme',m);e.setAttribute('data-palette',p);})();</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..900&family=Manrope:wght@200..800&family=JetBrains+Mono:wght@400..700&display=swap" rel="stylesheet">
+<style>
+/* ---- tokens (src/styles/tokens.css, teal identity) ---- */
+:root {
+  
+  
+  --font-display: 'Fraunces', 'Fraunces Fallback', 'Iowan Old Style', 'Palatino Linotype', 'Book Antiqua', Georgia, serif;
+  --font-body: 'Manrope', 'Manrope Fallback', 'Aptos', 'Segoe UI Variable Text', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+  --font-mono: 'JetBrains Mono', 'JetBrains Mono Fallback', 'SFMono-Regular', 'Cascadia Code', 'Fira Code', monospace;
+
+  
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-7: 32px;
+  --space-8: 40px;
+  --space-9: 48px;
+  --space-10: 64px;
+  --space-11: 80px;
+  --space-12: 100px;
+
+  
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 20px;
+  --radius-2xl: 28px;
+  --radius-full: 100px;
+
+  
+  --transition-fast: 0.15s ease;
+  --transition-base: 0.25s ease;
+  --transition-slow: 0.4s ease;
+  --transition-theme: 0.3s ease;
+
+  
+  --z-base: 1;
+  --z-dropdown: 100;
+  --z-sticky: 500;
+  --z-overlay: 900;
+  --z-modal: 1000;
+  --z-toast: 1100;
+  --z-cursor: 9999;
+
+  
+  --container-max: 1120px;
+  --container-wide: 1200px;
+  --container-md: 760px;
+  --nav-height: 64px;
+  --page-header-height: 280px;
+  --sidebar-width: 260px;
+  --reading-width: 680px;
+  --toc-width: 220px;
+
+  
+  --space-14: 120px;
+
+  
+  --radius-pill: 100px;
+
+  
+
+  
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.375rem;
+  --text-2xl: 1.875rem;
+  --text-3xl: 2.75rem;
+  
+  --text-4xl: 3.5rem;
+  --text-display: clamp(2.75rem, 6vw, 4.5rem);
+  
+  --text-hero: clamp(2.9rem, 7vw, 5.25rem);
+
+  
+  --leading-tight: 1.1;
+  --leading-snug: 1.3;
+  --leading-body: 1.65;
+  --tracking-tight: -0.02em;
+  --tracking-label: 0.14em;
+
+  
+  --hairline: 1px solid var(--border);
+  --rule-strong: 1px solid var(--border-strong);
+  --radius-editorial: 4px;
+
+  
+  --section-gap: clamp(96px, 12vh, 160px);
+
+  
+  --measure-prose: 68ch;
+  --measure-lede: 56ch;
+
+  
+  --focus-offset: 3px;
+}
+
+:root,
+[data-theme="light"] {
+  --bg: #f6f5f1;
+  --bg-alt: #efede6;
+  --surface: #fcfbf8;
+  --surface-hover: #f1efe9;
+  --surface-raised: #ffffff;
+  --text: #24262b;
+  --text-strong: #14161a;
+  --text-muted: #5c5f66;
+  --text-body: #24262b;
+  --accent: #2137c4;
+  --accent-hover: #1a2ca0;
+  --accent-contrast: #ffffff;
+  --accent-glow: rgba(33, 55, 196, 0.1);
+  --accent-subtle: rgba(33, 55, 196, 0.06);
+  --metric: #14161a;
+  --metric-bg: rgba(33, 55, 196, 0.05);
+  --metric-border: rgba(33, 55, 196, 0.35);
+  
+  --success: #13773a;
+  --error: #bb2c2c;
+  --info: #2137c4;
+  --border: #d8d5cb;
+  --border-strong: #b9b5a7;
+  --border-accent: rgba(33, 55, 196, 0.35);
+  --nav-bg: rgba(246, 245, 241, 0.88);
+  --glass-bg: rgba(252, 251, 248, 0.7);
+  --glass-border: #d8d5cb;
+  --badge-current-bg: rgba(33, 55, 196, 0.08);
+  --badge-current-text: #1a2ca0;
+  --chip-bg: rgba(20, 22, 26, 0.04);
+  --chip-border: rgba(20, 22, 26, 0.12);
+  --border-control: #8c8778;
+  --shadow-sm: 0 1px 2px rgba(30, 30, 20, 0.06);
+  --shadow-md: 0 4px 12px rgba(30, 30, 20, 0.08);
+  --shadow-lg: 0 8px 30px rgba(30, 30, 20, 0.1);
+  --shadow-glow: 0 0 40px rgba(33, 55, 196, 0.08);
+  --gradient-text: linear-gradient(135deg, #2137c4, #14161a);
+  --gradient-card: linear-gradient(135deg, rgba(33, 55, 196, 0.04), rgba(20, 22, 26, 0.02));
+  --gradient-hero: radial-gradient(ellipse at 50% 0%, rgba(33, 55, 196, 0.05) 0%, transparent 60%);
+  --particle-color: #2137c4;
+  --cursor-color: #2137c4;
+  --code-bg: #f1efe8;
+  --code-border: rgba(20, 22, 26, 0.1);
+  --code-text: #24292f;
+  --code-comment: #6e7781;
+  --code-keyword: #cf222e;
+  --code-string: #0a3069;
+  --code-function: #8250df;
+  --code-number: #0550ae;
+  --callout-tip-bg: rgba(34, 197, 94, 0.06);
+  --callout-tip-border: rgba(34, 197, 94, 0.3);
+  --callout-tip-icon: #15803d;
+  --callout-warning-bg: rgba(154, 106, 16, 0.06);
+  --callout-warning-border: rgba(154, 106, 16, 0.3);
+  --callout-warning-icon: #9a6a10;
+  --callout-info-bg: rgba(33, 55, 196, 0.05);
+  --callout-info-border: rgba(33, 55, 196, 0.3);
+  --callout-info-icon: #2137c4;
+  --process-step-1: #2137c4;
+  --process-step-2: #9a6a10;
+  --process-step-3: #15803d;
+  --process-step-4: #6d4fc4;
+  --process-connector: rgba(20, 22, 26, 0.14);
+  --divider-opacity: 0.1;
+  color-scheme: light;
+}
+
+[data-theme="dark"] {
+  --bg: #0d1322;
+  --bg-alt: #101828;
+  --surface: #141c30;
+  --surface-hover: #1a2440;
+  --surface-raised: #1c2740;
+  --text: #d6dae6;
+  --text-strong: #eef0f7;
+  --text-muted: #8f96aa;
+  --text-body: #d6dae6;
+  --accent: #8fa2ff;
+  --accent-hover: #a9b8ff;
+  --accent-contrast: #0d1322;
+  --accent-glow: rgba(143, 162, 255, 0.15);
+  --accent-subtle: rgba(143, 162, 255, 0.08);
+  --metric: #eef0f7;
+  --metric-bg: rgba(143, 162, 255, 0.07);
+  --metric-border: rgba(143, 162, 255, 0.4);
+  --success: #4ade80;
+  --error: #f87171;
+  --info: #7cb3ff;
+  --border: rgba(214, 222, 255, 0.1);
+  --border-strong: rgba(214, 222, 255, 0.18);
+  --border-accent: rgba(143, 162, 255, 0.35);
+  --nav-bg: rgba(13, 19, 34, 0.85);
+  --glass-bg: rgba(20, 28, 48, 0.6);
+  --glass-border: rgba(214, 222, 255, 0.12);
+  --badge-current-bg: rgba(143, 162, 255, 0.14);
+  --badge-current-text: #8fa2ff;
+  --chip-bg: rgba(214, 222, 255, 0.05);
+  --chip-border: rgba(214, 222, 255, 0.12);
+  
+  --border-control: #6b7390;
+  --shadow-sm: 0 1px 2px rgba(4, 8, 18, 0.3);
+  --shadow-md: 0 4px 12px rgba(4, 8, 18, 0.4);
+  --shadow-lg: 0 8px 30px rgba(4, 8, 18, 0.5);
+  --shadow-glow: 0 0 40px rgba(143, 162, 255, 0.12);
+  --gradient-text: linear-gradient(135deg, #8fa2ff, #eef0f7);
+  --gradient-card: linear-gradient(135deg, rgba(143, 162, 255, 0.06), rgba(238, 240, 247, 0.02));
+  --gradient-hero: radial-gradient(ellipse at 50% 0%, rgba(143, 162, 255, 0.09) 0%, transparent 60%);
+  --particle-color: #8fa2ff;
+  --cursor-color: #8fa2ff;
+  --code-bg: #111a2e;
+  --code-border: rgba(214, 222, 255, 0.08);
+  --code-text: #c9d1d9;
+  --code-comment: #6e7681;
+  --code-keyword: #ff7b72;
+  --code-string: #a5d6ff;
+  --code-function: #d2a8ff;
+  --code-number: #79c0ff;
+  --callout-tip-bg: rgba(74, 222, 128, 0.08);
+  --callout-tip-border: rgba(74, 222, 128, 0.3);
+  --callout-tip-icon: #4ade80;
+  --callout-warning-bg: rgba(234, 177, 68, 0.08);
+  --callout-warning-border: rgba(234, 177, 68, 0.3);
+  --callout-warning-icon: #eab144;
+  --callout-info-bg: rgba(124, 179, 255, 0.08);
+  --callout-info-border: rgba(124, 179, 255, 0.3);
+  --callout-info-icon: #7cb3ff;
+  --process-step-1: #8fa2ff;
+  --process-step-2: #eab144;
+  --process-step-3: #4ade80;
+  --process-step-4: #d2a8ff;
+  --process-connector: rgba(214, 222, 255, 0.12);
+  --divider-opacity: 0.08;
+  color-scheme: dark;
+}
+/* ---- base (src/styles/base.css, trimmed) ---- */
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+body {
+  font-family: var(--font-body); font-weight: 400; font-size: 16px; line-height: 1.65;
+  color: var(--text); background: var(--bg);
+  -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; overflow-x: clip;
+}
+h1, h2, h3, h4 { font-family: var(--font-display); color: var(--text-strong); line-height: 1.2; }
+h1 { font-size: clamp(2.6rem, 5.5vw, 4.2rem); font-weight: 700; letter-spacing: -0.02em; }
+h2 { font-size: clamp(1.8rem, 3.5vw, 2.8rem); font-weight: 700; margin-bottom: 1rem; letter-spacing: -0.01em; }
+h3 { font-size: clamp(1.1rem, 2vw, 1.4rem); font-weight: 700; }
+h4 { font-size: var(--text-lg); font-weight: 600; }
+a { color: var(--accent); text-decoration: none; transition: color var(--transition-fast); }
+p a, li a, td a, dd a { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 2px; }
+a:hover { color: var(--accent-hover); }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: var(--focus-offset); border-radius: var(--radius-sm); }
+img, svg { display: block; max-width: 100%; }
+button, a, input, [role="button"] { min-height: 44px; min-width: 44px; }
+p a, li a { min-height: auto; min-width: auto; }
+.section-divider { height: 1px; background: var(--border); border: none; margin: 0; }
+
+/* ---- preview chrome ---- */
+
+.ds-page { max-width: var(--container-max); margin: 0 auto; padding: var(--space-7) var(--space-6) var(--space-11); }
+.ds-head { display: flex; align-items: flex-start; justify-content: space-between; gap: var(--space-4); padding-bottom: var(--space-5); border-bottom: var(--rule-strong); margin-bottom: var(--space-8); }
+.ds-group { font-family: var(--font-mono); font-size: var(--text-xs); font-weight: 500; text-transform: uppercase; letter-spacing: var(--tracking-label); color: var(--accent); margin-bottom: var(--space-2); }
+.ds-title { font-family: var(--font-display); font-size: var(--text-2xl); font-weight: 700; letter-spacing: var(--tracking-tight); line-height: var(--leading-tight); color: var(--text-strong); }
+.ds-sub { margin-top: var(--space-2); font-size: var(--text-sm); color: var(--text-muted); max-width: var(--measure-lede); line-height: var(--leading-body); }
+.ds-toggle { flex: none; display: inline-flex; align-items: center; gap: 6px; padding: 10px 14px; font-family: var(--font-mono); font-size: var(--text-xs); font-weight: 500; letter-spacing: var(--tracking-label); text-transform: uppercase; color: var(--text-muted); background: transparent; border: 1px solid var(--border); border-radius: var(--radius-editorial); cursor: pointer; }
+.ds-toggle:hover { color: var(--accent); border-color: var(--accent); }
+.ds-section { margin-bottom: var(--space-9); }
+.ds-section:last-child { margin-bottom: 0; }
+.ds-label { font-family: var(--font-mono); font-size: var(--text-xs); font-weight: 500; text-transform: uppercase; letter-spacing: var(--tracking-label); color: var(--text-muted); margin-bottom: var(--space-4); display: flex; align-items: center; gap: var(--space-3); }
+.ds-label::before { content: ""; width: 24px; height: 1px; background: var(--border-strong); }
+.ds-note { font-size: var(--text-sm); color: var(--text-muted); max-width: var(--measure-prose); line-height: var(--leading-body); margin-bottom: var(--space-4); }
+.ds-row { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-4); }
+.ds-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: var(--space-5); }
+.ds-cap { font-family: var(--font-mono); font-size: 11px; color: var(--text-muted); margin-top: var(--space-2); letter-spacing: 0.04em; }
+.ds-code { font-family: var(--font-mono); font-size: var(--text-xs); color: var(--text-muted); }
+.ds-stack { display: flex; flex-direction: column; gap: var(--space-5); align-items: flex-start; }
+.ds-full { width: 100%; }
+.ds-mock { font-family: var(--font-body); }
+
+/* ---- components ---- */
+
+
+.sp { display: grid; grid-template-columns: 140px 70px 1fr; gap: var(--space-4); align-items: center; padding: 6px 0; border-bottom: var(--hairline); font-family: var(--font-mono); font-size: 11px; color: var(--text-muted); }
+.sp b { color: var(--text-strong); font-weight: 500; }
+.sp i { display: block; height: 14px; background: var(--accent); border-radius: 2px; }
+.rd { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: var(--space-5); }
+.rd div { height: 96px; border: var(--rule-strong); background: var(--surface); display: grid; place-items: end start; padding: var(--space-3); font-family: var(--font-mono); font-size: 11px; color: var(--text-muted); line-height: 1.5; }
+.rd div b { display: block; color: var(--text-strong); font-weight: 500; }
+.rl { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: var(--space-5); }
+.rl > div { padding: var(--space-5); background: var(--surface); font-family: var(--font-mono); font-size: 11px; color: var(--text-muted); border-radius: var(--radius-editorial); }
+.rl b { display: block; color: var(--text-strong); font-weight: 500; margin-bottom: 4px; }
+.focus-demo { display: inline-flex; align-items: center; min-height: 44px; padding: 10px 24px; font-family: var(--font-body); font-size: var(--text-sm); font-weight: 600; background: var(--accent); color: var(--accent-contrast); border-radius: var(--radius-editorial); outline: 2px solid var(--accent); outline-offset: var(--focus-offset); }
+table.tk { border-collapse: collapse; width: 100%; font-family: var(--font-mono); font-size: 11px; color: var(--text-muted); }
+table.tk td { padding: 6px 0; border-bottom: var(--hairline); vertical-align: top; }
+table.tk td:first-child { color: var(--text-strong); width: 220px; }
+
+</style>
+</head>
+<body>
+<div class="ds-page">
+<header class="ds-head">
+  <div>
+    <div class="ds-group">Spacing</div>
+    <h1 class="ds-title">Spacing and radii</h1>
+    <p class="ds-sub">A 4px base scale, one editorial 4px corner on almost everything, hairline rules instead of shadows, and a single 3px focus-ring offset.</p>
+  </div>
+  <button type="button" class="ds-toggle" aria-label="Toggle light and dark theme">Light theme</button>
+</header>
+
+<section class="ds-section">
+  <div class="ds-label">Spacing scale (4px base)</div>
+  <div>
+  <div class="sp"><b>--space-1</b><span>4px</span><i style="width:4px"></i></div>
+  <div class="sp"><b>--space-2</b><span>8px</span><i style="width:8px"></i></div>
+  <div class="sp"><b>--space-3</b><span>12px</span><i style="width:12px"></i></div>
+  <div class="sp"><b>--space-4</b><span>16px</span><i style="width:16px"></i></div>
+  <div class="sp"><b>--space-5</b><span>20px</span><i style="width:20px"></i></div>
+  <div class="sp"><b>--space-6</b><span>24px</span><i style="width:24px"></i></div>
+  <div class="sp"><b>--space-7</b><span>32px</span><i style="width:32px"></i></div>
+  <div class="sp"><b>--space-8</b><span>40px</span><i style="width:40px"></i></div>
+  <div class="sp"><b>--space-9</b><span>48px</span><i style="width:48px"></i></div>
+  <div class="sp"><b>--space-10</b><span>64px</span><i style="width:64px"></i></div>
+  <div class="sp"><b>--space-11</b><span>80px</span><i style="width:80px"></i></div>
+  <div class="sp"><b>--space-12</b><span>100px</span><i style="width:100px"></i></div>
+  <div class="sp"><b>--space-14</b><span>120px</span><i style="width:120px"></i></div>
+  </div>
+  <p class="ds-note" style="margin-top:var(--space-4)">Section rhythm: --section-gap clamp(96px, 12vh, 160px) between page bands; the band itself pads --space-8 above its content. Containers: --container-max 1120px, --container-wide 1200px, --container-md 760px (article column), --reading-width 680px, --nav-height 64px.</p>
+</section>
+<section class="ds-section">
+  <div class="ds-label">Radii</div>
+  <div class="rd">
+  <div style="border-radius:var(--radius-editorial)"><span><b>--radius-editorial</b>4px</span></div>
+  <div style="border-radius:var(--radius-sm)"><span><b>--radius-sm</b>6px</span></div>
+  <div style="border-radius:var(--radius-md)"><span><b>--radius-md</b>10px</span></div>
+  <div style="border-radius:var(--radius-lg)"><span><b>--radius-lg</b>14px</span></div>
+  <div style="border-radius:var(--radius-xl)"><span><b>--radius-xl</b>20px</span></div>
+  <div style="border-radius:var(--radius-2xl)"><span><b>--radius-2xl</b>28px</span></div>
+  <div style="border-radius:var(--radius-pill)"><span><b>--radius-pill</b>100px</span></div>
+  <div style="border-radius:var(--radius-full)"><span><b>--radius-full</b>100px</span></div>
+  </div>
+  <p class="ds-note" style="margin-top:var(--space-4)">--radius-editorial (4px) is the working corner: surfaces, buttons, badges, chips, the skip link, the plate. --radius-sm is the focus-ring corner and the framed-shot frame; --radius-md the shot ground and toasts; --radius-full the status dot and carousel dots.</p>
+</section>
+<section class="ds-section">
+  <div class="ds-label">Rules and focus</div>
+  <div class="rl">
+    <div style="border: var(--hairline)"><b>--hairline</b>1px solid var(--border). Surfaces, list rows, strips, chips, the footer rule.</div>
+    <div style="border: var(--rule-strong)"><b>--rule-strong</b>1px solid var(--border-strong). Heads every page band and the masthead's bottom rule.</div>
+    <div style="border: 1px dashed var(--border)"><b>EmptyState</b>1px dashed var(--border) on --surface.</div>
+    <div style="border: 1px solid var(--border-control)"><b>--border-control</b>Form-control boundary, 3:1 against --bg and --surface.</div>
+  </div>
+  <div class="ds-row" style="margin-top:var(--space-6)">
+    <span class="focus-demo">Focus ring</span>
+    <span class="ds-code">outline: 2px solid var(--accent); outline-offset: var(--focus-offset) (3px); border-radius: var(--radius-sm) on the global rule</span>
+  </div>
+</section>
+<section class="ds-section">
+  <div class="ds-label">Transitions and z-index</div>
+  <table class="tk">
+    <tr><td>--transition-fast</td><td>0.15s ease (colour, border, opacity on links, chips, rows)</td></tr>
+    <tr><td>--transition-base</td><td>0.25s ease (buttons, surfaces, nav underline)</td></tr>
+    <tr><td>--transition-slow</td><td>0.4s ease</td></tr>
+    <tr><td>--transition-theme</td><td>0.3s ease (html.theme-transitioning paints every colour change)</td></tr>
+    <tr><td>--z-base / dropdown / sticky</td><td>1 / 100 / 500 (navbar)</td></tr>
+    <tr><td>--z-overlay / modal / toast</td><td>900 (mobile drawer) / 1000 / 1100</td></tr>
+  </table>
+</section>
+</div>
+<script>(function(){var b=document.querySelector('.ds-toggle');if(!b)return;function sync(){b.textContent=(document.documentElement.getAttribute('data-theme')==='dark'?'Dark':'Light')+' theme';}b.addEventListener('click',function(){var e=document.documentElement;var m=e.getAttribute('data-theme')==='dark'?'light':'dark';e.setAttribute('data-theme',m);try{localStorage.setItem('ds-portfolio-theme',JSON.stringify({mode:m,palette:'teal'}));}catch(x){}sync();});new MutationObserver(sync).observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});sync();})();</script>
+</body>
+</html>

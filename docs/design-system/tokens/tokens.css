@@ -1,0 +1,441 @@
+/* Verbatim copy of src/styles/tokens.css (Portfolio-v4, main) for the
+   design-system bundle. Source of truth is the repo file; regenerate this
+   copy rather than editing it. Light ("working paper") is the default
+   identity; dark ("night blueprint") is applied by data-theme="dark" on
+   <html>. The palette blocks (ocean, emerald, amber, mono) are legacy
+   overrides and are not part of the shipped teal identity. */
+
+/* ============================================================
+   DESIGN TOKENS - CSS Custom Properties
+   Dark & Light theme system
+   ============================================================ */
+
+:root {
+  /* Typography */
+  /* Each web font is followed by its metric-matched fallback face (defined in
+     base.css) so the font swap does not shift layout; the rest of each stack
+     only applies where that local font is missing. */
+  --font-display: 'Fraunces', 'Fraunces Fallback', 'Iowan Old Style', 'Palatino Linotype', 'Book Antiqua', Georgia, serif;
+  --font-body: 'Manrope', 'Manrope Fallback', 'Aptos', 'Segoe UI Variable Text', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+  --font-mono: 'JetBrains Mono', 'JetBrains Mono Fallback', 'SFMono-Regular', 'Cascadia Code', 'Fira Code', monospace;
+
+  /* Spacing Scale (4px base) */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-7: 32px;
+  --space-8: 40px;
+  --space-9: 48px;
+  --space-10: 64px;
+  --space-11: 80px;
+  --space-12: 100px;
+
+  /* Border Radius */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 20px;
+  --radius-2xl: 28px;
+  --radius-full: 100px;
+
+  /* Transitions */
+  --transition-fast: 0.15s ease;
+  --transition-base: 0.25s ease;
+  --transition-slow: 0.4s ease;
+  --transition-theme: 0.3s ease;
+
+  /* Z-Index Scale */
+  --z-base: 1;
+  --z-dropdown: 100;
+  --z-sticky: 500;
+  --z-overlay: 900;
+  --z-modal: 1000;
+  --z-toast: 1100;
+  --z-cursor: 9999;
+
+  /* Layout */
+  --container-max: 1120px;
+  --container-wide: 1200px;
+  --container-md: 760px;
+  --nav-height: 64px;
+  --page-header-height: 280px;
+  --sidebar-width: 260px;
+  --reading-width: 680px;
+  --toc-width: 220px;
+
+  /* Extra spacing */
+  --space-14: 120px;
+
+  /* Extra radius */
+  --radius-pill: 100px;
+
+  /* ===== EDITORIAL SYSTEM =====
+     Type scale, rhythm and surface primitives for the editorial/dossier
+     layouts. Additive: nothing above changes. Every colour still comes from
+     the theme blocks below, so light mode and the palette swaps keep working. */
+
+  /* Type scale */
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.375rem;
+  --text-2xl: 1.875rem;
+  --text-3xl: 2.75rem;
+  /* Display ceiling for page and dossier titles. */
+  --text-4xl: 3.5rem;
+  --text-display: clamp(2.75rem, 6vw, 4.5rem);
+  /* One step above --text-display, used only by the home title block. */
+  --text-hero: clamp(2.9rem, 7vw, 5.25rem);
+
+  /* Line height + tracking */
+  --leading-tight: 1.1;
+  --leading-snug: 1.3;
+  --leading-body: 1.65;
+  --tracking-tight: -0.02em;
+  --tracking-label: 0.14em;
+
+  /* Editorial surfaces: flat, hairline-ruled. --hairline resolves --border at
+     use time, so it follows the active theme. */
+  --hairline: 1px solid var(--border);
+  --rule-strong: 1px solid var(--border-strong);
+  --radius-editorial: 4px;
+
+  /* Vertical rhythm between page sections */
+  --section-gap: clamp(96px, 12vh, 160px);
+
+  /* Reading measures. Only two: running prose (paragraphs, lists, timelines)
+     and the shorter lede under a page or section title. */
+  --measure-prose: 68ch;
+  --measure-lede: 56ch;
+
+  /* One gap between a control and its focus ring, everywhere. Rings drawn
+     inside a clipped box keep their own negative offset. */
+  --focus-offset: 3px;
+}
+
+/* Night blueprint: a deep Prussian-ink ground instead of neutral black,
+   paper-white ink, and the signal blue lifted for AA contrast. Hairlines
+   are deliberately more visible than the old 6% white: rules are part of
+   the dossier grammar and must read as printed, not implied. */
+[data-theme="dark"] {
+  --bg: #0d1322;
+  --bg-alt: #101828;
+  --surface: #141c30;
+  --surface-hover: #1a2440;
+  --surface-raised: #1c2740;
+  --text: #d6dae6;
+  --text-strong: #eef0f7;
+  --text-muted: #8f96aa;
+  --text-body: #d6dae6;
+  --accent: #8fa2ff;
+  --accent-hover: #a9b8ff;
+  --accent-contrast: #0d1322;
+  --accent-glow: rgba(143, 162, 255, 0.15);
+  --accent-subtle: rgba(143, 162, 255, 0.08);
+  --metric: #eef0f7;
+  --metric-bg: rgba(143, 162, 255, 0.07);
+  --metric-border: rgba(143, 162, 255, 0.4);
+  --success: #4ade80;
+  --error: #f87171;
+  --info: #7cb3ff;
+  --border: rgba(214, 222, 255, 0.1);
+  --border-strong: rgba(214, 222, 255, 0.18);
+  --border-accent: rgba(143, 162, 255, 0.35);
+  --nav-bg: rgba(13, 19, 34, 0.85);
+  --glass-bg: rgba(20, 28, 48, 0.6);
+  --glass-border: rgba(214, 222, 255, 0.12);
+  --badge-current-bg: rgba(143, 162, 255, 0.14);
+  --badge-current-text: #8fa2ff;
+  --chip-bg: rgba(214, 222, 255, 0.05);
+  --chip-border: rgba(214, 222, 255, 0.12);
+  /* Form-control boundary: 3:1 against --bg and --surface (WCAG 1.4.11).
+     Hairlines stay decorative; inputs and selects should use this. */
+  --border-control: #6b7390;
+  --shadow-sm: 0 1px 2px rgba(4, 8, 18, 0.3);
+  --shadow-md: 0 4px 12px rgba(4, 8, 18, 0.4);
+  --shadow-lg: 0 8px 30px rgba(4, 8, 18, 0.5);
+  --shadow-glow: 0 0 40px rgba(143, 162, 255, 0.12);
+  --gradient-text: linear-gradient(135deg, #8fa2ff, #eef0f7);
+  --gradient-card: linear-gradient(135deg, rgba(143, 162, 255, 0.06), rgba(238, 240, 247, 0.02));
+  --gradient-hero: radial-gradient(ellipse at 50% 0%, rgba(143, 162, 255, 0.09) 0%, transparent 60%);
+  --particle-color: #8fa2ff;
+  --cursor-color: #8fa2ff;
+  --code-bg: #111a2e;
+  --code-border: rgba(214, 222, 255, 0.08);
+  --code-text: #c9d1d9;
+  --code-comment: #6e7681;
+  --code-keyword: #ff7b72;
+  --code-string: #a5d6ff;
+  --code-function: #d2a8ff;
+  --code-number: #79c0ff;
+  --callout-tip-bg: rgba(74, 222, 128, 0.08);
+  --callout-tip-border: rgba(74, 222, 128, 0.3);
+  --callout-tip-icon: #4ade80;
+  --callout-warning-bg: rgba(234, 177, 68, 0.08);
+  --callout-warning-border: rgba(234, 177, 68, 0.3);
+  --callout-warning-icon: #eab144;
+  --callout-info-bg: rgba(124, 179, 255, 0.08);
+  --callout-info-border: rgba(124, 179, 255, 0.3);
+  --callout-info-icon: #7cb3ff;
+  --process-step-1: #8fa2ff;
+  --process-step-2: #eab144;
+  --process-step-3: #4ade80;
+  --process-step-4: #d2a8ff;
+  --process-connector: rgba(214, 222, 255, 0.12);
+  --divider-opacity: 0.08;
+  color-scheme: dark;
+}
+
+/* Working paper: the default identity. Cool paper ground, ink text,
+   printed rules, one signal-blue working colour used the way a reviewer's
+   pen is. Metrics are ink numerals over a blue baseline rule, not gold. */
+[data-theme="light"] {
+  --bg: #f6f5f1;
+  --bg-alt: #efede6;
+  --surface: #fcfbf8;
+  --surface-hover: #f1efe9;
+  --surface-raised: #ffffff;
+  --text: #24262b;
+  --text-strong: #14161a;
+  --text-muted: #5c5f66;
+  --text-body: #24262b;
+  --accent: #2137c4;
+  --accent-hover: #1a2ca0;
+  --accent-contrast: #ffffff;
+  --accent-glow: rgba(33, 55, 196, 0.1);
+  --accent-subtle: rgba(33, 55, 196, 0.06);
+  --metric: #14161a;
+  --metric-bg: rgba(33, 55, 196, 0.05);
+  --metric-border: rgba(33, 55, 196, 0.35);
+  /* success/error darkened one step (2026-09-30 contrast audit): the old
+     values fell to 4.25:1 on the toast tints. */
+  --success: #13773a;
+  --error: #bb2c2c;
+  --info: #2137c4;
+  --border: #d8d5cb;
+  --border-strong: #b9b5a7;
+  --border-accent: rgba(33, 55, 196, 0.35);
+  --nav-bg: rgba(246, 245, 241, 0.88);
+  --glass-bg: rgba(252, 251, 248, 0.7);
+  --glass-border: #d8d5cb;
+  --badge-current-bg: rgba(33, 55, 196, 0.08);
+  --badge-current-text: #1a2ca0;
+  --chip-bg: rgba(20, 22, 26, 0.04);
+  --chip-border: rgba(20, 22, 26, 0.12);
+  --border-control: #8c8778;
+  --shadow-sm: 0 1px 2px rgba(30, 30, 20, 0.06);
+  --shadow-md: 0 4px 12px rgba(30, 30, 20, 0.08);
+  --shadow-lg: 0 8px 30px rgba(30, 30, 20, 0.1);
+  --shadow-glow: 0 0 40px rgba(33, 55, 196, 0.08);
+  --gradient-text: linear-gradient(135deg, #2137c4, #14161a);
+  --gradient-card: linear-gradient(135deg, rgba(33, 55, 196, 0.04), rgba(20, 22, 26, 0.02));
+  --gradient-hero: radial-gradient(ellipse at 50% 0%, rgba(33, 55, 196, 0.05) 0%, transparent 60%);
+  --particle-color: #2137c4;
+  --cursor-color: #2137c4;
+  --code-bg: #f1efe8;
+  --code-border: rgba(20, 22, 26, 0.1);
+  --code-text: #24292f;
+  --code-comment: #6e7781;
+  --code-keyword: #cf222e;
+  --code-string: #0a3069;
+  --code-function: #8250df;
+  --code-number: #0550ae;
+  --callout-tip-bg: rgba(34, 197, 94, 0.06);
+  --callout-tip-border: rgba(34, 197, 94, 0.3);
+  --callout-tip-icon: #15803d;
+  --callout-warning-bg: rgba(154, 106, 16, 0.06);
+  --callout-warning-border: rgba(154, 106, 16, 0.3);
+  --callout-warning-icon: #9a6a10;
+  --callout-info-bg: rgba(33, 55, 196, 0.05);
+  --callout-info-border: rgba(33, 55, 196, 0.3);
+  --callout-info-icon: #2137c4;
+  --process-step-1: #2137c4;
+  --process-step-2: #9a6a10;
+  --process-step-3: #15803d;
+  --process-step-4: #6d4fc4;
+  --process-connector: rgba(20, 22, 26, 0.14);
+  --divider-opacity: 0.1;
+  color-scheme: light;
+}
+
+.theme-transitioning,
+.theme-transitioning *,
+.theme-transitioning *::before,
+.theme-transitioning *::after {
+  transition: background-color 0.3s ease,
+              color 0.3s ease,
+              border-color 0.3s ease,
+              box-shadow 0.3s ease,
+              fill 0.3s ease,
+              stroke 0.3s ease !important;
+}
+
+/* ===== ACCENT PALETTE OVERRIDES ===== */
+/* Teal (default) - no overrides needed, matches base dark/light tokens */
+
+[data-palette="ocean"] {
+  --accent: #3b82f6;
+  --accent-hover: #2563eb;
+  --accent-glow: rgba(59, 130, 246, 0.15);
+  --accent-subtle: rgba(59, 130, 246, 0.08);
+  --border-accent: rgba(59, 130, 246, 0.3);
+  --badge-current-bg: rgba(59, 130, 246, 0.12);
+  --badge-current-text: #3b82f6;
+  --gradient-text: linear-gradient(135deg, #3b82f6, #f59e0b);
+  --gradient-card: linear-gradient(135deg, rgba(59, 130, 246, 0.06), rgba(245, 158, 11, 0.03));
+  --gradient-hero: radial-gradient(ellipse at 50% 0%, rgba(59, 130, 246, 0.08) 0%, transparent 60%);
+  --particle-color: #3b82f6;
+  --cursor-color: #3b82f6;
+  --shadow-glow: 0 0 40px rgba(59, 130, 246, 0.1);
+  --metric: #f59e0b;
+  --metric-bg: rgba(245, 158, 11, 0.08);
+  --metric-border: rgba(245, 158, 11, 0.15);
+}
+
+[data-palette="emerald"] {
+  --accent: #10b981;
+  --accent-hover: #059669;
+  --accent-glow: rgba(16, 185, 129, 0.15);
+  --accent-subtle: rgba(16, 185, 129, 0.08);
+  --border-accent: rgba(16, 185, 129, 0.3);
+  --badge-current-bg: rgba(16, 185, 129, 0.12);
+  --badge-current-text: #10b981;
+  --gradient-text: linear-gradient(135deg, #10b981, #f97316);
+  --gradient-card: linear-gradient(135deg, rgba(16, 185, 129, 0.06), rgba(249, 115, 22, 0.03));
+  --gradient-hero: radial-gradient(ellipse at 50% 0%, rgba(16, 185, 129, 0.08) 0%, transparent 60%);
+  --particle-color: #10b981;
+  --cursor-color: #10b981;
+  --shadow-glow: 0 0 40px rgba(16, 185, 129, 0.1);
+  --metric: #f97316;
+  --metric-bg: rgba(249, 115, 22, 0.08);
+  --metric-border: rgba(249, 115, 22, 0.15);
+}
+
+[data-palette="amber"] {
+  --accent: #f59e0b;
+  --accent-hover: #d97706;
+  --accent-glow: rgba(245, 158, 11, 0.15);
+  --accent-subtle: rgba(245, 158, 11, 0.08);
+  --border-accent: rgba(245, 158, 11, 0.3);
+  --badge-current-bg: rgba(245, 158, 11, 0.12);
+  --badge-current-text: #f59e0b;
+  --gradient-text: linear-gradient(135deg, #f59e0b, #6366f1);
+  --gradient-card: linear-gradient(135deg, rgba(245, 158, 11, 0.06), rgba(99, 102, 241, 0.03));
+  --gradient-hero: radial-gradient(ellipse at 50% 0%, rgba(245, 158, 11, 0.08) 0%, transparent 60%);
+  --particle-color: #f59e0b;
+  --cursor-color: #f59e0b;
+  --shadow-glow: 0 0 40px rgba(245, 158, 11, 0.1);
+  --metric: #6366f1;
+  --metric-bg: rgba(99, 102, 241, 0.08);
+  --metric-border: rgba(99, 102, 241, 0.15);
+}
+
+[data-palette="mono"] {
+  --accent: #a1a1aa;
+  --accent-hover: #71717a;
+  --accent-glow: rgba(161, 161, 170, 0.15);
+  --accent-subtle: rgba(161, 161, 170, 0.08);
+  --border-accent: rgba(161, 161, 170, 0.3);
+  --badge-current-bg: rgba(161, 161, 170, 0.12);
+  --badge-current-text: #a1a1aa;
+  --gradient-text: linear-gradient(135deg, #a1a1aa, #e4e4e7);
+  --gradient-card: linear-gradient(135deg, rgba(161, 161, 170, 0.06), rgba(228, 228, 231, 0.03));
+  --gradient-hero: radial-gradient(ellipse at 50% 0%, rgba(161, 161, 170, 0.08) 0%, transparent 60%);
+  --particle-color: #a1a1aa;
+  --cursor-color: #a1a1aa;
+  --shadow-glow: 0 0 40px rgba(161, 161, 170, 0.1);
+  --metric: #e4e4e7;
+  --metric-bg: rgba(228, 228, 231, 0.08);
+  --metric-border: rgba(228, 228, 231, 0.15);
+}
+
+/* ===== PALETTE x THEME CORRECTIONS =====
+   The palette blocks above are written for the dark surface and apply in both
+   modes, so on the light theme every non-teal palette painted mid-tone accents
+   on a near-white page: 4 of 5 palettes failed WCAG AA contrast on ~55 nodes
+   per page (accent text, primary buttons, badges, metric readouts). Teal is
+   clean because the light theme block darkens the base tokens; these blocks do
+   the same per palette, hue kept. Two dark-mode hovers are fixed here too: they
+   darkened on an already-dark surface, which the case-study badge reads as
+   text. Verified with axe-core across every mode x palette.
+
+   Selector specificity (0,2,0) beats both [data-theme] and [data-palette]. */
+
+[data-theme="light"][data-palette="ocean"] {
+  --accent: #1d4ed8;
+  --accent-hover: #1e40af;
+  --accent-glow: rgba(29, 78, 216, 0.12);
+  --accent-subtle: rgba(29, 78, 216, 0.06);
+  --border-accent: rgba(29, 78, 216, 0.28);
+  --badge-current-bg: rgba(29, 78, 216, 0.1);
+  --badge-current-text: #1e40af;
+  --metric: #7a5d11;
+  --metric-bg: rgba(138, 106, 20, 0.08);
+  --metric-border: rgba(138, 106, 20, 0.18);
+}
+
+[data-theme="light"][data-palette="emerald"] {
+  --accent: #047857;
+  --accent-hover: #065f46;
+  --accent-glow: rgba(4, 120, 87, 0.12);
+  --accent-subtle: rgba(4, 120, 87, 0.06);
+  --border-accent: rgba(4, 120, 87, 0.28);
+  --badge-current-bg: rgba(4, 120, 87, 0.1);
+  --badge-current-text: #065f46;
+  --metric: #9a4a10;
+  --metric-bg: rgba(154, 74, 16, 0.08);
+  --metric-border: rgba(154, 74, 16, 0.18);
+}
+
+[data-theme="light"][data-palette="amber"] {
+  --accent: #985307;
+  --accent-hover: #8a4a06;
+  --accent-glow: rgba(163, 90, 8, 0.12);
+  --accent-subtle: rgba(163, 90, 8, 0.06);
+  --border-accent: rgba(163, 90, 8, 0.28);
+  --badge-current-bg: rgba(163, 90, 8, 0.1);
+  --badge-current-text: #8a4a06;
+  --metric: #4f46e5;
+  --metric-bg: rgba(79, 70, 229, 0.08);
+  --metric-border: rgba(79, 70, 229, 0.18);
+}
+
+[data-theme="light"][data-palette="mono"] {
+  --accent: #52525b;
+  --accent-hover: #3f3f46;
+  --accent-glow: rgba(82, 82, 91, 0.12);
+  --accent-subtle: rgba(82, 82, 91, 0.06);
+  --border-accent: rgba(82, 82, 91, 0.28);
+  --badge-current-bg: rgba(82, 82, 91, 0.1);
+  --badge-current-text: #3f3f46;
+  --metric: #3f3f46;
+  --metric-bg: rgba(63, 63, 70, 0.08);
+  --metric-border: rgba(63, 63, 70, 0.18);
+}
+
+/* Hover has to lighten on a dark surface, not darken. Ocean's blue-500 also
+   sat at ~4:1 on the raised surface and in its own badge tint, so the dark
+   ocean accent moves one step lighter (blue-400) and hover to blue-300.
+   Emerald's hover and amber's indigo metric had the same dark-mode problem
+   (scripts/audit-contrast.mjs, 2026-09-30). */
+[data-theme="dark"][data-palette="ocean"] {
+  --accent: #60a5fa;
+  --accent-hover: #93c5fd;
+  --badge-current-text: #60a5fa;
+}
+
+[data-theme="dark"][data-palette="emerald"] {
+  --accent-hover: #34d399;
+}
+
+[data-theme="dark"][data-palette="amber"] {
+  --metric: #818cf8;
+}
+
+[data-theme="dark"][data-palette="mono"] {
+  --accent-hover: #d4d4d8;
+}

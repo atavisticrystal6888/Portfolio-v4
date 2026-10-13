@@ -77,6 +77,13 @@
   margin: 0;
 }
 
+/* Rendered product plate: transparent, shadow in the alpha, so it sits on
+   the page ground with no frame, tint or clip. Full column width on phones,
+   where the stacked column would otherwise shrink to fit. */
+.shotPlate {
+  width: 100%;
+}
+
 /* Visible provenance for the hero shot (synthetic data, sample values). */
 .shotCaption {
   margin-top: var(--space-2);

@@ -44,6 +44,20 @@ export type EvidenceTier = "measured" | "tested" | "built" | "self-reported";
 /** "flagship" = full product page + home; "compact" = index entry. */
 export type ProjectTier = "flagship" | "compact";
 
+/**
+ * A Blender-rendered product plate: the screenshot (or a generated title
+ * card) on an accent slab, three-quarter view, transparent background with
+ * the shadow baked into alpha. Written by scripts/render-plates.mjs.
+ */
+export interface ProductPlateImage {
+  /** WebP path under /images/plates/. */
+  src: string;
+  /** AVIF sibling of `src`, same dimensions. */
+  avif: string;
+  width: number;
+  height: number;
+}
+
 export interface Project {
   slug: string;
   name: string;
@@ -87,6 +101,14 @@ export interface Project {
    * Cards keep `imageUrl`; the hero's zoom opens the full `imageUrl`.
    */
   heroImageUrl?: string;
+  /**
+   * Rendered product plate. When present it replaces the framed screenshot
+   * on cards and the case-study hero; without it they fall back to the
+   * framed shot or the monogram plate.
+   */
+  plate?: ProductPlateImage;
+  /** Screenshot the plate mounts instead of `imageUrl` (a landscape capture), path under /images/. */
+  plateSource?: string;
   stack: string[];
   metricValue: string;
   metricLabel: string;

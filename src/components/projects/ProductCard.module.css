@@ -31,6 +31,13 @@
   width: 100%;
 }
 
+/* Rendered product plate: transparent with its shadow in the alpha, so it
+   sits straight on the card surface. No rounded box, frame or tinted ground
+   around it; the hover brightness above still applies. */
+.mediaPlate {
+  border-radius: 0;
+}
+
 .body {
   display: flex;
   flex-direction: column;

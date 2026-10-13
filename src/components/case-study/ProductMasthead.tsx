@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { cn } from "@/lib/utils";
 import { Breadcrumbs, type Crumb } from "@/components/ui/Breadcrumbs";
+import { ProductPlate } from "@/components/projects/ProductPlate";
 import { EvidenceLedger } from "./ProjectFacts";
 import styles from "./ProductMasthead.module.css";
 
@@ -76,8 +77,38 @@ export function ProductMasthead({
 
   const hasActions = Boolean(project.liveUrl || project.githubUrl);
   // No screenshot: the masthead itself becomes the visual, a set title plate
-  // on a ruled band instead of an empty frame.
+  // on a ruled band instead of an empty frame. A rendered product plate, when
+  // the project has one, fills the band's right half (below the title block
+  // on narrow screens) so it is in the first screen; the hero below then
+  // shows no image. The band's flat tint is a ground, not a frame.
   const plate = !project.imageUrl;
+  const productPlate = plate ? project.plate : undefined;
+
+  const sideBlock =
+    project.businessModel || hasActions ? (
+      <div className={styles.side}>
+        {project.businessModel && (
+          <div className={styles.chips}>
+            <Badge variant="outline">{project.businessModel}</Badge>
+          </div>
+        )}
+
+        {hasActions && (
+          <div className={styles.actions}>
+            {project.liveUrl && (
+              <Button href={project.liveUrl} external>
+                Live app &#8599;
+              </Button>
+            )}
+            {project.githubUrl && (
+              <Button href={project.githubUrl} variant="secondary" external>
+                Source &#8599;
+              </Button>
+            )}
+          </div>
+        )}
+      </div>
+    ) : null;
 
   return (
     <section
@@ -90,7 +121,7 @@ export function ProductMasthead({
           <Breadcrumbs items={breadcrumbs} />
         </div>
       )}
-      <div className={styles.inner}>
+      <div className={cn(styles.inner, productPlate && styles.withPlate)}>
         <div className={styles.identity}>
           {eyebrow && <p className={styles.eyebrow}>{eyebrow}</p>}
 
@@ -144,29 +175,18 @@ export function ProductMasthead({
           )}
         </div>
 
-        {(project.businessModel || hasActions) && (
-        <div className={styles.side}>
-          {project.businessModel && (
-            <div className={styles.chips}>
-              <Badge variant="outline">{project.businessModel}</Badge>
-            </div>
-          )}
-
-          {hasActions && (
-            <div className={styles.actions}>
-              {project.liveUrl && (
-                <Button href={project.liveUrl} external>
-                  Live app &#8599;
-                </Button>
-              )}
-              {project.githubUrl && (
-                <Button href={project.githubUrl} variant="secondary" external>
-                  Source &#8599;
-                </Button>
-              )}
-            </div>
-          )}
-        </div>
+        {productPlate ? (
+          <div className={styles.visual}>
+            <ProductPlate
+              plate={productPlate}
+              name={name}
+              sizes="(max-width: 899px) calc(100vw - 80px), 440px"
+              priority
+            />
+            {sideBlock}
+          </div>
+        ) : (
+          sideBlock
         )}
       </div>
 

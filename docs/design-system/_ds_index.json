@@ -1,0 +1,164 @@
+[
+  {
+    "name": "Colors",
+    "path": "foundations/colors.html",
+    "group": "Colors",
+    "subtitle": "Every colour comes from tokens.css. Each swatch is painted with its live var (follows the theme toggle); the two small chips beneath print the fixed light and dark values."
+  },
+  {
+    "name": "Type",
+    "path": "foundations/type.html",
+    "group": "Type",
+    "subtitle": "Fraunces for display, Manrope for running text, JetBrains Mono for every field label. Sizes, leading and tracking are the tokens in tokens.css; heading defaults come from base.css."
+  },
+  {
+    "name": "Spacing and radii",
+    "path": "foundations/spacing-radii.html",
+    "group": "Spacing",
+    "subtitle": "A 4px base scale, one editorial 4px corner on almost everything, hairline rules instead of shadows, and a single 3px focus-ring offset."
+  },
+  {
+    "name": "Surface",
+    "path": "components/surface.html",
+    "group": "Components",
+    "subtitle": "The editorial card: flat, hairline-ruled, 4px corner, no blur. SurfaceTitle and SurfaceText are the one card heading and body size for every grid."
+  },
+  {
+    "name": "Button",
+    "path": "components/button.html",
+    "group": "Components",
+    "subtitle": "Three variants on one 44px, 4px-radius control in Manrope 600. Primary is the signal blue; secondary borders it; ghost is text-only. Focus is the global 2px ring at --focus-offset."
+  },
+  {
+    "name": "Badge",
+    "path": "components/badge.html",
+    "group": "Components",
+    "subtitle": "The one chip on the site: mono, uppercase, squared, in the same voice as section eyebrows. accent is a status; default is a category or attribute; outline is quieter; metric is a figure."
+  },
+  {
+    "name": "Filter chip",
+    "path": "components/filter-chip.html",
+    "group": "Components",
+    "subtitle": "Single-select toggle buttons (aria-pressed) on /projects, /blog and /lab: 44px tall, mono caps, accent border and text on hover, accent fill when active."
+  },
+  {
+    "name": "Section label",
+    "path": "components/section-label.html",
+    "group": "Components",
+    "subtitle": "The mono eyebrow. With an index it reads as a dossier marker (01, a short rule, the name); without one it falls back to an accent tick. Renders as span or as a heading."
+  },
+  {
+    "name": "List row",
+    "path": "components/list-row.html",
+    "group": "Components",
+    "subtitle": "Index rows for articles and ideas: a 200px mono rail (date, then category and reading time), a Fraunces title, a two-line dek. The whole band is the link; hover paints a 2px accent bar in the left margin."
+  },
+  {
+    "name": "Article rail",
+    "path": "components/article-rail.html",
+    "group": "Components",
+    "subtitle": "The ListRow rail for an article wherever one is listed: short date, then category and reading time, joined by a middle dot. CSS uppercases it; the source stays as written."
+  },
+  {
+    "name": "Page header",
+    "path": "components/page-header.html",
+    "group": "Components",
+    "subtitle": "One header for every index, utility and article page: nav clearance, the hero gradient wash, a hairline below, breadcrumbs as the top line, optional eyebrow, the h1 scale, lede and a mono meta line."
+  },
+  {
+    "name": "Breadcrumbs",
+    "path": "components/breadcrumbs.html",
+    "group": "Components",
+    "subtitle": "Mono caps trail: earlier items are muted links with a slash separator, the last item is the current page in --text with aria-current. Hover underlines in accent; it also emits the page's BreadcrumbList JSON-LD."
+  },
+  {
+    "name": "Metric counter",
+    "path": "components/metric-counter.html",
+    "group": "Components",
+    "subtitle": "Dossier metric: a Fraunces numeral in --metric (ink in both themes) over a mono field label. A word in the value slot sets a step smaller; a caption longer than four words switches to sentence-case body prose."
+  },
+  {
+    "name": "Metric strip",
+    "path": "components/metric-strip.html",
+    "group": "Components",
+    "subtitle": "Typographic data strip: one ruled row of readouts, no boxes. Row layout for case studies (one line from 768px); grid layout for the home evidence grid (3x2 from 1024px) with every caption set as prose."
+  },
+  {
+    "name": "Empty state",
+    "path": "components/empty-state.html",
+    "group": "Components",
+    "subtitle": "The nothing-to-show panel: dashed hairline on --surface, Fraunces title, 42ch description, and always a secondary button back out. role=status so a filter that empties a list is announced."
+  },
+  {
+    "name": "Toast",
+    "path": "components/toast.html",
+    "group": "Components",
+    "subtitle": "Fixed bottom-right at --z-toast, 360px max, --radius-md, 12px backdrop blur. Tints are mixed from the theme's own --success and --error so each theme gets its own green and red. Click dismisses; auto-dismiss after 4s."
+  },
+  {
+    "name": "Co-creator chips",
+    "path": "components/co-creator-chips.html",
+    "group": "Components",
+    "subtitle": "Credit for co-builders: name in 600, mono handle, muted role, each chip a link to a public profile. compact sits inside cards; byline is the case-study hero band on --accent-subtle."
+  },
+  {
+    "name": "Skip link",
+    "path": "components/skip-link.html",
+    "group": "Components",
+    "subtitle": "Hidden above the viewport until focused, then drops in at --space-4 as a primary-coloured pill with the 4px corner. Focusing it and pressing Enter moves focus to main#main-content."
+  },
+  {
+    "name": "Navbar",
+    "path": "components/navbar.html",
+    "group": "Components",
+    "subtitle": "Fixed 64px bar on 95% of the page ground with a 12px blur. Brand mark and Fraunces name, five muted links with a 2px accent underline on hover and active, theme toggle, the Ctrl+K palette trigger and a resume download. A hairline appears after 20px of scroll."
+  },
+  {
+    "name": "Mobile nav",
+    "path": "components/mobile-nav.html",
+    "group": "Components",
+    "subtitle": "The drawer under the fixed bar below 768px: a full-ground overlay at --z-overlay, Home plus the five primary links as 44px rows on hairlines, active and hover in accent. Links stagger in 50ms apart; Escape closes and focus returns to the hamburger."
+  },
+  {
+    "name": "Footer",
+    "path": "components/footer.html",
+    "group": "Components",
+    "subtitle": "On --bg-alt under a hairline: brand column (Fraunces name, tagline, real last-updated date linking to the changelog), three mono-headed link groups, then a bottom bar with the copyright line and a bordered Back to top button."
+  },
+  {
+    "name": "Compact row",
+    "path": "components/compact-row.html",
+    "group": "Components",
+    "subtitle": "Index row for compact-tier work, no image by design: a 13.5rem rail (category, status pill, evidence chip), the body (Fraunces name, one sentence, ownership line, links) and a 12rem right column with one MetricCounter readout."
+  },
+  {
+    "name": "Product card",
+    "path": "components/product-card.html",
+    "group": "Components",
+    "subtitle": "The flagship card for the home carousel and the /projects featured grid: a framed shot on the product's tinted ground, then eyebrow, name, tagline, the decision line, ownership, status and evidence chips, one outcome and the links."
+  },
+  {
+    "name": "Case-study masthead",
+    "path": "patterns/case-study-masthead.html",
+    "group": "Patterns",
+    "subtitle": "Product identity above the dossier: breadcrumb, eyebrow (audience and descriptor), product mark and h1, tagline, the decision with what it beat and what it cost, business-model badge and actions, then the four-cell evidence ledger. Without a screenshot the band becomes a tinted title plate."
+  },
+  {
+    "name": "Home selected work",
+    "path": "patterns/home-selected-work.html",
+    "group": "Patterns",
+    "subtitle": "The first band under the hero: section 01 header, the flagship carousel (two cards plus a 15% peek, arrows, dots and a mono counter), then the compact tier as CompactRows under a More work label and an All projects link."
+  },
+  {
+    "name": "Article header",
+    "path": "patterns/article-header.html",
+    "group": "Patterns",
+    "subtitle": "Every /blog/[slug] page opens with the shared PageHeader on the 760px reading column: crumb, category eyebrow, balanced h1, then a mono facts block (date, updated, reading time; tags) and the share row. The AuthorBio closes the article under a strong rule."
+  },
+  {
+    "name": "Plate card",
+    "path": "plates/plate-card.html",
+    "group": "Plates",
+    "subtitle": "Placeholder for the Blender-rendered 3D product plates. Each product will get a light and a dark render at 16:10 under public/images/plates/."
+  }
+]

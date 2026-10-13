@@ -233,6 +233,35 @@
   }
 }
 
+/* Rendered product plate in the band: below the title block on narrow
+   screens, the right half beside it from 900px, so it is in the first screen
+   at 1440x900. No frame, border, radius or clip around it (the shadow is in
+   the image's alpha); any business-model chip or action buttons follow it. */
+.visual {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-4);
+  width: 100%;
+  min-width: 0;
+}
+
+@media (min-width: 900px) {
+  .withPlate {
+    align-items: center;
+  }
+
+  .withPlate > .identity {
+    flex: 1 1 0;
+  }
+
+  .visual {
+    flex: 0 0 44%;
+    width: auto;
+    align-items: flex-end;
+  }
+}
+
 /* Phones: a shorter plate so the evidence row still ends inside the first
    390x844 screen now that the decision carries its context line. */
 @media (max-width: 599.98px) {

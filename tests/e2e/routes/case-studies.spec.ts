@@ -54,6 +54,38 @@ test.describe("Case studies", () => {
     expect(CASE_STUDIES).toHaveLength(10);
   });
 
+  test("sawari's masthead carries its rendered product plate in the first screen, unframed, with no hero copy", async ({ page }) => {
+    await page.setViewportSize({ width: 1440, height: 900 });
+    await open(page, "/projects/sawari");
+    const masthead = page.getByRole("region", { name: "Product", exact: true });
+    const plate = masthead.getByTestId("product-plate");
+    await expect(plate).toHaveCount(1);
+    await expect(plate).toBeVisible();
+    // next/image serves it through /_next/image?url=..., so read the decoded src.
+    const srcs = await plate
+      .locator("img")
+      .evaluateAll((imgs) =>
+        imgs.map((img) => decodeURIComponent((img as HTMLImageElement).currentSrc || img.getAttribute("src") || ""))
+      );
+    expect(srcs.some((src) => src.includes("plates/sawari")), srcs.join(" | ")).toBe(true);
+    const box = (await plate.boundingBox())!;
+    expect(box.y + box.height, "plate bottom inside 1440x900").toBeLessThanOrEqual(900);
+    // Right half of the band, beside the title block.
+    const name = (await masthead.getByRole("heading", { level: 1 }).boundingBox())!;
+    expect(box.x).toBeGreaterThan(name.x + name.width);
+    // One plate on the page: the hero below stays text only, and a title-card
+    // plate has no screenshot behind it to zoom.
+    const header = page.getByRole("region", { name: "Case study header" });
+    await expect(header.getByTestId("product-plate")).toHaveCount(0);
+    await expect(header.getByTestId("hero-zoom")).toHaveCount(0);
+    // No frame, border or rounded clip around the plate.
+    const style = await plate.evaluate((el) => {
+      const cs = getComputedStyle(el);
+      return { border: cs.borderTopWidth, radius: cs.borderTopLeftRadius, overflow: cs.overflow };
+    });
+    expect(style).toEqual({ border: "0px", radius: "0px", overflow: "visible" });
+  });
+
   for (const path of CASE_STUDIES) {
     const slug = path.split("/").pop()!;
 

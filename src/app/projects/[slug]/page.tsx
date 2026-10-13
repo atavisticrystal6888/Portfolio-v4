@@ -122,6 +122,9 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
         demoVideo={currentProject?.demoVideo}
         imageCaption={currentProject?.imageCaption}
         team={currentProject?.team}
+        plate={currentProject?.plate}
+        plateSource={currentProject?.plateSource}
+        productName={currentProject?.productName ?? currentProject?.name}
         belowMasthead={Boolean(currentProject)}
       />
 

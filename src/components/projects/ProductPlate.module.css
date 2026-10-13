@@ -1,0 +1,20 @@
+/* The plate floats on whatever ground it is placed on. No background, border,
+   radius or overflow clip: the baked shadow runs to the file's edges. */
+.plate {
+  width: 100%;
+  min-width: 0;
+  aspect-ratio: 16 / 10;
+}
+
+.image {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 10;
+}
+
+/* Same matte the framed screenshots use on the night ground, so a pale
+   product UI does not glare. The shadow is black, so the filter leaves it. */
+[data-theme="dark"] .image {
+  filter: brightness(0.86) contrast(0.96) saturate(0.95);
+}

@@ -52,7 +52,7 @@ export function RelatedWork({
       <ul className={styles.cards}>
         {related.map((project) => (
           <li key={project.slug} className={styles.cardItem}>
-            <ProductCard project={project} sizes="(max-width: 640px) 100vw, 33vw" />
+            <ProductCard project={project} sizes="(max-width: 699px) calc(100vw - 48px), (max-width: 1023px) 50vw, 360px" />
           </li>
         ))}
       </ul>

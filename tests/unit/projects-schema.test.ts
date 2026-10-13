@@ -77,6 +77,23 @@ describe("content/projects.json product fields", () => {
     expect(sawari.audience).not.toMatch(/driver/i);
   });
 
+  it("a rendered product plate, when present, is a 1600x1000 file under /images/plates/", () => {
+    for (const p of projects) {
+      if (!p.plate) continue;
+      expect(p.plate.src, `${p.slug} plate.src`).toMatch(/^\/images\/plates\/.+\.webp$/);
+      expect(p.plate.avif, `${p.slug} plate.avif`).toMatch(/^\/images\/plates\/.+\.avif$/);
+      expect(p.plate.width, `${p.slug} plate.width`).toBe(1600);
+      expect(p.plate.height, `${p.slug} plate.height`).toBe(1000);
+    }
+  });
+
+  it("a plate source override, when present, is a path under /images/", () => {
+    for (const p of projects) {
+      if (p.plateSource === undefined) continue;
+      expect(p.plateSource, `${p.slug} plateSource`).toMatch(/^\/images\//);
+    }
+  });
+
   it("withdrawn entries stay out and order stays contiguous", () => {
     const slugs = projects.map((p) => p.slug);
     for (const s of WITHDRAWN) expect(slugs, s).not.toContain(s);
