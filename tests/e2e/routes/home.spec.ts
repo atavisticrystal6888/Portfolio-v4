@@ -282,9 +282,10 @@ for (const viewport of [
         transform: getComputedStyle(el).textTransform,
       }))
     );
+    // One caption style for the whole grid: a short label no longer flips
+    // to mono capitals beside five sentence-case captions.
     for (const c of captions) {
-      const words = c.text.split(/\s+/).filter((w) => /[A-Za-z0-9]/.test(w)).length;
-      expect(c.transform, c.text).toBe(words > 4 ? "none" : "uppercase");
+      expect(c.transform, c.text).toBe("none");
     }
   });
 }

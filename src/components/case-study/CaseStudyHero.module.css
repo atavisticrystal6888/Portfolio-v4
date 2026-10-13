@@ -16,8 +16,11 @@
   z-index: 1;
 }
 
+/* Content boxes exclude the .hero side gutter (as in ProductMasthead), so
+   the single column starts on the reading-column edge the TL;DR and the
+   chapters use, and the split layout on the masthead and nav-logo edge. */
 .inner {
-  max-width: var(--container-md);
+  max-width: calc(var(--container-md) - 2 * var(--space-6));
   margin: 0 auto;
   display: flex;
   flex-direction: column;
@@ -29,7 +32,7 @@
    subtitle span the full measure, then the spec table and the shot sit side
    by side. Below 900px it stays the single stacked column. */
 .innerSplit {
-  max-width: var(--container-max);
+  max-width: calc(var(--container-max) - 2 * var(--space-6));
 }
 
 @media (min-width: 900px) {
@@ -98,12 +101,12 @@
   font-size: var(--text-lg);
   color: var(--text-muted);
   line-height: var(--leading-body);
-  max-width: 56ch;
+  max-width: var(--measure-lede);
   text-wrap: pretty;
 }
 
 .heroNote {
-  max-width: 60ch;
+  max-width: var(--measure-lede);
   font-size: var(--text-sm);
   color: var(--text-muted);
   line-height: var(--leading-body);
@@ -177,7 +180,7 @@
 
 .stackSummary:focus-visible {
   outline: 2px solid var(--accent);
-  outline-offset: 2px;
+  outline-offset: var(--focus-offset);
   border-radius: var(--radius-editorial);
 }
 

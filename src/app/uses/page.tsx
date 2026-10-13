@@ -4,7 +4,9 @@ import { generatePageMetadata } from "@/lib/metadata";
 import { SectionLabel } from "@/components/ui/SectionLabel";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { WhereNext } from "@/components/ui/WhereNext";
+import { Surface, SurfaceText, SurfaceTitle } from "@/components/ui/Surface";
 import styles from "@/styles/content-page.module.css";
+import section from "@/styles/section.module.css";
 
 export const metadata = generatePageMetadata({
   title: "Uses",
@@ -81,16 +83,18 @@ export default function UsesPage() {
       />
 
       {GROUPS.map((group, i) => (
-        <section key={group.label} className={styles.section}>
-          <div className={styles.inner}>
-            <SectionLabel>{group.label}</SectionLabel>
-            <h2 className={styles.sectionTitle}>{group.title}</h2>
+        <section key={group.label} className={section.section}>
+          <div className={section.inner}>
+            <header className={section.header}>
+              <SectionLabel index={String(i + 1).padStart(2, "0")}>{group.label}</SectionLabel>
+              <h2 className={section.title}>{group.title}</h2>
+            </header>
             <div className={styles.cardGrid}>
               {group.items.map((item) => (
-                <div key={item.name} className={styles.card}>
-                  <h3>{item.name}</h3>
-                  <p>{item.detail}</p>
-                </div>
+                <Surface key={item.name} hover>
+                  <SurfaceTitle>{item.name}</SurfaceTitle>
+                  <SurfaceText>{item.detail}</SurfaceText>
+                </Surface>
               ))}
             </div>
 

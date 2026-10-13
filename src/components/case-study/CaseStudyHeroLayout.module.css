@@ -3,7 +3,7 @@
    1440. Doubled class beats the single-class .inner rule regardless of
    stylesheet order. */
 .alignWithMasthead.alignWithMasthead {
-  max-width: var(--container-max);
+  max-width: calc(var(--container-max) - 2 * var(--space-6));
 }
 
 .alignWithMasthead.alignWithMasthead > * {

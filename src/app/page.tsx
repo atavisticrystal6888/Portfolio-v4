@@ -19,6 +19,7 @@ import { isExperimentsEnabled } from "@/lib/experiments/config";
 import { HERO_CTA_EXPERIMENT } from "@/lib/experiments/hero";
 import { UID_HEADER, isValidUid } from "@/lib/experiments/identity";
 import styles from "./home.module.css";
+import section from "@/styles/section.module.css";
 
 export const metadata = generatePageMetadata({
   title: SITE_TITLE,
@@ -67,13 +68,13 @@ export default async function Home() {
         id="work"
         aria-label="Selected work"
         data-section="selected-work"
-        className={styles.section}
+        className={section.section}
       >
-        <div className={styles.inner}>
-          <header className={`${styles.sectionHeader} ${styles.sectionHeaderTight}`}>
+        <div className={section.inner}>
+          <header className={section.headerTight}>
             <SectionLabel index="01">Selected work</SectionLabel>
-            <h2 className={styles.sectionTitle}>Four stories, one PM decision each</h2>
-            <p className={styles.sectionLede}>
+            <h2 className={section.title}>Four stories, one PM decision each</h2>
+            <p className={section.lede}>
               AI trust and evaluation &middot; focused scope &middot; D2C
               retention definitions and privacy &middot; rider-to-rider matching
               and fare fairness.
@@ -88,13 +89,13 @@ export default async function Home() {
         id="outcomes"
         aria-label="Key metrics"
         data-section="metrics"
-        className={styles.section}
+        className={section.section}
       >
-        <div className={styles.inner}>
-          <header className={styles.sectionHeader}>
+        <div className={section.inner}>
+          <header className={section.header}>
             <SectionLabel index="02">Evidence</SectionLabel>
-            <h2 className={styles.sectionTitle}>What the evidence supports</h2>
-            <p className={styles.sectionLede}>
+            <h2 className={section.title}>What the evidence supports</h2>
+            <p className={section.lede}>
               Each number says where it stops. Case-study and article counts
               are coverage, not outcomes.
             </p>
@@ -109,12 +110,12 @@ export default async function Home() {
           id="thinking"
           aria-label="Writing"
           data-section="blog-teaser"
-          className={styles.section}
+          className={section.section}
         >
-          <div className={styles.inner}>
-            <header className={styles.sectionHeader}>
+          <div className={section.inner}>
+            <header className={section.header}>
               <SectionLabel index="03">Method</SectionLabel>
-              <h2 className={styles.sectionTitle}>How I think</h2>
+              <h2 className={section.title}>How I think</h2>
             </header>
             <BlogTeaser posts={thinkingPosts} totalCount={posts.length} />
           </div>
@@ -136,9 +137,9 @@ export default async function Home() {
         id="contact"
         aria-label="Contact"
         data-section="contact-cta"
-        className={styles.ctaSection}
+        className={section.section}
       >
-        <div className={`${styles.inner} ${styles.ctaInner}`}>
+        <div className={`${section.inner} ${styles.ctaInner}`}>
           <Image
             src={dhruvImage}
             alt="Dhruv Singhal"

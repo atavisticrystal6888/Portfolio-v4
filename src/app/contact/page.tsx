@@ -15,6 +15,7 @@ import {
   SITE_URL,
 } from "@/lib/site";
 import styles from "./contact.module.css";
+import section from "@/styles/section.module.css";
 
 export const metadata = generatePageMetadata({
   title: "Contact",
@@ -78,11 +79,12 @@ export default function ContactPage() {
       />
 
       {/* Form + direct channels, one spread */}
-      <section className={styles.section} aria-label="Ways to reach me">
-        <div className={styles.inner}>
+      <section className={section.section} aria-label="Ways to reach me">
+        <div className={section.inner}>
           {/* Direct channels first in the DOM, so on a phone the Email card
-              comes before a long form, and reading, Tab and numbering order
-              all agree. From 960px the grid pins the form back into the left
+              comes before a long form, and reading and Tab order agree. The
+              two column labels are unnumbered because the desktop grid shows
+              them in the opposite order. From 960px the grid pins the form back into the left
               column (see contact.module.css). */}
           <div className={styles.reachGrid}>
             {/* A plain group, not an <aside>: these links are the other half
@@ -90,18 +92,18 @@ export default function ContactPage() {
                 complementary landmark nested in this region failed axe's
                 landmark-complementary-is-top-level. */}
             <div className={styles.aside} role="group" aria-label="Direct contact links">
-              <h2 className={`${styles.asideHeader} ${styles.labelHeading}`}>
-                <SectionLabel index="01">Or reach out directly</SectionLabel>
-              </h2>
+              <div className={styles.asideHeader}>
+                <SectionLabel as="h2">Or reach out directly</SectionLabel>
+              </div>
               <DirectLinks />
               <p className={styles.location}>Based in India · IST (UTC+5:30)</p>
             </div>
             <div className={styles.formColumn}>
               {/* h2 so heading navigation reaches the form; it looks like
                   the other section labels. */}
-              <h2 className={`${styles.sectionHeader} ${styles.labelHeading}`}>
-                <SectionLabel index="02">Write to me</SectionLabel>
-              </h2>
+              <div className={styles.formHeader}>
+                <SectionLabel as="h2">Write to me</SectionLabel>
+              </div>
               <ContactForm />
             </div>
           </div>
@@ -109,13 +111,13 @@ export default function ContactPage() {
       </section>
 
       {/* FAQ */}
-      <section className={styles.section} aria-labelledby="contact-faq-heading">
-        <div className={styles.inner}>
-          <div className={styles.sectionHeader}>
-            <SectionLabel index="03">FAQ</SectionLabel>
-            <h2 className={styles.sectionTitle} id="contact-faq-heading">Common Questions</h2>
-          </div>
-          <div className={styles.faq}>
+      <section className={section.section} aria-labelledby="contact-faq-heading">
+        <div className={section.inner}>
+          <header className={section.header}>
+            <SectionLabel index="01">FAQ</SectionLabel>
+            <h2 className={section.title} id="contact-faq-heading">Common Questions</h2>
+          </header>
+          <div className={section.measure}>
             <FAQAccordion />
           </div>
         </div>

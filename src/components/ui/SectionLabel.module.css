@@ -13,6 +13,13 @@
   margin-bottom: var(--space-2);
 }
 
+/* As a heading it keeps the label's look: no display face, no heading
+   line-height or top margin from base.css. */
+.heading {
+  line-height: inherit;
+  margin-top: 0;
+}
+
 .index {
   color: var(--text-muted);
   font-variant-numeric: tabular-nums;

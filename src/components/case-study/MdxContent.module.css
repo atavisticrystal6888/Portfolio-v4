@@ -37,7 +37,7 @@
   margin-bottom: var(--space-2);
 }
 
-/* Case-study measure: running text stops at about 65 characters (~620px),
+/* Case-study measure: running text stops at --measure-prose (68 characters),
    where the 712px column ran 67-90 at 1440. Only the top-level text is
    capped, so tables, code, figures and the MDX blocks keep the full column,
    and the chapter rail (outside this element) is untouched. Scoped to case
@@ -46,7 +46,7 @@
 .prose[data-case-study] > ul,
 .prose[data-case-study] > ol,
 .prose[data-case-study] > blockquote {
-  max-width: 65ch;
+  max-width: var(--measure-prose);
 }
 
 .prose blockquote {
@@ -69,7 +69,7 @@
 .prose pre {
   background: var(--surface-hover);
   padding: var(--space-4);
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-editorial);
   overflow-x: auto;
   margin: var(--space-6) 0;
   font-family: var(--font-mono);
@@ -101,7 +101,7 @@
 
 .prose img {
   max-width: 100%;
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-sm);
   margin: var(--space-6) 0;
 }
 
@@ -270,7 +270,7 @@
 
 .prose [data-table-scroll]:focus-visible {
   outline: 2px solid var(--accent);
-  outline-offset: 2px;
+  outline-offset: var(--focus-offset);
 }
 
 .prose th, .prose td {

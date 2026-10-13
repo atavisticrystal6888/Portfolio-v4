@@ -4,6 +4,7 @@ import { SectionLabel } from "@/components/ui/SectionLabel";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { WhereNext } from "@/components/ui/WhereNext";
 import styles from "@/styles/content-page.module.css";
+import section from "@/styles/section.module.css";
 
 export const metadata = generatePageMetadata({
   title: "Now",
@@ -21,6 +22,7 @@ export default function NowPage() {
           { name: "Now", href: "/now" },
         ]}
         title="What I'm Doing Now"
+        subtitle="A dated snapshot of what I am building, reading, and looking for next."
         meta={
           <>
             Last updated: <time dateTime="2026-10-02">2 October 2026</time>
@@ -28,10 +30,12 @@ export default function NowPage() {
         }
       />
 
-      <section className={styles.section}>
-        <div className={styles.inner}>
-          <SectionLabel>Work</SectionLabel>
-          <h2 className={styles.sectionTitle}>Most Recent Role</h2>
+      <section className={section.section}>
+        <div className={section.inner}>
+          <header className={section.header}>
+            <SectionLabel index="01">Work</SectionLabel>
+            <h2 className={section.title}>Most Recent Role</h2>
+          </header>
           <ul className={styles.list}>
             <li>
               <strong>The Sleep Company</strong> (Jul–Oct 2026): most recently a
@@ -42,10 +46,12 @@ export default function NowPage() {
         </div>
       </section>
 
-      <section className={styles.section}>
-        <div className={styles.inner}>
-          <SectionLabel>Learning</SectionLabel>
-          <h2 className={styles.sectionTitle}>Growing In</h2>
+      <section className={section.section}>
+        <div className={section.inner}>
+          <header className={section.header}>
+            <SectionLabel index="02">Learning</SectionLabel>
+            <h2 className={section.title}>Growing In</h2>
+          </header>
           <ul className={styles.list}>
             <li>LLM evaluation harnesses (golden sets, shadow traffic, A/B)</li>
             <li>Edge-runtime cost modelling for multimodal pipelines</li>
@@ -54,10 +60,12 @@ export default function NowPage() {
         </div>
       </section>
 
-      <section className={styles.section}>
-        <div className={styles.inner}>
-          <SectionLabel>Reading</SectionLabel>
-          <h2 className={styles.sectionTitle}>On My Shelf</h2>
+      <section className={section.section}>
+        <div className={section.inner}>
+          <header className={section.header}>
+            <SectionLabel index="03">Reading</SectionLabel>
+            <h2 className={section.title}>On My Shelf</h2>
+          </header>
           <ul className={styles.list}>
             {/* Same two books as "On my desk right now" on /bookshelf. */}
             <li><em>Inspired</em>, Marty Cagan</li>
@@ -67,10 +75,12 @@ export default function NowPage() {
         </div>
       </section>
 
-      <section className={styles.section}>
-        <div className={styles.inner}>
-          <SectionLabel>Building</SectionLabel>
-          <h2 className={styles.sectionTitle}>Side Projects</h2>
+      <section className={section.section}>
+        <div className={section.inner}>
+          <header className={section.header}>
+            <SectionLabel index="04">Building</SectionLabel>
+            <h2 className={section.title}>Side Projects</h2>
+          </header>
           <ul className={styles.list}>
             <li>
               <strong>
@@ -115,10 +125,12 @@ export default function NowPage() {
         </div>
       </section>
 
-      <section className={styles.section}>
-        <div className={styles.inner}>
-          <SectionLabel>Looking For</SectionLabel>
-          <h2 className={styles.sectionTitle}>Next Step</h2>
+      <section className={section.section}>
+        <div className={section.inner}>
+          <header className={section.header}>
+            <SectionLabel index="05">Looking For</SectionLabel>
+            <h2 className={section.title}>Next Step</h2>
+          </header>
           <p className={styles.prose}>
             {/* Explicit space: JSX drops a leading one when the text node
                 wraps onto the next line. */}

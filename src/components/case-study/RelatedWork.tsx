@@ -1,6 +1,7 @@
 import type { Project } from "@/types/project";
 import { ProductCard } from "@/components/projects/ProductCard";
 import styles from "./RelatedWork.module.css";
+import { SectionLabel } from "@/components/ui/SectionLabel";
 
 interface RelatedWorkProps {
   currentSlug: string;
@@ -43,9 +44,11 @@ export function RelatedWork({
   // and ownership travel with the product wherever it is listed.
   return (
     <section className={styles.wrapper} aria-labelledby="related-products-heading">
-      <h2 id="related-products-heading" className={styles.heading}>
-        Related products
-      </h2>
+      <div className={styles.heading}>
+        <SectionLabel as="h2" id="related-products-heading">
+          Related products
+        </SectionLabel>
+      </div>
       <ul className={styles.cards}>
         {related.map((project) => (
           <li key={project.slug} className={styles.cardItem}>

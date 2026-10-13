@@ -155,7 +155,7 @@ a:hover {
 
 :focus-visible {
   outline: 2px solid var(--accent);
-  outline-offset: 3px;
+  outline-offset: var(--focus-offset);
   border-radius: var(--radius-sm);
 }
 
@@ -170,7 +170,7 @@ a:hover {
   font-weight: 600;
   color: var(--accent-contrast);
   background: var(--accent);
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-editorial);
   text-decoration: none;
   transition: top var(--transition-fast);
 }
@@ -191,14 +191,8 @@ img, svg {
   max-width: 100%;
 }
 
-/* Layout */
-.container {
-  width: 100%;
-  max-width: var(--container-max);
-  margin: 0 auto;
-  padding: 0 var(--space-6);
-}
-
+/* Layout: page containers live in src/styles/section.module.css and the
+   PageHeader / masthead modules; there is no global container class. */
 section {
   padding: var(--space-11) 0;
   position: relative;
@@ -242,7 +236,7 @@ section {
   padding: var(--space-4) var(--space-6);
   border-left: 3px solid var(--accent);
   background: var(--accent-subtle);
-  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  border-radius: 0 var(--radius-editorial) var(--radius-editorial) 0;
   font-style: italic;
   color: var(--text);
 }
@@ -257,7 +251,7 @@ section {
   font-size: 0.85em;
   background: var(--code-bg);
   border: 1px solid var(--code-border);
-  border-radius: 4px;
+  border-radius: var(--radius-editorial);
   color: var(--code-text);
 }
 
@@ -266,7 +260,7 @@ section {
   padding: var(--space-5);
   background: var(--code-bg);
   border: 1px solid var(--code-border);
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-editorial);
   overflow-x: auto;
   font-size: 0.875rem;
   line-height: 1.6;
@@ -285,7 +279,7 @@ section {
 }
 
 .article-body figure img {
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-sm);
   border: 1px solid var(--border);
 }
 
@@ -331,7 +325,7 @@ section {
 .callout {
   margin: var(--space-6) 0;
   padding: var(--space-5);
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-editorial);
   display: flex;
   gap: var(--space-3);
   align-items: flex-start;
@@ -374,23 +368,10 @@ body {
   overflow-x: clip;
 }
 
-/* Container max-width with full-bleed backgrounds */
-.container-wide {
-  width: 100%;
-  max-width: var(--container-wide);
-  margin: 0 auto;
-  padding: 0 var(--space-6);
-}
-
 /* Responsive section padding */
 @media (max-width: 767px) {
   section {
     padding: var(--space-9) 0;
-  }
-
-  .container,
-  .container-wide {
-    padding: 0 var(--space-4);
   }
 }
 

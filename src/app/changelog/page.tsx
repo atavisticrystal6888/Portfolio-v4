@@ -3,6 +3,7 @@ import { SectionLabel } from "@/components/ui/SectionLabel";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { WhereNext } from "@/components/ui/WhereNext";
 import styles from "@/styles/content-page.module.css";
+import section from "@/styles/section.module.css";
 import { RELEASES, type Release } from "@/lib/changelog";
 
 export const metadata = generatePageMetadata({
@@ -38,10 +39,12 @@ export default function ChangelogPage() {
         subtitle="Every PM should eat their own dog food. This is the release log for this portfolio: what shipped, when, and why. Each release is treated like a real product increment."
       />
 
-      <section className={styles.section}>
-        <div className={styles.inner}>
-          <SectionLabel>Releases</SectionLabel>
-          <h2 className={styles.sectionTitle}>Timeline</h2>
+      <section className={section.section}>
+        <div className={section.inner}>
+          <header className={section.header}>
+            <SectionLabel index="01">Releases</SectionLabel>
+            <h2 className={section.title}>Timeline</h2>
+          </header>
           <div className={styles.timeline}>
             {RELEASES.map((r) => (
               <div key={r.version} className={styles.timelineItem}>
@@ -68,10 +71,12 @@ export default function ChangelogPage() {
         </div>
       </section>
 
-      <section className={styles.section}>
-        <div className={styles.inner}>
-          <SectionLabel>On the Roadmap</SectionLabel>
-          <h2 className={styles.sectionTitle}>What&apos;s next</h2>
+      <section className={section.section}>
+        <div className={section.inner}>
+          <header className={section.header}>
+            <SectionLabel index="02">On the Roadmap</SectionLabel>
+            <h2 className={section.title}>What&apos;s next</h2>
+          </header>
           <ul className={styles.list}>
             {UPCOMING.map((u) => (
               <li key={u}>{u}</li>

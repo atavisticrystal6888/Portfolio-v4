@@ -9,7 +9,7 @@ import { SectionLabel } from "@/components/ui/SectionLabel";
 import type { Project } from "@/types/project";
 import type { BlogSummary } from "@/lib/blog-summary";
 import { shownOnHome } from "./selection";
-import styles from "./Suggestions.module.css";
+import section from "@/styles/section.module.css";
 
 interface SuggestionsProps {
   projects: Project[];
@@ -40,12 +40,12 @@ export function Suggestions({ projects, posts }: SuggestionsProps) {
       id="next"
       aria-label="Where to go next"
       data-section="suggestions"
-      className={styles.section}
+      className={section.section}
     >
-      <div className={styles.inner}>
-        <header className={styles.header}>
+      <div className={section.inner}>
+        <header className={section.header}>
           <SectionLabel index="04">Where next</SectionLabel>
-          <h2 className={styles.heading}>Where to go next</h2>
+          <h2 className={section.title}>Where to go next</h2>
         </header>
         <ListRows>
           {suggestions.map((item) => (

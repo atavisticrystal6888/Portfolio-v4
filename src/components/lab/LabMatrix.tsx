@@ -5,6 +5,8 @@ import type { LabIdea } from "@/types/lab";
 import { SectionLabel } from "@/components/ui/SectionLabel";
 import { cn } from "@/lib/utils";
 import page from "@/app/lab/lab.module.css";
+import section from "@/styles/section.module.css";
+import { Surface, SurfaceText, SurfaceTitle } from "@/components/ui/Surface";
 import styles from "./LabMatrix.module.css";
 
 const ALL = "All";
@@ -57,7 +59,7 @@ export function LabMatrix({ ideas }: LabMatrixProps) {
         <SectionLabel index="01">
           {active === ALL ? "All ideas" : `${active} ideas`}
         </SectionLabel>
-        <h2 className={cn(page.sectionTitle, styles.tightHeading)}>
+        <h2 className={cn(section.title, styles.tightHeading)}>
           The matrix, sorted by difficulty (hardest first)
         </h2>
 
@@ -96,21 +98,21 @@ export function LabMatrix({ ideas }: LabMatrixProps) {
         </p>
         <div className={page.cardGrid}>
           {visible.map((idea) => (
-            <div key={idea.id} className={page.card}>
+            <Surface key={idea.id} hover>
               {/* Title and difficulty each get a fixed home: the chip used to
                   sit inline after the title and wrapped mid-name on long ones. */}
-              <h3 className={styles.cardHead}>
+              <SurfaceTitle className={styles.cardHead}>
                 <span className={styles.cardName}>{idea.name}</span>
                 <span className={page.badge} data-testid="lab-difficulty">
                   {idea.difficulty}
                 </span>
-              </h3>
-              <p>{idea.problem}</p>
+              </SurfaceTitle>
+              <SurfaceText>{idea.problem}</SurfaceText>
               {/* One quiet line, in sentence case. The all-caps mono rail used
                   to carry the category plus a comma list of PM skills, which
                   read as five tags per card. */}
               <span className={styles.skill}>{idea.pmSkill}</span>
-            </div>
+            </Surface>
           ))}
         </div>
       </div>

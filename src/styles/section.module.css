@@ -1,0 +1,63 @@
+/* The one section grammar for every index and utility page (home, /about,
+   /ai-pm, /contact, /lab, /now, /uses, /bookshelf, /changelog).
+
+   A full-bleed strong rule heads each band, the measure lives on .inner
+   (the same container-max box as PageHeader, so every left edge lands on
+   one grid line), and the header block is a SectionLabel, an h2 and an
+   optional lede. Pages compose these classes; they do not copy them. */
+
+.section {
+  width: 100%;
+  border-top: var(--rule-strong);
+  padding-top: var(--space-8);
+  padding-bottom: var(--section-gap);
+  /* In-page links (home contents index, /ai-pm deep links) land below the
+     fixed nav. */
+  scroll-margin-top: var(--nav-height);
+}
+
+/* The first band under a PageHeader already sits on its hairline; a second
+   rule there drew a doubled line. */
+:global([data-page-header]) + .section {
+  border-top: 0;
+}
+
+.inner {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 0 var(--space-6);
+  width: 100%;
+}
+
+.header {
+  margin-bottom: var(--space-9);
+}
+
+/* Home's product rail wants to sit as high as it can: the whole first card
+   should clear the fold at 1440x900. */
+.headerTight {
+  margin-bottom: var(--space-6);
+}
+
+.title {
+  font-family: var(--font-display);
+  font-size: clamp(var(--text-xl), 3vw, var(--text-2xl));
+  font-weight: 700;
+  letter-spacing: var(--tracking-tight);
+  line-height: var(--leading-tight);
+  color: var(--text-strong);
+}
+
+.lede {
+  margin-top: var(--space-3);
+  font-size: var(--text-base);
+  color: var(--text-muted);
+  line-height: var(--leading-body);
+  max-width: var(--measure-lede);
+  text-wrap: pretty;
+}
+
+/* Reading measure for prose, lists and timelines inside a full-width band. */
+.measure {
+  max-width: var(--measure-prose);
+}

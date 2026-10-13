@@ -2,8 +2,10 @@ import { generatePageMetadata } from "@/lib/metadata";
 import { SectionLabel } from "@/components/ui/SectionLabel";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { WhereNext } from "@/components/ui/WhereNext";
+import { Surface, SurfaceText, SurfaceTitle } from "@/components/ui/Surface";
 import styles from "@/styles/content-page.module.css";
 import local from "./bookshelf.module.css";
+import section from "@/styles/section.module.css";
 
 export const metadata = generatePageMetadata({
   title: "Bookshelf",
@@ -89,19 +91,19 @@ function Shelf({ books }: { books: Book[] }) {
   return (
     <div className={styles.cardGrid}>
       {books.map((b) => (
-        <div key={b.title} className={styles.card}>
-          <h3>{b.title}</h3>
+        <Surface key={b.title} hover>
+          <SurfaceTitle>{b.title}</SurfaceTitle>
           {b.status === "reading" && (
             <p className={local.statusRow}>
               <span className={styles.badge}>Reading</span>
             </p>
           )}
-          <p>
+          <SurfaceText>
             <strong className={styles.cardAuthor}>{b.author}</strong>
             <br />
             {b.note}
-          </p>
-        </div>
+          </SurfaceText>
+        </Surface>
       ))}
     </div>
   );
@@ -119,26 +121,32 @@ export default function BookshelfPage() {
         subtitle="The books I credit for shaping how I think about product, systems, and building. Not a reading list, a working bibliography."
       />
 
-      <section className={styles.section}>
-        <div className={styles.inner}>
-          <SectionLabel>Currently Reading</SectionLabel>
-          <h2 className={styles.sectionTitle}>On my desk right now</h2>
+      <section className={section.section}>
+        <div className={section.inner}>
+          <header className={section.header}>
+            <SectionLabel index="01">Currently Reading</SectionLabel>
+            <h2 className={section.title}>On my desk right now</h2>
+          </header>
           <Shelf books={CURRENT} />
         </div>
       </section>
 
-      <section className={styles.section}>
-        <div className={styles.inner}>
-          <SectionLabel>Foundation</SectionLabel>
-          <h2 className={styles.sectionTitle}>Books that shaped me</h2>
+      <section className={section.section}>
+        <div className={section.inner}>
+          <header className={section.header}>
+            <SectionLabel index="02">Foundation</SectionLabel>
+            <h2 className={section.title}>Books that shaped me</h2>
+          </header>
           <Shelf books={SHAPED_ME} />
         </div>
       </section>
 
-      <section className={styles.section}>
-        <div className={styles.inner}>
-          <SectionLabel>Queue</SectionLabel>
-          <h2 className={styles.sectionTitle}>Next up</h2>
+      <section className={section.section}>
+        <div className={section.inner}>
+          <header className={section.header}>
+            <SectionLabel index="03">Queue</SectionLabel>
+            <h2 className={section.title}>Next up</h2>
+          </header>
           <Shelf books={NEXT_UP} />
 
           <p className={styles.note}>

@@ -12,9 +12,10 @@ interface MetricCounterProps {
    * "label" sets every caption as a mono field label. "auto" keeps that only
    * for short labels (four words or fewer) and sets a longer caption as a
    * sentence-case line of body text, which reads as a sentence instead of a
-   * block of letter-spaced capitals.
+   * block of letter-spaced capitals. "prose" sets every caption as body
+   * text, for a strip whose captions must all match (home evidence grid).
    */
-  caption?: "label" | "auto";
+  caption?: "label" | "auto" | "prose";
 }
 
 export function MetricCounter({
@@ -23,7 +24,7 @@ export function MetricCounter({
   size = "lg",
   caption = "label",
 }: MetricCounterProps) {
-  const prose = caption === "auto" && isProseCaption(label);
+  const prose = caption === "prose" || (caption === "auto" && isProseCaption(label));
   // A word in the value slot ("Sourced", "Continue") is set a step smaller
   // than a numeral so it fits its cell whole instead of breaking mid-word.
   const word = !/\d/.test(value);

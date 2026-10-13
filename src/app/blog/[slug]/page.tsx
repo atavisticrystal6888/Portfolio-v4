@@ -4,7 +4,7 @@ import { getAllBlogSlugs, getBlogPostBySlug, getAllBlogPosts } from "@/lib/conte
 import { markdownToHtml } from "@/lib/markdown";
 import { formatDate, slugify } from "@/lib/utils";
 import { Button } from "@/components/ui/Button";
-import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
+import { PageHeader } from "@/components/ui/PageHeader";
 import { ShareButtons } from "@/components/blog/ShareButtons";
 import { RelatedArticles } from "@/components/blog/RelatedArticles";
 import { AuthorBio } from "@/components/blog/AuthorBio";
@@ -121,43 +121,47 @@ export default async function BlogArticlePage({
       {/* Reading progress comes from the site-wide ScrollProgress in the
           root layout; a second per-article bar drew on top of it. */}
 
-      {/* Article Header */}
-      <header className={styles.header}>
-        <div className={styles.crumbs}>
-          <Breadcrumbs
-            items={[
-              { name: "Home", href: "/" },
-              { name: "Blog", href: "/blog" },
-              { name: post.title, href: `/blog/${slug}` },
-            ]}
-          />
-        </div>
-        <p className={styles.eyebrow}>{post.category}</p>
-        <h1 className={styles.title}>{post.title}</h1>
-        <div className={styles.meta}>
-          <time dateTime={post.date}>{formatDate(post.date)}</time>
-          {updated && (
-            <>
-              <span className={styles.sep} aria-hidden="true">&middot;</span>
-              <span data-testid="article-updated">
-                Updated <time dateTime={updated}>{formatDate(updated)}</time>
-              </span>
-            </>
+      {/* Article header: the shared PageHeader on the 760px reading column,
+          so the crumb, h1 scale, gradient band and hairline match every
+          index page while the left edge matches the article body. */}
+      <PageHeader
+        as="header"
+        width="narrow"
+        innerClassName={styles.header}
+        breadcrumbs={[
+          { name: "Home", href: "/" },
+          { name: "Blog", href: "/blog" },
+          { name: post.title, href: `/blog/${slug}` },
+        ]}
+        eyebrow={post.category}
+        title={post.title}
+      >
+        <div className={styles.facts}>
+          <div className={styles.meta}>
+            <time dateTime={post.date}>{formatDate(post.date)}</time>
+            {updated && (
+              <>
+                <span className={styles.sep} aria-hidden="true">&middot;</span>
+                <span data-testid="article-updated">
+                  Updated <time dateTime={updated}>{formatDate(updated)}</time>
+                </span>
+              </>
+            )}
+            <span className={styles.sep} aria-hidden="true">&middot;</span>
+            <span>{post.readingTime}</span>
+          </div>
+          {post.tags.length > 0 && (
+            <ul className={styles.tags} aria-label="Tags">
+              {post.tags.map((tag) => (
+                <li key={tag} className={styles.tag}>
+                  {tag}
+                </li>
+              ))}
+            </ul>
           )}
-          <span className={styles.sep} aria-hidden="true">&middot;</span>
-          <span>{post.readingTime}</span>
         </div>
-        {post.tags.length > 0 && (
-          <ul className={styles.tags} aria-label="Tags">
-            {post.tags.map((tag) => (
-              <li key={tag} className={styles.tag}>
-                {tag}
-              </li>
-            ))}
-          </ul>
-        )}
         <ShareButtons title={post.title} url={`/blog/${slug}`} />
-      </header>
+      </PageHeader>
 
       {/* Article: "On this page" disclosure above it below 1200px, a sticky
           list beside it from 1200px. Short posts get neither. */}

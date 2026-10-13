@@ -6,6 +6,7 @@ import { MetricCounter } from "@/components/ui/MetricCounter";
 import { ProductCarousel } from "./ProductCarousel";
 import { splitSelectedWork } from "./selection";
 import styles from "./SelectedWork.module.css";
+import { SectionLabel } from "@/components/ui/SectionLabel";
 
 interface SelectedWorkProps {
   projects: Project[];
@@ -25,7 +26,9 @@ export function SelectedWork({ projects }: SelectedWorkProps) {
 
       {rest.length > 0 && (
         <div className={styles.also}>
-          <h3 className={styles.alsoHeading}>Also built</h3>
+          <div className={styles.alsoHeading}>
+            <SectionLabel as="h3">Also built</SectionLabel>
+          </div>
           <ListRows>
             {rest.map((project) => (
               <ListRow

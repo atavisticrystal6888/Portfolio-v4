@@ -18,6 +18,7 @@ import { CaseStudyNav } from "@/components/case-study/CaseStudyNav";
 import { RelatedWork } from "@/components/case-study/RelatedWork";
 import { JsonLd } from "@/components/ui/JsonLd";
 import styles from "./case-study.module.css";
+import { SectionLabel } from "@/components/ui/SectionLabel";
 
 interface CaseStudyPageProps {
   params: Promise<{ slug: string }>;
@@ -126,7 +127,9 @@ export default async function CaseStudyPage({ params }: CaseStudyPageProps) {
 
       {/* TL;DR */}
       <section className={styles.tldr} aria-label="Summary">
-        <h2 className={styles.tldrTitle}>TL;DR</h2>
+        <div className={styles.tldrTitle}>
+          <SectionLabel as="h2">TL;DR</SectionLabel>
+        </div>
         <p className={styles.tldrText}>{caseStudy.tldr}</p>
       </section>
 

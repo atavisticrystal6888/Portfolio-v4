@@ -17,7 +17,8 @@ interface MetricStripProps {
    * "row" puts every readout on one ruled line from tablet up (case-study
    * strips). "grid" wraps them into three columns from 1024px and two from
    * 480px, so each cell has room for its value and a sentence-long caption
-   * (home evidence grid); long captions are set as body text.
+   * (home evidence grid); every caption in the grid is set as body text,
+   * so one short label never switches style mid-grid.
    */
   layout?: "row" | "grid";
 }
@@ -36,7 +37,7 @@ export function MetricStrip({
 
   const grid = layout === "grid";
   const itemClass = grid ? styles.cell : styles.item;
-  const caption = grid ? "auto" : "label";
+  const caption = grid ? "prose" : "label";
 
   return (
     <div

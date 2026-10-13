@@ -1,52 +1,19 @@
 /* Shared layout for the utility pages (/now, /uses, /bookshelf, /changelog).
 
-   The header is the shared PageHeader, so the h1 scale, top clearance and
-   left edge match /blog and /projects exactly. Below it the page uses the
-   same ruled-band grammar as the home and AI PM sections: full-bleed rules,
-   a container-max inner column, and a mono section label over each h2.
-   Prose, lists and the timeline keep a reading measure but start on the
-   same left edge as the h1; card grids take the full column. */
+   The header is the shared PageHeader and the bands are the shared section
+   primitive (src/styles/section.module.css), so the h1, the section rhythm
+   and every left edge match /about and the home page exactly. This file only
+   holds what is particular to these pages: prose, arrow lists, card grids
+   and the changelog timeline. Prose, lists and the timeline keep the
+   reading measure; card grids take the full column. Cards are ui/Surface. */
 
 .page {
   display: flex;
   flex-direction: column;
 }
 
-.section {
-  width: 100%;
-  padding: var(--space-8) 0 var(--space-9);
-}
-
-/* The first band sits directly under PageHeader's own hairline, so only the
-   bands after it draw a rule. */
-.section + .section {
-  border-top: var(--rule-strong);
-}
-
-.inner {
-  max-width: var(--container-max);
-  margin: 0 auto;
-  padding: 0 var(--space-6);
-  width: 100%;
-}
-
-.sectionTitle {
-  font-family: var(--font-display);
-  font-size: clamp(var(--text-xl), 3vw, var(--text-2xl));
-  font-weight: 700;
-  color: var(--text-strong);
-  letter-spacing: var(--tracking-tight);
-  line-height: var(--leading-tight);
-  margin-bottom: var(--space-6);
-}
-
-/* Reading measure for prose, lists and the timeline. */
-.measure {
-  max-width: 68ch;
-}
-
 .prose {
-  max-width: 68ch;
+  max-width: var(--measure-prose);
   color: var(--text-body);
   line-height: 1.7;
 }
@@ -57,7 +24,7 @@
   display: flex;
   flex-direction: column;
   gap: var(--space-4);
-  max-width: 68ch;
+  max-width: var(--measure-prose);
 }
 
 .list li {
@@ -84,33 +51,6 @@
   gap: var(--space-4);
 }
 
-.card {
-  padding: var(--space-5);
-  border: var(--hairline);
-  border-radius: var(--radius-editorial);
-  background: var(--surface);
-  transition: border-color var(--transition-fast);
-}
-
-.card:hover {
-  border-color: var(--border-strong);
-}
-
-.card h3 {
-  font-family: var(--font-display);
-  font-size: 1.05rem;
-  font-weight: 700;
-  color: var(--text-strong);
-  margin: 0 0 var(--space-2);
-}
-
-.card p {
-  color: var(--text-muted);
-  font-size: 0.9rem;
-  line-height: 1.6;
-  margin: 0;
-}
-
 .cardAuthor {
   color: var(--text);
 }
@@ -122,7 +62,7 @@
   display: flex;
   flex-direction: column;
   gap: var(--space-8);
-  max-width: 68ch;
+  max-width: var(--measure-prose);
 }
 
 .timelineItem {
@@ -172,7 +112,7 @@
 
 /* Colophon line at the end of the last band. */
 .note {
-  max-width: 68ch;
+  max-width: var(--measure-prose);
   font-size: 0.85rem;
   color: var(--text-muted);
   margin-top: var(--space-8);
@@ -197,10 +137,4 @@
   margin-left: var(--space-2);
   vertical-align: middle;
   white-space: nowrap;
-}
-
-@media (max-width: 767px) {
-  .section {
-    padding: var(--space-7) 0 var(--space-8);
-  }
 }

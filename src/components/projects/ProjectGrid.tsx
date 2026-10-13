@@ -8,6 +8,7 @@ import { CompactRow } from "@/components/projects/CompactRow";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { cn } from "@/lib/utils";
 import styles from "./ProjectGrid.module.css";
+import { SectionLabel } from "@/components/ui/SectionLabel";
 
 type LayoutMode = "rows" | "dense";
 
@@ -124,7 +125,11 @@ export function ProjectGrid({ projects }: ProjectGridProps) {
 
       {flagships.length > 0 && (
         <>
-          {showHeadings && <h2 className={styles.sectionHeading}>Featured</h2>}
+          {showHeadings && (
+            <div className={styles.sectionHeading}>
+              <SectionLabel as="h2">Featured</SectionLabel>
+            </div>
+          )}
           <div className={cn(styles.featured, dense && styles.featuredDense)}>
             {flagships.map((p, i) => (
               <ProductCard
@@ -144,7 +149,11 @@ export function ProjectGrid({ projects }: ProjectGridProps) {
 
       {compact.length > 0 && (
         <>
-          {showHeadings && <h2 className={styles.sectionHeading}>More work</h2>}
+          {showHeadings && (
+            <div className={styles.sectionHeading}>
+              <SectionLabel as="h2">More work</SectionLabel>
+            </div>
+          )}
           <div className={cn(styles.rows, dense && styles.rowsDense)}>
             {compact.map((p) => (
               <CompactRow key={p.slug} project={p} />

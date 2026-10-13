@@ -8,6 +8,7 @@
 }
 
 .inner {
+  position: relative;
   max-width: var(--container-max);
   margin: 0 auto;
   padding: 0 var(--space-6);
@@ -15,6 +16,42 @@
   flex-direction: column;
   align-items: flex-start;
   gap: var(--space-4);
+}
+
+/* Articles: the header column is the 760px reading column the body uses,
+   so the crumb, h1 and first paragraph share one left edge. */
+.narrow {
+  max-width: var(--container-md);
+}
+
+/* Decorated headers (/lab): the text sits above the scene, and from 900px
+   the column stops short of the scene and holds the stage open to its
+   height, since a cropped figure reads as a bug. */
+.decorated > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* The wrapper covers .inner exactly, so the absolute scene positions as if
+   .inner were its box, and it leaves the flex flow (no extra column gap
+   above the breadcrumb). It sits under the text. */
+.decorated > .decoration {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+@media (min-width: 900px) {
+  .decorated {
+    padding-right: calc(min(34%, 320px) + var(--space-8));
+    min-height: 248px;
+  }
+}
+
+@media (max-width: 899px) {
+  .decoration {
+    display: none;
+  }
 }
 
 .title {
@@ -43,6 +80,6 @@
 .subtitle {
   font-size: var(--text-lg);
   color: var(--text-muted);
-  max-width: 52ch;
+  max-width: var(--measure-lede);
   line-height: var(--leading-body);
 }

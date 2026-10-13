@@ -5,10 +5,14 @@
   padding: calc(var(--nav-height) + var(--space-7)) var(--space-6) var(--space-7);
 }
 
+/* Content boxes are the container-max box minus its gutters, so the crumb,
+   name, rules and ledger start on the same x as the nav logo and every
+   PageHeader (184px at 1440), and the rules end where the text does. The
+   outer side padding stays as the gutter on narrow screens. */
 .top,
 .inner,
 .ledger {
-  max-width: var(--container-max);
+  max-width: calc(var(--container-max) - 2 * var(--space-6));
   margin: 0 auto;
 }
 
@@ -22,7 +26,7 @@
   display: flex;
   flex-direction: column;
   gap: var(--space-1);
-  max-width: 62ch;
+  max-width: var(--measure-lede);
   margin-top: calc(var(--space-1) - var(--space-3));
   padding-left: var(--space-3);
   border-left: 3px solid var(--product-accent, var(--accent));
@@ -106,7 +110,7 @@
 
 .name {
   font-family: var(--font-display);
-  font-size: clamp(var(--text-2xl), 4vw, var(--text-3xl));
+  font-size: clamp(var(--text-2xl), 5vw, var(--text-4xl));
   font-weight: 700;
   color: var(--text-strong);
   line-height: var(--leading-tight);
@@ -165,7 +169,7 @@
   display: flex;
   flex-direction: column;
   gap: var(--space-1);
-  max-width: 62ch;
+  max-width: var(--measure-lede);
   margin-top: var(--space-1);
   padding-left: var(--space-3);
   border-left: 3px solid var(--product-accent, var(--accent));
@@ -189,7 +193,7 @@
 
 /* Why there is no screenshot: small, muted, never louder than the tagline. */
 .heroNote {
-  max-width: 60ch;
+  max-width: var(--measure-lede);
   margin-top: var(--space-1);
   font-size: var(--text-sm);
   color: var(--text-muted);
@@ -216,8 +220,10 @@
   min-height: 3rem;
 }
 
+/* Same title size as every other case study and PageHeader: the plate
+   used to set the name at --text-display (72px) against 44-56px elsewhere. */
 .plate .name {
-  font-size: var(--text-display);
+  font-size: clamp(var(--text-2xl), 5vw, var(--text-4xl));
   line-height: 1;
 }
 

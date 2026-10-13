@@ -91,7 +91,7 @@
    alone was too weak a focus indicator. */
 .search:focus-visible {
   outline: 2px solid var(--accent);
-  outline-offset: 2px;
+  outline-offset: var(--focus-offset);
 }
 
 /* Wrapper around the shared EmptyState panel: spacing only. */
@@ -101,7 +101,7 @@
 
 .pill:focus-visible {
   outline: 2px solid var(--accent);
-  outline-offset: 2px;
+  outline-offset: var(--focus-offset);
 }
 
 .srOnly {

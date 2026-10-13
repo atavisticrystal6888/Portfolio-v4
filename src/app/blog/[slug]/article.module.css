@@ -3,32 +3,16 @@
   flex-direction: column;
 }
 
-.header {
-  max-width: var(--container-md);
-  margin: 0 auto;
-  padding: calc(var(--nav-height) + var(--space-10)) var(--space-6) var(--space-8);
-  width: 100%;
+/* The header itself is PageHeader (width="narrow"); these rules only
+   cover the article's own facts row under the title. */
+.facts {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
 }
 
-/* Mono topic eyebrow, same voice as the section labels. */
-.eyebrow {
-  font-family: var(--font-mono);
-  font-size: var(--text-xs);
-  font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: var(--tracking-label);
-  color: var(--accent);
-}
-
-.title {
-  font-family: var(--font-display);
-  font-size: clamp(var(--text-2xl), 5vw, var(--text-3xl));
-  font-weight: 700;
-  color: var(--text-strong);
-  line-height: var(--leading-tight);
-  letter-spacing: var(--tracking-tight);
-  margin-top: var(--space-4);
-  margin-bottom: var(--space-5);
+/* Long article titles wrap more evenly. */
+.header h1 {
   text-wrap: balance;
 }
 
@@ -52,15 +36,14 @@
   display: flex;
   flex-wrap: wrap;
   list-style: none;
-  margin: var(--space-3) 0 0;
-  padding: 0 0 var(--space-6);
+  margin: 0;
+  padding: 0;
   font-family: var(--font-mono);
   font-size: var(--text-xs);
   text-transform: uppercase;
   letter-spacing: var(--tracking-label);
   color: var(--text-muted);
   line-height: 1.7;
-  border-bottom: var(--hairline);
 }
 
 /* Each tag keeps its own separator, so a wrapped line never starts with a
@@ -94,19 +77,15 @@
 
 /* The breadcrumb replaced the old top "Back to Blog" link: its "Blog" step is
    the way back, so on touch screens its targets get the full 44px. */
-.crumbs {
-  margin-bottom: var(--space-5);
-}
-
 @media (max-width: 767px) {
-  .crumbs a {
+  .header nav[aria-label="Breadcrumb"] a {
     min-height: 44px;
   }
 
   /* The h1 right below repeats the title in full; on a phone the current
      crumb keeps one line instead of three. Only the visual box is clipped,
      so the accessible name is still the whole title. */
-  .crumbs [aria-current="page"] {
+  .header nav[aria-label="Breadcrumb"] [aria-current="page"] {
     display: block;
     max-width: calc(100vw - 2 * var(--space-6));
     overflow: hidden;
@@ -152,7 +131,7 @@
 .article h2:focus-visible,
 .article h3:focus-visible {
   outline: 2px solid var(--accent);
-  outline-offset: 4px;
+  outline-offset: var(--focus-offset);
 }
 
 @media (min-width: 1200px) {
@@ -171,6 +150,6 @@
   /* Prose capped near 68 characters a line; the 760px column ran 74 to 98. */
   .article {
     grid-column: 2;
-    max-width: 68ch;
+    max-width: var(--measure-prose);
   }
 }

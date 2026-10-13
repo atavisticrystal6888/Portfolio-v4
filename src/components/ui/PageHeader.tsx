@@ -2,6 +2,7 @@ import styles from "./PageHeader.module.css";
 import { Badge } from "@/components/ui/Badge";
 import { SectionLabel } from "@/components/ui/SectionLabel";
 import { Breadcrumbs, type Crumb } from "@/components/ui/Breadcrumbs";
+import { cn } from "@/lib/utils";
 
 interface PageHeaderProps {
   title: string;
@@ -16,16 +17,25 @@ interface PageHeaderProps {
   eyebrow?: string;
   /** Small mono line under the subtitle, e.g. a last-updated date or count. */
   meta?: React.ReactNode;
-  /** Optional decoration rendered behind the text column (e.g. /lab's scene). */
+  /** Optional decoration rendered behind the text column (e.g. /lab's scene).
+   *  From 900px the text column stops short of it; below 900px it is hidden. */
   decoration?: React.ReactNode;
+  /** "narrow" sets the text column to the 760px reading column, for article
+   *  pages whose body below uses that column. */
+  width?: "default" | "narrow";
+  /** Root element: "header" where the page has no other banner-like header
+   *  (articles), "section" otherwise. */
+  as?: "section" | "header";
+  /** Extra class on the inner column, for page-specific child rules. */
+  innerClassName?: string;
   children?: React.ReactNode;
 }
 
 /**
- * One header for every index and utility page, so the h1 scale, top
- * clearance, left edge and top line (the breadcrumb trail) are identical
+ * One header for every index, utility and article page, so the h1 scale,
+ * top clearance, left edge and top line (the breadcrumb trail) are identical
  * across /about, /projects, /ai-pm, /blog, /lab, /contact, /now, /uses,
- * /bookshelf and /changelog.
+ * /bookshelf, /changelog and every /blog/[slug].
  */
 export function PageHeader({
   title,
@@ -35,12 +45,22 @@ export function PageHeader({
   eyebrow,
   meta,
   decoration,
+  width = "default",
+  as: Tag = "section",
+  innerClassName,
   children,
 }: PageHeaderProps) {
   return (
-    <section className={styles.header}>
-      <div className={styles.inner}>
-        {decoration}
+    <Tag className={styles.header} data-page-header="">
+      <div
+        className={cn(
+          styles.inner,
+          width === "narrow" && styles.narrow,
+          decoration != null && styles.decorated,
+          innerClassName
+        )}
+      >
+        {decoration != null && <div className={styles.decoration}>{decoration}</div>}
         {breadcrumbs && breadcrumbs.length > 0 && <Breadcrumbs items={breadcrumbs} />}
         {badge && <Badge variant="accent">{badge}</Badge>}
         {eyebrow && (
@@ -53,6 +73,6 @@ export function PageHeader({
         {meta && <p className={styles.meta}>{meta}</p>}
         {children}
       </div>
-    </section>
+    </Tag>
   );
 }

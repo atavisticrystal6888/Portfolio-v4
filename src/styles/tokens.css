@@ -99,6 +99,15 @@
 
   /* Vertical rhythm between page sections */
   --section-gap: clamp(96px, 12vh, 160px);
+
+  /* Reading measures. Only two: running prose (paragraphs, lists, timelines)
+     and the shorter lede under a page or section title. */
+  --measure-prose: 68ch;
+  --measure-lede: 56ch;
+
+  /* One gap between a control and its focus ring, everywhere. Rings drawn
+     inside a clipped box keep their own negative offset. */
+  --focus-offset: 3px;
 }
 
 /* Night blueprint: a deep Prussian-ink ground instead of neutral black,

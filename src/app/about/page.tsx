@@ -13,6 +13,8 @@ import Image from "next/image";
 import Link from "next/link";
 import dhruvImage from "@/assets/Dhruv_Image.jpg";
 import styles from "./about.module.css";
+import section from "@/styles/section.module.css";
+import ledger from "@/components/about/ledger.module.css";
 
 export const metadata = generatePageMetadata({
   title: "About",
@@ -30,8 +32,8 @@ export default async function AboutPage() {
 
   // Section numbers count what actually renders: with GitHub stats hidden a
   // hardcoded 07 after 05 read as a numbering error on a working paper.
-  let section = 0;
-  const num = () => String(++section).padStart(2, "0");
+  let sectionCount = 0;
+  const num = () => String(++sectionCount).padStart(2, "0");
 
   return (
     <div className={styles.page}>
@@ -46,11 +48,11 @@ export default async function AboutPage() {
       />
 
       {/* Bio */}
-      <section aria-label="Biography" data-section="bio" className={styles.section}>
-        <div className={styles.innerNarrow}>
-          <header className={styles.sectionHeader}>
+      <section aria-label="Biography" data-section="bio" className={section.section}>
+        <div className={section.inner}>
+          <header className={section.header}>
             <SectionLabel index={num()}>Background</SectionLabel>
-            <h2 className={styles.sectionTitle}>My story</h2>
+            <h2 className={section.title}>My story</h2>
           </header>
           <div className={styles.bioRow}>
             <Image
@@ -133,33 +135,35 @@ export default async function AboutPage() {
       </section>
 
       {/* Experience Timeline */}
-      <section aria-label="Experience" data-section="experience" className={styles.section}>
-        <div className={styles.innerNarrow}>
-          <header className={styles.sectionHeader}>
+      <section aria-label="Experience" data-section="experience" className={section.section}>
+        <div className={section.inner}>
+          <header className={section.header}>
             <SectionLabel index={num()}>Experience</SectionLabel>
-            <h2 className={styles.sectionTitle}>Four teams, four problems</h2>
+            <h2 className={section.title}>Four teams, four problems</h2>
           </header>
-          <Timeline />
+          <div className={section.measure}>
+            <Timeline />
+          </div>
         </div>
       </section>
 
       {/* Philosophy */}
-      <section aria-label="Philosophy" data-section="philosophy" className={styles.section}>
-        <div className={styles.inner}>
-          <header className={styles.sectionHeader}>
+      <section aria-label="Philosophy" data-section="philosophy" className={section.section}>
+        <div className={section.inner}>
+          <header className={section.header}>
             <SectionLabel index={num()}>Philosophy</SectionLabel>
-            <h2 className={styles.sectionTitle}>How I think</h2>
+            <h2 className={section.title}>How I think</h2>
           </header>
           <Philosophy />
         </div>
       </section>
 
       {/* Skills */}
-      <section aria-label="Skills" data-section="skills" className={styles.section}>
-        <div className={styles.inner}>
-          <header className={styles.sectionHeader}>
+      <section aria-label="Skills" data-section="skills" className={section.section}>
+        <div className={section.inner}>
+          <header className={section.header}>
             <SectionLabel index={num()}>Skills</SectionLabel>
-            <h2 className={styles.sectionTitle}>
+            <h2 className={section.title}>
               Product, data, and enough engineering
             </h2>
           </header>
@@ -168,11 +172,11 @@ export default async function AboutPage() {
       </section>
 
       {/* Achievements */}
-      <section aria-label="Achievements" data-section="achievements" className={styles.section}>
-        <div className={styles.inner}>
-          <header className={styles.sectionHeader}>
+      <section aria-label="Achievements" data-section="achievements" className={section.section}>
+        <div className={section.inner}>
+          <header className={section.header}>
             <SectionLabel index={num()}>Achievements</SectionLabel>
-            <h2 className={styles.sectionTitle}>Highlights</h2>
+            <h2 className={section.title}>Highlights</h2>
           </header>
           <Achievements />
         </div>
@@ -180,11 +184,11 @@ export default async function AboutPage() {
 
       {/* GitHub Stats */}
       {hasGitHub && (
-        <section aria-label="GitHub activity" data-section="github" className={styles.section}>
-          <div className={styles.inner}>
-            <header className={styles.sectionHeader}>
+        <section aria-label="GitHub activity" data-section="github" className={section.section}>
+          <div className={section.inner}>
+            <header className={section.header}>
               <SectionLabel index={num()}>Open source</SectionLabel>
-              <h2 className={styles.sectionTitle}>GitHub activity</h2>
+              <h2 className={section.title}>GitHub activity</h2>
             </header>
             <GitHubStats profile={github} />
           </div>
@@ -192,13 +196,13 @@ export default async function AboutPage() {
       )}
 
       {/* How I Work */}
-      <section aria-label="How I work" data-section="how-i-work" className={styles.section}>
-        <div className={styles.innerNarrow}>
-          <header className={styles.sectionHeader}>
+      <section aria-label="How I work" data-section="how-i-work" className={section.section}>
+        <div className={section.inner}>
+          <header className={section.header}>
             <SectionLabel index={num()}>How I work</SectionLabel>
-            <h2 className={styles.sectionTitle}>Operating principles</h2>
+            <h2 className={section.title}>Operating principles</h2>
           </header>
-          <dl className={styles.values}>
+          <dl className={ledger.list}>
             {[
               // The 37-charts story moved up into "My story", so this row
               // carries different evidence rather than repeating it.
@@ -216,9 +220,9 @@ export default async function AboutPage() {
                 ),
               },
             ].map((v) => (
-              <div key={v.label} className={styles.valueRow}>
-                <dt className={styles.valueName}>{v.label}</dt>
-                <dd className={styles.valueDetail}>{v.detail}</dd>
+              <div key={v.label} className={ledger.row}>
+                <dt className={ledger.key}>{v.label}</dt>
+                <dd className={ledger.value}>{v.detail}</dd>
               </div>
             ))}
           </dl>
@@ -226,8 +230,8 @@ export default async function AboutPage() {
       </section>
 
       {/* Resume CTA */}
-      <div className={styles.resumeCta}>
-        <div className={styles.inner}>
+      <div className={section.section}>
+        <div className={section.inner}>
           <Button href="/resume/dhruv-singhal-resume.pdf">
             Download resume
           </Button>

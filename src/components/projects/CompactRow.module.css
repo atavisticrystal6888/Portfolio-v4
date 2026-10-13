@@ -51,7 +51,7 @@
 }
 
 .ownership {
-  max-width: 64ch;
+  max-width: var(--measure-prose);
 }
 
 .body {
@@ -83,14 +83,14 @@
 
 .name a:focus-visible {
   outline: 2px solid var(--accent);
-  outline-offset: 4px;
+  outline-offset: var(--focus-offset);
 }
 
 .desc {
   font-size: var(--text-sm);
   color: var(--text-muted);
   line-height: var(--leading-body);
-  max-width: 64ch;
+  max-width: var(--measure-prose);
   text-wrap: pretty;
 }
 

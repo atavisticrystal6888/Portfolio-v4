@@ -40,7 +40,7 @@
 
 .row:focus-visible {
   outline: 2px solid var(--accent);
-  outline-offset: 4px;
+  outline-offset: var(--focus-offset);
 }
 
 .rail {
@@ -85,7 +85,7 @@
   font-size: var(--text-sm);
   color: var(--text-muted);
   line-height: var(--leading-body);
-  max-width: 64ch;
+  max-width: var(--measure-prose);
   display: -webkit-box;
   -webkit-line-clamp: 2;
   line-clamp: 2;

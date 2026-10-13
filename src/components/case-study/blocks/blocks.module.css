@@ -63,7 +63,7 @@
 
 .zoom:focus-visible {
   outline: 2px solid var(--accent);
-  outline-offset: 3px;
+  outline-offset: var(--focus-offset);
 }
 
 /* Matte: hairline frame on a soft ground so pale screenshots don't glare in
@@ -342,7 +342,7 @@
     margin-bottom: var(--space-3);
     padding: var(--space-3) 0;
     border: var(--hairline);
-    border-radius: var(--radius-md);
+    border-radius: var(--radius-editorial);
   }
 
   .options .optionName,
@@ -606,7 +606,7 @@
 
 .artifactChip:focus-visible {
   outline: 2px solid var(--accent);
-  outline-offset: 2px;
+  outline-offset: var(--focus-offset);
 }
 
 @media (prefers-reduced-motion: no-preference) {

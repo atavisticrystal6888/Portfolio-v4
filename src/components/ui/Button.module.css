@@ -25,11 +25,13 @@
 
 .primary {
   background: var(--accent);
-  color: var(--bg);
+  color: var(--accent-contrast);
 }
 
+/* Restated so the global a:hover colour never repaints a linked button. */
 .primary:hover:not(:disabled) {
   background: var(--accent-hover);
+  color: var(--accent-contrast);
 }
 
 .secondary {
@@ -57,7 +59,7 @@
 /* Focus + Active states (T156) */
 .button:focus-visible {
   outline: 2px solid var(--accent);
-  outline-offset: 3px;
+  outline-offset: var(--focus-offset);
 }
 
 .button:active:not(:disabled) {

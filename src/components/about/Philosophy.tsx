@@ -1,4 +1,4 @@
-import styles from "./Philosophy.module.css";
+import styles from "./ledger.module.css";
 
 const CARDS = [
   {
@@ -20,8 +20,8 @@ export function Philosophy() {
     <ul className={styles.list}>
       {CARDS.map((c) => (
         <li key={c.title} className={styles.row}>
-          <h3 className={styles.title}>{c.title}</h3>
-          <p className={styles.desc}>{c.desc}</p>
+          <h3 className={styles.key}>{c.title}</h3>
+          <p className={styles.value}>{c.desc}</p>
         </li>
       ))}
     </ul>

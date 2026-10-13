@@ -1,38 +1,11 @@
-/* Contact: homepage section grammar. The form and the direct channels
-   share one section as two columns from 960px up, so the page reads as a
-   composed spread instead of a lone centred form. */
+/* Contact. Bands, headers and titles come from the shared
+   src/styles/section.module.css. The form and the direct channels share one
+   band as two columns from 960px up, so the page reads as a composed spread
+   instead of a lone centred form. */
 
 .page {
   display: flex;
   flex-direction: column;
-}
-
-.section {
-  width: 100%;
-  border-top: var(--rule-strong);
-  padding-top: var(--space-8);
-  padding-bottom: var(--section-gap);
-}
-
-.inner {
-  max-width: var(--container-max);
-  margin: 0 auto;
-  padding: 0 var(--space-6);
-  width: 100%;
-}
-
-.sectionHeader {
-  margin-bottom: var(--space-7);
-}
-
-.sectionTitle {
-  font-family: var(--font-display);
-  font-size: clamp(var(--text-xl), 3vw, var(--text-2xl));
-  font-weight: 700;
-  letter-spacing: var(--tracking-tight);
-  line-height: var(--leading-tight);
-  color: var(--text-strong);
-  margin-top: var(--space-2);
 }
 
 .reachGrid {
@@ -76,13 +49,10 @@
   margin-bottom: var(--space-2);
 }
 
-/* The two column labels are h2s for heading navigation, styled exactly as
-   the plain section labels they replaced. */
-.labelHeading {
-  font: inherit;
-  letter-spacing: normal;
-  text-transform: none;
-  color: inherit;
+/* The two column labels are SectionLabel h2s, so heading navigation
+   reaches the form and the direct links. */
+.formHeader {
+  margin-bottom: var(--space-7);
 }
 
 .location {
@@ -91,8 +61,4 @@
   font-size: var(--text-xs);
   text-transform: uppercase;
   letter-spacing: var(--tracking-label);
-}
-
-.faq {
-  max-width: 56rem;
 }

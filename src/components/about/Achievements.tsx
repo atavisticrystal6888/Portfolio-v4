@@ -1,4 +1,4 @@
-import styles from "./Achievements.module.css";
+import styles from "./ledger.module.css";
 
 const ITEMS = [
   // Worded exactly as the resume has them (claim-gates F8;
@@ -13,8 +13,8 @@ export function Achievements() {
     <ul className={styles.list}>
       {ITEMS.map((item) => (
         <li key={item.title} className={styles.row}>
-          <h3 className={styles.title}>{item.title}</h3>
-          <p className={styles.desc}>{item.desc}</p>
+          <h3 className={styles.key}>{item.title}</h3>
+          <p className={styles.value}>{item.desc}</p>
         </li>
       ))}
     </ul>
