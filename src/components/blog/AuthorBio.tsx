@@ -1,12 +1,12 @@
 import Image from "next/image";
 import Link from "next/link";
 import dhruvImage from "@/assets/Dhruv_Image.jpg";
-import { GITHUB_URL, LINKEDIN_URL, SITE_NAME } from "@/lib/site";
+import { GITHUB_URL, LINKEDIN_URL, SITE_NAME, SLEEP_COMPANY_TENURE } from "@/lib/site";
 import styles from "./AuthorBio.module.css";
 import { SectionLabel } from "@/components/ui/SectionLabel";
 
 export const BIO_TEXT =
-  "Dhruv Singhal has about a year of product experience across internships, most recently as a product intern on the growth team at The Sleep Company (Jul–Oct 2026). He builds small, tested products and writes about AI evaluation, retention analytics and product judgment.";
+  `Dhruv Singhal has about a year of product experience across internships, most recently as a product intern on the growth team at The Sleep Company (${SLEEP_COMPANY_TENURE}). He builds small, tested products and writes about AI evaluation, retention analytics and product judgment.`;
 
 /**
  * Short, factual author note at the foot of every article. It claims no more

@@ -30,7 +30,7 @@
 
 .label {
   display: block;
-  font-size: 0.8rem;
+  font-size: var(--text-xs);
   color: var(--text-muted);
   margin-top: var(--space-1);
 }
@@ -42,7 +42,7 @@
 }
 
 .langTitle {
-  font-size: 0.85rem;
+  font-size: var(--text-sm);
   font-weight: 600;
   color: var(--text-strong);
 }
@@ -54,7 +54,7 @@
 }
 
 .synced {
-  font-size: 0.75rem;
+  font-size: var(--text-xs);
   color: var(--text-muted);
   margin: 0;
 }

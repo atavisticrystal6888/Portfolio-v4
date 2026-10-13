@@ -9,6 +9,8 @@
   display: flex;
   flex-direction: column;
   gap: var(--space-3);
+  /* Clips the separator slot at the start of each meta/tag line (below). */
+  overflow: hidden;
 }
 
 /* Long article titles wrap more evenly. */
@@ -16,56 +18,38 @@
   text-wrap: balance;
 }
 
-.meta {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-2);
-  align-items: center;
-  font-family: var(--font-mono);
-  font-size: var(--text-xs);
-  text-transform: uppercase;
-  letter-spacing: var(--tracking-label);
-  color: var(--text-muted);
-}
-
-.sep {
-  color: var(--border-strong);
-}
-
+/* The meta and tag rows clip their own left edge: each item carries a
+   leading "·" in a fixed 1.6em slot and the row is pulled left by that
+   slot, so whichever item starts a line has its dot clipped away. A wrapped
+   row never strands a separator at either end. */
+.meta,
 .tags {
   display: flex;
   flex-wrap: wrap;
-  list-style: none;
-  margin: 0;
+  align-items: center;
+  row-gap: var(--space-1);
+  margin: 0 0 0 -1.6em;
   padding: 0;
+  list-style: none;
   font-family: var(--font-mono);
   font-size: var(--text-xs);
   text-transform: uppercase;
   letter-spacing: var(--tracking-label);
   color: var(--text-muted);
-  line-height: 1.7;
 }
 
-/* Each tag keeps its own separator, so a wrapped line never starts with a
-   stranded "·". */
+.metaItem,
 .tag {
   white-space: nowrap;
 }
 
-.tag + .tag::before {
+.metaItem::before,
+.tag::before {
   content: "\00b7";
-  margin: 0 0.6em;
+  display: inline-block;
+  width: 1.6em;
+  text-align: center;
   color: var(--border-strong);
-}
-
-/* width:100% matters: .page is a column flex container, and `margin: 0 auto`
-   on a flex item shrinks it to its content instead of centring a
-   full-measure box. Without it this nav collapsed to the button's width. */
-.nav {
-  max-width: var(--container-md);
-  margin: 0 auto;
-  padding: var(--space-8) var(--space-6) var(--section-gap);
-  width: 100%;
 }
 
 .relatedSection {

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { GitHubProfile } from "@/types/github";
 import { Badge } from "@/components/ui/Badge";
+import { formatDate } from "@/lib/utils";
 import { Surface } from "@/components/ui/Surface";
 import { SectionLabel } from "@/components/ui/SectionLabel";
 import styles from "./GitHubActivity.module.css";
@@ -15,19 +16,13 @@ export function GitHubActivity({ profile }: GitHubActivityProps) {
   }
 
   return (
-    <section aria-label="GitHub Activity" className={styles.wrapper}>
+    <section aria-label="GitHub activity" className={styles.wrapper}>
       <div className={styles.header}>
-        <SectionLabel>Open Source</SectionLabel>
-        <h2 className={styles.title}>GitHub Activity</h2>
+        <SectionLabel>Open source</SectionLabel>
+        <h2 className={styles.title}>GitHub activity</h2>
         <p className={styles.updated}>
-          Last synced:{" "}
-          <time dateTime={profile.fetchedAt}>
-            {new Date(profile.fetchedAt).toLocaleDateString("en-US", {
-              month: "short",
-              day: "numeric",
-              year: "numeric",
-            })}
-          </time>
+          Last synced{" "}
+          <time dateTime={profile.fetchedAt}>{formatDate(profile.fetchedAt, "short")}</time>
         </p>
       </div>
 

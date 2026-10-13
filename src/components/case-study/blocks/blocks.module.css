@@ -546,7 +546,7 @@
 
 .artifactCaption {
   padding-top: var(--space-3);
-  font-size: 0.9rem;
+  font-size: var(--text-sm);
   line-height: 1.6;
   color: var(--text-muted);
 }
@@ -558,7 +558,7 @@
    and the readout needed nearly 3x horizontal scroll. */
 @media (max-width: 480px) {
   .artifact { padding: var(--space-3); }
-  .artifact .artifactBody pre { font-size: 12px; }
+  .artifact .artifactBody pre { font-size: var(--text-xs); }
 }
 
 /* ---- Artifacts row ----------------------------------------------------- */

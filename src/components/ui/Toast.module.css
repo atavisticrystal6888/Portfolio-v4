@@ -12,7 +12,7 @@
 .toast {
   padding: var(--space-4) var(--space-6);
   border-radius: var(--radius-md);
-  font-size: 0.9rem;
+  font-size: var(--text-sm);
   font-weight: 500;
   cursor: pointer;
   pointer-events: auto;
@@ -22,15 +22,17 @@
   max-width: 360px;
 }
 
+/* Tints mixed from the theme's own --success / --error, so each theme gets
+   its own green and red (the dark-theme rgba values showed in light mode). */
 .success {
-  background: rgba(74, 222, 128, 0.15);
-  border: 1px solid rgba(74, 222, 128, 0.3);
+  background: color-mix(in srgb, var(--success) 15%, transparent);
+  border: 1px solid color-mix(in srgb, var(--success) 30%, transparent);
   color: var(--success);
 }
 
 .error {
-  background: rgba(248, 113, 113, 0.15);
-  border: 1px solid rgba(248, 113, 113, 0.3);
+  background: color-mix(in srgb, var(--error) 15%, transparent);
+  border: 1px solid color-mix(in srgb, var(--error) 30%, transparent);
   color: var(--error);
 }
 

@@ -19,7 +19,7 @@ const GROUPS = [
   // PM work first: this is a PM portfolio, so the thinking and
   // analytics tools lead and hardware comes after.
   {
-    label: "PM Stack",
+    label: "PM stack",
     title: "Thinking & shipping",
     items: [
       { name: "Notion", detail: "PRDs, research notes, personal wiki" },
@@ -59,7 +59,7 @@ const GROUPS = [
     ],
   },
   {
-    label: "Ship Stack",
+    label: "Ship stack",
     title: "This portfolio runs on",
     items: [
       { name: "Next.js 16 (App Router)", detail: "React 19 · Turbopack · MDX for long-form content" },

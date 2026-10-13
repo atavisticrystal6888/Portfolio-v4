@@ -10,6 +10,9 @@ interface ScoredItem {
   score: number;
   href: string;
   description: string;
+  /** Articles only: the same date and reading time as every other article rail. */
+  date?: string;
+  readingTime?: string;
 }
 
 export function scoreSuggestions(
@@ -49,6 +52,8 @@ export function scoreSuggestions(
       score,
       href: `/blog/${post.slug}`,
       description: post.excerpt,
+      date: post.date,
+      readingTime: post.readingTime,
     });
   }
 

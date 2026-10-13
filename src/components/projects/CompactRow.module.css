@@ -128,38 +128,18 @@
 }
 
 .outcome {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-1);
   min-width: 0;
 }
 
+/* Right-aligned beside the body from 760px; MetricCounter inherits it. */
 @media (min-width: 760px) {
   .outcome {
     text-align: right;
+  }
+
+  .outcome > * {
     align-items: flex-end;
   }
-}
-
-.outcomeValue {
-  font-family: var(--font-display);
-  font-size: var(--text-xl);
-  font-weight: 700;
-  color: var(--metric);
-  line-height: var(--leading-tight);
-  letter-spacing: var(--tracking-tight);
-  font-variant-numeric: lining-nums tabular-nums;
-}
-
-.outcomeLabel {
-  font-family: var(--font-mono);
-  font-size: var(--text-xs);
-  font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: var(--tracking-label);
-  color: var(--text-muted);
-  line-height: 1.45;
-  text-wrap: balance;
 }
 
 /* The rail column is narrow; a long status may break onto a second line

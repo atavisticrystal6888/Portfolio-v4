@@ -33,7 +33,7 @@
   overflow-wrap: anywhere;
   color: var(--text-body);
   line-height: 1.65;
-  font-size: 0.95rem;
+  font-size: var(--text-base);
   padding-left: var(--space-5);
   position: relative;
 }
@@ -80,8 +80,13 @@
   background: var(--accent);
 }
 
+/* Date and status badge share the rail; the gap replaces the badge's old
+   local margin. */
 .timelineDate {
-  display: block;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3);
   font-family: var(--font-mono);
   font-size: var(--text-xs);
   letter-spacing: var(--tracking-label);
@@ -92,7 +97,7 @@
 
 .timelineTitle {
   font-family: var(--font-display);
-  font-size: 1.1rem;
+  font-size: var(--text-lg);
   font-weight: 700;
   color: var(--text-strong);
   line-height: var(--leading-snug);
@@ -101,7 +106,7 @@
 
 .timelineBody {
   color: var(--text-body);
-  font-size: 0.95rem;
+  font-size: var(--text-base);
   line-height: 1.65;
   margin: 0;
 }
@@ -113,7 +118,7 @@
 /* Colophon line at the end of the last band. */
 .note {
   max-width: var(--measure-prose);
-  font-size: 0.85rem;
+  font-size: var(--text-sm);
   color: var(--text-muted);
   margin-top: var(--space-8);
   line-height: var(--leading-body);
@@ -123,18 +128,3 @@
   color: var(--accent);
 }
 
-.badge {
-  display: inline-block;
-  padding: 2px 10px;
-  font-family: var(--font-mono);
-  font-size: var(--text-xs);
-  font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: var(--tracking-label);
-  color: var(--badge-current-text);
-  background: var(--badge-current-bg);
-  border-radius: var(--radius-editorial);
-  margin-left: var(--space-2);
-  vertical-align: middle;
-  white-space: nowrap;
-}

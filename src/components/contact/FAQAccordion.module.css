@@ -22,7 +22,7 @@
   justify-content: space-between;
   padding: var(--space-4) var(--space-5);
   font-family: var(--font-body);
-  font-size: 0.9rem;
+  font-size: var(--text-sm);
   font-weight: 600;
   color: var(--text-strong);
   background: transparent;
@@ -68,7 +68,7 @@
 }
 
 .answer p {
-  font-size: 0.85rem;
+  font-size: var(--text-sm);
   color: var(--text-muted);
   line-height: 1.6;
 }

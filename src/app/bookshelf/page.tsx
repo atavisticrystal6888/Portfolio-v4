@@ -3,6 +3,7 @@ import { SectionLabel } from "@/components/ui/SectionLabel";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { WhereNext } from "@/components/ui/WhereNext";
 import { Surface, SurfaceText, SurfaceTitle } from "@/components/ui/Surface";
+import { Badge } from "@/components/ui/Badge";
 import styles from "@/styles/content-page.module.css";
 import local from "./bookshelf.module.css";
 import section from "@/styles/section.module.css";
@@ -95,7 +96,7 @@ function Shelf({ books }: { books: Book[] }) {
           <SurfaceTitle>{b.title}</SurfaceTitle>
           {b.status === "reading" && (
             <p className={local.statusRow}>
-              <span className={styles.badge}>Reading</span>
+              <Badge variant="accent">Reading</Badge>
             </p>
           )}
           <SurfaceText>
@@ -124,7 +125,7 @@ export default function BookshelfPage() {
       <section className={section.section}>
         <div className={section.inner}>
           <header className={section.header}>
-            <SectionLabel index="01">Currently Reading</SectionLabel>
+            <SectionLabel index="01">Currently reading</SectionLabel>
             <h2 className={section.title}>On my desk right now</h2>
           </header>
           <Shelf books={CURRENT} />

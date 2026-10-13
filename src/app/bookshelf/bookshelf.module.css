@@ -4,7 +4,3 @@
   margin: 0 0 var(--space-2);
   line-height: 1;
 }
-
-.statusRow > span {
-  margin-left: 0;
-}

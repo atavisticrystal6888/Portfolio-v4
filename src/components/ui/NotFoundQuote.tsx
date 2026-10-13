@@ -10,16 +10,9 @@
  * hydration, so most unknown paths threw React error #418
  * (tests/e2e/not-found-hydration.spec.ts).
  */
-export function NotFoundQuote() {
+export function NotFoundQuote({ className }: { className?: string }) {
   return (
-    <p
-      style={{
-        marginTop: "1.25rem",
-        fontSize: "1.15rem",
-        fontStyle: "italic",
-        color: "var(--text)",
-      }}
-    >
+    <p className={className}>
       No user stories matched this path. Try one of the links below.
     </p>
   );

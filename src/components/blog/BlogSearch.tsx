@@ -5,6 +5,7 @@ import { debounce } from "@/lib/utils";
 import type { BlogSummary } from "@/lib/blog-summary";
 import { ListRows } from "@/components/ui/ListRow";
 import { EmptyState } from "@/components/ui/EmptyState";
+import { FilterChip, FilterChipGroup } from "@/components/ui/FilterChip";
 import { BlogCard } from "./BlogCard";
 import styles from "./BlogSearch.module.css";
 
@@ -68,22 +69,17 @@ export function BlogSearch({ posts }: BlogSearchProps) {
       <div className={styles.controls}>
         {/* Single-select toggle buttons: aria-pressed carries the active
             category to assistive tech, which the old class-only state did not. */}
-        <div className={styles.categories} role="group" aria-label="Filter articles by category">
-          {CATEGORIES.map((cat) => {
-            const isActive = activeCategory === cat;
-            return (
-              <button
-                key={cat}
-                type="button"
-                aria-pressed={isActive}
-                className={`${styles.pill} ${isActive ? styles.active : ""}`}
-                onClick={() => setActiveCategory(cat)}
-              >
-                {cat}
-              </button>
-            );
-          })}
-        </div>
+        <FilterChipGroup label="Filter articles by category" className={styles.categories}>
+          {CATEGORIES.map((cat) => (
+            <FilterChip
+              key={cat}
+              active={activeCategory === cat}
+              onClick={() => setActiveCategory(cat)}
+            >
+              {cat}
+            </FilterChip>
+          ))}
+        </FilterChipGroup>
         <div className={styles.searchWrap}>
           <svg className={styles.searchIcon} width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
             <circle cx="11" cy="11" r="8" />

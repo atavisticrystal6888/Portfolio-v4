@@ -5,17 +5,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import styles from './MobileNav.module.css';
 import { cn } from '@/lib/utils';
-
-const NAV_LINKS = [
-  { href: '/', label: 'Home' },
-  { href: '/about', label: 'About' },
-  { href: '/projects', label: 'Projects' },
-  { href: '/ai-pm', label: 'AI PM' },
-  { href: '/blog', label: 'Blog' },
-  // Lab is demoted to the footer "More" group, same as the desktop bar.
-  { href: '/contact', label: 'Contact' },
-  { href: '/now', label: 'Now' },
-];
+import { DRAWER_LINKS } from './nav-links';
 
 interface MobileNavProps {
   open: boolean;
@@ -108,7 +98,7 @@ export function MobileNav({ open, onClose }: MobileNavProps) {
       aria-label="Mobile navigation"
     >
       <nav className={styles.nav}>
-        {NAV_LINKS.map(({ href, label }, i) => (
+        {DRAWER_LINKS.map(({ href, label }, i) => (
           <div
             key={href}
             className={styles.item}

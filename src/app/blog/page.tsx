@@ -24,7 +24,7 @@ export default function BlogPage() {
           { name: "Home", href: "/" },
           { name: "Blog", href: "/blog" },
         ]}
-        title="Thoughts on Product, Data & Building"
+        title="Thoughts on product, data & building"
         subtitle="Lessons from product thinking and technical execution."
         meta={`${posts.length} articles · newest first`}
       />

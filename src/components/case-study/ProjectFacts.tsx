@@ -1,5 +1,5 @@
 import type { EvidenceTier, ProjectStatus } from "@/types/project";
-import { cn } from "@/lib/utils";
+import { cn, formatDate } from "@/lib/utils";
 import styles from "./ProjectFacts.module.css";
 
 /**
@@ -39,21 +39,6 @@ const EVIDENCE_RANK: Record<EvidenceTier, number> = {
   built: 2,
   "self-reported": 1,
 };
-
-const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-
-/**
- * "2026-09-30" -> "30 Sep 2026". Parsed by hand, not through Intl: ICU builds
- * disagree on "Sep" vs "Sept", and a server/client mismatch there would be a
- * hydration warning on a client-rendered card.
- */
-export function formatVerified(iso: string): string {
-  const match = /^(\d{4})-(\d{2})-(\d{2})/.exec(iso);
-  if (!match) return iso;
-  const [, y, m, d] = match;
-  const month = MONTHS[Number(m) - 1];
-  return month ? `${Number(d)} ${month} ${y}` : iso;
-}
 
 interface StatusPillProps {
   status: ProjectStatus;
@@ -190,7 +175,7 @@ export function EvidenceLedger({
           <dt className={styles.key}>Checked</dt>
           <dd className={styles.value} data-testid="last-verified">
             Last verified{" "}
-            <time dateTime={lastVerified}>{formatVerified(lastVerified)}</time>
+            <time dateTime={lastVerified}>{formatDate(lastVerified, "long")}</time>
           </dd>
         </div>
       )}

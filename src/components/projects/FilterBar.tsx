@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import type { Project } from "@/types/project";
-import { cn } from "@/lib/utils";
+import { FilterChip, FilterChipGroup } from "@/components/ui/FilterChip";
 import styles from "./FilterBar.module.css";
 
 const CATEGORIES = [
@@ -39,22 +39,17 @@ export function FilterBar({ projects, onFilter }: FilterBarProps) {
 
   return (
     <div className={styles.wrap}>
-      <div className={styles.bar} role="group" aria-label="Filter projects">
-        {CATEGORIES.map((cat) => {
-          const isActive = active === cat.value;
-          return (
-            <button
-              key={cat.value}
-              type="button"
-              aria-pressed={isActive}
-              className={cn(styles.pill, isActive && styles.active)}
-              onClick={() => handleFilter(cat.value)}
-            >
-              {cat.label}
-            </button>
-          );
-        })}
-      </div>
+      <FilterChipGroup label="Filter projects">
+        {CATEGORIES.map((cat) => (
+          <FilterChip
+            key={cat.value}
+            active={active === cat.value}
+            onClick={() => handleFilter(cat.value)}
+          >
+            {cat.label}
+          </FilterChip>
+        ))}
+      </FilterChipGroup>
       <p className={styles.srOnly} role="status" aria-live="polite" aria-atomic="true">
         {count === 1 ? "1 project shown" : `${count} projects shown`}
       </p>

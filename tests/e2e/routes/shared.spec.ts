@@ -31,6 +31,8 @@ test.describe("Shared chrome", () => {
       .poll(() => drawer.evaluate((d) => d.contains(document.activeElement)))
       .toBe(true);
     await expect(drawer.getByRole("link", { name: "Lab", exact: true })).toHaveCount(0);
+    // Same link set as the desktop bar (one shared list): Now stays in the footer.
+    await expect(drawer.getByRole("link", { name: "Now", exact: true })).toHaveCount(0);
     for (let i = 0; i < 15; i++) {
       await page.keyboard.press("Tab");
       expect(await drawer.evaluate((d) => d.contains(document.activeElement)), `tab ${i + 1}`).toBe(true);

@@ -4,7 +4,7 @@ import type { Project } from "@/types/project";
  * One place decides what the home page shows under "Selected work", so the
  * sections beneath it can exclude the same projects instead of repeating
  * them. Flagships take the product carousel; compact-tier projects with a
- * case-study page take the "Also built" index rows.
+ * case-study page take the "More work" index rows.
  */
 export function splitSelectedWork(projects: Project[]): {
   flagships: Project[];

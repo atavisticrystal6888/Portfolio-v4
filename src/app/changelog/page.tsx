@@ -5,6 +5,8 @@ import { WhereNext } from "@/components/ui/WhereNext";
 import styles from "@/styles/content-page.module.css";
 import section from "@/styles/section.module.css";
 import { RELEASES, type Release } from "@/lib/changelog";
+import { Badge } from "@/components/ui/Badge";
+import { formatDate } from "@/lib/utils";
 
 export const metadata = generatePageMetadata({
   title: "Changelog",
@@ -16,7 +18,7 @@ export const metadata = generatePageMetadata({
 // Phase 3 used to sit at the top of this list while v4.3 · Phase 3 sat in the
 // timeline above marked Shipped. The page was arguing with itself.
 const UPCOMING = [
-  "Phase 4, Proof: measured on 30 Sep 2026 with a local Lighthouse run on the home page and an axe scan across 36 routes. Still open: real-device and screen-reader passes",
+  `Phase 4, Proof: measured on ${formatDate("2026-09-30")} with a local Lighthouse run on the home page and an axe scan across 36 routes. Still open: real-device and screen-reader passes`,
   "Phase 5, Hardening: OG review, sitemap integrity, deploy preview automation",
 ];
 
@@ -51,10 +53,9 @@ export default function ChangelogPage() {
                 {/* Status rides on the date line: inside the h3 it wrapped
                     onto an orphan line under long titles. */}
                 <span className={styles.timelineDate}>
-                  {r.date}
-                  {r.badge && (
-                    <span className={styles.badge}>{badgeLabel(r.badge)}</span>
-                  )}
+                  {/* A month-only release ("2026-09") renders "September 2026". */}
+                  <time dateTime={r.date}>{formatDate(r.date, "long")}</time>
+                  {r.badge && <Badge variant="accent">{badgeLabel(r.badge)}</Badge>}
                 </span>
                 <h3 className={styles.timelineTitle}>
                   {r.version}: {r.title}
@@ -74,7 +75,7 @@ export default function ChangelogPage() {
       <section className={section.section}>
         <div className={section.inner}>
           <header className={section.header}>
-            <SectionLabel index="02">On the Roadmap</SectionLabel>
+            <SectionLabel index="02">On the roadmap</SectionLabel>
             <h2 className={section.title}>What&apos;s next</h2>
           </header>
           <ul className={styles.list}>

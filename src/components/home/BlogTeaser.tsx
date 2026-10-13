@@ -1,7 +1,7 @@
 import Link from "next/link";
 import type { BlogArticle } from "@/types/blog";
 import { ListRow, ListRows } from "@/components/ui/ListRow";
-import { formatDate } from "@/lib/utils";
+import { ArticleRail } from "@/components/blog/ArticleRail";
 import styles from "./BlogTeaser.module.css";
 
 interface BlogTeaserProps {
@@ -20,14 +20,7 @@ export function BlogTeaser({ posts, totalCount }: BlogTeaserProps) {
             href={`/blog/${post.slug}`}
             title={post.title}
             dek={post.excerpt}
-            rail={
-              <>
-                <time dateTime={post.date}>{formatDate(post.date)}</time>
-                <span>
-                  {post.category} &middot; {post.readingTime}
-                </span>
-              </>
-            }
+            rail={<ArticleRail date={post.date} category={post.category} readingTime={post.readingTime} />}
           />
         ))}
       </ListRows>

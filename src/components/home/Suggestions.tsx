@@ -6,6 +6,7 @@ import { scoreSuggestions } from "@/lib/suggestions";
 import { formatCategoryLabel } from "@/lib/utils";
 import { ListRow, ListRows } from "@/components/ui/ListRow";
 import { SectionLabel } from "@/components/ui/SectionLabel";
+import { ArticleRail } from "@/components/blog/ArticleRail";
 import type { Project } from "@/types/project";
 import type { BlogSummary } from "@/lib/blog-summary";
 import { shownOnHome } from "./selection";
@@ -54,7 +55,17 @@ export function Suggestions({ projects, posts }: SuggestionsProps) {
               href={item.href}
               title={item.title}
               dek={item.description}
-              rail={formatCategoryLabel(item.category)}
+              rail={
+                item.type === "blog" && item.date ? (
+                  <ArticleRail
+                    date={item.date}
+                    category={item.category}
+                    readingTime={item.readingTime}
+                  />
+                ) : (
+                  formatCategoryLabel(item.category)
+                )
+              }
             />
           ))}
         </ListRows>

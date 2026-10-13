@@ -1,5 +1,5 @@
 import { ListRow } from "@/components/ui/ListRow";
-import { formatDate } from "@/lib/utils";
+import { ArticleRail } from "@/components/blog/ArticleRail";
 import type { BlogSummary } from "@/lib/blog-summary";
 
 interface BlogCardProps {
@@ -20,14 +20,7 @@ export function BlogCard({ post }: BlogCardProps) {
       // Index rows sit directly under the page h1, so they are h2 here.
       headingLevel={2}
       dek={post.excerpt}
-      rail={
-        <>
-          <time dateTime={post.date}>{formatDate(post.date)}</time>
-          <span>
-            {post.category} &middot; {post.readingTime}
-          </span>
-        </>
-      }
+      rail={<ArticleRail date={post.date} category={post.category} readingTime={post.readingTime} />}
     />
   );
 }

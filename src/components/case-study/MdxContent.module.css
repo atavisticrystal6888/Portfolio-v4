@@ -4,7 +4,7 @@
   padding: 0 var(--space-6);
   color: var(--text-body);
   line-height: 1.8;
-  font-size: 1rem;
+  font-size: var(--text-base);
 }
 
 .prose h2 {
@@ -17,7 +17,7 @@
 }
 
 .prose h3 {
-  font-size: 1.15rem;
+  font-size: var(--text-lg);
   font-weight: 700;
   color: var(--text-strong);
   margin-top: var(--space-8);
@@ -73,7 +73,7 @@
   overflow-x: auto;
   margin: var(--space-6) 0;
   font-family: var(--font-mono);
-  font-size: 0.875rem;
+  font-size: var(--text-sm);
   line-height: 1.6;
 }
 
@@ -138,7 +138,7 @@
 }
 
 .lightboxCounter {
-  font-size: 0.9rem;
+  font-size: var(--text-sm);
   color: var(--text-muted);
 }
 
@@ -154,7 +154,7 @@
 .lightboxClose {
   border-radius: 999px;
   padding: 0.65rem 1rem;
-  font-size: 0.9rem;
+  font-size: var(--text-sm);
 }
 
 .lightboxNav {
@@ -199,7 +199,7 @@
 }
 
 .lightboxCaption {
-  font-size: 0.95rem;
+  font-size: var(--text-base);
   line-height: 1.6;
   color: var(--text-muted);
 }
@@ -277,7 +277,7 @@
   padding: var(--space-3);
   border: 1px solid var(--border);
   text-align: left;
-  font-size: 0.9rem;
+  font-size: var(--text-sm);
 }
 
 .prose th {

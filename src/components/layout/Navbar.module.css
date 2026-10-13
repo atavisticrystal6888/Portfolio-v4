@@ -84,7 +84,7 @@
 /* At 320px the name wrapped onto two lines beside the two icon buttons. */
 @media (max-width: 360px) {
   .logo {
-    font-size: 1.05rem;
+    font-size: var(--text-base);
     gap: 8px;
   }
 }
@@ -100,7 +100,7 @@
 }
 
 .link {
-  font-size: 0.875rem;
+  font-size: var(--text-sm);
   font-weight: 500;
   color: var(--text-muted);
   text-decoration: none;
@@ -147,7 +147,7 @@
   gap: 6px;
   padding: 10px 16px;
   font-family: var(--font-body);
-  font-size: 0.8rem;
+  font-size: var(--text-xs);
   font-weight: 500;
   color: var(--text-muted);
   background: transparent;
@@ -165,7 +165,7 @@
 
 .cmdTrigger kbd {
   padding: 2px 6px;
-  font-size: 0.7rem;
+  font-size: var(--text-xs);
   font-family: var(--font-body);
   background: var(--chip-bg);
   border: 1px solid var(--chip-border);
@@ -179,7 +179,7 @@
   gap: 6px;
   padding: 10px 14px;
   font-family: var(--font-body);
-  font-size: 0.8rem;
+  font-size: var(--text-xs);
   font-weight: 500;
   color: var(--text-muted);
   background: transparent;

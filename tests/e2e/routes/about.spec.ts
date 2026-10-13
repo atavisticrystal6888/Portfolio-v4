@@ -19,7 +19,7 @@ test.describe("About (/about)", () => {
     // Title backed by the evidence ledger; no unbacked "Product Manager Intern".
     await expect(page.getByRole("region", { name: "Experience" })).toContainText("Product Intern, Growth");
     // Dated tenure, never "Present" (the internship ends 9 Oct 2026).
-    await expect(page.getByRole("region", { name: "Experience" })).toContainText("Jul 2026 – Oct 2026");
+    await expect(page.getByRole("region", { name: "Experience" })).toContainText("Jul to Oct 2026");
     await expect(page.getByRole("region", { name: "Experience" })).not.toContainText("Present");
     expect(text).not.toMatch(/Product Manager Intern/);
     // Internal Wipro platform names stay off the page (owner gate).

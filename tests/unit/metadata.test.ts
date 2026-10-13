@@ -180,7 +180,7 @@ describe("generatePersonJsonLd (identity and claims)", () => {
   it("dates the internship and makes no present-tense role claim", () => {
     const ld = generatePersonJsonLd();
     expect(ld.description).toBe(
-      "About one year of product experience across internships, most recently product intern (growth) at The Sleep Company, Jul–Oct 2026. Writes about AI evaluation, retention and product scope."
+      "About one year of product experience across internships, most recently product intern (growth) at The Sleep Company, Jul to Oct 2026. Writes about AI evaluation, retention and product scope."
     );
     expect(ld.description).not.toMatch(/\b(currently|working on|works at|is a product intern)\b/i);
     expect(ld).not.toHaveProperty("jobTitle");

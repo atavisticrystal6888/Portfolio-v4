@@ -1,67 +1,7 @@
-/* Wrapper keeps the chip row and its status line one flex item in the parent. */
+/* Wrapper keeps the chip row and its status line one flex item in the parent.
+   The chips themselves are ui/FilterChip. */
 .wrap {
   min-width: 0;
-}
-
-.bar {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-3);
-}
-
-/* Squared filter control, mono like the rest of the field labels. */
-.pill {
-  padding: 8px 16px;
-  border-radius: var(--radius-editorial);
-  border: var(--hairline);
-  background: transparent;
-  color: var(--text-muted);
-  font-family: var(--font-mono);
-  font-size: var(--text-xs);
-  font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: var(--tracking-label);
-  cursor: pointer;
-  transition: border-color var(--transition-fast), color var(--transition-fast),
-              background-color var(--transition-fast);
-  min-height: 44px;
-  min-width: 44px;
-}
-
-.pill:hover {
-  border-color: var(--accent);
-  color: var(--accent);
-}
-
-.pill:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: var(--focus-offset);
-}
-
-.pill:active {
-  transform: scale(0.97);
-}
-
-.active {
-  background: var(--accent);
-  color: var(--accent-contrast);
-  border-color: var(--accent);
-}
-
-.active:hover {
-  color: var(--accent-contrast);
-}
-
-/* Narrow phones: tighter padding so five chips wrap to two tidy rows at
-   320px instead of leaving one orphan per line. Height stays 44px. */
-@media (max-width: 420px) {
-  .pill {
-    padding: 8px 12px;
-  }
-
-  .bar {
-    gap: var(--space-2);
-  }
 }
 
 .srOnly {

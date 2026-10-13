@@ -16,42 +16,6 @@
   gap: var(--space-5);
 }
 
-.categories {
-  display: flex;
-  gap: var(--space-2);
-  flex-wrap: wrap;
-}
-
-.pill {
-  padding: 8px 16px;
-  font-family: var(--font-mono);
-  font-size: var(--text-xs);
-  font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: var(--tracking-label);
-  color: var(--text-muted);
-  background: transparent;
-  border: var(--hairline);
-  border-radius: var(--radius-editorial);
-  cursor: pointer;
-  transition: border-color var(--transition-fast), color var(--transition-fast),
-              background-color var(--transition-fast);
-  min-height: 44px;
-}
-
-.pill:hover {
-  color: var(--text-strong);
-  border-color: var(--border-strong);
-}
-
-/* Filled, the same active state as the /projects and /lab filters. */
-.pill.active,
-.pill.active:hover {
-  color: var(--accent-contrast);
-  border-color: var(--accent);
-  background: var(--accent);
-}
-
 .searchWrap {
   position: relative;
   flex: 1;
@@ -71,7 +35,7 @@
   width: 100%;
   padding: 10px 12px 10px 40px;
   font-family: var(--font-body);
-  font-size: 0.875rem;
+  font-size: var(--text-sm);
   color: var(--text);
   background: var(--surface);
   /* Resting edge must reach 3:1 against the page (WCAG 1.4.11); the
@@ -99,11 +63,6 @@
   padding: var(--space-8) 0 0;
 }
 
-.pill:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: var(--focus-offset);
-}
-
 .srOnly {
   position: absolute;
   width: 1px;
@@ -118,8 +77,7 @@
 
 /* Phones: category chips first on their own wrapped row, search full width
    underneath (DOM order unchanged, so focus order matches what is seen).
-   Tighter chip padding keeps five chips on two rows at 320px; 16px input
-   text stops iOS zooming the page on focus. */
+   16px input text stops iOS zooming the page on focus. */
 @media (max-width: 640px) {
   .controls {
     gap: var(--space-4);
@@ -129,16 +87,12 @@
     width: 100%;
   }
 
-  .pill {
-    padding: 8px 12px;
-  }
-
   .searchWrap {
     flex-basis: 100%;
     min-width: 0;
   }
 
   .search {
-    font-size: 1rem;
+    font-size: var(--text-base);
   }
 }

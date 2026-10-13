@@ -1,57 +1,7 @@
-/* The domain filter is a chip row above the matrix, not a grid of count
-   tiles. Each chip is a real button, so it carries its own reset and has to
-   clear the 44px touch target the accessibility suite checks for. */
+/* The domain filter is a chip row above the matrix (ui/FilterChip), not a
+   grid of count tiles. This only spaces it from the count line. */
 .filters {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-2);
   margin: 0 0 var(--space-5);
-}
-
-.filter {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-2);
-  min-height: 44px;
-  padding: var(--space-2) var(--space-4);
-  font-family: var(--font-mono);
-  font-size: var(--text-xs);
-  letter-spacing: var(--tracking-label);
-  text-transform: uppercase;
-  color: var(--text-muted);
-  background: var(--surface);
-  border: var(--hairline);
-  border-radius: var(--radius-editorial);
-  cursor: pointer;
-  appearance: none;
-  transition: border-color var(--transition-fast), color var(--transition-fast);
-}
-
-.filter:hover {
-  border-color: var(--accent);
-  color: var(--text-strong);
-}
-
-.filter:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: var(--focus-offset);
-}
-
-/* Filled, the same active state as the /projects and /blog filters. */
-.filterActive,
-.filterActive:hover {
-  border-color: var(--accent);
-  background: var(--accent);
-  color: var(--accent-contrast);
-}
-
-.filterCount {
-  color: var(--text-muted);
-  font-variant-numeric: tabular-nums;
-}
-
-.filterActive .filterCount {
-  color: var(--accent-contrast);
 }
 
 /* The PM angle on each idea, in sentence case rather than the all-caps mono

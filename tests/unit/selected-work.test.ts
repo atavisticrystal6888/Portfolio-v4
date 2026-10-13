@@ -56,7 +56,7 @@ describe("carouselProjects", () => {
 });
 
 describe("splitSelectedWork", () => {
-  it("sends flagships to the rail and compact work with a page to Also built", () => {
+  it("sends flagships to the rail and compact work with a page to More work", () => {
     const { flagships, rest } = splitSelectedWork(roster);
     expect(flagships.map((p) => p.slug)).toEqual(["f-first", "f-second", "f-third"]);
     expect(rest.map((p) => p.slug)).toEqual(["c-first", "untiered"]);

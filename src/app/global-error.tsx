@@ -132,7 +132,7 @@ export default function GlobalError({ error, reset }: GlobalErrorProps) {
                 textDecoration: "none",
               }}
             >
-              Go home
+              Back to home
             </a>
           </div>
         </main>

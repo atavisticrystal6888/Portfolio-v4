@@ -1,3 +1,4 @@
+import { Badge } from "@/components/ui/Badge";
 import styles from "./Skills.module.css";
 
 /* Plain lists, no scores. The old radar plotted self-rated percentages that
@@ -6,7 +7,7 @@ const CATEGORIES = [
   { name: "Product", skills: ["PRDs & Roadmaps", "User Research", "A/B Testing", "Growth Strategy", "Metrics Design"] },
   { name: "Data", skills: ["Python", "SQL", "Pandas", "Scikit-learn", "Tableau"] },
   { name: "Technical", skills: ["Next.js", "React", "TypeScript", "Git", "REST APIs"] },
-  { name: "Soft Skills", skills: ["Stakeholder Mgmt", "Cross-functional", "Presentation", "Problem Solving"] },
+  { name: "Soft skills", skills: ["Stakeholder Mgmt", "Cross-functional", "Presentation", "Problem Solving"] },
 ];
 
 export function Skills() {
@@ -17,7 +18,9 @@ export function Skills() {
           <h3 className={styles.catTitle}>{cat.name}</h3>
           <ul className={styles.tags}>
             {cat.skills.map((s) => (
-              <li key={s} className={styles.tag}>{s}</li>
+              <li key={s}>
+                <Badge>{s}</Badge>
+              </li>
             ))}
           </ul>
         </div>

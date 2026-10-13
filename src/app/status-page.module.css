@@ -1,0 +1,79 @@
+/* The 404 and the route error page: one centred column on the shared
+   section primitive (section.module.css supplies the gutters and the
+   bottom --section-gap). There is no PageHeader above them, so the band
+   clears the fixed nav itself and drops the section's top rule. */
+.page {
+  border-top: 0;
+  padding-top: calc(var(--nav-height) + var(--space-10));
+  text-align: center;
+}
+
+.column {
+  max-width: 45rem;
+}
+
+/* SectionLabel centred over the column. */
+.eyebrow {
+  justify-content: center;
+  margin-bottom: var(--space-4);
+}
+
+/* 404: the large supporting figure under the small h1. */
+.figure {
+  font-family: var(--font-display);
+  font-size: clamp(5rem, 14vw, 8rem);
+  font-weight: 700;
+  line-height: 1;
+  margin: 0;
+  color: var(--text-strong);
+}
+
+.quote {
+  margin-top: var(--space-5);
+  font-size: var(--text-lg);
+  font-style: italic;
+  color: var(--text);
+}
+
+/* Error page h1: focus target, so no ring on the programmatic focus. */
+.title {
+  outline: none;
+  font-family: var(--font-display);
+  font-size: clamp(var(--text-2xl), 6vw, var(--text-3xl));
+  line-height: var(--leading-tight);
+  margin: 0;
+  color: var(--text-strong);
+}
+
+.text {
+  margin: var(--space-4) auto 0;
+  max-width: var(--measure-lede);
+  color: var(--text-muted);
+  font-size: var(--text-base);
+  line-height: var(--leading-body);
+}
+
+.digest {
+  margin-top: var(--space-3);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+}
+
+.actions {
+  margin-top: var(--space-7);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-3);
+}
+
+/* Suggested pages: linked Surface cards, left-aligned inside the centred
+   column. */
+.suggested {
+  margin-top: var(--space-10);
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(13.75rem, 1fr));
+  gap: var(--space-4);
+  text-align: left;
+}

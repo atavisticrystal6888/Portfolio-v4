@@ -7,6 +7,8 @@ import { Surface, SurfaceText, SurfaceTitle } from "@/components/ui/Surface";
 import { EvalHarnessDemo } from "@/components/ai-pm/EvalHarnessDemo";
 import { CostModelDemo } from "@/components/ai-pm/CostModelDemo";
 import { getAllBlogPosts } from "@/lib/content";
+import { ListRow, ListRows } from "@/components/ui/ListRow";
+import { ArticleRail } from "@/components/blog/ArticleRail";
 import styles from "./ai-pm.module.css";
 import section from "@/styles/section.module.css";
 
@@ -111,7 +113,7 @@ export default function AIPMPage() {
       >
         <div className={section.inner}>
           <header className={section.header}>
-            <SectionLabel index="02">Live Demo</SectionLabel>
+            <SectionLabel index="02">Live demo: eval harness</SectionLabel>
             <h2 className={section.title}>
               An eval harness, in your browser
             </h2>
@@ -133,7 +135,7 @@ export default function AIPMPage() {
       >
         <div className={section.inner}>
           <header className={section.header}>
-            <SectionLabel index="03">Live Demo</SectionLabel>
+            <SectionLabel index="03">Live demo: cost model</SectionLabel>
             <h2 className={section.title}>Cost modelling, in real time</h2>
             <p className={section.lede}>
               Illustrative model with fixed example inputs: unit prices are
@@ -151,7 +153,7 @@ export default function AIPMPage() {
       <section className={section.section} aria-label="Case study">
         <div className={section.inner}>
           <header className={section.header}>
-            <SectionLabel index="04">Case Study</SectionLabel>
+            <SectionLabel index="04">Case study</SectionLabel>
             <h2 className={section.title}>Aarchid: the worked example</h2>
           </header>
           <Surface>
@@ -178,15 +180,24 @@ export default function AIPMPage() {
               <SectionLabel index="05">Writing</SectionLabel>
               <h2 className={section.title}>Essays on AI + product</h2>
             </header>
-            <div className={styles.cardGrid}>
+            {/* The same index row as /blog: date, category and read time. */}
+            <ListRows>
               {aiPmPosts.map((post) => (
-                <Surface key={post.slug} href={`/blog/${post.slug}`}>
-                  <SurfaceTitle>{post.title}</SurfaceTitle>
-                  <SurfaceText>{post.excerpt}</SurfaceText>
-                  <span className={styles.meta}>{post.readingTime}</span>
-                </Surface>
+                <ListRow
+                  key={post.slug}
+                  href={`/blog/${post.slug}`}
+                  title={post.title}
+                  dek={post.excerpt}
+                  rail={
+                    <ArticleRail
+                      date={post.date}
+                      category={post.category}
+                      readingTime={post.readingTime}
+                    />
+                  }
+                />
               ))}
-            </div>
+            </ListRows>
           </div>
         </section>
       )}
@@ -194,7 +205,7 @@ export default function AIPMPage() {
       <section className={section.section} aria-label="What's next">
         <div className={section.inner}>
           <header className={section.header}>
-            <SectionLabel index="06">What&apos;s Next</SectionLabel>
+            <SectionLabel index="06">What&apos;s next</SectionLabel>
             <h2 className={section.title}>On the bench</h2>
           </header>
           <ul className={styles.list}>

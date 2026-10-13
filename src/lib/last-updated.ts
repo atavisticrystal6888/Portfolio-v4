@@ -1,5 +1,6 @@
 import { getAllBlogPosts, getAllProjects } from "@/lib/content";
 import { LATEST_RELEASE } from "@/lib/changelog";
+import { formatDate } from "@/lib/utils";
 
 /**
  * The site's "Last updated" date: the newest dated change anywhere in the
@@ -21,9 +22,6 @@ export function getSiteLastUpdated(): { iso: string; label: string } {
   for (const project of getAllProjects()) push(project.lastVerified);
   push(LATEST_RELEASE.date);
 
-  const newest = new Date(Math.max(...candidates));
-  return {
-    iso: newest.toISOString().slice(0, 10),
-    label: newest.toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric", timeZone: "UTC" }),
-  };
+  const iso = new Date(Math.max(...candidates)).toISOString().slice(0, 10);
+  return { iso, label: formatDate(iso, "long") };
 }

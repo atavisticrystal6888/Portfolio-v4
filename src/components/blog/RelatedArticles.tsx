@@ -1,6 +1,6 @@
 import type { BlogArticle } from "@/types/blog";
 import { ListRow, ListRows } from "@/components/ui/ListRow";
-import { formatDate } from "@/lib/utils";
+import { ArticleRail } from "@/components/blog/ArticleRail";
 import { pickRelatedPosts } from "@/lib/content";
 import styles from "./RelatedArticles.module.css";
 import { SectionLabel } from "@/components/ui/SectionLabel";
@@ -29,14 +29,7 @@ export function RelatedArticles({ current, allPosts }: RelatedArticlesProps) {
             href={`/blog/${post.slug}`}
             title={post.title}
             dek={post.excerpt}
-            rail={
-              <>
-                <time dateTime={post.date}>{formatDate(post.date)}</time>
-                <span>
-                  {post.category} &middot; {post.readingTime}
-                </span>
-              </>
-            }
+            rail={<ArticleRail date={post.date} category={post.category} readingTime={post.readingTime} />}
           />
         ))}
       </ListRows>

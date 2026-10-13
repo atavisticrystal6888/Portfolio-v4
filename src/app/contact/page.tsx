@@ -115,7 +115,7 @@ export default function ContactPage() {
         <div className={section.inner}>
           <header className={section.header}>
             <SectionLabel index="01">FAQ</SectionLabel>
-            <h2 className={section.title} id="contact-faq-heading">Common Questions</h2>
+            <h2 className={section.title} id="contact-faq-heading">Common questions</h2>
           </header>
           <div className={section.measure}>
             <FAQAccordion />

@@ -95,7 +95,7 @@ export async function GET(
     subtitle = "Playbooks for Shipping LLM Products";
   } else if (path === "blog") {
     kicker = "Blog";
-    subtitle = "Thoughts on Product, Data & Building";
+    subtitle = "Thoughts on product, data & building";
   } else if (path === "contact") {
     kicker = "Contact";
     subtitle = "Let's Talk Product";

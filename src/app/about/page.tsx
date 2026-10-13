@@ -15,11 +15,13 @@ import dhruvImage from "@/assets/Dhruv_Image.jpg";
 import styles from "./about.module.css";
 import section from "@/styles/section.module.css";
 import ledger from "@/components/about/ledger.module.css";
+import { SLEEP_COMPANY_TENURE } from "@/lib/site";
+import { formatDate } from "@/lib/utils";
 
 export const metadata = generatePageMetadata({
   title: "About",
   description:
-    "About Dhruv Singhal: about a year of product management internships, most recently in growth at The Sleep Company (Jul–Oct 2026), aiming for APM and PM roles.",
+    `About Dhruv Singhal: about a year of product management internships, most recently in growth at The Sleep Company (${SLEEP_COMPANY_TENURE}), aiming for APM/PM roles.`,
   path: "/about",
 });
 
@@ -94,7 +96,7 @@ export default async function AboutPage() {
                 tickets instead of incidents. It is also where I killed 37
                 low-signal dashboard charts and kept the 3 that actually drove a
                 decision (self-reported). Most recently I was a product intern
-                on the growth team at The Sleep Company (Jul–Oct 2026), on
+                on the growth team at The Sleep Company ({SLEEP_COMPANY_TENURE}), on
                 pre-launch work; the internal detail stays internal.
               </p>
               <p className={styles.bio}>
@@ -206,14 +208,14 @@ export default async function AboutPage() {
             {[
               // The 37-charts story moved up into "My story", so this row
               // carries different evidence rather than repeating it.
-              { label: "High-Ownership", detail: "Run my own release gates: the DeskTasks gate run of 15 Sep 2026 finished with zero failures" },
+              { label: "High ownership", detail: `Run my own release gates: the DeskTasks gate run of ${formatDate("2026-09-15")} finished with zero failures` },
               { label: "Close to the build", detail: "Wrote the Aarchid PRD and eval harness, and co-built v1 with Dilpreet Grover" },
-              { label: "Data-First", detail: "Every feature proposal comes with a success metric and a kill criterion" },
+              { label: "Data first", detail: "Every feature proposal comes with a success metric and a kill criterion" },
               {
-                label: "Fast Execution",
+                label: "Fast execution",
                 detail: (
                   <>
-                    Portfolio iterated from v1 (Jan 2026) to v6 (Sept 2026), each
+                    Portfolio iterated from v1 ({formatDate("2026-01", "month")}) to v6 ({formatDate("2026-09", "month")}), each
                     version sharpening positioning, content, or navigation; the{" "}
                     <Link href="/changelog">changelog</Link> has every release.
                   </>

@@ -156,7 +156,7 @@ export function ProductMasthead({
             <div className={styles.actions}>
               {project.liveUrl && (
                 <Button href={project.liveUrl} external>
-                  Try it &#8599;
+                  Live app &#8599;
                 </Button>
               )}
               {project.githubUrl && (

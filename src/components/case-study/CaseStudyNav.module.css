@@ -1,4 +1,4 @@
-/* Prev | All projects | Next. On phones the index link drops to its own
+/* Prev | All projects (or All articles) | Next. On phones the index link drops to its own
    centred line under the two neighbours. */
 .nav {
   display: grid;
@@ -28,8 +28,8 @@
   min-height: 44px;
 }
 
-.link:first-child { grid-area: prev; }
-.link:last-child { grid-area: next; text-align: right; }
+.prev { grid-area: prev; }
+.next { grid-area: next; text-align: right; }
 .link:hover { border-color: var(--border-strong); }
 
 .link:focus-visible,

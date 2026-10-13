@@ -59,13 +59,13 @@
 }
 
 .modelName {
-  font-size: 0.9rem;
+  font-size: var(--text-sm);
   font-weight: 600;
 }
 
 .modelTag {
   font-family: var(--font-mono);
-  font-size: 0.7rem;
+  font-size: var(--text-xs);
   color: var(--text-muted);
   letter-spacing: 0.02em;
 }
@@ -79,7 +79,7 @@
 
 .thresholdLabel {
   font-family: var(--font-mono);
-  font-size: 0.75rem;
+  font-size: var(--text-xs);
   color: var(--text-muted);
   letter-spacing: var(--tracking-label);
   text-transform: uppercase;
@@ -105,6 +105,7 @@
   display: flex;
   flex-direction: column;
   gap: 2px;
+  min-width: 0;
   padding: var(--space-3) var(--space-4);
   border: 1px solid var(--border);
   border-radius: var(--radius-sm);
@@ -120,10 +121,13 @@
 
 .statLabel {
   font-family: var(--font-mono);
-  font-size: 0.7rem;
+  font-size: var(--text-xs);
   color: var(--text-muted);
   text-transform: uppercase;
   letter-spacing: var(--tracking-label);
+  /* Three cells across at 320px: a long tracked word ("CONFIDENCE") may
+     break rather than push its cell past the viewport. */
+  overflow-wrap: anywhere;
 }
 
 .cases {
@@ -188,7 +192,7 @@
 }
 
 .caseInput {
-  font-size: 0.95rem;
+  font-size: var(--text-base);
   color: var(--text-strong);
   font-weight: 500;
 }
@@ -217,7 +221,7 @@
 }
 
 .fieldValue {
-  font-size: 0.85rem;
+  font-size: var(--text-sm);
   color: var(--text-body);
   display: inline-flex;
   align-items: center;
@@ -236,7 +240,7 @@
 }
 
 .note {
-  font-size: 0.85rem;
+  font-size: var(--text-sm);
   color: var(--text-muted);
   line-height: 1.6;
   margin: 0;

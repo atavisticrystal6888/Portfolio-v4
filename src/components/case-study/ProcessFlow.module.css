@@ -52,14 +52,14 @@
 }
 
 .title {
-  font-size: 1rem;
+  font-size: var(--text-base);
   font-weight: 700;
   color: var(--text-strong);
   margin: 0 0 var(--space-1);
 }
 
 .desc {
-  font-size: 0.9rem;
+  font-size: var(--text-sm);
   color: var(--text-muted);
   line-height: 1.6;
   margin: 0;

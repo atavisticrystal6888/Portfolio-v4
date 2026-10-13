@@ -57,7 +57,7 @@ test.describe("404 hydrates cleanly on any unknown path", () => {
       expect(errors.hydrationLogs, `hydration warnings on ${path}`).toEqual([]);
 
       // Recovery: the primary CTA reaches the home page.
-      await section.getByRole("link", { name: "Back to Home" }).click();
+      await section.getByRole("link", { name: "Back to home" }).click();
       await expect(page).toHaveURL(/\/$/);
       await expect(page.locator("h1")).toHaveCount(1);
       expect(errors.pageErrors, `page errors after recovering from ${path}`).toEqual([]);

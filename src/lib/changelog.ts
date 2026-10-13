@@ -6,6 +6,7 @@
  */
 export interface Release {
   version: string;
+  /** ISO day ("2026-09-30") or month ("2026-09"); rendered through formatDate. */
   date: string;
   title: string;
   body: string;
@@ -16,7 +17,7 @@ export interface Release {
 export const RELEASES: Release[] = [
   {
     version: "v7 · Trust pass",
-    date: "30 September 2026",
+    date: "2026-09-30",
     title: "Claims re-verified against their sources",
     badge: "in-progress",
     body: "Claims re-verified and one case study withdrawn; Cohort & Retention Studio and Sawari added; utility pages aligned. The home page now tells four stories, one PM decision each, and every number on it says where it stops.",
@@ -31,7 +32,7 @@ export const RELEASES: Release[] = [
   },
   {
     version: "v6 · Product pages",
-    date: "September 2026",
+    date: "2026-09",
     title: "Case studies as product pages, site hardened",
     badge: "shipped",
     body: "The five flagship case studies of that release (Aarchid, KiteEdge, ExperimentHub, DeskTasks and TCS NQT Prep Hub) were rewritten product-first on a real MDX pipeline, each with a product masthead and chapter rail, and the home page now leads with a flagship carousel. A polish pass then hardened the rest of the site: accessibility fixes, error boundaries, tighter mobile layouts, and honest contact handling. Two leftovers went with it: the background-music toggle and testimonial autoplay.",
@@ -47,7 +48,7 @@ export const RELEASES: Release[] = [
   {
     // Scope and date from the v5 commits of 19-22 Aug 2026 (WS-0 to WS-F).
     version: "v5 · Working paper",
-    date: "August 2026",
+    date: "2026-08",
     title: "Editorial redesign: the work leads",
     badge: "shipped",
     body: "A redesign around one idea: the work comes first and the page reads like a working paper. The home page became a title block with a contents index and Selected Work directly under it, case studies gained a dossier layout with a \"My part\" row, and the decorative extras went.",
@@ -61,7 +62,7 @@ export const RELEASES: Release[] = [
   },
   {
     version: "v4.3 · Phase 3",
-    date: "August 2026",
+    date: "2026-08",
     title: "Built-and-tested roster",
     badge: "shipped",
     body: "The portfolio caught up with the building. Three new case studies (ExperimentHub and DeskTasks featured, Better-Half in the library) shift the roster's weight toward products that were built and tested (deployment status is on each entry), KiteEdge's study now reflects its August state, and /projects gained a Featured / More split with card-only entries for smaller builds.",
@@ -75,7 +76,7 @@ export const RELEASES: Release[] = [
   },
   {
     version: "v4.2 · Phase 2",
-    date: "April 2026",
+    date: "2026-04",
     title: "Depth pages & AI PM landing",
     badge: "shipped",
     body: "The specialization layer. Shipped /ai-pm as the single place to route AI-PM conversations, plus /lab, /uses, /bookshelf: the pages that make this feel like a person, not a résumé.",
@@ -88,7 +89,7 @@ export const RELEASES: Release[] = [
   },
   {
     version: "v4.1 · Phase 1",
-    date: "April 2026",
+    date: "2026-04",
     title: "Identity, truth, and UX depth",
     badge: "shipped",
     body: "Closed the gap between what the site claimed and what's actually true. Every Aarchid surface now credits Dilpreet Grover as co-creator, stacks reflect reality, and the command palette gained the actions a power user expects.",
@@ -101,7 +102,7 @@ export const RELEASES: Release[] = [
   },
   {
     version: "v4.0 · Phase 0",
-    date: "April 2026",
+    date: "2026-04",
     title: "Consolidation",
     badge: "shipped",
     body: "Moved v1 → v3, legacy HTMLs, and the portfolio-next experiment into /archive. Promoted v4 to the single source of truth and split it into its own repository.",
@@ -111,7 +112,7 @@ export const RELEASES: Release[] = [
   },
   {
     version: "v3 · archived",
-    date: "March 2026",
+    date: "2026-03",
     title: "Next.js experiment",
     badge: "shipped",
     body: "First Next.js rewrite: validated the App Router + MDX pattern that v4 is built on. Shipped, learned, archived.",
@@ -122,7 +123,7 @@ export const RELEASES: Release[] = [
   },
   {
     version: "v2 · archived",
-    date: "February 2026",
+    date: "2026-02",
     title: "Static multipage portfolio",
     badge: "shipped",
     body: "14-page static site with CDN-only dependencies. The constitution-driven design system behind v4 was authored here.",
@@ -134,7 +135,7 @@ export const RELEASES: Release[] = [
   },
   {
     version: "v1 · archived",
-    date: "January 2026",
+    date: "2026-01",
     title: "First public portfolio",
     badge: "shipped",
     body: "Single-page HTML resume. Proof that shipping beats perfect.",

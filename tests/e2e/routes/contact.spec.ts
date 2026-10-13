@@ -35,7 +35,7 @@ test.describe("Contact (/contact)", () => {
     await expect(ways.getByRole("link", { name: /^Email/ })).toHaveAttribute("href", /^mailto:/);
     await expect(ways.getByRole("link", { name: /^Resume/ })).toHaveAttribute("href", "/resume/dhruv-singhal-resume.pdf");
 
-    const faq = page.getByRole("region", { name: "Common Questions" });
+    const faq = page.getByRole("region", { name: "Common questions" });
     const buttons = faq.getByRole("button");
     await expect(buttons).toHaveCount(4);
     for (let i = 0; i < 4; i++) {
@@ -62,7 +62,7 @@ test.describe("Contact (/contact)", () => {
     const raw = await page.locator('script[type="application/ld+json"]').allTextContents();
     const faq = raw.map((t) => JSON.parse(t)).find((d) => d["@type"] === "FAQPage");
     expect(faq, "FAQPage JSON-LD").toBeTruthy();
-    const region = page.getByRole("region", { name: "Common Questions" });
+    const region = page.getByRole("region", { name: "Common questions" });
     const buttons = region.getByRole("button");
     await expect(buttons).toHaveCount(faq.mainEntity.length);
     for (let i = 0; i < faq.mainEntity.length; i++) {
@@ -74,7 +74,7 @@ test.describe("Contact (/contact)", () => {
 
   test("empty submit shows four errors and focuses Name", async ({ page }) => {
     const calls = await interceptContact(page, 200, { ok: true });
-    await page.getByRole("button", { name: "Send Message" }).click();
+    await page.getByRole("button", { name: "Send message" }).click();
     const form = page.locator("form");
     await expect(form.getByRole("alert")).toHaveCount(4);
     await expect(page.getByLabel(/^Name/)).toBeFocused();
@@ -86,7 +86,7 @@ test.describe("Contact (/contact)", () => {
     await page.unroute("**/api/contact");
     const calls = await interceptContact(page, 503, { error: "Contact form is temporarily offline." });
     await fillValid(page);
-    await page.getByRole("button", { name: "Send Message" }).click();
+    await page.getByRole("button", { name: "Send message" }).click();
     const alert = page.locator("form").getByRole("alert");
     await expect(alert).toContainText("temporarily offline");
     await expect(alert.getByRole("link")).toHaveAttribute("href", /^mailto:/);
@@ -105,7 +105,7 @@ test.describe("Contact (/contact)", () => {
     const SEND_FAILED = "The message could not be sent. Please email me directly.";
     const calls = await interceptContact(page, 502, { error: SEND_FAILED });
     await fillValid(page);
-    await page.getByRole("button", { name: "Send Message" }).click();
+    await page.getByRole("button", { name: "Send message" }).click();
     const result = page.getByTestId("contact-status");
     await expect(result).toBeVisible();
     await expect(result).toHaveAttribute("role", "alert");
@@ -133,7 +133,7 @@ test.describe("Contact (/contact)", () => {
     await page.unroute("**/api/contact");
     const calls = await interceptContact(page, 200, { ok: true });
     await fillValid(page);
-    await page.getByRole("button", { name: "Send Message" }).click();
+    await page.getByRole("button", { name: "Send message" }).click();
     await expect(page.getByRole("status").filter({ hasText: /sent successfully/i })).toBeVisible();
     await expect(page.getByTestId("contact-status")).toBeFocused();
     await expect(page.getByLabel(/^Name/)).toHaveValue("");

@@ -5,6 +5,11 @@ import { PageHeader } from "@/components/ui/PageHeader";
 import { WhereNext } from "@/components/ui/WhereNext";
 import styles from "@/styles/content-page.module.css";
 import section from "@/styles/section.module.css";
+import { SLEEP_COMPANY_TENURE } from "@/lib/site";
+import { formatDate } from "@/lib/utils";
+
+/** The day this snapshot was last checked. */
+const UPDATED = "2026-10-02";
 
 export const metadata = generatePageMetadata({
   title: "Now",
@@ -21,11 +26,11 @@ export default function NowPage() {
           { name: "Home", href: "/" },
           { name: "Now", href: "/now" },
         ]}
-        title="What I'm Doing Now"
+        title="What I'm doing now"
         subtitle="A dated snapshot of what I am building, reading, and looking for next."
         meta={
           <>
-            Last updated: <time dateTime="2026-10-02">2 October 2026</time>
+            Last updated <time dateTime={UPDATED}>{formatDate(UPDATED, "long")}</time>
           </>
         }
       />
@@ -34,11 +39,11 @@ export default function NowPage() {
         <div className={section.inner}>
           <header className={section.header}>
             <SectionLabel index="01">Work</SectionLabel>
-            <h2 className={section.title}>Most Recent Role</h2>
+            <h2 className={section.title}>Most recent role</h2>
           </header>
           <ul className={styles.list}>
             <li>
-              <strong>The Sleep Company</strong> (Jul–Oct 2026): most recently a
+              <strong>The Sleep Company</strong> ({SLEEP_COMPANY_TENURE}): most recently a
               product intern on the growth team, on pre-launch work. The
               internal detail stays internal.
             </li>
@@ -50,7 +55,7 @@ export default function NowPage() {
         <div className={section.inner}>
           <header className={section.header}>
             <SectionLabel index="02">Learning</SectionLabel>
-            <h2 className={section.title}>Growing In</h2>
+            <h2 className={section.title}>Growing in</h2>
           </header>
           <ul className={styles.list}>
             <li>LLM evaluation harnesses (golden sets, shadow traffic, A/B)</li>
@@ -64,7 +69,7 @@ export default function NowPage() {
         <div className={section.inner}>
           <header className={section.header}>
             <SectionLabel index="03">Reading</SectionLabel>
-            <h2 className={section.title}>On My Shelf</h2>
+            <h2 className={section.title}>On my shelf</h2>
           </header>
           <ul className={styles.list}>
             {/* Same two books as "On my desk right now" on /bookshelf. */}
@@ -79,7 +84,7 @@ export default function NowPage() {
         <div className={section.inner}>
           <header className={section.header}>
             <SectionLabel index="04">Building</SectionLabel>
-            <h2 className={section.title}>Side Projects</h2>
+            <h2 className={section.title}>Side projects</h2>
           </header>
           <ul className={styles.list}>
             <li>
@@ -128,8 +133,8 @@ export default function NowPage() {
       <section className={section.section}>
         <div className={section.inner}>
           <header className={section.header}>
-            <SectionLabel index="05">Looking For</SectionLabel>
-            <h2 className={section.title}>Next Step</h2>
+            <SectionLabel index="05">Looking for</SectionLabel>
+            <h2 className={section.title}>Next step</h2>
           </header>
           <p className={styles.prose}>
             {/* Explicit space: JSX drops a leading one when the text node

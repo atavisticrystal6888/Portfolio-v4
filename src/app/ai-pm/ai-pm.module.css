@@ -42,7 +42,7 @@
 .list li {
   color: var(--text-body);
   line-height: 1.65;
-  font-size: 0.95rem;
+  font-size: var(--text-base);
   padding-left: var(--space-5);
   position: relative;
 }
@@ -55,7 +55,7 @@
 }
 
 .note {
-  font-size: 0.95rem;
+  font-size: var(--text-base);
   color: var(--text-muted);
   line-height: var(--leading-body);
 }

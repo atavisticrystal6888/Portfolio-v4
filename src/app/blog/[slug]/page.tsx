@@ -2,8 +2,8 @@ import { notFound } from "next/navigation";
 import { generatePageMetadata, generateArticleJsonLd } from "@/lib/metadata";
 import { getAllBlogSlugs, getBlogPostBySlug, getAllBlogPosts } from "@/lib/content";
 import { markdownToHtml } from "@/lib/markdown";
-import { formatDate, slugify } from "@/lib/utils";
-import { Button } from "@/components/ui/Button";
+import { formatDate, formatTagLabel, slugify } from "@/lib/utils";
+import { CaseStudyNav } from "@/components/case-study/CaseStudyNav";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { ShareButtons } from "@/components/blog/ShareButtons";
 import { RelatedArticles } from "@/components/blog/RelatedArticles";
@@ -100,6 +100,9 @@ export default async function BlogArticlePage({
   }
 
   const allPosts = getAllBlogPosts();
+  const position = allPosts.findIndex((p) => p.slug === post.slug);
+  const newer = position > 0 ? allPosts[position - 1] : undefined;
+  const older = position >= 0 ? allPosts[position + 1] : undefined;
   const { html: contentHtml, headings } = withHeadingIds(markdownToHtml(post.content));
   const showToc = headings.filter((h) => h.level === 2).length >= TOC_MIN_H2;
   const updated = post.updatedDate && post.updatedDate !== post.date ? post.updatedDate : null;
@@ -137,24 +140,24 @@ export default async function BlogArticlePage({
         title={post.title}
       >
         <div className={styles.facts}>
+          {/* Separators are drawn in CSS (.metaItem::before) and clipped at
+              the start of each line, so a wrapped row never strands a "·". */}
           <div className={styles.meta}>
-            <time dateTime={post.date}>{formatDate(post.date)}</time>
+            <span className={styles.metaItem}>
+              <time dateTime={post.date}>{formatDate(post.date, "short")}</time>
+            </span>
             {updated && (
-              <>
-                <span className={styles.sep} aria-hidden="true">&middot;</span>
-                <span data-testid="article-updated">
-                  Updated <time dateTime={updated}>{formatDate(updated)}</time>
-                </span>
-              </>
+              <span className={styles.metaItem} data-testid="article-updated">
+                Updated <time dateTime={updated}>{formatDate(updated, "short")}</time>
+              </span>
             )}
-            <span className={styles.sep} aria-hidden="true">&middot;</span>
-            <span>{post.readingTime}</span>
+            <span className={styles.metaItem}>{post.readingTime}</span>
           </div>
           {post.tags.length > 0 && (
             <ul className={styles.tags} aria-label="Tags">
               {post.tags.map((tag) => (
                 <li key={tag} className={styles.tag}>
-                  {tag}
+                  {formatTagLabel(tag)}
                 </li>
               ))}
             </ul>
@@ -187,12 +190,19 @@ export default async function BlogArticlePage({
         <RelatedArticles current={post} allPosts={allPosts} />
       </div>
 
-      {/* Back to Blog */}
-      <nav className={styles.nav} aria-label="Blog navigation">
-        <Button href="/blog" variant="secondary">
-          <span aria-hidden="true">&larr;</span> Back to Blog
-        </Button>
-      </nav>
+      {/* Previous / All articles / Next, the same end-of-page navigation as
+          a case study. Posts are listed newest first, so "Previous" is the
+          older post and "Next" the newer one; the ends do not wrap. */}
+      <CaseStudyNav
+        basePath="/blog"
+        indexHref="/blog"
+        indexLabel="All articles"
+        label="Article navigation"
+        prevSlug={older?.slug}
+        prevName={older?.title}
+        nextSlug={newer?.slug}
+        nextName={newer?.title}
+      />
     </div>
   );
 }

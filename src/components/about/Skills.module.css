@@ -16,11 +16,15 @@
   min-width: 0;
 }
 
+/* Category title in the label voice (same tokens as SectionLabel): a
+   sub-heading under the section's own label, so no rule tick. */
 .catTitle {
-  font-size: 0.8rem;
-  font-weight: 700;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-weight: 500;
   text-transform: uppercase;
   letter-spacing: var(--tracking-label);
+  line-height: inherit;
   color: var(--text-muted);
 }
 
@@ -33,12 +37,3 @@
   padding: 0;
 }
 
-.tag {
-  overflow-wrap: anywhere;
-  font-size: 0.75rem;
-  padding: 4px 10px;
-  border-radius: var(--radius-editorial);
-  background: var(--surface-hover);
-  color: var(--text-body);
-  border: 1px solid var(--border);
-}

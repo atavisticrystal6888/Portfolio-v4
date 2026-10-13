@@ -8,21 +8,12 @@ import styles from './Navbar.module.css';
 import { cn } from '@/lib/utils';
 import { ThemeToggle } from '@/components/interactive/ThemeToggle';
 import { MobileNav } from './MobileNav';
+import { NAV_LINKS } from './nav-links';
 import dhruvImage from '@/assets/Dhruv_Image.jpg';
 
 // No "Home" text link on desktop: the brand link goes to "/" and its
 // accessible name ends in "Home", so a second Home stop only lengthened the
-// Tab path to the page. The mobile drawer (MobileNav) keeps its own Home link.
-const NAV_LINKS = [
-  { href: '/about', label: 'About' },
-  { href: '/projects', label: 'Projects' },
-  { href: '/ai-pm', label: 'AI PM' },
-  { href: '/blog', label: 'Blog' },
-  // Lab (unbuilt ideas) lives in the footer's "More" group and the command
-  // palette: the primary nav is for built, tested work.
-  { href: '/contact', label: 'Contact' },
-];
-
+// Tab path to the page. The list itself is shared with the mobile drawer.
 export function Navbar() {
   const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);

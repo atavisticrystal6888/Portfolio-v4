@@ -152,8 +152,8 @@ export function ContactForm() {
           aria-describedby={errors.subject ? "subject-error" : undefined}
         >
           <option value="">Select a subject</option>
-          <option value="job">Job Opportunity</option>
-          <option value="freelance">Freelance/Consulting</option>
+          <option value="job">Job opportunity</option>
+          <option value="freelance">Freelance/consulting</option>
           <option value="collaboration">Collaboration</option>
           <option value="other">Other</option>
         </select>
@@ -175,7 +175,7 @@ export function ContactForm() {
       </div>
 
       <Button type="submit" disabled={status === "sending"}>
-        {status === "sending" ? "Sending..." : "Send Message"}
+        {status === "sending" ? "Sending..." : "Send message"}
       </Button>
 
       {status === "success" && (

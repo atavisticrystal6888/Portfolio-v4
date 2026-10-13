@@ -1,5 +1,6 @@
 import type { GitHubProfile } from "@/types/github";
 import { Badge } from "@/components/ui/Badge";
+import { formatDate } from "@/lib/utils";
 import { Surface } from "@/components/ui/Surface";
 import styles from "./GitHubStats.module.css";
 
@@ -17,7 +18,7 @@ export function GitHubStats({ profile }: GitHubStatsProps) {
       <div className={styles.cards}>
         <Surface className={styles.card}>
           <span className={styles.value}>{profile.totalPublicRepos}</span>
-          <span className={styles.label}>Public Repos</span>
+          <span className={styles.label}>Public repos</span>
         </Surface>
         <Surface className={styles.card}>
           <span className={styles.value}>
@@ -29,7 +30,7 @@ export function GitHubStats({ profile }: GitHubStatsProps) {
 
       {profile.topLanguages.length > 0 && (
         <div className={styles.languages}>
-          <span className={styles.langTitle}>Top Languages</span>
+          <span className={styles.langTitle}>Top languages</span>
           <div className={styles.langList}>
             {profile.topLanguages.map((lang) => (
               <Badge key={lang.name} variant="outline">
@@ -41,13 +42,8 @@ export function GitHubStats({ profile }: GitHubStatsProps) {
       )}
 
       <p className={styles.synced}>
-        Last synced:{" "}
-        <time dateTime={profile.fetchedAt}>
-          {new Date(profile.fetchedAt).toLocaleDateString("en-US", {
-            month: "short",
-            day: "numeric",
-          })}
-        </time>
+        Last synced{" "}
+        <time dateTime={profile.fetchedAt}>{formatDate(profile.fetchedAt, "short")}</time>
       </p>
     </div>
   );

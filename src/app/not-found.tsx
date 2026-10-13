@@ -1,8 +1,12 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { Button } from "@/components/ui/Button";
 import { NotFoundQuote } from "@/components/ui/NotFoundQuote";
+import { SectionLabel } from "@/components/ui/SectionLabel";
+import { Surface, SurfaceText, SurfaceTitle } from "@/components/ui/Surface";
 import { SITE_NAME } from "@/lib/site";
+import { cn } from "@/lib/utils";
+import section from "@/styles/section.module.css";
+import styles from "./status-page.module.css";
 
 export const metadata: Metadata = {
   title: "Page not found",
@@ -34,90 +38,32 @@ export default function NotFound() {
     <section
       aria-label="Page not found"
       data-section="404"
-      style={{
-        textAlign: "center",
-        // Same 24px side gutter as every other page.
-        padding: "6rem var(--space-6) 4rem",
-        maxWidth: "720px",
-        margin: "0 auto",
-      }}
+      className={cn(section.section, styles.page)}
     >
-      {/* The h1 names the problem; "404" is the large supporting figure. */}
-      <h1
-        style={{
-          fontFamily: "var(--font-mono)",
-          fontSize: "0.8rem",
-          fontWeight: 500,
-          letterSpacing: "0.12em",
-          textTransform: "uppercase",
-          color: "var(--text-muted)",
-          margin: "0 0 1rem",
-        }}
-      >
-        Page not found
-      </h1>
-      <p
-        aria-hidden="true"
-        style={{
-          fontFamily: "var(--font-display)",
-          fontSize: "clamp(5rem, 14vw, 8rem)",
-          fontWeight: 700,
-          lineHeight: 1,
-          margin: 0,
-          color: "var(--text-strong)",
-        }}
-      >
-        404
-      </p>
-      <NotFoundQuote />
-      <div style={{ marginTop: "2rem" }}>
-        <Button href="/">Back to Home</Button>
-      </div>
+      <div className={cn(section.inner, styles.column)}>
+        {/* The h1 names the problem; "404" is the large supporting figure. */}
+        <SectionLabel as="h1" className={styles.eyebrow}>
+          Page not found
+        </SectionLabel>
+        <p aria-hidden="true" className={styles.figure}>
+          404
+        </p>
+        <NotFoundQuote className={styles.quote} />
+        <div className={styles.actions}>
+          <Button href="/">Back to home</Button>
+        </div>
 
-      {/* A nav, not a bare div: aria-label is prohibited on a role-less
-          div (axe aria-prohibited-attr), and these are navigation links. */}
-      <nav
-        style={{
-          marginTop: "4rem",
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
-          gap: "1rem",
-          textAlign: "left",
-        }}
-        aria-label="Suggested pages"
-      >
-        {SUGGESTED.map((s) => (
-          <Link
-            key={s.href}
-            href={s.href}
-            style={{
-              display: "block",
-              padding: "1.25rem",
-              border: "1px solid var(--border)",
-              borderRadius: "var(--radius-md)",
-              background: "var(--surface)",
-              textDecoration: "none",
-              transition: "border-color 0.15s ease, transform 0.15s ease",
-            }}
-          >
-            <strong
-              style={{
-                display: "block",
-                color: "var(--text-strong)",
-                fontFamily: "var(--font-display)",
-                fontSize: "1.1rem",
-                marginBottom: "0.35rem",
-              }}
-            >
-              {s.label} →
-            </strong>
-            <span style={{ color: "var(--text-muted)", fontSize: "0.9rem" }}>
-              {s.desc}
-            </span>
-          </Link>
-        ))}
-      </nav>
+        {/* A nav, not a bare div: aria-label is prohibited on a role-less
+            div (axe aria-prohibited-attr), and these are navigation links. */}
+        <nav className={styles.suggested} aria-label="Suggested pages">
+          {SUGGESTED.map((s) => (
+            <Surface key={s.href} href={s.href}>
+              <SurfaceTitle>{s.label} &rarr;</SurfaceTitle>
+              <SurfaceText>{s.desc}</SurfaceText>
+            </Surface>
+          ))}
+        </nav>
+      </div>
     </section>
   );
 }
-

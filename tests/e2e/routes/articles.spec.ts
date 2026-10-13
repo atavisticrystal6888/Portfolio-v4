@@ -100,9 +100,16 @@ test.describe("Articles", () => {
         await expect(tocAside).toHaveCount(0);
       }
 
-      // The top "Back to Blog" link became the breadcrumb's "Blog" step (held
-      // to the same click-through below); the bottom button stays.
-      const back = page.getByRole("link", { name: "Back to Blog" });
+      // The top "Back to Blog" link became the breadcrumb's "Blog" step; the
+      // page ends like a case study: Previous / All articles / Next.
+      const articleNav = page.getByRole("navigation", { name: "Article navigation" });
+      const steps = articleNav.getByRole("link", { name: /^(← Previous|Next →)/ });
+      expect(await steps.count(), "at least one neighbouring article").toBeGreaterThan(0);
+      for (const href of await steps.evaluateAll((els) => els.map((e) => e.getAttribute("href")))) {
+        expect(href).toMatch(/^\/blog\/[a-z0-9-]+$/);
+        expect(href).not.toBe(path);
+      }
+      const back = articleNav.getByRole("link", { name: "All articles", exact: true });
       await expect(back).toHaveCount(1);
       await back.click();
       await expect(page).toHaveURL(/\/blog$/);
@@ -162,7 +169,7 @@ test.describe("Articles", () => {
       await expect(bio.getByRole("heading", { name: "About the author" })).toBeVisible();
       await expect(bio).toContainText("Dhruv Singhal");
       await expect(bio).toContainText(
-        "Dhruv Singhal has about a year of product experience across internships, most recently as a product intern on the growth team at The Sleep Company (Jul–Oct 2026). He builds small, tested products and writes about AI evaluation, retention analytics and product judgment."
+        "Dhruv Singhal has about a year of product experience across internships, most recently as a product intern on the growth team at The Sleep Company (Jul to Oct 2026). He builds small, tested products and writes about AI evaluation, retention analytics and product judgment."
       );
       expect(await bio.textContent(), "no undated present-tense employment").not.toMatch(/\bis a product intern\b/);
       await expect(bio.getByRole("link", { name: "About Dhruv" })).toHaveAttribute("href", "/about");

@@ -7,6 +7,8 @@ import { cn } from "@/lib/utils";
 import page from "@/app/lab/lab.module.css";
 import section from "@/styles/section.module.css";
 import { Surface, SurfaceText, SurfaceTitle } from "@/components/ui/Surface";
+import { Badge } from "@/components/ui/Badge";
+import { FilterChip, FilterChipGroup } from "@/components/ui/FilterChip";
 import styles from "./LabMatrix.module.css";
 
 const ALL = "All";
@@ -65,27 +67,18 @@ export function LabMatrix({ ideas }: LabMatrixProps) {
 
         {/* A chip row, not a grid of count tiles. With twelve categories for
             twelve ideas the grid was eleven cards reading "1 idea". */}
-        <div
-          className={styles.filters}
-          role="group"
-          aria-label="Filter ideas by domain"
-        >
-          {filters.map((f) => {
-            const isActive = active === f.label;
-            return (
-              <button
-                key={f.label}
-                type="button"
-                aria-pressed={isActive}
-                onClick={() => setActive(f.label)}
-                className={cn(styles.filter, isActive && styles.filterActive)}
-              >
-                {f.label}
-                <span className={styles.filterCount}>{f.count}</span>
-              </button>
-            );
-          })}
-        </div>
+        <FilterChipGroup label="Filter ideas by domain" className={styles.filters}>
+          {filters.map((f) => (
+            <FilterChip
+              key={f.label}
+              active={active === f.label}
+              onClick={() => setActive(f.label)}
+              count={f.count}
+            >
+              {f.label}
+            </FilterChip>
+          ))}
+        </FilterChipGroup>
 
         <p
           className={styles.count}
@@ -103,9 +96,7 @@ export function LabMatrix({ ideas }: LabMatrixProps) {
                   sit inline after the title and wrapped mid-name on long ones. */}
               <SurfaceTitle className={styles.cardHead}>
                 <span className={styles.cardName}>{idea.name}</span>
-                <span className={page.badge} data-testid="lab-difficulty">
-                  {idea.difficulty}
-                </span>
+                <Badge data-testid="lab-difficulty">{idea.difficulty}</Badge>
               </SurfaceTitle>
               <SurfaceText>{idea.problem}</SurfaceText>
               {/* One quiet line, in sentence case. The all-caps mono rail used

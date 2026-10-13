@@ -6,8 +6,9 @@ interface SectionLabelProps {
   /** Dossier index for ordered page sections, e.g. "01". */
   index?: string;
   /** Render the label itself as a heading where it names a section with no
-   *  other title ("Related reading", "TL;DR", "Featured"). */
-  as?: "span" | "h2" | "h3";
+   *  other title ("Related reading", "TL;DR", "Featured"), or the page (the
+   *  404's "Page not found", where the big "404" is only supporting text). */
+  as?: "span" | "h1" | "h2" | "h3";
   id?: string;
   className?: string;
 }

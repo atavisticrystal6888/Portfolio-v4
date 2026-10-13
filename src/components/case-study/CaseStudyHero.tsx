@@ -123,8 +123,9 @@ export function CaseStudyHero({
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    {liveHost} &#8599;
-                  </a>
+                    Live app &#8599;
+                  </a>{" "}
+                  ({liveHost})
                 </dd>
               </div>
             )}

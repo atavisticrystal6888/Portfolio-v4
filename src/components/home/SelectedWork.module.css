@@ -19,23 +19,9 @@
   margin-bottom: 0;
 }
 
-/* Status and evidence under each "Also built" row: same pills as the
-   carousel and /projects, wrapping onto a second line at 320px. */
-.facts {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: var(--space-2);
-  min-width: 0;
-  margin-top: var(--space-1);
-}
-
-/* Own line above the pills, in body voice (not a chip). */
-.ownership {
-  flex-basis: 100%;
-  font-size: var(--text-sm);
-  color: var(--text);
-  line-height: var(--leading-snug);
+/* CompactRows carry their own bottom hairline; this is the top one. */
+.rows {
+  border-top: var(--hairline);
 }
 
 .viewAll {

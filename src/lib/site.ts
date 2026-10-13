@@ -1,3 +1,6 @@
+// Relative, not "@/", so this constants module needs no path alias to load.
+import { formatDateRange } from "./utils";
+
 const DEFAULT_SITE_URL = "https://dhruvsinghal.codes";
 
 export const SITE_URL = (
@@ -15,13 +18,19 @@ export const WWW_SITE_HOST = SITE_HOST.startsWith("www.")
 	: `www.${SITE_HOST}`;
 export const PERSON_TITLE = "Product Manager & Builder";
 /**
+ * The Sleep Company internship, dated (it ended 9 Oct 2026): "Jul to Oct
+ * 2026". One constant so the hero, /now, /about, the author bio and the
+ * schema description never drift apart.
+ */
+export const SLEEP_COMPANY_TENURE = formatDateRange("2026-07", "2026-10");
+/**
  * Person description for schema.org. Dated and past-safe (owner decision,
  * 3 Oct 2026): the internship ends 9 Oct 2026, so no undated present-tense
  * role. For the same reason the Person carries no schema `jobTitle` and no
  * `worksFor`. About one year of experience, never more.
  */
 export const PERSON_DESCRIPTION =
-	"About one year of product experience across internships, most recently product intern (growth) at The Sleep Company, Jul–Oct 2026. Writes about AI evaluation, retention and product scope.";
+	`About one year of product experience across internships, most recently product intern (growth) at The Sleep Company, ${SLEEP_COMPANY_TENURE}. Writes about AI evaluation, retention and product scope.`;
 /** The page that describes the person: the target of every author link. */
 export const ABOUT_PATH = "/about";
 /**

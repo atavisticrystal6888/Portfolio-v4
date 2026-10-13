@@ -70,7 +70,7 @@ test.describe("Case studies", () => {
           .trim();
         expect(STATUS_LABELS, `status label "${status}"`).toContain(status);
         await expect(page.getByTestId("evidence-tier")).not.toBeEmpty();
-        await expect(page.getByTestId("last-verified")).toHaveText(/Last verified\s*30 Sep 2026/);
+        await expect(page.getByTestId("last-verified")).toHaveText(/Last verified\s*30 September 2026/);
         if (HERO_NOTE.has(slug)) await expect(page.getByTestId("hero-note")).toBeVisible();
 
         const text = await page.locator("main").innerText();

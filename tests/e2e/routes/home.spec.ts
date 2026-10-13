@@ -4,6 +4,7 @@ import { test, expect } from "@playwright/test";
 
 interface RosterEntry {
   slug: string;
+  name: string;
   hasCaseStudy?: boolean;
   productName?: string;
   decision?: string;
@@ -90,7 +91,7 @@ test.describe("Home (/)", () => {
 
   test("hero states the most recent role with its dates, not an undated 'Currently'", async ({ page }) => {
     const hero = page.getByRole("region", { name: "Introduction" });
-    await expect(hero).toContainText("Product Intern, Growth · The Sleep Company (Jul–Oct 2026)");
+    await expect(hero).toContainText("Product Intern, Growth · The Sleep Company (Jul to Oct 2026)");
     await expect(hero).not.toContainText(/Currently/i);
   });
 
@@ -115,8 +116,8 @@ test.describe("Home (/)", () => {
     );
   });
 
-  test("Also built rows show the metric as a serif value with its caption beneath", async ({ page }) => {
-    const rows = page.getByRole("listitem").filter({ has: page.getByTestId("also-built-ownership") });
+  test("More work rows show the metric as a serif value with its caption beneath", async ({ page }) => {
+    const rows = page.getByTestId("home-more-work").locator("article");
     const n = await rows.count();
     expect(n).toBeGreaterThan(0);
     for (let i = 0; i < n; i++) {
@@ -202,11 +203,20 @@ test.describe("Home (/)", () => {
     }
   });
 
-  test("Also built rows state the contribution, including the TCS NQT credit", async ({ page }) => {
-    const rows = page.getByTestId("also-built-ownership");
+  test("More work rows state the contribution, including the TCS NQT credit", async ({ page }) => {
+    const rows = page.getByTestId("home-more-work").getByTestId("ownership-line");
     const expected = ROSTER.filter((p) => p.tier !== "flagship" && p.hasCaseStudy !== false);
     await expect(rows).toHaveCount(expected.length);
     await expect(rows.filter({ hasText: /three other contributors/i })).toHaveCount(1);
+    // Same names as /projects "More work": the short product name, not the
+    // long "Name: Descriptor" form.
+    const names = await page
+      .getByTestId("home-more-work")
+      .getByRole("heading", { level: 4 })
+      .allTextContents();
+    expect(names.map((n) => n.trim()).sort()).toEqual(
+      expected.map((p) => p.productName ?? p.name).sort()
+    );
   });
 
   test("the PM decision on every flagship card is shown in full, not clamped", async ({ page }) => {

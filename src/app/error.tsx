@@ -1,9 +1,13 @@
 "use client";
 
 import { startTransition, useEffect, useRef } from "react";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/Button";
+import { SectionLabel } from "@/components/ui/SectionLabel";
+import { Surface, SurfaceText, SurfaceTitle } from "@/components/ui/Surface";
+import { cn } from "@/lib/utils";
+import section from "@/styles/section.module.css";
+import styles from "./status-page.module.css";
 
 interface ErrorProps {
   error: Error & { digest?: string };
@@ -11,8 +15,8 @@ interface ErrorProps {
 }
 
 const SUGGESTED = [
-  { href: "/projects", label: "Projects" },
-  { href: "/contact", label: "Contact" },
+  { href: "/projects", label: "Projects", desc: "Case studies with their evidence and limits." },
+  { href: "/contact", label: "Contact", desc: "Talk product, roles, and opportunities." },
 ];
 
 /**
@@ -45,97 +49,36 @@ export default function Error({ error, reset }: ErrorProps) {
     <section
       aria-label="Something went wrong"
       data-section="error"
-      style={{
-        textAlign: "center",
-        padding: "6rem 1rem 4rem",
-        maxWidth: "720px",
-        margin: "0 auto",
-      }}
+      className={cn(section.section, styles.page)}
     >
-      <p
-        style={{
-          fontFamily: "var(--font-mono)",
-          fontSize: "0.8rem",
-          letterSpacing: "0.12em",
-          textTransform: "uppercase",
-          color: "var(--text-muted)",
-          marginBottom: "1rem",
-        }}
-      >
-        Error · Unexpected
-      </p>
-      <h1
-        ref={headingRef}
-        tabIndex={-1}
-        style={{
-          outline: "none",
-          fontFamily: "var(--font-display)",
-          fontSize: "clamp(1.8rem, 6vw, 2.8rem)",
-          lineHeight: 1.15,
-          margin: 0,
-          color: "var(--text-strong)",
-        }}
-      >
-        Something went wrong on this page
-      </h1>
-      <p
-        style={{
-          marginTop: "1rem",
-          color: "var(--text-muted)",
-          fontSize: "1rem",
-          lineHeight: 1.7,
-        }}
-      >
-        This part of the site failed to load. Trying again usually fixes it. If
-        it doesn&apos;t, the rest of the site still works.
-      </p>
-
-      {error.digest && (
-        <p
-          style={{
-            marginTop: "0.75rem",
-            fontFamily: "var(--font-mono)",
-            fontSize: "0.75rem",
-            color: "var(--text-muted)",
-          }}
-        >
-          Reference: {error.digest}
+      <div className={cn(section.inner, styles.column)}>
+        <SectionLabel className={styles.eyebrow}>Error &middot; Unexpected</SectionLabel>
+        <h1 ref={headingRef} tabIndex={-1} className={styles.title}>
+          Something went wrong on this page
+        </h1>
+        <p className={styles.text}>
+          This part of the site failed to load. Trying again usually fixes it. If
+          it doesn&apos;t, the rest of the site still works.
         </p>
-      )}
 
-      <div
-        style={{
-          marginTop: "2rem",
-          display: "flex",
-          gap: "0.75rem",
-          justifyContent: "center",
-          flexWrap: "wrap",
-        }}
-      >
-        <Button onClick={retry}>Try again</Button>
-        <Button href="/" variant="secondary">
-          Go home
-        </Button>
+        {error.digest && <p className={styles.digest}>Reference: {error.digest}</p>}
+
+        <div className={styles.actions}>
+          <Button onClick={retry}>Try again</Button>
+          <Button href="/" variant="secondary">
+            Back to home
+          </Button>
+        </div>
+
+        <nav className={styles.suggested} aria-label="Suggested pages">
+          {SUGGESTED.map((s) => (
+            <Surface key={s.href} href={s.href}>
+              <SurfaceTitle>{s.label} &rarr;</SurfaceTitle>
+              <SurfaceText>{s.desc}</SurfaceText>
+            </Surface>
+          ))}
+        </nav>
       </div>
-
-      <p
-        style={{
-          marginTop: "2.5rem",
-          fontSize: "0.9rem",
-          color: "var(--text-muted)",
-        }}
-      >
-        Or head to{" "}
-        {SUGGESTED.map((s, i) => (
-          <span key={s.href}>
-            {i > 0 && " or "}
-            <Link href={s.href} style={{ color: "var(--accent)" }}>
-              {s.label}
-            </Link>
-          </span>
-        ))}
-        .
-      </p>
     </section>
   );
 }

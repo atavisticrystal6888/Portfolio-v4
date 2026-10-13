@@ -95,7 +95,7 @@ test.describe("Filter toggles and FAQ disclosure", () => {
   test("FAQ answers are hidden disclosures under one named region", async ({ page }) => {
     await page.goto("/contact", { waitUntil: "networkidle" });
 
-    const faq = page.getByRole("region", { name: "Common Questions" });
+    const faq = page.getByRole("region", { name: "Common questions" });
     await expect(faq).toBeVisible();
     // No nested per-answer regions and no complementary landmark on /contact.
     await expect(faq.getByRole("region")).toHaveCount(0);

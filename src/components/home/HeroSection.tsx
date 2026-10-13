@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/Button";
-import { AVAILABILITY, CONTACT_EMAIL_HREF } from "@/lib/site";
+import { AVAILABILITY, CONTACT_EMAIL_HREF, SLEEP_COMPANY_TENURE } from "@/lib/site";
 import { HeroCtaLink } from "./HeroCtaLink";
 import { heroCtaCopy } from "@/lib/experiments/hero";
 import styles from "./HeroSection.module.css";
@@ -41,7 +41,7 @@ export function HeroSection({ ctaVariant, tracked = false }: HeroSectionProps) {
             Where I also built it, I say so.
           </h1>
           <p className={styles.status}>
-            Product Intern, Growth &middot; The Sleep Company (Jul–Oct 2026)
+            Product Intern, Growth &middot; The Sleep Company ({SLEEP_COMPANY_TENURE})
           </p>
           <p className={styles.statement}>
             E-commerce and AI products: stakeholder input, user research,

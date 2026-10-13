@@ -44,7 +44,7 @@ test.describe("Utility pages", () => {
     }
     // Dated role, never an undated present tense (the internship ends 9 Oct 2026).
     await expect(main).toContainText(
-      "The Sleep Company (Jul–Oct 2026): most recently a product intern on the growth team"
+      "The Sleep Company (Jul to Oct 2026): most recently a product intern on the growth team"
     );
     await expect(main).not.toContainText("Product Manager Intern");
     await expect(main).not.toContainText(/Current Roles|Currently:|– Present/);
