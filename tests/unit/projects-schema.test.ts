@@ -87,6 +87,27 @@ describe("content/projects.json product fields", () => {
     }
   });
 
+  it("a plate records what it mounts: a raster screenshot with its source, or a title card", () => {
+    for (const p of projects) {
+      if (!p.plate) continue;
+      expect(["screenshot", "title-card"], `${p.slug} plate.kind`).toContain(p.plate.kind);
+      const mounted = p.plateSource ?? p.imageUrl;
+      const raster = Boolean(mounted) && !/\.svg$/i.test(mounted!);
+      if (p.plate.kind === "screenshot") {
+        expect(p.plate.source, `${p.slug} plate.source`).toMatch(/^\/images\//);
+        expect(p.plate.source, `${p.slug} plate.source`).not.toMatch(/\.svg$/i);
+        expect(p.plate.source, `${p.slug} plate.source is plateSource ?? imageUrl`).toBe(mounted);
+        expect(
+          fs.existsSync(path.join(process.cwd(), "public", p.plate.source!)),
+          `${p.slug} plate.source on disk`
+        ).toBe(true);
+      } else {
+        expect(p.plate.source, `${p.slug} title card has no source`).toBeUndefined();
+        expect(raster && fs.existsSync(path.join(process.cwd(), "public", mounted!)), `${p.slug} has a raster screenshot but a title card`).toBe(false);
+      }
+    }
+  });
+
   it("a plate source override, when present, is a path under /images/", () => {
     for (const p of projects) {
       if (p.plateSource === undefined) continue;

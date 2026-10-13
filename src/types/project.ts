@@ -56,6 +56,15 @@ export interface ProductPlateImage {
   avif: string;
   width: number;
   height: number;
+  /**
+   * What is mounted on the slab: a raster `screenshot` (`plateSource` or
+   * `imageUrl`), or a generated `title-card` (no raster screenshot, or an
+   * SVG one). A title card shows no product UI, so it takes a generic alt
+   * and never opens a zoom.
+   */
+  kind: "screenshot" | "title-card";
+  /** Path under /images/ of the screenshot mounted; only for `screenshot`. */
+  source?: string;
 }
 
 export interface Project {

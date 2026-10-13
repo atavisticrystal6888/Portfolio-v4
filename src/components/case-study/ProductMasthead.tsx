@@ -4,6 +4,7 @@ import type { Project } from "@/types/project";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { cn } from "@/lib/utils";
+import { plateAlt } from "@/lib/plate";
 import { Breadcrumbs, type Crumb } from "@/components/ui/Breadcrumbs";
 import { ProductPlate } from "@/components/projects/ProductPlate";
 import { EvidenceLedger } from "./ProjectFacts";
@@ -78,9 +79,11 @@ export function ProductMasthead({
   const hasActions = Boolean(project.liveUrl || project.githubUrl);
   // No screenshot: the masthead itself becomes the visual, a set title plate
   // on a ruled band instead of an empty frame. A rendered product plate, when
-  // the project has one, fills the band's right half (below the title block
-  // on narrow screens) so it is in the first screen; the hero below then
-  // shows no image. The band's flat tint is a ground, not a frame.
+  // the project has one, fills the band's right half from 900px so it is in
+  // the first screen; between 600 and 899px it sits below the title block,
+  // and on phones it follows the evidence ledger, which keeps its
+  // first-screen slot. The hero below then shows no image. The band's flat
+  // tint is a ground, not a frame.
   const plate = !project.imageUrl;
   const productPlate = plate ? project.plate : undefined;
 
@@ -112,7 +115,11 @@ export function ProductMasthead({
 
   return (
     <section
-      className={cn(styles.masthead, plate && styles.plate)}
+      className={cn(
+        styles.masthead,
+        plate && styles.plate,
+        productPlate && styles.mastheadWithPlate
+      )}
       aria-label="Product"
       style={style}
     >
@@ -180,6 +187,7 @@ export function ProductMasthead({
             <ProductPlate
               plate={productPlate}
               name={name}
+              alt={plateAlt(productPlate, name, project.imageUrl, project.imageAlt)}
               sizes="(max-width: 899px) calc(100vw - 80px), 440px"
               priority
             />

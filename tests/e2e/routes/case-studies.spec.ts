@@ -86,6 +86,29 @@ test.describe("Case studies", () => {
     expect(style).toEqual({ border: "0px", radius: "0px", overflow: "visible" });
   });
 
+  test("sawari at 390x844 keeps the evidence ledger in the first screen, with the plate after it", async ({ page }) => {
+    await page.setViewportSize({ width: 390, height: 844 });
+    await open(page, "/projects/sawari");
+    const masthead = page.getByRole("region", { name: "Product", exact: true });
+    const ledger = (await masthead.getByTestId("evidence-row").boundingBox())!;
+    expect(ledger.y + ledger.height, "ledger bottom inside 390x844").toBeLessThanOrEqual(844);
+    const plate = (await masthead.getByTestId("product-plate").boundingBox())!;
+    expect(plate.y, "plate follows the ledger on phones").toBeGreaterThanOrEqual(ledger.y + ledger.height);
+  });
+
+  test("better-half's hero plate is a title card: generic alt, no zoom, no mock-up caption", async ({ page }) => {
+    await open(page, "/projects/better-half");
+    const header = page.getByRole("region", { name: "Case study header" });
+    const plate = header.getByTestId("product-plate");
+    await expect(plate).toHaveCount(1);
+    const alt = (await plate.locator("img").getAttribute("alt")) ?? "";
+    expect(alt).toMatch(/title plate$/);
+    expect(alt).not.toMatch(/Illustrative/i);
+    await expect(header.getByTestId("hero-zoom")).toHaveCount(0);
+    await expect(header.getByRole("button", { name: /^Open full-size image/ })).toHaveCount(0);
+    await expect(header.getByTestId("hero-caption")).toHaveCount(0);
+  });
+
   for (const path of CASE_STUDIES) {
     const slug = path.split("/").pop()!;
 

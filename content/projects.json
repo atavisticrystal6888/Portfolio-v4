@@ -50,7 +50,9 @@
       "src": "/images/plates/aarchid.webp",
       "avif": "/images/plates/aarchid.avif",
       "width": 1600,
-      "height": 1000
+      "height": 1000,
+      "kind": "screenshot",
+      "source": "/images/projects/aarchid/hero.png"
     }
   },
   {
@@ -95,7 +97,9 @@
       "src": "/images/plates/desktasks.webp",
       "avif": "/images/plates/desktasks.avif",
       "width": 1600,
-      "height": 1000
+      "height": 1000,
+      "kind": "screenshot",
+      "source": "/images/projects/desktasks/hero.png"
     }
   },
   {
@@ -137,7 +141,8 @@
       "src": "/images/plates/cohort-retention-studio.webp",
       "avif": "/images/plates/cohort-retention-studio.avif",
       "width": 1600,
-      "height": 1000
+      "height": 1000,
+      "kind": "title-card"
     }
   },
   {
@@ -176,7 +181,8 @@
       "src": "/images/plates/sawari.webp",
       "avif": "/images/plates/sawari.avif",
       "width": 1600,
-      "height": 1000
+      "height": 1000,
+      "kind": "title-card"
     }
   },
   {
@@ -222,7 +228,9 @@
       "src": "/images/plates/experiment-hub.webp",
       "avif": "/images/plates/experiment-hub.avif",
       "width": 1600,
-      "height": 1000
+      "height": 1000,
+      "kind": "screenshot",
+      "source": "/images/projects/experiment-hub/dashboard.png"
     }
   },
   {
@@ -270,7 +278,9 @@
       "src": "/images/plates/kite-edge.webp",
       "avif": "/images/plates/kite-edge.avif",
       "width": 1600,
-      "height": 1000
+      "height": 1000,
+      "kind": "screenshot",
+      "source": "/images/projects/kite-edge/tearsheet-top.webp"
     }
   },
   {
@@ -313,7 +323,9 @@
       "src": "/images/plates/tcs-nqt-prep-hub.webp",
       "avif": "/images/plates/tcs-nqt-prep-hub.avif",
       "width": 1600,
-      "height": 1000
+      "height": 1000,
+      "kind": "screenshot",
+      "source": "/images/projects/tcs-nqt-prep-hub/dashboard.png"
     }
   },
   {
@@ -354,7 +366,8 @@
       "src": "/images/plates/hackmate.webp",
       "avif": "/images/plates/hackmate.avif",
       "width": 1600,
-      "height": 1000
+      "height": 1000,
+      "kind": "title-card"
     }
   },
   {
@@ -398,7 +411,8 @@
       "src": "/images/plates/better-half.webp",
       "avif": "/images/plates/better-half.avif",
       "width": 1600,
-      "height": 1000
+      "height": 1000,
+      "kind": "title-card"
     }
   },
   {
@@ -439,7 +453,9 @@
       "src": "/images/plates/portfolio-site.webp",
       "avif": "/images/plates/portfolio-site.avif",
       "width": 1600,
-      "height": 1000
+      "height": 1000,
+      "kind": "screenshot",
+      "source": "/images/projects/portfolio-site/home.png"
     }
   },
   {
@@ -483,7 +499,9 @@
       "src": "/images/plates/weekly-retro.webp",
       "avif": "/images/plates/weekly-retro.avif",
       "width": 1600,
-      "height": 1000
+      "height": 1000,
+      "kind": "screenshot",
+      "source": "/images/projects/weekly-retro/deck.png"
     }
   }
 ]

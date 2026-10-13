@@ -262,8 +262,10 @@
   }
 }
 
-/* Phones: a shorter plate so the evidence row still ends inside the first
-   390x844 screen now that the decision carries its context line. */
+/* Phones: a tighter title band, so the band and the evidence row below it
+   end inside the first 390x844 screen now that the decision carries its
+   context line. A rendered plate no longer competes for that screen: it
+   moves below the ledger (next block). */
 @media (max-width: 599.98px) {
   .plate .inner {
     padding: var(--space-5) var(--space-4);
@@ -276,5 +278,45 @@
     font-size: clamp(var(--text-2xl), 11vw, var(--text-3xl));
     min-width: 0;
     overflow-wrap: break-word;
+  }
+}
+
+/* Phones with a rendered plate: the evidence ledger keeps its first-screen
+   slot and the plate (with any chips or actions) follows it, instead of the
+   plate pushing the ledger below the fold. The plate lives in the band's DOM
+   (it is the band's right half from 900px), so below 600px the band box
+   steps aside (display: contents) and the identity block carries the band's
+   tint and rules; the plate then sits on the page ground under the ledger,
+   as it does in the hero. Auto side margins would shrink-wrap flex items,
+   hence the explicit widths. */
+@media (max-width: 599.98px) {
+  .mastheadWithPlate {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .mastheadWithPlate .inner {
+    display: contents;
+  }
+
+  .mastheadWithPlate .top,
+  .mastheadWithPlate .ledger {
+    width: 100%;
+  }
+
+  .mastheadWithPlate .identity {
+    padding: var(--space-5) var(--space-4);
+    border-top: var(--rule-strong);
+    border-bottom: var(--rule-strong);
+    background: color-mix(in srgb, var(--product-accent) 6%, transparent);
+  }
+
+  .mastheadWithPlate .ledger {
+    order: 1;
+  }
+
+  .mastheadWithPlate .visual {
+    order: 2;
+    margin-top: var(--space-6);
   }
 }

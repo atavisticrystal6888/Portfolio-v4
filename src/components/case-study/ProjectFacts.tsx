@@ -1,21 +1,15 @@
 import type { EvidenceTier, ProjectStatus } from "@/types/project";
 import { cn, formatDate } from "@/lib/utils";
+import { STATUS_LABEL as STATUS_LABELS } from "@/lib/project-labels.mjs";
 import styles from "./ProjectFacts.module.css";
 
 /**
  * The exact product-status and evidence vocabulary, shared by the case-study
  * masthead, the /projects cards and rows, related work and the home carousel.
- * One source so a pill never says something different on two pages.
+ * One source so a pill never says something different on two pages. The map
+ * itself lives in project-labels.mjs, which the plate render script reads too.
  */
-export const STATUS_LABEL: Record<ProjectStatus, string> = {
-  live: "Live",
-  "local-build": "Local build · not deployed",
-  "pilot-ready": "Ready for local pilot",
-  "open-source": "Open source",
-  private: "Private",
-  internal: "Internal",
-  archived: "Archived",
-};
+export const STATUS_LABEL: Record<ProjectStatus, string> = STATUS_LABELS;
 
 export const EVIDENCE_LABEL: Record<EvidenceTier, string> = {
   measured: "Measured",

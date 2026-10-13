@@ -9,6 +9,7 @@ import {
   StatusPill,
 } from "@/components/case-study/ProjectFacts";
 import { cn, formatCategoryLabel } from "@/lib/utils";
+import { plateAlt } from "@/lib/plate";
 import styles from "./ProductCard.module.css";
 
 interface ProductCardProps {
@@ -51,8 +52,7 @@ export function ProductCard({
     <ProductPlate
       plate={project.plate}
       name={name}
-      // imageAlt describes imageUrl; a plateSource override mounts another shot.
-      alt={project.imageUrl && !project.plateSource ? project.imageAlt : undefined}
+      alt={plateAlt(project.plate, name, project.imageUrl, project.imageAlt)}
       sizes={sizes}
       priority={priority}
       className={styles.shot}

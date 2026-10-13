@@ -4,6 +4,7 @@ import { SignatureScene } from "@/components/interactive/SignatureScene";
 import { FramedShot } from "@/components/case-study/FramedShot";
 import { ProductPlate } from "@/components/projects/ProductPlate";
 import { cn } from "@/lib/utils";
+import { plateAlt, plateZoomSrc } from "@/lib/plate";
 import { HeroZoom } from "./HeroZoom";
 import { LightboxProvider } from "./blocks/Lightbox";
 import styles from "./CaseStudyHero.module.css";
@@ -31,14 +32,8 @@ interface CaseStudyHeroProps {
    * (a demo loop still wins), and gives imageless studies a hero image.
    */
   plate?: ProductPlateImage;
-  /** Product name for the plate's fallback alt text. */
+  /** Product name for the plate's generic alt text. */
   productName?: string;
-  /**
-   * Screenshot the plate mounts when it is not `imageUrl`. The plate then
-   * takes the generic alt, since `imageAlt` describes `imageUrl`; the zoom
-   * and the caption stay on the original screenshot.
-   */
-  plateSource?: string;
   /**
    * True when a ProductMasthead sits above: the header drops its nav clearance
    * and its h1, since the masthead's product name is the page heading and the
@@ -54,9 +49,12 @@ interface CaseStudyHeroProps {
  * tools; the headline number lives in the metric strip below the TL;DR.
  *
  * Where the project has a screenshot and a rendered product plate, the plate
- * sits beside the facts straight on the page ground and the zoom opens the
- * original screenshot. An imageless study under a masthead shows its plate
- * in the masthead instead, so the hero stays text only. Otherwise a
+ * sits beside the facts straight on the page ground; its alt and zoom follow
+ * what it mounts (src/lib/plate.ts): a screenshot plate opens the original
+ * raster screenshot, a title-card plate (an SVG-only study) opens nothing and
+ * drops the screenshot's caption, which describes an image not shown. An
+ * imageless study under a masthead shows its plate in the masthead instead,
+ * so the hero stays text only. Otherwise a
  * screenshot sits in a browser frame on the product's tinted ground, never
  * cropped. With neither, the masthead above already carries the title plate,
  * so nothing else competes for the eye; a standalone header (no masthead)
@@ -74,12 +72,17 @@ export function CaseStudyHero({
   team,
   plate,
   productName,
-  plateSource,
   belowMasthead = false,
 }: CaseStudyHeroProps) {
   // Imageless studies under a masthead carry the plate there, not here.
   const showPlate = Boolean(plate) && !demoVideo && (Boolean(imageUrl) || !belowMasthead);
-  const plateAlt = plateSource ? undefined : imageAlt;
+  // imageAlt and the zoom target describe the project's own imageUrl, which
+  // the page passes as zoomSrc when a separate hero image is shown.
+  const describedUrl = zoomSrc ?? imageUrl;
+  const plateName = productName ?? caseStudy.title;
+  const plateAltText = plate ? plateAlt(plate, plateName, describedUrl, imageAlt) : undefined;
+  const plateZoom = plate ? plateZoomSrc(plate, describedUrl) : null;
+  const titleCardPlate = showPlate && plate?.kind === "title-card";
   const hasMedia = Boolean(imageUrl) || showPlate;
   const plateSizes = "(max-width: 899px) calc(100vw - 48px), 480px";
   const hasTeam = (caseStudy.coCreators?.length ?? 0) > 0;
@@ -172,12 +175,12 @@ export function CaseStudyHero({
         {hasMedia && (
           <div className={cn(styles.shot, showPlate && styles.shotPlate)}>
             {showPlate && plate ? (
-              imageUrl ? (
-                <HeroZoom src={zoomSrc ?? imageUrl} alt={imageAlt ?? ""} caption={imageCaption}>
+              plateZoom ? (
+                <HeroZoom src={plateZoom} alt={imageAlt ?? ""} caption={imageCaption}>
                   <ProductPlate
                     plate={plate}
-                    name={productName ?? caseStudy.title}
-                    alt={plateAlt}
+                    name={plateName}
+                    alt={plateAltText}
                     sizes={plateSizes}
                     priority
                   />
@@ -185,7 +188,8 @@ export function CaseStudyHero({
               ) : (
                 <ProductPlate
                   plate={plate}
-                  name={productName ?? caseStudy.title}
+                  name={plateName}
+                  alt={plateAltText}
                   sizes={plateSizes}
                   priority
                 />
@@ -212,7 +216,7 @@ export function CaseStudyHero({
                 />
               </HeroZoom>
             ) : null}
-            {imageUrl && imageCaption && (
+            {imageUrl && imageCaption && !titleCardPlate && (
               <p className={styles.shotCaption} data-testid="hero-caption">
                 {imageCaption}
               </p>

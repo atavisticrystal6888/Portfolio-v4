@@ -118,22 +118,10 @@ export function cn(...classes: (string | undefined | null | false)[]): string {
 }
 
 /**
- * Convert internal category keys into user-facing labels.
+ * Convert internal category keys into user-facing labels. Lives in
+ * project-labels.mjs so scripts/render-plates.mjs can share it.
  */
-export function formatCategoryLabel(category: string): string {
-  switch (category.toLowerCase()) {
-    case "ai":
-      return "AI";
-    case "product":
-      return "Product";
-    case "data":
-      return "Data";
-    case "technical":
-      return "Technical";
-    default:
-      return category;
-  }
-}
+export { formatCategoryLabel } from "./project-labels.mjs";
 
 /**
  * A metric caption longer than four words reads as a sentence, so it is set

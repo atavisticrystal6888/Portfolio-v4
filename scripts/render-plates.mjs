@@ -14,17 +14,23 @@
  *      One theme-neutral render per project: transparent film, shadow in alpha.
  *   3. sharp trims the alpha bounds, fits the plate into a 1600x1000 canvas
  *      with even padding and writes public/images/plates/<slug>.webp and .avif.
- *   4. content/projects.json gets `plate: { src, avif, width, height }`.
+ *   4. content/projects.json gets `plate: { src, avif, width, height, kind, source? }`:
+ *      `kind` is "screenshot" or "title-card", `source` the /images/ path of
+ *      the screenshot mounted (screenshots only). The site derives the plate's
+ *      alt text and zoom from these (src/lib/plate.ts). A project whose plate
+ *      files are gone loses its `plate` field.
  *
- * Requires Blender 5.x (env BLENDER or the default install path) and the repo's
+ * Requires Blender 5.x (env BLENDER or the default install path) for a real
+ * render only; --dry-run and --post-only never start it. Also needs the repo's
  * sharp + playwright devDependencies.
  */
 import { spawnSync } from "node:child_process";
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import path from "node:path";
-import { fileURLToPath, pathToFileURL } from "node:url";
+import { fileURLToPath } from "node:url";
 import sharp from "sharp";
 import { chromium } from "playwright";
+import { STATUS_LABEL, formatCategoryLabel } from "../src/lib/project-labels.mjs";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const BLENDER =
@@ -55,19 +61,31 @@ const postOnly = args.includes("--post-only");
 
 for (const d of [OUT_DIR, RAW_DIR, CARD_DIR]) mkdirSync(d, { recursive: true });
 
+// Inlined as data URLs: the card is set with page.setContent (about:blank),
+// which may not load file:// fonts, so the card silently fell back to Times
+// and Arial.
 function fontFace(family, file, extra = "") {
-  const url = pathToFileURL(path.join(ROOT, "public/fonts", file)).href;
-  return `@font-face{font-family:"${family}";src:url("${url}") format("woff2");${extra}}`;
+  const data = readFileSync(path.join(ROOT, "public/fonts", file)).toString("base64");
+  return `@font-face{font-family:"${family}";src:url("data:font/woff2;base64,${data}") format("woff2");${extra}}`;
 }
 
 function escapeHtml(s) {
   return String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
 }
 
-/** Title card for projects without a raster screenshot: the masthead plate, as an image. */
+/**
+ * Title card for projects without a raster screenshot: the masthead plate, as
+ * an image. The eyebrow uses the site's own category and status labels
+ * (src/lib/project-labels.mjs), uppercased in CSS like every site eyebrow.
+ */
 function titleCardHtml(project, accent) {
   const name = project.productName || project.name;
-  const eyebrow = [project.category, project.status].filter(Boolean).join(" · ").toUpperCase();
+  const eyebrow = [
+    project.category && formatCategoryLabel(project.category),
+    project.status && (STATUS_LABEL[project.status] ?? project.status),
+  ]
+    .filter(Boolean)
+    .join(" · ");
   const monogram = name.replace(/[^A-Za-z0-9]/g, "").slice(0, 2).toUpperCase();
   return `<!doctype html><html><head><meta charset="utf-8"><style>
 ${fontFace("Fraunces", "fraunces-variable.woff2", "font-weight:100 900;")}
@@ -77,9 +95,9 @@ html,body{margin:0;width:1600px;height:1000px;background:#fcfbf8;color:#121826;f
 .card{position:relative;width:1600px;height:1000px;box-sizing:border-box;padding:96px 112px;display:flex;flex-direction:column;justify-content:space-between;
   background:linear-gradient(135deg, color-mix(in srgb, ${accent} 7%, #fcfbf8) 0%, #fcfbf8 60%)}
 .bar{position:absolute;left:0;top:0;bottom:0;width:18px;background:${accent}}
-.eyebrow{font-family:"JetBrains Mono",monospace;font-size:30px;font-weight:600;letter-spacing:.14em;color:${accent};display:flex;align-items:center;gap:20px}
+.eyebrow{font-family:"JetBrains Mono",monospace;font-size:30px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:${accent};display:flex;align-items:center;gap:20px}
 .eyebrow::before{content:"";display:block;width:56px;height:2px;background:${accent}}
-.name{font-family:Fraunces,serif;font-weight:600;font-size:150px;line-height:1.02;letter-spacing:-.02em;margin:0;max-width:1240px}
+.name{font-family:Fraunces,serif;font-weight:600;font-size:150px;line-height:1.02;letter-spacing:-.02em;margin:0;max-width:1100px;text-wrap:balance}
 .tag{font-size:40px;line-height:1.35;color:#3b4457;max-width:1040px;margin:36px 0 0}
 .mono{position:absolute;right:112px;bottom:96px;width:200px;height:200px;border-radius:8px;background:${accent};color:#fff;
   display:flex;align-items:center;justify-content:center;font-family:Fraunces,serif;font-weight:600;font-size:96px;letter-spacing:-.04em}
@@ -90,40 +108,69 @@ html,body{margin:0;width:1600px;height:1000px;background:#fcfbf8;color:#121826;f
 </div></body></html>`;
 }
 
+/** One Chromium for the whole batch, launched on the first title card; main() closes it. */
+let browser = null;
+
 async function renderTitleCard(project, accent) {
   const out = path.join(CARD_DIR, `${project.slug}.png`);
-  const browser = await chromium.launch();
+  browser ??= await chromium.launch();
+  const page = await browser.newPage({ viewport: CANVAS, deviceScaleFactor: 1 });
   try {
-    const page = await browser.newPage({ viewport: CANVAS, deviceScaleFactor: 1 });
     await page.setContent(titleCardHtml(project, accent), { waitUntil: "load" });
     await page.evaluate(() => document.fonts.ready);
     await page.screenshot({ path: out, type: "png" });
   } finally {
-    await browser.close();
+    await page.close();
   }
   return out;
 }
 
-function sourceFor(project) {
-  // `plateSource` lets a project mount a different (landscape) screenshot than
-  // the one its card shows, for example when imageUrl is a portrait tearsheet.
+/**
+ * The /images/ path of the raster screenshot a plate mounts, or null when the
+ * project gets a title card (no screenshot, a missing file, or an SVG).
+ * `plateSource` lets a project mount a different (landscape) screenshot than
+ * the one its card shows, for example when imageUrl is a portrait tearsheet.
+ */
+function plateSourcePath(project) {
   const src = project.plateSource || project.imageUrl;
-  if (!src) return null;
-  const abs = path.join(ROOT, "public", src);
-  if (!existsSync(abs) || /\.svg$/i.test(abs)) return null;
-  return abs;
+  if (!src || /\.svg$/i.test(src)) return null;
+  return existsSync(path.join(ROOT, "public", src)) ? src : null;
 }
 
+let blenderChecked = false;
+
 function renderBlender(input, output, accent) {
+  if (!blenderChecked) {
+    if (!existsSync(BLENDER)) throw new Error(`Blender not found at ${BLENDER} (set BLENDER)`);
+    blenderChecked = true;
+  }
   const res = spawnSync(
     BLENDER,
     ["-b", "--python", PLATE_SCRIPT, "--", "--input", input, "--output", output, "--accent", accent, "--width", String(width), "--samples", String(samples)],
     { cwd: ROOT, encoding: "utf8", maxBuffer: 64 * 1024 * 1024 },
   );
-  const log = `${res.stdout}\n${res.stderr}`;
+  const log = `${res.stdout ?? ""}\n${res.stderr ?? ""}${res.error ? `\n${res.error.message}` : ""}`;
   if (res.status !== 0 || !/PLATE_OK/.test(log)) {
-    const tail = log.split("\n").filter((l) => /Error|Traceback|line \d+|PLATE_OK/.test(l)).slice(-12).join("\n");
-    throw new Error(`Blender failed for ${path.basename(output)} (exit ${res.status}):\n${tail}`);
+    const tail = log.split("\n").filter((l) => l.trim()).slice(-40).join("\n");
+    const err = new Error(`Blender failed for ${path.basename(output)} (exit ${res.status}):\n${tail}`);
+    err.logTail = tail;
+    throw err;
+  }
+}
+
+/**
+ * Cycles can fail with "out of memory" when a build runs alongside it; one
+ * retry after a pause recovers that without restarting the batch. Any other
+ * failure is rethrown at once with its log tail.
+ */
+async function renderWithRetry(slug, input, raw, accent) {
+  try {
+    renderBlender(input, raw, accent);
+  } catch (e) {
+    if (!/out of memory/i.test(e.logTail ?? "")) throw e;
+    console.warn(`retrying ${slug} in 20 s after Blender ran out of memory`);
+    await new Promise((r) => setTimeout(r, 20000));
+    renderBlender(input, raw, accent);
   }
 }
 
@@ -181,71 +228,68 @@ async function postProcess(rawPng, slug) {
 }
 
 async function main() {
-  if (!existsSync(BLENDER)) throw new Error(`Blender not found at ${BLENDER} (set BLENDER)`);
   const projects = JSON.parse(readFileSync(PROJECTS, "utf8"));
   const todo = projects.filter((p) => only.length === 0 || only.includes(p.slug));
-  const results = [];
-  for (const project of todo) {
-    const slug = project.slug;
-    const accent = project.accent || DEFAULT_ACCENT;
-    const webpOut = path.join(OUT_DIR, `${slug}.webp`);
-    if (postOnly && !existsSync(path.join(RAW_DIR, `${slug}.png`))) {
-      console.log(`skip ${slug} (no raw render for --post-only)`);
-      continue;
+  try {
+    for (const project of todo) {
+      const slug = project.slug;
+      const accent = project.accent || DEFAULT_ACCENT;
+      const raw = path.join(RAW_DIR, `${slug}.png`);
+      const webpOut = path.join(OUT_DIR, `${slug}.webp`);
+      if (postOnly && !existsSync(raw)) {
+        console.log(`skip ${slug} (no raw render for --post-only)`);
+        continue;
+      }
+      if (skipExisting && existsSync(webpOut) && existsSync(webpOut.replace(/\.webp$/, ".avif"))) {
+        console.log(`skip ${slug} (exists)`);
+        continue;
+      }
+      const started = Date.now();
+      const source = plateSourcePath(project);
+      const kind = source ? "screenshot" : "title-card";
+      if (dryRun) {
+        console.log(`would render ${slug}: ${kind}${source ? ` (${source})` : ""}, accent ${accent}`);
+        continue;
+      }
+      // --post-only re-runs only the sharp stage on the existing Blender render.
+      if (!postOnly) {
+        const input = source ? path.join(ROOT, "public", source) : await renderTitleCard(project, accent);
+        await renderWithRetry(slug, input, raw, accent);
+      }
+      const out = await postProcess(raw, slug);
+      recordPlates();
+      const kb = (f) => Math.round(readFileSync(f).length / 1024);
+      console.log(
+        `ok ${slug}: ${kind}, ${out.width}x${out.height}, webp ${kb(out.webp)} KB, avif ${kb(out.avif)} KB, ${Math.round((Date.now() - started) / 1000)} s`,
+      );
     }
-    if (skipExisting && existsSync(webpOut) && existsSync(webpOut.replace(/\.webp$/, ".avif"))) {
-      console.log(`skip ${slug} (exists)`);
-      continue;
-    }
-    const started = Date.now();
-    let input = sourceFor(project);
-    const kind = input ? "screenshot" : "title-card";
-    if (dryRun) {
-      console.log(`would render ${slug}: ${kind}, accent ${accent}`);
-      continue;
-    }
-    if (!input) input = await renderTitleCard(project, accent);
-    const raw = path.join(RAW_DIR, `${slug}.png`);
-    if (postOnly && existsSync(raw)) {
-      // Re-run only the sharp stage on an existing Blender render.
-    } else {
-    try {
-      renderBlender(input, raw, accent);
-    } catch (e) {
-      // Cycles can fail with "out of memory" when a build runs alongside it;
-      // one retry after a pause recovers that without restarting the batch.
-      const firstLine = String(e.message).split(String.fromCharCode(10))[0];
-      console.warn(`retrying ${slug} after: ${firstLine}`);
-      await new Promise((r) => setTimeout(r, 20000));
-      renderBlender(input, raw, accent);
-    }
-    }
-    const out = await postProcess(raw, slug);
-    recordPlates();
-    const kb = (f) => Math.round(readFileSync(f).length / 1024);
-    console.log(
-      `ok ${slug}: ${kind}, ${out.width}x${out.height}, webp ${kb(out.webp)} KB, avif ${kb(out.avif)} KB, ${Math.round((Date.now() - started) / 1000)} s`,
-    );
-    results.push({ slug, out });
+  } finally {
+    if (browser) await browser.close();
   }
-  if (dryRun) return;
-  recordPlates();
 }
 
-/** Record every plate that exists on disk; called after each render so a crash keeps progress. */
+/**
+ * Record every plate that exists on disk, and drop the field where the files
+ * are gone; called after each render so a crash keeps progress.
+ */
 function recordPlates() {
   const fresh = JSON.parse(readFileSync(PROJECTS, "utf8"));
   for (const p of fresh) {
     const webp = path.join(OUT_DIR, `${p.slug}.webp`);
     const avif = path.join(OUT_DIR, `${p.slug}.avif`);
-    if (existsSync(webp) && existsSync(avif)) {
-      p.plate = {
-        src: `/images/plates/${p.slug}.webp`,
-        avif: `/images/plates/${p.slug}.avif`,
-        width: CANVAS.width,
-        height: CANVAS.height,
-      };
+    if (!existsSync(webp) || !existsSync(avif)) {
+      delete p.plate;
+      continue;
     }
+    const source = plateSourcePath(p);
+    p.plate = {
+      src: `/images/plates/${p.slug}.webp`,
+      avif: `/images/plates/${p.slug}.avif`,
+      width: CANVAS.width,
+      height: CANVAS.height,
+      kind: source ? "screenshot" : "title-card",
+      ...(source ? { source } : {}),
+    };
   }
   writeFileSync(PROJECTS, JSON.stringify(fresh, null, 2) + "\n");
   console.log(`wrote plate fields for ${fresh.filter((p) => p.plate).length} projects`);
